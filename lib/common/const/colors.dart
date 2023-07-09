@@ -1,0 +1,11 @@
+import 'package:flutter/material.dart';
+
+const PINK_COLOR = Color(0xFFEB6DA5);
+const SKY_COLOR = Color(0xFF5AC2D8);
+const PURPLE_COLOR = Color(0xFF9A7CB6);
+const GRAY_0_COLOR = Color(0xFFF2F2F2);
+const GRAY_1_COLOR = Color(0xFFBFBFBF);
+const GRAY_2_COLOR = Color(0xFF828282);
+const GRAY_3_COLOR = Color(0xFF5A5A5A);
+const GRAY_4_COLOR = Color(0xFF414141);
+const GRAY_5_COLOR = Color(0xFF000000);
