@@ -15,6 +15,7 @@ class MainAppBarLayout extends StatefulWidget {
 }
 
 class _MainAppBarLayoutState extends State<MainAppBarLayout> {
+  Widget? appBar;
   String? inputSearchKeyword;
 
   @override
