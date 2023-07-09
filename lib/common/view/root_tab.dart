@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/const/tabbar_items.dart';
 
-import '../../board/view/board_screen.dart';
 import '../../chat/view/chat_screen.dart';
 import '../../home/view/home_screen.dart';
 import '../../mypage/view/mypage_screen.dart';
+import '../../shopping/view/shopping_screen.dart';
 
 class RootTab extends StatefulWidget {
   const RootTab({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: 5, vsync: this);
+    controller = TabController(length: TABBAR_ICONS.length, vsync: this);
     controller.addListener(tabListener);
   }
 
@@ -53,8 +53,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
       controller: controller,
       children: [
         HomeScreen(),
-        BoardScreen(board_name: '쇼핑 화면',),
-        BoardScreen(board_name: '게시판 화면',),
+        ShoppingScreen(),
         ChatScreen(),
         MypageScreen(),
       ],

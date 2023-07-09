@@ -16,11 +16,6 @@ final TABBAR_ICONS = [
     label: '쇼핑',
   ),
   BottomNavigationBarItem(
-    icon: SvgPicture.asset('asset/icons/tabbar/board.svg', width: ICON_WIDTH, height: ICON_HEIGHT),
-    activeIcon: SvgPicture.asset('asset/icons/tabbar/board.fill.svg', width: ICON_WIDTH, height: ICON_HEIGHT),
-    label: '게시판'
-  ),
-  BottomNavigationBarItem(
     icon: SvgPicture.asset('asset/icons/tabbar/chat.svg', width: ICON_WIDTH, height: ICON_HEIGHT),
     activeIcon: SvgPicture.asset('asset/icons/tabbar/chat.fill.svg', width: ICON_WIDTH, height: ICON_HEIGHT),
     label: '채팅'
