@@ -32,7 +32,7 @@ class _MainAppBarLayoutState extends State<MainAppBarLayout> {
       leading: renderMainLogoButton(),
       title: renderSearchField(),
       elevation: 0,
-      leadingWidth: 90,
+      leadingWidth: 75,
     );
   }
 
@@ -40,8 +40,7 @@ class _MainAppBarLayoutState extends State<MainAppBarLayout> {
   Widget renderMainLogoButton() {
     return Container(
       height: 44,
-      width: 50,
-      padding: EdgeInsets.only(left: 18, top: 3, bottom: 2),
+      margin: EdgeInsets.only(left: 5, top: 3, bottom: 2),
       child: IconButton(
         // TODO: png -> svg로 변경 (화질 이슈)
         icon: Image.asset("asset/icons/common/main_logo.png"),
@@ -59,16 +58,16 @@ class _MainAppBarLayoutState extends State<MainAppBarLayout> {
   Widget renderSearchField() {
     return Container(
       height: 44,
-      padding: EdgeInsets.only(top: 3, bottom: 2),
+      padding: EdgeInsets.only(top: 4, bottom: 4),
       child: TextField(
         onTap: didTapSearchField(),
         cursorColor: PURPLE_COLOR,
         decoration: InputDecoration(
           hintText: '검색어를 입력해주세요.',
           hintStyle: TextStyle(
-            fontWeight: FontWeight.w200,
-            fontSize: 13.0,
-            color: GRAY_2_COLOR
+            fontWeight: FontWeight.w300,
+            fontSize: 12.0,
+            color: GRAY_1_COLOR
           ),
           contentPadding: EdgeInsets.only(left: 18),
           border: renderOutlineBorder(),
