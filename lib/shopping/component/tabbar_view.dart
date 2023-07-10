@@ -34,7 +34,7 @@ class _ShoppingTabBarViewState extends State<ShoppingTabBarView> {
         children: [
           renderTitle('📌 인기목록'),
           renderPopularListView(),
-          SizedBox(height: 4.0),
+          SizedBox(height: 5.0),
           renderTitle(widget.categoryName),
           renderCategoryListView(),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../common/const/colors.dart';
 
@@ -10,6 +11,8 @@ class CategoryListItem extends StatefulWidget {
 }
 
 class _CategoryListItemState extends State<CategoryListItem> {
+  bool isLiked = false;
+
   /// 제품 정보 텍스트 스타일 정의
   final brandNameTextStyle = TextStyle(
     fontSize: 12.0,
@@ -76,13 +79,25 @@ class _CategoryListItemState extends State<CategoryListItem> {
 
   /// 좋아요 버튼 위젯 구현 메소드
   Widget renderLikeButton() {
+    Widget likeIcon;
+    if (isLiked) {
+      likeIcon = SvgPicture.asset('asset/icons/common/favorite_border.fill.svg', width: 20, height: 20,);
+    } else {
+      likeIcon = SvgPicture.asset('asset/icons/common/favorite_border.svg', width: 20, height: 20,);
+    }
+
     return IconButton(
-        onPressed: () {
-          // TODO: 아이콘 색상 변경
-          print('didTapLikeButton');
-        },
-        icon: Icon(Icons.favorite_border_sharp, color: GRAY_1_COLOR,)
+        onPressed: didTapLikeButton,
+        icon: likeIcon
     );
+  }
+
+  /// 이벤트 메소드 정의
+  void didTapLikeButton() {
+    print('didTapLikeButton');
+    setState(() {
+      isLiked = !isLiked;
+    });
   }
 
 }

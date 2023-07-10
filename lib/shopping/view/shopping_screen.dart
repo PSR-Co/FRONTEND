@@ -53,9 +53,9 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: GRAY_2_COLOR.withOpacity(0.5),
+            color: GRAY_2_COLOR.withOpacity(0.3),
             spreadRadius: 0,
-            blurRadius: 5,
+            blurRadius: 4,
           ),
         ],
       ),

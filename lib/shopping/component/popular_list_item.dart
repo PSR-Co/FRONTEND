@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:psr/common/const/colors.dart';
 
 class PopularListItem extends StatefulWidget {
@@ -10,6 +11,8 @@ class PopularListItem extends StatefulWidget {
 }
 
 class _PopularListItemState extends State<PopularListItem> {
+  bool isLiked = false;
+
   /// TextStyle 정의
   final productNameTextStyle = TextStyle(
     color: GRAY_4_COLOR,
@@ -62,7 +65,7 @@ class _PopularListItemState extends State<PopularListItem> {
     return Stack(
       children: [
         renderProductImage('asset/images/product_sample.png'),
-        renderLikeButton(false),
+        renderLikeButton(),
       ],
     );
   }
@@ -81,22 +84,19 @@ class _PopularListItemState extends State<PopularListItem> {
     );
   }
 
-  Widget renderLikeButton(bool isLiked) {
-    Icon likeIcon;
+  Widget renderLikeButton() {
+    Widget likeIcon;
     if (isLiked) {
-      likeIcon = Icon(Icons.favorite_border_sharp,color: PINK_COLOR,);
+      likeIcon = SvgPicture.asset('asset/icons/common/favorite_border.fill.svg', width: 20, height: 20,);
     } else {
-      likeIcon = Icon(Icons.favorite_border_sharp,color: GRAY_1_COLOR,);
+      likeIcon = SvgPicture.asset('asset/icons/common/favorite_border.svg', width: 20, height: 20,);
     }
 
     return Positioned(
       bottom: 0,
       right: 0,
       child: IconButton(
-          onPressed: () {
-            // TODO: 아이콘 색상 변경
-            print('didTapLikeButton');
-          },
+          onPressed: didTapLikeButton,
           icon: likeIcon!
       ),
     );
@@ -136,7 +136,7 @@ class _PopularListItemState extends State<PopularListItem> {
 
   Widget renderReviewInfo() {
     return Padding(
-      padding: EdgeInsets.only(top: 4),
+      padding: EdgeInsets.only(top: 4, bottom: 3),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -154,5 +154,13 @@ class _PopularListItemState extends State<PopularListItem> {
     );
   }
 
+
+  /// 이벤트 메소드 정의
+  void didTapLikeButton() {
+    print('didTapLikeButton');
+    setState(() {
+      isLiked = !isLiked;
+    });
+  }
 
 }
