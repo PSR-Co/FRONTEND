@@ -72,12 +72,13 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
 
   BoxDecoration renderTabBarContainerDeco() {
     return BoxDecoration(
-        border: Border(
-            bottom: BorderSide(
-                color: GRAY_1_COLOR,
-                width: 1.0
-            )
-        )
+      color: Colors.white,
+      border: Border(
+          bottom: BorderSide(
+              color: GRAY_1_COLOR,
+              width: 1.0
+          )
+      )
     );
   }
 
