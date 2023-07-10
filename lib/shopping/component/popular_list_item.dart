@@ -93,7 +93,10 @@ class _PopularListItemState extends State<PopularListItem> {
       bottom: 0,
       right: 0,
       child: IconButton(
-          onPressed: didTapLikeButton,
+          onPressed: () {
+            // TODO: 아이콘 색상 변경
+            print('didTapLikeButton');
+          },
           icon: likeIcon!
       ),
     );
@@ -151,13 +154,5 @@ class _PopularListItemState extends State<PopularListItem> {
     );
   }
 
-
-  /// 이벤트 정의 메소드
-  VoidCallback didTapLikeButton() {
-    return () {
-      // TODO: 아이콘 색상 변경
-      print('didTapLikeButton');
-    };
-  }
 
 }

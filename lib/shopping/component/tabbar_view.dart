@@ -46,7 +46,7 @@ class _ShoppingTabBarViewState extends State<ShoppingTabBarView> {
   Widget renderTitle(String titleStr) {
     return Container(
       // padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
-      padding: EdgeInsets.only(left: 10.0, right: 8.0, top: 18.0, bottom: 12.0),
+      padding: EdgeInsets.only(left: 12.0, right: 8.0, top: 18.0, bottom: 12.0),
       color: Colors.white,
       child: Text(titleStr, style: titleStyle),
     );
