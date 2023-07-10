@@ -15,6 +15,16 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
   late final TabController controller;
   final TABS = [ "관심목록", "강사매칭", "라이브커머스교육", "방송가능상품소싱", "나머지" ];
 
+  final TextStyle selectedTextStyle = TextStyle(
+    fontSize: 13.0,
+    fontWeight: FontWeight.w700,
+  );
+
+  final TextStyle unSelectedTextStyle = TextStyle(
+    fontSize: 13.0,
+    fontWeight: FontWeight.w500,
+  );
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +41,32 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
   Widget build(BuildContext context) {
     return Scaffold(
       body: MainAppBarLayout(widget: renderBody(), context: context,),
+      floatingActionButton: renderFloatingActionButton(),
+    );
+  }
+  
+  Widget renderFloatingActionButton() {
+    return Container(
+      width: 48.0,
+      height: 48.0,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: GRAY_2_COLOR.withOpacity(0.5),
+            spreadRadius: 0,
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      child: FloatingActionButton(
+        onPressed: didTapAddProductButton(),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        highlightElevation: 0,
+        focusElevation: 0,
+        child: Icon(Icons.add,color: GRAY_2_COLOR, size: 32.0,),
+      ),
     );
   }
 
@@ -63,8 +99,8 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
         indicatorPadding: EdgeInsets.only(left: 10, right: 10),
         labelColor: PURPLE_COLOR,
         unselectedLabelColor: GRAY_1_COLOR,
-        labelStyle: renderSelectedTextStyle(),
-        unselectedLabelStyle: renderUnselectedTextStyle(),
+        labelStyle: selectedTextStyle,
+        unselectedLabelStyle: unSelectedTextStyle,
         tabs: TABS.map((e) => Tab(child: Text(e),)).toList(),
       ),
     );
@@ -82,17 +118,13 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
     );
   }
 
-  TextStyle renderSelectedTextStyle() {
-    return TextStyle(
-      fontSize: 13.0,
-      fontWeight: FontWeight.w700,
-    );
+
+  /// 이벤트 메소드 정의
+  VoidCallback didTapAddProductButton() {
+    return () {
+      // TODO: 글 작성 화면으로 전환
+      print('didTapAddProductButton');
+    };
   }
 
-  TextStyle renderUnselectedTextStyle() {
-    return TextStyle(
-      fontSize: 13.0,
-      fontWeight: FontWeight.w500,
-    );
-  }
 }
