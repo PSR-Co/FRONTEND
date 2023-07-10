@@ -64,7 +64,13 @@ class _MainAppBarLayoutState extends State<MainAppBarLayout> {
         onTap: didTapSearchField(),
         cursorColor: PURPLE_COLOR,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(left: 20),
+          hintText: '검색어를 입력해주세요.',
+          hintStyle: TextStyle(
+            fontWeight: FontWeight.w200,
+            fontSize: 13.0,
+            color: GRAY_2_COLOR
+          ),
+          contentPadding: EdgeInsets.only(left: 18),
           border: renderOutlineBorder(),
           enabledBorder: renderOutlineBorder(),
           focusedBorder: renderOutlineBorder(),
