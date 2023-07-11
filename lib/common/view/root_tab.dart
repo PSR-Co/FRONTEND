@@ -63,14 +63,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
   /// 하단 탭바 구현 메소드 ///
   Container renderBottomNavBar() {
     return Container(
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: Color(0xFFD9D9D9),
-            width: 1.0,
-          ),
-        )
-      ),
+      color: Colors.white,
       child: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: PURPLE_COLOR,
