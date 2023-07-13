@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:psr/common/const/colors.dart';
 
+import '../view/product_detail_screen.dart';
+
 class PopularListItem extends StatefulWidget {
+  final String category;
+
   // TODO: api 연결 후 속성값(상품이름,가격,평균리뷰점수, 리뷰개수, 좋아요 여부) 추가 및 수정
-  const PopularListItem({Key? key}) : super(key: key);
+  const PopularListItem({
+    required this.category,
+    Key? key
+  }) : super(key: key);
 
   @override
   State<PopularListItem> createState() => _PopularListItemState();
@@ -46,19 +53,21 @@ class _PopularListItemState extends State<PopularListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 170,
-      child: Column(
-        children: [
-          renderProductImageItem(),
-          renderItemOrder(),
-          renderDivider(),
-          renderProductInfo(),
-        ],
+    return GestureDetector(
+      child: Container(
+        width: 170,
+        child: Column(
+          children: [
+            renderProductImageItem(),
+            renderItemOrder(),
+            renderDivider(),
+            renderProductInfo(),
+          ],
+        ),
       ),
+      onTap: didTapItem,
     );
   }
-
 
   /// 제품 이미지 컴포넌트 구현 관련 메소드
   Widget renderProductImageItem() {
@@ -163,4 +172,7 @@ class _PopularListItemState extends State<PopularListItem> {
     });
   }
 
+  void didTapItem() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category,)));
+  }
 }

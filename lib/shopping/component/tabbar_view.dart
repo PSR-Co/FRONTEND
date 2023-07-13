@@ -62,11 +62,11 @@ class _ShoppingTabBarViewState extends State<ShoppingTabBarView> {
         scrollDirection: Axis.horizontal,
         children: [
           // TODO: api연결 후 수정
-          PopularListItem(),
-          PopularListItem(),
-          PopularListItem(),
-          PopularListItem(),
-          PopularListItem(),
+          PopularListItem(category: widget.categoryName,),
+          PopularListItem(category: widget.categoryName,),
+          PopularListItem(category: widget.categoryName,),
+          PopularListItem(category: widget.categoryName,),
+          PopularListItem(category: widget.categoryName,),
         ],
       ),
     );
