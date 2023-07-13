@@ -13,7 +13,7 @@ class ShoppingScreen extends StatefulWidget {
 
 class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStateMixin {
   late final TabController controller;
-  final TABS = [ "관심목록", "강사매칭", "라이브커머스교육", "방송가능상품소싱", "나머지" ];
+  final TABS = [ "관심목록", "강사매칭", "라이브커머스\n교육", "방송가능\n상품소싱", "쇼호스트\n구현", "스마트스토어\n런칭", "퍼스널브랜딩", "SNS 마케팅", "홍보물 디자인" ];
 
   final TextStyle selectedTextStyle = TextStyle(
     fontSize: 13.0,
@@ -89,7 +89,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
 
   Widget renderTabBar() {
     return Container(
-      height: 46,
+      height: 56,
       decoration: renderTabBarContainerDeco(),
       child: TabBar(
         controller: controller,
@@ -101,7 +101,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
         unselectedLabelColor: GRAY_1_COLOR,
         labelStyle: selectedTextStyle,
         unselectedLabelStyle: unSelectedTextStyle,
-        tabs: TABS.map((e) => Tab(child: Text(e),)).toList(),
+        tabs: TABS.map((e) => Tab(child: Text(e, textAlign: TextAlign.center,),)).toList(),
       ),
     );
   }
