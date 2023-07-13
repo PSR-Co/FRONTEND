@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:psr/common/const/colors.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final String category;
@@ -19,6 +20,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       body: Center(
         child: Text("상품 상세 메인"),
       ),
+      bottomNavigationBar: renderBottomButtons(),
     );
   }
 
@@ -26,7 +28,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     final titleStyle = TextStyle(
         color: Colors.black,
         fontSize: 17
-
     );
     return AppBar(
       backgroundColor: Colors.white,
@@ -70,8 +71,78 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return rightItems;
   }
 
+  Widget renderBottomButtons() {
+
+
+    return Container(
+      padding: EdgeInsets.only(bottom: 20),
+      height: 90,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          renderLikeButton(),
+          renderOrderButton(),
+        ],
+      ),
+    );
+  }
+
+  Widget renderLikeButton() {
+    final likeCntStyle = TextStyle(
+        fontSize: 12,
+        color: PINK_COLOR,
+        fontWeight: FontWeight.w500
+    );
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          height: 35,
+          width: 40,
+          child: IconButton(
+              onPressed: didTapLikeButton,
+              icon: SvgPicture.asset("asset/icons/common/favorite_border.fill.svg")
+          ),
+        ),
+        Text('23', style: likeCntStyle,),
+      ],
+    );
+  }
+
+  Widget renderOrderButton() {
+    return Container(
+      // padding: EdgeInsets.symmetric(horizontal: 8),
+      margin: EdgeInsets.symmetric(vertical: 14, horizontal: 8),
+      width: MediaQuery.of(context).size.width-90,
+      child: ElevatedButton(
+        onPressed: didTapOrderButton,
+        child: Text("1:1 요청하기", style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 14
+        ),),
+        style: ElevatedButton.styleFrom(
+            backgroundColor: PURPLE_COLOR,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20)
+            ),
+            elevation: 0
+        ),
+      ),
+    );
+  }
+
   /// 이벤트 메소드 정의
   void didTapBackItem() {
     Navigator.of(context).pop();
+  }
+
+  void didTapLikeButton() {
+    print("didTapLikeButton");
+  }
+
+  void didTapOrderButton() {
+    print("didTapOrderButton");
   }
 }
