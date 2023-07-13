@@ -13,13 +13,17 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
+  final String sellerName = "루시 앤플 셀러";
+  final String name = "폴로랄프로렌 목도리";
+  final double avgOfRating = 5.0;
+  final int reviewCnt = 12;
+  final int price = 79000;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: renderAppBar(),
-      body: Center(
-        child: Text("상품 상세 메인"),
-      ),
+      body: renderBody(),
       bottomNavigationBar: renderBottomButtons(),
     );
   }
@@ -71,9 +75,76 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return rightItems;
   }
 
+  Widget renderBody() {
+    final sellerNameStyle = TextStyle(
+      fontSize: 14,
+      color: GRAY_2_COLOR,
+      fontWeight: FontWeight.w500
+    );
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // 상품 이미지 리스트
+        Image.asset(
+          "asset/images/product_sample.png",
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.width,
+          fit: BoxFit.contain,
+        ),
+        
+        // 팔매자 이름 버튼
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 11),
+          child: Row(
+            children: [
+              Container(
+                // color: Colors.red,
+                child: TextButton(
+                    onPressed: (){},
+                    child: Text(sellerName, style: sellerNameStyle,)
+                ),
+              ),
+              Container(
+                // color: Colors.green,
+                child: IconButton(
+                    onPressed: (){},
+                    icon: Icon(Icons.chevron_right,color: GRAY_2_COLOR)
+                ),
+              ),
+            ],
+          ),
+        ),
+        // 상품 제목
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 18),
+          child: Text(name, style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 20,
+          ),),
+        ),
+
+        // 별점 이미지 + 리뷰 개수
+
+
+        // 가격
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 18),
+          child: Text('${price.toString()}원', style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 24,
+          ),),
+        ),
+
+        // 상세 뷰
+        // 더보기 버튼
+        // 리뷰 목록 프리뷰
+        
+      ],
+    );
+  }
+
   Widget renderBottomButtons() {
-
-
     return Container(
       padding: EdgeInsets.only(bottom: 20),
       height: 90,
