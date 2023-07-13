@@ -61,12 +61,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     rightItems.add(
         IconButton(
           icon: SvgPicture.asset("asset/icons/shopping/declaration.svg"),
-          onPressed: didTapBackItem,
+          onPressed: didTapDeclarationButton,
         ));
     rightItems.add(
         IconButton(
           icon: SvgPicture.asset("asset/icons/shopping/share.svg"),
-          onPressed: didTapBackItem,
+          onPressed: didTapShareButton,
         ));
     return rightItems;
   }
@@ -136,6 +136,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   /// 이벤트 메소드 정의
   void didTapBackItem() {
     Navigator.of(context).pop();
+  }
+
+  void didTapDeclarationButton() {
+    // TODO: 신고하기 팝업 띄우기
+    print("didTapDeclarationButton");
+  }
+
+  void didTapShareButton() {
+    print("didTapShareButton");
   }
 
   void didTapLikeButton() {
