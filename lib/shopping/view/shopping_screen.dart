@@ -98,6 +98,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
         indicatorWeight: 3.0,
         indicatorPadding: EdgeInsets.only(left: 10, right: 10),
         labelColor: PURPLE_COLOR,
+        labelStyle: selectedTextStyle,
         unselectedLabelColor: GRAY_1_COLOR,
         unselectedLabelStyle: unSelectedTextStyle,
         tabs: TABS.map((e) => Tab(child: Text(e, textAlign: TextAlign.center,),)).toList(),
