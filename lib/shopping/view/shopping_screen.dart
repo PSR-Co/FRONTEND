@@ -65,7 +65,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
         elevation: 0,
         highlightElevation: 0,
         focusElevation: 0,
-        child: Icon(Icons.add,color: GRAY_2_COLOR, size: 32.0,),
+        child: Icon(Icons.add,color: PURPLE_COLOR, size: 32.0,),
       ),
     );
   }
@@ -99,7 +99,6 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
         indicatorPadding: EdgeInsets.only(left: 10, right: 10),
         labelColor: PURPLE_COLOR,
         unselectedLabelColor: GRAY_1_COLOR,
-        labelStyle: selectedTextStyle,
         unselectedLabelStyle: unSelectedTextStyle,
         tabs: TABS.map((e) => Tab(child: Text(e, textAlign: TextAlign.center,),)).toList(),
       ),
