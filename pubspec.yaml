@@ -38,6 +38,7 @@ dependencies:
   flutter_svg: ^2.0.7
   flutter_secure_storage: ^8.0.0
   dio: ^4.0.6
+  smooth_page_indicator: ^1.1.0
 
 dev_dependencies:
   flutter_test:

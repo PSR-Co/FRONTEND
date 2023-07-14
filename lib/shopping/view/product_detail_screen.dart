@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
+import 'package:psr/shopping/component/product_img_page_view.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../component/review_list_item.dart';
 
@@ -98,44 +100,38 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       color: GRAY_2_COLOR,
       fontWeight: FontWeight.w500
     );
+
+    final List<String> imgKeyList = [
+      "asset/images/product_sample.png",
+      "asset/images/product_sample.png",
+      "asset/images/product_sample.png",
+      "asset/images/product_sample.png",
+      "asset/images/product_sample.png",
+    ];
     
     return Container(
       color: Colors.white,
       child: ListView(
         children: [
           // 상품 이미지 리스트
-          Image.asset(
-            "asset/images/product_sample.png",
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width,
-            fit: BoxFit.contain,
-          ),
-
+          ProductImgPageView(imgKeyList: imgKeyList, context: context),
+          SizedBox(height: 25,),
           // 팔매자 이름 버튼
           Container(
             padding: EdgeInsets.symmetric(horizontal: 11),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    TextButton(
-                        onPressed: (){
-                          // TODO: 판매자 프로필 화면으로 전환
-                        },
-                        child: Text(sellerName, style: sellerNameStyle,)
-                    ),
-                    IconButton(
-                        onPressed: (){
-                          // TODO: 판매자 프로필 화면으로 전환
-                        },
-                        icon: Icon(Icons.chevron_right,color: GRAY_2_COLOR)
-                    ),
-                  ],
+                TextButton(
+                    onPressed: (){
+                      // TODO: 판매자 프로필 화면으로 전환
+                    },
+                    child: Text(sellerName, style: sellerNameStyle,)
                 ),
                 IconButton(
-                    onPressed: (){},
-                    icon: SvgPicture.asset('asset/icons/common/favorite_border.fill.svg', width: 18,)
+                    onPressed: (){
+                      // TODO: 판매자 프로필 화면으로 전환
+                    },
+                    icon: Icon(Icons.chevron_right,color: GRAY_2_COLOR)
                 ),
               ],
             ),
