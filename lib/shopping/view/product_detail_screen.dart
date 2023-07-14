@@ -114,20 +114,27 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 11),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  // color: Colors.red,
-                  child: TextButton(
-                      onPressed: (){},
-                      child: Text(sellerName, style: sellerNameStyle,)
-                  ),
+                Row(
+                  children: [
+                    TextButton(
+                        onPressed: (){
+                          // TODO: 판매자 프로필 화면으로 전환
+                        },
+                        child: Text(sellerName, style: sellerNameStyle,)
+                    ),
+                    IconButton(
+                        onPressed: (){
+                          // TODO: 판매자 프로필 화면으로 전환
+                        },
+                        icon: Icon(Icons.chevron_right,color: GRAY_2_COLOR)
+                    ),
+                  ],
                 ),
-                Container(
-                  // color: Colors.green,
-                  child: IconButton(
-                      onPressed: (){},
-                      icon: Icon(Icons.chevron_right,color: GRAY_2_COLOR)
-                  ),
+                IconButton(
+                    onPressed: (){},
+                    icon: SvgPicture.asset('asset/icons/common/favorite_border.fill.svg', width: 18,)
                 ),
               ],
             ),
