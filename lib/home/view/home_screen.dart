@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/main_appbar_layout.dart';
@@ -72,7 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   Widget renderFavPackageHeader() {
     return Container(
         width: MediaQuery.of(context).size.width,
@@ -82,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget renderFavPackageList() {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: WidgetSlider(
         controller: controller,
@@ -105,34 +102,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(15))
               ),
               child: Container(
-                padding: EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                    color: favPackageList[index].cardColor, shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(15))
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                  padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 15.0),
+                  decoration: BoxDecoration(
+                      color: favPackageList[index].cardColor, shape: BoxShape.rectangle, borderRadius: const BorderRadius.all(Radius.circular(15))
+                  ),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
                             children: [
-                            Text(favPackageList[index].package, style: packageTextStyle,),
-                            Text(favPackageList[index].packageName, style: packageNameTextStyle,)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(favPackageList[index].package, style: packageTextStyle,),
+                                  Text(favPackageList[index].packageName, style: packageNameTextStyle,)
+                                ],
+                              ),
+                              Text(favPackageList[index].emogi, style: const TextStyle(fontSize: 40.0),),
                             ],
                           ),
-                          Text(favPackageList[index].emogi, style: TextStyle(fontSize: 40.0),),
-                        ],
-                      ),
-                    ),
-                    Text(favPackageList[index].introduction, style: packageIntroductionTextStyle,)
-                  ]
-                )
+                        ),
+                        Text(favPackageList[index].introduction, style: packageIntroductionTextStyle,)
+                      ]
+                  )
               ),
             ),
           );
@@ -182,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               favPackageBtn[1].title2, style: packageBtnTextStyle,),
                             IconButton(
                               onPressed: () {},
-                              padding: EdgeInsets.only(top: 2.0), // 패딩 설정
+                              padding: const EdgeInsets.only(top: 2.0), // 패딩 설정
                               constraints: const BoxConstraints(),
                               icon: const Icon(Icons.arrow_forward_ios, size: 15.0,
                                 color: GRAY_3_COLOR,),
@@ -220,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget renderBtnGroup() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(left: 10),
+      margin: const EdgeInsets.only(left: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -232,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget buttonContent(String content) {
-    return Padding(padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 7.0),
+    return Padding(padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 7.0),
       child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
