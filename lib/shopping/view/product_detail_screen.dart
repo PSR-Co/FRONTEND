@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
 
+import '../component/review_list_item.dart';
+
 class ProductDetailScreen extends StatefulWidget {
   final String category;
 
@@ -82,65 +84,158 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       fontWeight: FontWeight.w500
     );
     
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // 상품 이미지 리스트
-        Image.asset(
-          "asset/images/product_sample.png",
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.width,
-          fit: BoxFit.contain,
-        ),
-        
-        // 팔매자 이름 버튼
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 11),
-          child: Row(
-            children: [
-              Container(
-                // color: Colors.red,
-                child: TextButton(
-                    onPressed: (){},
-                    child: Text(sellerName, style: sellerNameStyle,)
-                ),
-              ),
-              Container(
-                // color: Colors.green,
-                child: IconButton(
-                    onPressed: (){},
-                    icon: Icon(Icons.chevron_right,color: GRAY_2_COLOR)
-                ),
-              ),
-            ],
+    return Container(
+      color: Colors.white,
+      child: ListView(
+        children: [
+          // 상품 이미지 리스트
+          Image.asset(
+            "asset/images/product_sample.png",
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width,
+            fit: BoxFit.contain,
           ),
-        ),
-        // 상품 제목
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 18),
-          child: Text(name, style: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 20,
-          ),),
-        ),
 
-        // 별점 이미지 + 리뷰 개수
+          // 팔매자 이름 버튼
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 11),
+            child: Row(
+              children: [
+                Container(
+                  // color: Colors.red,
+                  child: TextButton(
+                      onPressed: (){},
+                      child: Text(sellerName, style: sellerNameStyle,)
+                  ),
+                ),
+                Container(
+                  // color: Colors.green,
+                  child: IconButton(
+                      onPressed: (){},
+                      icon: Icon(Icons.chevron_right,color: GRAY_2_COLOR)
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // 상품 제목
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 18),
+            child: Text(name, style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 20,
+            ),),
+          ),
 
+          // 별점 이미지 + 리뷰 개수
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 18),
+            child: renderAvgOfRating()
+          ),
 
-        // 가격
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 18),
-          child: Text('${price.toString()}원', style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 24,
-          ),),
-        ),
+          // 가격
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 18),
+            child: Text('${price.toString()}원', style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 24,
+            ),),
+          ),
 
-        // 상세 뷰
-        // 더보기 버튼
-        // 리뷰 목록 프리뷰
-        
-      ],
+          // 상세 뷰
+          // 더보기 버튼
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+            color: GRAY_0_COLOR,
+            height: 200,
+            child:
+              Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text("상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명")
+                    ),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      height: 40,
+                      child: OutlinedButton(
+                          onPressed: (){},
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(width: 1, color: PURPLE_COLOR),
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(20))
+                            )
+                          ),
+                          child: Text("상세설명 더보기 >", style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            color: PURPLE_COLOR
+                          ),)
+                      )
+                    )
+                  ]
+              ),
+          ),
+
+          // 리뷰 목록 프리뷰
+          Container(
+            margin: EdgeInsets.only(left: 13, bottom: 18),
+            height: 100,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                // TODO: 이후 데이터 패치 후 map 연산자를 통해 코드 리팩토링
+                ReviewItem(
+                  avgOfRating: 5.0,
+                  // detail: '리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다',
+                  detail: '리뷰 내용입니다',
+                ),
+                ReviewItem(
+                  avgOfRating: 5.0,
+                  detail: '리뷰 내용입니다',
+                ),
+                ReviewItem(
+                  avgOfRating: 5.0,
+                  detail: '리뷰 내용입니다',
+                ),
+                ReviewItem(
+                  avgOfRating: 5.0,
+                  detail: '리뷰 내용입니다',
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget renderAvgOfRating() {
+    final reviewCntStyle = TextStyle(
+      fontSize: 14,
+      color: GRAY_2_COLOR,
+      fontWeight: FontWeight.w400,
+      decoration: TextDecoration.underline,
+    );
+
+    List<Widget> starIconList = [];
+    for (int i=0; i<avgOfRating; i++) {
+      starIconList.add(
+          Icon(Icons.star, color: Color(0xFFFFA939), size: 16.0,)
+      );
+    }
+    starIconList.add(
+        TextButton(
+            onPressed: didTapReviewCntButton,
+            child: Text('리뷰 ${reviewCnt}개', style: reviewCntStyle,)
+        )
+    );
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: starIconList,
     );
   }
 
@@ -224,5 +319,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   void didTapOrderButton() {
     print("didTapOrderButton");
+  }
+
+  void didTapReviewCntButton() {
+    print("didTapReviewCntButton");
   }
 }
