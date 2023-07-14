@@ -63,11 +63,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             avgOfRating: avgOfRating,
             reviewCnt: reviewCnt,
           ),
-          // renderProductDetail(),
-          ProductDetailView(
-            // isFolded: isFolded,
-            // didTapViewMoreButton: didTapViewMoreButton,
-          ),
+          ProductDetailView(),
           ReviewListView(),
         ],
       ),
