@@ -4,7 +4,8 @@ import '../../shopping/view/search_screen.dart';
 import '../const/colors.dart';
 import '../view/root_tab.dart';
 
-/// 메인 로고와 검색창을 포함한 AppBar가 있는 화면 레이아웃 정의
+
+// 메인 로고와 검색창을 포함한 AppBar가 있는 화면 레이아웃 정의
 class MainAppBarLayout extends StatefulWidget {
   final Widget widget;
   final BuildContext context;
