@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:psr/shopping/component/product_img_page_view.dart';
+import 'package:psr/shopping/component/product_img_page_view_widget.dart';
 
-import '../component/bottom_navigation_view.dart';
+import '../component/bottom_navigation_widget.dart';
 import '../component/product_detail_appbar.dart';
-import '../component/product_detail_view.dart';
-import '../component/product_info_view.dart';
-import '../component/revirw_list_view.dart';
-import '../component/seller_info_view.dart';
+import '../component/product_detail_widget.dart';
+import '../component/product_info_widget.dart';
+import '../component/review_list_widget.dart';
+import '../component/seller_info_widget.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final String category;
@@ -35,7 +35,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         category: widget.category, isMyProduct: isMyProduct,
       ),
       body: renderBody(),
-      bottomNavigationBar: BottomNavigationView(),
+      bottomNavigationBar: BottomNavigationWidget(),
     );
   }
 
@@ -54,17 +54,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       color: Colors.white,
       child: ListView(
         children: [
-          ProductImgPageView(imgKeyList: imgKeyList, context: context),
+          ProductImgPageViewWidget(imgKeyList: imgKeyList, context: context),
           SizedBox(height: 25,),
-          SellerInfoView(sellerName: sellerName,),
-          ProductInfoView(
+          SellerInfoWidget(sellerName: sellerName,),
+          ProductInfoWidget(
             productName: name,
             price: price,
             avgOfRating: avgOfRating,
             reviewCnt: reviewCnt,
           ),
-          ProductDetailView(),
-          ReviewListView(),
+          ProductDetailWidget(),
+          ReviewListWidget(),
         ],
       ),
     );

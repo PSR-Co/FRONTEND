@@ -3,13 +3,13 @@ import 'package:intl/intl.dart';
 
 import '../../common/const/colors.dart';
 
-class ProductInfoView extends StatefulWidget {
+class ProductInfoWidget extends StatefulWidget {
   final String productName;
   final int price;
   final double avgOfRating;
   final int reviewCnt;
 
-  const ProductInfoView({
+  const ProductInfoWidget({
     required this.productName,
     required this.price,
     required this.avgOfRating,
@@ -18,10 +18,10 @@ class ProductInfoView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ProductInfoView> createState() => _ProductInfoViewState();
+  State<ProductInfoWidget> createState() => _ProductInfoWidgetState();
 }
 
-class _ProductInfoViewState extends State<ProductInfoView> {
+class _ProductInfoWidgetState extends State<ProductInfoWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(

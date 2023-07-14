@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class ProductImgPageView extends StatefulWidget {
+class ProductImgPageViewWidget extends StatefulWidget {
 
   final BuildContext context;
   final List<String> imgKeyList;
 
-  const ProductImgPageView({
+  const ProductImgPageViewWidget({
     required this.imgKeyList,
     required this.context,
     Key? key
   }) : super(key: key);
 
   @override
-  State<ProductImgPageView> createState() => _ProductImgPageViewState();
+  State<ProductImgPageViewWidget> createState() => _ProductImgPageViewWidgetState();
 }
 
-class _ProductImgPageViewState extends State<ProductImgPageView> {
+class _ProductImgPageViewWidgetState extends State<ProductImgPageViewWidget> {
   final PageController controller = PageController(
     initialPage: 0,
   );

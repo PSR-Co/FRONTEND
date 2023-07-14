@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../../common/const/colors.dart';
 
-class SellerInfoView extends StatefulWidget {
+class SellerInfoWidget extends StatefulWidget {
   final String sellerName;
 
-  const SellerInfoView({
+  const SellerInfoWidget({
     required this.sellerName,
     Key? key
   }) : super(key: key);
 
   @override
-  State<SellerInfoView> createState() => _SellerInfoViewState();
+  State<SellerInfoWidget> createState() => _SellerInfoWidgetState();
 }
 
-class _SellerInfoViewState extends State<SellerInfoView> {
+class _SellerInfoWidgetState extends State<SellerInfoWidget> {
   final sellerNameStyle = TextStyle(
       fontSize: 15,
       color: GRAY_2_COLOR,

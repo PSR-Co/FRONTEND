@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 
 import '../../common/layout/main_appbar_layout.dart';
-import '../component/tabbar_view.dart';
+import '../component/tabbar_widget.dart';
 
 class ShoppingScreen extends StatefulWidget {
   const ShoppingScreen({Key? key}) : super(key: key);
@@ -79,7 +79,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
             child: TabBarView(
               controller: controller,
               children:
-                  TABS.map((e) => ShoppingTabBarView(categoryName: e)).toList(),
+                  TABS.map((e) => ShoppingTabBarWidget(categoryName: e)).toList(),
             ),
           )
         ],

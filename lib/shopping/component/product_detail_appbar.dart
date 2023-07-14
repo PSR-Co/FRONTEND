@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:psr/shopping/component/declaration_dialog.dart';
 
 import '../../common/const/colors.dart';
 
@@ -94,7 +95,6 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   }
 
   void didTapMoreButton() {
-    print("didTapMoreButton");
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -102,9 +102,7 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
           return Stack(
             children: [
               Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 65.1,
+                  left: 0, right: 0, bottom: 65.1,
                   height: 65,
                   child: ElevatedButton(
                     onPressed: didTapEditButton,
@@ -153,6 +151,13 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   void didTapDeclarationButton() {
     // TODO: 신고하기 팝업 띄우기
     print("didTapDeclarationButton");
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (_) {
+          return DeclarationDialog();
+        }
+    );
   }
 
   void didTapShareButton() {

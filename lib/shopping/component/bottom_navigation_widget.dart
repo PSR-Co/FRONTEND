@@ -3,14 +3,14 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../common/const/colors.dart';
 
-class BottomNavigationView extends StatefulWidget {
-  const BottomNavigationView({Key? key}) : super(key: key);
+class BottomNavigationWidget extends StatefulWidget {
+  const BottomNavigationWidget({Key? key}) : super(key: key);
 
   @override
-  State<BottomNavigationView> createState() => _State();
+  State<BottomNavigationWidget> createState() => _State();
 }
 
-class _State extends State<BottomNavigationView> {
+class _State extends State<BottomNavigationWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(

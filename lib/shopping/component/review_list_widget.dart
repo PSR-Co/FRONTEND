@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:psr/shopping/component/review_list_item.dart';
 
-class ReviewListView extends StatefulWidget {
-  const ReviewListView({Key? key}) : super(key: key);
+class ReviewListWidget extends StatefulWidget {
+  const ReviewListWidget({Key? key}) : super(key: key);
 
   @override
-  State<ReviewListView> createState() => _ReviewListViewState();
+  State<ReviewListWidget> createState() => _ReviewListWidgetState();
 }
 
-class _ReviewListViewState extends State<ReviewListView> {
+class _ReviewListWidgetState extends State<ReviewListWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(

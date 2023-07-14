@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../common/const/colors.dart';
 
-class ProductDetailView extends StatefulWidget {
-  const ProductDetailView({Key? key}) : super(key: key);
+class ProductDetailWidget extends StatefulWidget {
+  const ProductDetailWidget({Key? key}) : super(key: key);
 
   @override
-  State<ProductDetailView> createState() => _ProductDetailViewState();
+  State<ProductDetailWidget> createState() => _ProductDetailWidgetState();
 }
 
-class _ProductDetailViewState extends State<ProductDetailView> {
+class _ProductDetailWidgetState extends State<ProductDetailWidget> {
   bool isFolded = true;
   final double FOLDED_HEIGHT = 200.0;
   final double NOT_FOLDED_HEIGHT = 1000.0;
