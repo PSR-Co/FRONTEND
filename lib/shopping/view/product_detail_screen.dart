@@ -15,7 +15,8 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
-  final isMyProduct = true;
+  final bool isFolded = true;
+  final isMyProduct = false;
 
   final String sellerName = "루시 앤플 셀러";
   final String name = "폴로랄프로렌 목도리";
@@ -167,8 +168,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           // 더보기 버튼
           Container(
             margin: EdgeInsets.symmetric(horizontal: 18, vertical: 18),
-            color: GRAY_0_COLOR,
             height: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+              color: GRAY_0_COLOR,
+            ),
             child:
               Stack(
                   children: [
@@ -182,7 +186,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       bottom: 0,
                       height: 40,
                       child: OutlinedButton(
-                          onPressed: (){},
+                          onPressed: didTapViewMoreButton,
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(width: 1, color: PURPLE_COLOR),
                             backgroundColor: Colors.white,
@@ -409,5 +413,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   void didTapReviewCntButton() {
     print("didTapReviewCntButton");
+  }
+
+  void didTapViewMoreButton() {
+    print("didTapViewMoreButton");
   }
 }
