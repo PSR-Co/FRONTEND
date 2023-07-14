@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../common/const/colors.dart';
 
 class TitleView extends StatefulWidget {
-  // const TitleView({super.key});
   String title;
   TitleView({required this.title, Key? key}):super(key: key);
 

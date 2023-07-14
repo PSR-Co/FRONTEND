@@ -21,10 +21,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   ///package 부분 임시 데이터
   List<PackageCard> favPackageList = [
-    PackageCard('패키지', '새싹 등급', '👨🏻‍🏫', '한 줄 소개글을 작성해주세요', PURPLE_COLOR_20),
-    PackageCard('패키지', '교육 컨설팅', '📚', '한 줄 소개글을 작성해주세요', SKY_COLOR_20),
+    PackageCard('패키지', '새싹 등급   ', '👨🏻‍🏫', '한 줄 소개글을 작성해주세요', PURPLE_COLOR_20),
+    PackageCard('패키지', '교육 컨설팅  ', '📚', '한 줄 소개글을 작성해주세요', SKY_COLOR_20),
     PackageCard('패키지', '라이브 커머스', '👨🏻‍🏫', '한 줄 소개글을 작성해주세요', PINK_COLOR_20)];
-  // List<Color> cardColor = [PURPLE_COLOR_20, SKY_COLOR_20, PINK_COLOR_20];
   List<PackageBtn> favPackageBtn = [
     PackageBtn('강사매칭', ''),
     PackageBtn('라이브커머스', '교육'),
@@ -106,29 +105,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(15))
               ),
               child: Container(
-                width: 220.0,
-                height: 170.0,
                 padding: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                     color: favPackageList[index].cardColor, shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(15))
                 ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
                         children: [
-                        Text(favPackageList[index].package, style: packageTextStyle,),
-                        Text(favPackageList[index].packageName, style: packageNameTextStyle,)
-                      ],),
-                      Text(favPackageList[index].emogi, style: TextStyle(fontSize: 40.0),)
-                    ],),
-                    Padding(padding: EdgeInsets.only(right: 15.0),child: Text(favPackageList[index].introduction, style: packageIntroductionTextStyle,))
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                            Text(favPackageList[index].package, style: packageTextStyle,),
+                            Text(favPackageList[index].packageName, style: packageNameTextStyle,)
+                            ],
+                          ),
+                          Text(favPackageList[index].emogi, style: TextStyle(fontSize: 40.0),),
+                        ],
+                      ),
+                    ),
+                    Text(favPackageList[index].introduction, style: packageIntroductionTextStyle,)
                   ]
                 )
               ),
@@ -136,75 +138,80 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
         infiniteScroll: false,
-        proximity: 0.55,
+        proximity: 0.48,
         sizeDistinction: 0.4,
-        fixedSize: 140.0,
+        fixedSize: 130.0,
       ),
     );
   }
 
   Widget renderFavPackageFooter() {
-    return Container(
+    return SizedBox(
         width: MediaQuery.of(context).size.width,
         height: 80.0,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              OutlinedBtnComponent(borderColor : SHADOW_COLOR, borderWidth : 2, radius : 10, width: 120, height : 70, child :Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(padding: const EdgeInsets.only(left: 10.0),
-                      child: Text(
-                        favPackageBtn[0].title1, style: packageBtnTextStyle,)),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.arrow_forward_ios, size: 15.0,
-                        color: GRAY_3_COLOR),),
-                ],
-              )
+              OutlinedBtnComponent(borderColor : SHADOW_COLOR, borderWidth : 2, radius : 10, width: 120, height : 70,
+                  child :Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(padding: const EdgeInsets.only(left: 10.0),
+                            child: Text(
+                              favPackageBtn[0].title1, style: packageBtnTextStyle,)),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.arrow_forward_ios, size: 15.0,
+                              color: GRAY_3_COLOR),),
+                      ],
+                  )
               ),
-              OutlinedBtnComponent(borderColor : SHADOW_COLOR, borderWidth : 2, radius : 10, width: 120, height : 70, child :Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(padding: const EdgeInsets.only(left: 14.0),
-                      child: Text(
-                        favPackageBtn[1].title1, style: packageBtnTextStyle,)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        favPackageBtn[1].title2, style: packageBtnTextStyle,),
-                      IconButton(
-                        onPressed: () {},
-                        padding: EdgeInsets.only(top: 2.0), // 패딩 설정
-                        constraints: const BoxConstraints(),
-                        icon: const Icon(Icons.arrow_forward_ios, size: 15.0,
-                          color: GRAY_3_COLOR,),
-                      )
-                    ],
-                  ),
-                ],
-              )),
-              OutlinedBtnComponent(borderColor : SHADOW_COLOR, borderWidth : 2, radius : 10, width: 120, height : 70, child :Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(padding: const EdgeInsets.only(left: 14.0), child: Text(favPackageBtn[2].title1, style: packageBtnTextStyle,)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Padding(padding: const EdgeInsets.only(left: 6.0), child: Text(favPackageBtn[2].title2, style: packageBtnTextStyle,)),
-                      IconButton(
-                        onPressed: () {},
-                        padding: const EdgeInsets.only(top: 2.0,), // 패딩 설정
-                        constraints: const BoxConstraints(),
-                        icon: const Icon(Icons.arrow_forward_ios, size: 15.0, color: GRAY_3_COLOR,),)
-                    ],
-                  ),
-                ],
-              ))
+              OutlinedBtnComponent(borderColor : SHADOW_COLOR, borderWidth : 2, radius : 10, width: 120, height : 70,
+                  child :Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(padding: const EdgeInsets.only(left: 14.0),
+                            child: Text(
+                              favPackageBtn[1].title1, style: packageBtnTextStyle,)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              favPackageBtn[1].title2, style: packageBtnTextStyle,),
+                            IconButton(
+                              onPressed: () {},
+                              padding: EdgeInsets.only(top: 2.0), // 패딩 설정
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.arrow_forward_ios, size: 15.0,
+                                color: GRAY_3_COLOR,),
+                            )
+                          ],
+                        ),
+                     ],
+                  )
+              ),
+              OutlinedBtnComponent(borderColor : SHADOW_COLOR, borderWidth : 2, radius : 10, width: 120, height : 70,
+                  child :Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(padding: const EdgeInsets.only(left: 14.0), child: Text(favPackageBtn[2].title1, style: packageBtnTextStyle,)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Padding(padding: const EdgeInsets.only(left: 6.0), child: Text(favPackageBtn[2].title2, style: packageBtnTextStyle,)),
+                            IconButton(
+                              onPressed: () {},
+                              padding: const EdgeInsets.only(top: 2.0,), // 패딩 설정
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.arrow_forward_ios, size: 15.0, color: GRAY_3_COLOR,),)
+                          ],
+                        ),
+                      ],
+                    )
+              )
             ]
         )
     );
@@ -239,5 +246,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }
