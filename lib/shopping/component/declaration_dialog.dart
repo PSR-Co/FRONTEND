@@ -45,7 +45,7 @@ class DeclarationDialog extends StatelessWidget {
       ),
       content: Container(
         height: 400,
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery.of(context).size.width ,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -75,15 +75,30 @@ class DeclarationDialog extends StatelessWidget {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
                       child: GridView.count(
                         physics: NeverScrollableScrollPhysics(),
                         crossAxisCount: 2,
+                        childAspectRatio: 140/40, /// 가로/세로 비율
                         children: reasonList.map((e) =>
                             Container(
-                                color: Colors.green,
+                                // color: Colors.green,
                                 height: 20,
-                                child: Text(e)
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    IconButton(
+                                        onPressed: (){},
+                                        icon: Icon(Icons.circle, color: GRAY_0_COLOR),
+                                      style: IconButton.styleFrom(
+                                        padding: EdgeInsets.zero
+                                      ),
+                                    ),
+                                    Text(e, style: TextStyle(
+                                      fontSize: 12
+                                    ),),
+                                  ],
+                                )
                             )
                         ).toList(),
                       ),
