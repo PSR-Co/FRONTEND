@@ -15,6 +15,8 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
+  final isMyProduct = true;
+
   final String sellerName = "루시 앤플 셀러";
   final String name = "폴로랄프로렌 목도리";
   final double avgOfRating = 5.0;
@@ -64,16 +66,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   List<Widget> renderRightItems() {
     List<Widget> rightItems = [];
-    rightItems.add(
+    if (isMyProduct) {
+      rightItems.add(
+          IconButton(
+            icon: SvgPicture.asset("asset/icons/shopping/more_vertical.svg"),
+            onPressed: didTapMoreButton,
+          )
+      );
+    } else {
+      rightItems.add(
         IconButton(
           icon: SvgPicture.asset("asset/icons/shopping/declaration.svg"),
           onPressed: didTapDeclarationButton,
-        ));
-    rightItems.add(
+        )
+      );
+      rightItems.add(
         IconButton(
           icon: SvgPicture.asset("asset/icons/shopping/share.svg"),
           onPressed: didTapShareButton,
-        ));
+        )
+      );
+    }
+
     return rightItems;
   }
 
@@ -304,6 +318,63 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     Navigator.of(context).pop();
   }
 
+  void didTapMoreButton() {
+    print("didTapMoreButton");
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (_) {
+          return Stack(
+            children: [
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 65.1,
+                height: 65,
+                  child: ElevatedButton(
+                    onPressed: didTapEditButton,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                    ),
+                    child: Text("수정", style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black
+                      ),
+                    ),
+                )
+              ),
+              Divider(color: GRAY_0_COLOR, height: 0.1,),
+              Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: 65,
+                  child: ElevatedButton(
+                    onPressed: didDeleteEditButton,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                    ),
+                    child: Text("삭제", style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.red
+                    ),
+                    ),
+                  )
+              ),
+            ],
+          );
+        }
+    );
+  }
+
   void didTapDeclarationButton() {
     // TODO: 신고하기 팝업 띄우기
     print("didTapDeclarationButton");
@@ -311,6 +382,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   void didTapShareButton() {
     print("didTapShareButton");
+  }
+
+  void didTapEditButton() {
+    print("didTapEditButton");
+  }
+
+  void didDeleteEditButton() {
+    print("didDeleteEditButton");
   }
 
   void didTapLikeButton() {
