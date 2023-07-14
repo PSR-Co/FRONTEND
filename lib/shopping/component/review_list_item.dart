@@ -19,11 +19,15 @@ class ReviewItem extends StatefulWidget {
 }
 
 class _ReviewItemState extends State<ReviewItem> {
+  static final double CONTAINER_HEIGHT = 190.0;
+  static final double REVIEW_IMG_HEIGHT = 48.0;
+  static final double REVIEW_IMG_WIDTH = 48.0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
-      width: 190,
+      width: CONTAINER_HEIGHT,
       decoration: BoxDecoration(
         color: GRAY_0_COLOR,
         borderRadius: BorderRadius.circular(14),
@@ -57,7 +61,7 @@ class _ReviewItemState extends State<ReviewItem> {
         )
     );
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+      padding: EdgeInsets.only(left: 14, right: 14, top: 12, bottom: 5),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: starIconList,
@@ -66,14 +70,23 @@ class _ReviewItemState extends State<ReviewItem> {
   }
   
   Widget renderDetail() {
+    final reviewStyle = TextStyle(
+      fontSize: 12,
+    );
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Text(widget.detail, style: TextStyle(
-          fontSize: 12
-        ),),
-        Image.asset("asset/images/product_sample.png", width: 48, height: 48,)
+        Container(
+          width: CONTAINER_HEIGHT - REVIEW_IMG_WIDTH - 15,
+          height: REVIEW_IMG_HEIGHT,
+          padding: EdgeInsets.only(left: 14, right: 5),
+          child: Text(widget.detail, style: reviewStyle, maxLines: 2,),
+        ),
+        Container(
+          padding: EdgeInsets.only(right: 10),
+            child: Image.asset("asset/images/product_sample.png", width: REVIEW_IMG_WIDTH, height: REVIEW_IMG_HEIGHT,)
+        )
       ],
     );
   }

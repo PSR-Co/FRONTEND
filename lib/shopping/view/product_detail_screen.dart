@@ -17,7 +17,7 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
-  final bool isFolded = true;
+  bool isFolded = true;
   final isMyProduct = false;
 
   final String sellerName = "루시 앤플 셀러";
@@ -162,44 +162,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
           // 상세 뷰
           // 더보기 버튼
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 18, vertical: 18),
-            height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-              color: GRAY_0_COLOR,
-            ),
-            child:
-              Stack(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      child: Text("상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명")
-                    ),
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      height: 40,
-                      child: OutlinedButton(
-                          onPressed: didTapViewMoreButton,
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(width: 1, color: PURPLE_COLOR),
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20))
-                            )
-                          ),
-                          child: Text("상세설명 더보기 >", style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                            color: PURPLE_COLOR
-                          ),)
-                      )
-                    )
-                  ]
-              ),
-          ),
+          renderProductDetail(),
 
           // 리뷰 목록 프리뷰
           Container(
@@ -211,8 +174,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 // TODO: 이후 데이터 패치 후 map 연산자를 통해 코드 리팩토링
                 ReviewItem(
                   avgOfRating: 5.0,
-                  // detail: '리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다',
-                  detail: '리뷰 내용입니다',
+                  detail: '리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다',
                 ),
                 ReviewItem(
                   avgOfRating: 5.0,
@@ -260,8 +222,48 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     );
   }
 
+  Widget renderProductDetail() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+      height: isFolded ? 200 : 1000,  // TODO: 상세내용에 따른 동적높이 구현
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+        color: GRAY_0_COLOR,
+      ),
+      child:
+      Stack(
+          children: [
+            Container(
+                margin: EdgeInsets.all(10),
+                child: Text("상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명 상세설명")
+            ),
+            Positioned(
+                left: 0, right: 0, bottom: 0,
+                height: 40,
+                child: OutlinedButton(
+                    onPressed: didTapViewMoreButton,
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(width: 1, color: PURPLE_COLOR),
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20))
+                        )
+                    ),
+                    child: Text(isFolded ? "상세설명 더보기 >" : "상세설명 접기", style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                        color: PURPLE_COLOR
+                    ),)
+                )
+            )
+          ]
+      ),
+    );
+  }
+
   Widget renderBottomButtons() {
     return Container(
+      color: Colors.white,
       padding: EdgeInsets.only(bottom: 20),
       height: 90,
       child: Row(
@@ -412,6 +414,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   void didTapViewMoreButton() {
-    print("didTapViewMoreButton");
+    setState(() {
+      isFolded = !isFolded;
+    });
   }
 }
