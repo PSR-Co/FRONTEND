@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/shopping/component/product_img_page_view.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:intl/intl.dart';
 
 import '../component/review_list_item.dart';
 
@@ -58,6 +58,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return category;
   }
 
+  String getTrimmedPrice() {
+    return NumberFormat.currency(locale: 'ko_KR', symbol: '').format(price);
+  }
+
   Widget renderleftItem() {
     return Container(
       child: IconButton(
@@ -96,7 +100,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Widget renderBody() {
     final sellerNameStyle = TextStyle(
-      fontSize: 14,
+      fontSize: 15,
       color: GRAY_2_COLOR,
       fontWeight: FontWeight.w500
     );
@@ -120,18 +124,27 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 11),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextButton(
                     onPressed: (){
                       // TODO: 판매자 프로필 화면으로 전환
                     },
-                    child: Text(sellerName, style: sellerNameStyle,)
+                    child: Text(sellerName, style: sellerNameStyle,),
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.only(left: 8),
+                    // backgroundColor: Colors.red
+                  ),
                 ),
-                IconButton(
+                SizedBox(
+                  width: 10,
+                  child: IconButton(
                     onPressed: (){
                       // TODO: 판매자 프로필 화면으로 전환
+                      print("did tap icon btn");
                     },
-                    icon: Icon(Icons.chevron_right,color: GRAY_2_COLOR)
+                    icon: Icon(Icons.chevron_right, color: GRAY_2_COLOR,),
+                  ),
                 ),
               ],
             ),
@@ -154,7 +167,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           // 가격
           Container(
             padding: EdgeInsets.symmetric(horizontal: 18),
-            child: Text('${price.toString()}원', style: TextStyle(
+            child: Text('${getTrimmedPrice()}원', style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 24,
             ),),
@@ -166,7 +179,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
           // 리뷰 목록 프리뷰
           Container(
-            margin: EdgeInsets.only(left: 13, bottom: 18),
+            margin: EdgeInsets.only(top: 10, left: 13, bottom: 18),
             height: 100,
             child: ListView(
               scrollDirection: Axis.horizontal,
@@ -199,7 +212,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget renderAvgOfRating() {
     final reviewCntStyle = TextStyle(
       fontSize: 14,
-      color: GRAY_2_COLOR,
+      color: GRAY_4_COLOR,
       fontWeight: FontWeight.w400,
       decoration: TextDecoration.underline,
     );
@@ -249,7 +262,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             borderRadius: BorderRadius.all(Radius.circular(20))
                         )
                     ),
-                    child: Text(isFolded ? "상세설명 더보기 >" : "상세설명 접기", style: TextStyle(
+                    child: Text(isFolded ? "상세설명 더보기 \u{0203A}" : "상세설명 접기", style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14,
                         color: PURPLE_COLOR
