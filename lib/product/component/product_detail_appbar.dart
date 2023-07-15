@@ -35,7 +35,6 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   DefaultAppBarLayout build(BuildContext context) {
     return DefaultAppBarLayout(
         titleText: getTrimmedCategory(),
-        // leftItem: renderleftItem(),
         rightItems: renderRightItems()
     );
   }

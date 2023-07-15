@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
+import 'package:psr/product/view/add_product_screen.dart';
 
 import '../../common/layout/main_appbar_layout.dart';
 import '../component/tabbar_widget.dart';
@@ -119,11 +120,10 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
   }
 
 
-  /// 이벤트 메소드 정의
+  /// event methods
   VoidCallback didTapAddProductButton() {
     return () {
-      // TODO: 글 작성 화면으로 전환
-      print('didTapAddProductButton');
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddProductScreen()));
     };
   }
 
