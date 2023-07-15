@@ -79,12 +79,12 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
       child: Column(
         children: [
           // TODO: api연결 후 수정
-          CategoryListItem(),
-          CategoryListItem(),
-          CategoryListItem(),
-          CategoryListItem(),
-          CategoryListItem(),
-          CategoryListItem(),
+          CategoryListItem(category: widget.categoryName,),
+          CategoryListItem(category: widget.categoryName,),
+          CategoryListItem(category: widget.categoryName,),
+          CategoryListItem(category: widget.categoryName,),
+          CategoryListItem(category: widget.categoryName,),
+          CategoryListItem(category: widget.categoryName,),
         ],
       ),
     );
