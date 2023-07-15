@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:psr/common/const/colors.dart';
 
 import '../../common/layout/default_appbar_layout.dart';
-import '../../product/view/declaration_dialog.dart';
 import '../component/review_item.dart';
 
 class ReviewScreen extends StatefulWidget {
@@ -32,7 +30,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
     return Container(
       color: Colors.white,
       child: ListView.builder(
-          itemCount: 10,
+          itemCount: 10,  // for test
           itemBuilder: (BuildContext context, int index) {
             return ReviewItem(reviewContent: reviewContent,);
           }
