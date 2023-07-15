@@ -55,7 +55,6 @@ class _State extends State<BottomNavigationWidget> {
 
   Widget renderOrderButton() {
     return Container(
-      // padding: EdgeInsets.symmetric(horizontal: 8),
       margin: EdgeInsets.symmetric(vertical: 14, horizontal: 8),
       width: MediaQuery.of(context).size.width-90,
       child: ElevatedButton(
@@ -81,6 +80,11 @@ class _State extends State<BottomNavigationWidget> {
   }
 
   void didTapOrderButton() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddOrderScreen()));
+    Navigator.of(context).push(MaterialPageRoute(builder:
+        (_) => AddOrderScreen(
+          productImgKey: 'asset/images/product_sample.png',
+          productName: '폴로랄프로렌 목도리',
+        )
+    ));
   }
 }
