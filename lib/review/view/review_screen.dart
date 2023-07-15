@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 
 import '../../common/layout/default_appbar_layout.dart';
+import '../../product/view/declaration_dialog.dart';
 
 class ReviewScreen extends StatefulWidget {
   const ReviewScreen({Key? key}) : super(key: key);
@@ -11,6 +12,8 @@ class ReviewScreen extends StatefulWidget {
 }
 
 class _ReviewScreenState extends State<ReviewScreen> {
+  bool isReviewFolded = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +43,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
   Widget renderReviewItem() {
     return Container(
       color: Colors.white,
-      height: 300,
+      height: isReviewFolded ? 300 : 370,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,49 +52,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               renderAvgOfRating(), // 평점
-
-              Container(
-                margin: EdgeInsets.only(left: 14, top: 3),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // 아이디 (뒤4자리 가리기)
-                    Text('ryr0121', style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                      color: GRAY_2_COLOR
-                    ),),
-
-                    SizedBox(width: 10,),
-                    // 작성일
-                    Text('23.07.16', style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
-                      color: GRAY_2_COLOR,
-                    ),),
-
-                    SizedBox(width: 12,),
-                    // 신고 버튼
-                    TextButton(
-                        onPressed: (){},
-                        child: Text('신고', style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: GRAY_2_COLOR
-                        ),),
-                      style: TextButton.styleFrom(
-                        minimumSize: Size.zero,
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                    )
-                  ],
-                ),
-              )
-
-              // 리뷰 내용
-
-              // 리뷰 사진 (사진 있으면,,!)
+              renderWriteInfo(),  // 작성자 아이디, 작성일, 신고 버튼
+              renderReviewContent(), // 리뷰 내용
+              // renderImgListView(),  // 리뷰 사진 (사진 있으면,,!)
             ],
           ),
         ],
@@ -148,6 +111,97 @@ class _ReviewScreenState extends State<ReviewScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: starIconList,
       ),
+    );
+  }
+
+  Widget renderWriteInfo() {
+    return Container(
+      margin: EdgeInsets.only(left: 14, top: 3),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // 아이디 (뒤4자리 가리기)
+          Text('ryr0121', style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 12,
+              color: GRAY_2_COLOR
+          ),),
+
+          SizedBox(width: 10,),
+          // 작성일
+          Text('23.07.16', style: TextStyle(
+            fontWeight: FontWeight.w400,
+            fontSize: 12,
+            color: GRAY_2_COLOR,
+          ),),
+
+          SizedBox(width: 12,),
+          // 신고 버튼
+          TextButton(
+            onPressed: didTapDeclarationButton,
+            child: Text('신고', style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: GRAY_2_COLOR
+            ),),
+            style: TextButton.styleFrom(
+              minimumSize: Size.zero,
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget renderReviewContent() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isReviewFolded = !isReviewFolded;
+        });
+      },
+      child: Container(
+        height: isReviewFolded ? 80 : 150,  // TODO: 리뷰 내용에 따른 동적 높이로 변경
+        width: MediaQuery.of(context).size.width - 85,
+        margin: EdgeInsets.only(left: 14, top: 10),
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: GRAY_0_COLOR,
+          borderRadius: BorderRadius.circular(14)
+        ),
+        child: Text('리뷰내용')
+      ),
+    );
+  }
+
+  Widget renderImgListView() {
+    return Container(
+      height: 150,
+      margin: EdgeInsets.only(left: 14, top: 10),
+      padding: EdgeInsets.all(15),
+      child: ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: GRAY_0_COLOR, width: 1)
+            ),
+            child: Image.asset('asset/images/product_sample.png',),
+          );
+        },
+      ),
+    );
+  }
+
+  /// event methods
+  void didTapDeclarationButton() {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (_) {
+          return DeclarationDialog();
+        }
     );
   }
 }
