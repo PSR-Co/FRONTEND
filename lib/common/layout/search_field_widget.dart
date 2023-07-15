@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SearchFieldWidget extends StatefulWidget {
-  const SearchFieldWidget({Key? key}) : super(key: key);
+class SearchDetailScreen extends StatefulWidget {
+  const SearchDetailScreen({Key? key}) : super(key: key);
 
   @override
-  State<SearchFieldWidget> createState() => _SearchFieldWidgetState();
+  State<SearchDetailScreen> createState() => _SearchDetailScreenState();
 }
 
-class _SearchFieldWidgetState extends State<SearchFieldWidget> {
+class _SearchDetailScreenState extends State<SearchDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -93,7 +93,7 @@ class _MainAppBarLayoutState extends State<MainAppBarLayout> {
   /// 검색창 탭했을 경우 이벤트 정의
   VoidCallback didTapSearchField() {
     return () {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchFieldWidget()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchDetailScreen()));
     };
   }
 
