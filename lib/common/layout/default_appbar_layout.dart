@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 
-class DefaultAppBarLayout extends StatefulWidget {
+class DefaultAppBarLayout extends StatefulWidget implements PreferredSizeWidget {
   final String? titleText;
   final Widget? leftItem;
   final List<Widget>? rightItems;
 
+  static const double APPBAR_HEIGHT = 50;
+
   const DefaultAppBarLayout({
     required this.titleText,
-    required this.leftItem,
-    required this.rightItems,
+    this.leftItem,
+    this.rightItems,
     Key? key
   }) : super(key: key);
 
   @override
   State<DefaultAppBarLayout> createState() => _DefaultAppBarLayoutState();
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => Size.fromHeight(APPBAR_HEIGHT);
 }
 
 class _DefaultAppBarLayoutState extends State<DefaultAppBarLayout> {
