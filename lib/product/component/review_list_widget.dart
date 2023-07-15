@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psr/shopping/component/review_list_item.dart';
+import 'package:psr/product/component/review_list_item.dart';
 
 class ReviewListWidget extends StatefulWidget {
   const ReviewListWidget({Key? key}) : super(key: key);

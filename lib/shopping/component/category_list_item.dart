@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../common/const/colors.dart';
-import '../view/product_detail_screen.dart';
+import '../../product/view/product_detail_screen.dart';
 
 class CategoryListItem extends StatefulWidget {
   final String category;

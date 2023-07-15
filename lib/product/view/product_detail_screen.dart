@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psr/shopping/component/product_img_page_view_widget.dart';
+import 'package:psr/product/component/product_img_page_view_widget.dart';
 
 import '../component/bottom_navigation_widget.dart';
 import '../component/product_detail_appbar.dart';

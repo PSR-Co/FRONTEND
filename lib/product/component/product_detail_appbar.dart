@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:psr/shopping/component/declaration_dialog.dart';
+import 'package:psr/product/view/declaration_dialog.dart';
 
 import '../../common/const/colors.dart';
 
