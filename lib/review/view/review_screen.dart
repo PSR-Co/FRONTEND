@@ -12,6 +12,12 @@ class ReviewScreen extends StatefulWidget {
 }
 
 class _ReviewScreenState extends State<ReviewScreen> {
+  static const double FOLDED_HEIGHT = 330;
+  static const double NOT_FOLDED_HEIGHT = 400;
+
+  static const double FOLDED_REVIEW_HEIGHT = 80;
+  static const double NOT_FOLDED_REVIEW_HEIGHT = 150;
+
   bool isReviewFolded = true;
 
   @override
@@ -43,7 +49,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
   Widget renderReviewItem() {
     return Container(
       color: Colors.white,
-      height: isReviewFolded ? 300 : 370,
+      height: isReviewFolded ? FOLDED_HEIGHT : NOT_FOLDED_HEIGHT,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -54,7 +60,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
               renderAvgOfRating(), // 평점
               renderWriteInfo(),  // 작성자 아이디, 작성일, 신고 버튼
               renderReviewContent(), // 리뷰 내용
-              // renderImgListView(),  // 리뷰 사진 (사진 있으면,,!)
+              renderImgListView(),  // 리뷰 사진 (사진 있으면,,!)
             ],
           ),
         ],
@@ -121,7 +127,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 아이디 (뒤4자리 가리기)
-          Text('ryr0121', style: TextStyle(
+          Text(getEditedID('ryr0121'), style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 12,
               color: GRAY_2_COLOR
@@ -163,7 +169,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
         });
       },
       child: Container(
-        height: isReviewFolded ? 80 : 150,  // TODO: 리뷰 내용에 따른 동적 높이로 변경
+        height: isReviewFolded ? FOLDED_REVIEW_HEIGHT : NOT_FOLDED_REVIEW_HEIGHT,  // TODO: 리뷰 내용에 따른 동적 높이로 변경
         width: MediaQuery.of(context).size.width - 85,
         margin: EdgeInsets.only(left: 14, top: 10),
         padding: EdgeInsets.all(15),
@@ -179,19 +185,26 @@ class _ReviewScreenState extends State<ReviewScreen> {
   Widget renderImgListView() {
     return Container(
       height: 150,
+      width: MediaQuery.of(context).size.width - 85,
       margin: EdgeInsets.only(left: 14, top: 10),
-      padding: EdgeInsets.all(15),
-      child: ListView.builder(
+      child:
+      ListView.builder(
+        itemCount: 5,
+        scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            decoration: BoxDecoration(
-                border: Border.all(color: GRAY_0_COLOR, width: 1)
-            ),
-            child: Image.asset('asset/images/product_sample.png',),
+            padding: EdgeInsets.only(right: 5),
+            child: Image.asset('asset/images/product_sample.png', fit: BoxFit.cover, width: 144, height: 144,),
           );
         },
       ),
     );
+  }
+
+  /// helper methods
+  String getEditedID(String id) {
+    // 작성자 ID의 뒷 4자리를 '*'로 대체
+    return id.replaceRange(id.length-4, id.length, '****');
   }
 
   /// event methods
