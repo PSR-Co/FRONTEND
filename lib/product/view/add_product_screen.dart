@@ -54,7 +54,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
           height: 50,
           child: CustomDropdownButton(width: MediaQuery.of(context).size.width - 40,)
         ),
-
         SizedBox(height: 15,),
 
 
@@ -84,81 +83,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
         SizedBox(height: 15,),
 
         renderTitleText('사진을 올려주세요', ' (선택)'),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 100,
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: imgKeyList.length + 1,
-                itemBuilder: (BuildContext context, int index) {
-                  print('index - ${index}');
-                  if (imgKeyList.length > 0 && index < imgKeyList.length) {
-                    return Container(
-                        padding: EdgeInsets.all(5),
-                        child: Image.file(File(imgKeyList.elementAt(index)), width: 90, height: 90,)
-                    );
-                  } else {
-                    return SizedBox(
-                      width: 90,
-                      height: 90,
-                      child: IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: didTapPickImgButton,
-                          icon: SvgPicture.asset('asset/icons/shopping/pick_img_icon_${imgKeyList.length}.svg',)
-                      ),
-                    );
-                  }
-                },
-                // children: renderImgListView(),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 3),
-              child: Text('상품과 무관한 사진을 첨부하면 노출 제한 처리 될 수 있습니다. \n사진 첨부시 개인 정보가 노출되지 않게 유의해주세요.',
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: GRAY_1_COLOR,
-                  )
-              ),
-            )
-          ],
-        ),
+        renderPickImgListView(),
         SizedBox(height: 30,),
 
       ],
     );
   }
 
-  List<Widget> renderImgListView() {
-    print("renderImgListView called -> imgKeyList.length : ${imgKeyList.length}");
-    List<Widget> imgs = [];
-    if (imgKeyList.length > 0) {
-      imgKeyList.map((e) =>
-          imgs.add(
-            Container(
-              padding: EdgeInsets.all(5),
-              child: Image.file(File(e), width: 90, height: 90,)
-            ),
-          )
-      );
-    }
-    imgs.add(
-      SizedBox(
-        width: 90,
-        height: 90,
-        child:
-        IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: didTapPickImgButton,
-            icon: SvgPicture.asset('asset/icons/shopping/pick_img_icon_${imgKeyList.length}.svg',)
-        ),
-      ),
-    );
-    return imgs;
-  }
+
 
   Widget renderTitleText(String title, String? option) {
     final titleStyle = TextStyle(
@@ -183,6 +115,51 @@ class _AddProductScreenState extends State<AddProductScreen> {
             ]
         ),
       ),
+    );
+  }
+
+  Widget renderPickImgListView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 100,
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: imgKeyList.length + 1,
+            itemBuilder: (BuildContext context, int index) {
+              print('index - ${index}');
+              if (imgKeyList.length > 0 && index < imgKeyList.length) {
+                return Container(
+                    padding: EdgeInsets.all(5),
+                    child: Image.file(File(imgKeyList.elementAt(index)), width: 90, height: 90,)
+                );
+              } else {
+                return SizedBox(
+                  width: 90,
+                  height: 90,
+                  child: IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: didTapPickImgButton,
+                      icon: SvgPicture.asset('asset/icons/shopping/pick_img_icon_${imgKeyList.length}.svg',)
+                  ),
+                );
+              }
+            },
+            // children: renderImgListView(),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 18, vertical: 3),
+          child: Text('상품과 무관한 사진을 첨부하면 노출 제한 처리 될 수 있습니다. \n사진 첨부시 개인 정보가 노출되지 않게 유의해주세요.',
+              style: TextStyle(
+                fontSize: 11,
+                color: GRAY_1_COLOR,
+              )
+          ),
+        )
+      ],
     );
   }
 
