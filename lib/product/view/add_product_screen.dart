@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -71,7 +70,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         PurpleOutlinedTextField(
           maxLine: 1,
           hintText: '상품 가격을 입력해주세요.',
-          controller: nameController,
+          controller: priceController,
         ),
         SizedBox(height: 15,),
 
@@ -79,7 +78,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         PurpleOutlinedTextField(
           maxLine: 5,
           hintText: '상품 설명을 입력해주세요.',
-          controller: nameController,
+          controller: detailController,
         ),
         SizedBox(height: 15,),
 
@@ -107,7 +106,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       child: IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: didTapPickImgButton,
-                          icon: SvgPicture.asset('asset/icons/shopping/pick_img_icon.svg',)
+                          icon: SvgPicture.asset('asset/icons/shopping/pick_img_icon_${imgKeyList.length}.svg',)
                       ),
                     );
                   }
@@ -149,10 +148,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
       SizedBox(
         width: 90,
         height: 90,
-        child: IconButton(
+        child:
+        IconButton(
             padding: EdgeInsets.zero,
             onPressed: didTapPickImgButton,
-            icon: SvgPicture.asset('asset/icons/shopping/pick_img_icon.svg',)
+            icon: SvgPicture.asset('asset/icons/shopping/pick_img_icon_${imgKeyList.length}.svg',)
         ),
       ),
     );
