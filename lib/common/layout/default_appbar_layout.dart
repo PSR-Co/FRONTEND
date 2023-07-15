@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class DefaultAppBarLayout extends StatefulWidget implements PreferredSizeWidget {
   final String? titleText;
-  final Widget? leftItem;
   final List<Widget>? rightItems;
 
   static const double APPBAR_HEIGHT = 50;
 
   const DefaultAppBarLayout({
     required this.titleText,
-    this.leftItem,
     this.rightItems,
     Key? key
   }) : super(key: key);
@@ -18,7 +17,6 @@ class DefaultAppBarLayout extends StatefulWidget implements PreferredSizeWidget 
   State<DefaultAppBarLayout> createState() => _DefaultAppBarLayoutState();
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(APPBAR_HEIGHT);
 }
 
@@ -33,14 +31,27 @@ class _DefaultAppBarLayoutState extends State<DefaultAppBarLayout> {
     return renderAppBar();
   }
 
+  /// rendering methods
   AppBar renderAppBar() {
     return AppBar(
       backgroundColor: Colors.white,
       title: (widget.titleText != null) ? Text(widget.titleText!, style: titleStyle,) : Text(""),
       centerTitle: true,
-      leading: widget.leftItem,
+      leading: renderleftItem(),
       actions: widget.rightItems,
       elevation: 0,
     );
   }
+
+  Widget renderleftItem() {
+    return Container(
+      child: IconButton(
+        icon: SvgPicture.asset("asset/icons/common/chevron.backward.svg"),
+        onPressed: didTapBackItem,
+      ),
+    );
+  }
+
+  /// event methods
+  void didTapBackItem() { Navigator.of(context).pop(); }
 }

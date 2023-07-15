@@ -21,7 +21,6 @@ class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget 
   State<ProductDetailAppBar> createState() => _ProductDetailAppBarState();
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(APPBAR_HEIGHT);
 }
 
@@ -36,21 +35,12 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   DefaultAppBarLayout build(BuildContext context) {
     return DefaultAppBarLayout(
         titleText: getTrimmedCategory(),
-        leftItem: renderleftItem(),
+        // leftItem: renderleftItem(),
         rightItems: renderRightItems()
     );
   }
 
   /// rendering methods
-  Widget renderleftItem() {
-    return Container(
-      child: IconButton(
-        icon: SvgPicture.asset("asset/icons/common/chevron.backward.svg"),
-        onPressed: didTapBackItem,
-      ),
-    );
-  }
-
   List<Widget> renderRightItems() {
     List<Widget> rightItems = [];
     if (widget.isMyProduct) {
@@ -88,10 +78,6 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   }
 
   /// event methods
-  void didTapBackItem() {
-    Navigator.of(context).pop();
-  }
-
   void didTapMoreButton() {
     showDialog(
         context: context,
