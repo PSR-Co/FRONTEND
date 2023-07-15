@@ -62,7 +62,7 @@ class _MainAppBarLayoutState extends State<MainAppBarLayout> {
       padding: EdgeInsets.only(top: 4, bottom: 4),
       child: TextField(
         onTap: didTapSearchField(),
-        cursorColor: PURPLE_COLOR,
+        showCursor: false,
         decoration: InputDecoration(
           hintText: '검색어를 입력해주세요.',
           hintStyle: TextStyle(

@@ -6,9 +6,11 @@ import '../../product/view/product_detail_screen.dart';
 
 class CategoryListItem extends StatefulWidget {
   final String category;
+  final String? name;
 
   const CategoryListItem({
     required this.category,
+    this.name,
     Key? key
   }) : super(key: key);
 
@@ -78,7 +80,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('루시 앤플 셀러', style: brandNameTextStyle,),
+          Text((widget.name == null) ? '루시 앤플 셀러' : widget.name!, style: brandNameTextStyle,),
           Text('폴로랄프로렌 목도리 Red Color', style: productNameTextStyle,),
           Text('79,000원', style: priceTextStyle,),
         ],
