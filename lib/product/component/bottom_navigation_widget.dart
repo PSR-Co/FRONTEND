@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../common/const/colors.dart';
+import '../../order/view/add_order_screen.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
   const BottomNavigationWidget({Key? key}) : super(key: key);
@@ -80,6 +81,6 @@ class _State extends State<BottomNavigationWidget> {
   }
 
   void didTapOrderButton() {
-    print("didTapOrderButton");
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddOrderScreen()));
   }
 }
