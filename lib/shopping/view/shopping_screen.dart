@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/product/view/add_product_screen.dart';
 
+import '../../common/const/constants.dart';
 import '../../common/layout/main_appbar_layout.dart';
 import '../component/tabbar_widget.dart';
 
@@ -14,7 +15,6 @@ class ShoppingScreen extends StatefulWidget {
 
 class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStateMixin {
   late final TabController controller;
-  final TABS = [ "관심목록", "강사매칭", "라이브커머스\n교육", "방송가능\n상품소싱", "쇼호스트\n구현", "스마트스토어\n런칭", "퍼스널브랜딩", "SNS 마케팅", "홍보물 디자인" ];
 
   final TextStyle selectedTextStyle = TextStyle(
     fontSize: 13.0,
@@ -30,7 +30,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
   void initState() {
     super.initState();
     controller = TabController(
-        length: TABS.length,
+        length: CATEGORY_FOR_TAB.length,
         vsync: this
     );
     controller.addListener(() {
@@ -80,7 +80,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
             child: TabBarView(
               controller: controller,
               children:
-                  TABS.map((e) => ShoppingTabBarWidget(categoryName: e)).toList(),
+              CATEGORY_FOR_TAB.map((e) => ShoppingTabBarWidget(categoryName: e)).toList(),
             ),
           )
         ],
@@ -102,7 +102,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
         labelStyle: selectedTextStyle,
         unselectedLabelColor: GRAY_1_COLOR,
         unselectedLabelStyle: unSelectedTextStyle,
-        tabs: TABS.map((e) => Tab(child: Text(e, textAlign: TextAlign.center,),)).toList(),
+        tabs: CATEGORY_FOR_TAB.map((e) => Tab(child: Text(e, textAlign: TextAlign.center,),)).toList(),
       ),
     );
   }
