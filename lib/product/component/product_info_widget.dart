@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../common/const/colors.dart';
+import '../../review/view/review_screen.dart';
 
 class ProductInfoWidget extends StatefulWidget {
   final String productName;
@@ -88,6 +89,6 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
 
   /// event methods
   void didTapReviewCntButton() {
-    print("didTapReviewCntButton");
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ReviewScreen()));
   }
 }
