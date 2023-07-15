@@ -19,7 +19,7 @@ class CategoryListItem extends StatefulWidget {
 class _CategoryListItemState extends State<CategoryListItem> {
   bool isLiked = false;
 
-  /// 제품 정보 텍스트 스타일 정의
+  // 제품 정보 텍스트 스타일 정의
   final brandNameTextStyle = TextStyle(
     fontSize: 12.0,
     fontWeight: FontWeight.w500,
