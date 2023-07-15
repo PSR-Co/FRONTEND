@@ -10,7 +10,7 @@ class ProductListItem extends StatefulWidget {
 }
 
 class _ProductListItemState extends State<ProductListItem> {
-  ///
+  ///임시 데이터
   List<String> productName = ['상품명', '상품명', '상품명', '상품명', '상품명',];
 
   List<String> productImg = [
@@ -45,7 +45,6 @@ class _ProductListItemState extends State<ProductListItem> {
             ],
           );
         },
-
       ),
     );
   }
