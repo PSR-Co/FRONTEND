@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -8,6 +9,7 @@ import 'dart:io';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/purple_outlined_text_field.dart';
+import '../component/custom_dropdown_button.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({Key? key}) : super(key: key);
@@ -49,8 +51,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
         SizedBox(height: 20,),
 
         renderTitleText('상품 카테고리', null),
-        // 카테고리 드롭다운
-
+        Container(
+          height: 50,
+          child: CustomDropdownButton(width: MediaQuery.of(context).size.width - 40,)
+        ),
 
         SizedBox(height: 15,),
 
