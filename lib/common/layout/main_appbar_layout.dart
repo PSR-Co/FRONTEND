@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../shopping/view/search_screen.dart';
+import 'search_field_widget.dart';
 import '../const/colors.dart';
 import '../view/root_tab.dart';
 
@@ -93,7 +93,7 @@ class _MainAppBarLayoutState extends State<MainAppBarLayout> {
   /// 검색창 탭했을 경우 이벤트 정의
   VoidCallback didTapSearchField() {
     return () {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchScreen()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchFieldWidget()));
     };
   }
 

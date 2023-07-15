@@ -3,19 +3,19 @@ import 'package:psr/shopping/component/popular_list_item.dart';
 
 import 'category_list_item.dart';
 
-class ShoppingTabBarView extends StatefulWidget {
+class ShoppingTabBarWidget extends StatefulWidget {
   final String categoryName;
 
-  const ShoppingTabBarView({
+  const ShoppingTabBarWidget({
     required this.categoryName,
     Key? key
   }) : super(key: key);
 
   @override
-  State<ShoppingTabBarView> createState() => _ShoppingTabBarViewState();
+  State<ShoppingTabBarWidget> createState() => _ShoppingTabBarWidgetState();
 }
 
-class _ShoppingTabBarViewState extends State<ShoppingTabBarView> {
+class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
   final titleStyle = TextStyle(
     color: Colors.black,
     fontSize: 18.0,
@@ -65,11 +65,11 @@ class _ShoppingTabBarViewState extends State<ShoppingTabBarView> {
         scrollDirection: Axis.horizontal,
         children: [
           // TODO: api연결 후 수정
-          PopularListItem(),
-          PopularListItem(),
-          PopularListItem(),
-          PopularListItem(),
-          PopularListItem(),
+          PopularListItem(category: widget.categoryName,),
+          PopularListItem(category: widget.categoryName,),
+          PopularListItem(category: widget.categoryName,),
+          PopularListItem(category: widget.categoryName,),
+          PopularListItem(category: widget.categoryName,),
         ],
       ),
     );
@@ -82,12 +82,12 @@ class _ShoppingTabBarViewState extends State<ShoppingTabBarView> {
       child: Column(
         children: [
           // TODO: api연결 후 수정
-          CategoryListItem(),
-          CategoryListItem(),
-          CategoryListItem(),
-          CategoryListItem(),
-          CategoryListItem(),
-          CategoryListItem(),
+          CategoryListItem(category: widget.categoryName,),
+          CategoryListItem(category: widget.categoryName,),
+          CategoryListItem(category: widget.categoryName,),
+          CategoryListItem(category: widget.categoryName,),
+          CategoryListItem(category: widget.categoryName,),
+          CategoryListItem(category: widget.categoryName,),
         ],
       ),
     );

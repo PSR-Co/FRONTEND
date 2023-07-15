@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../common/const/colors.dart';
+import '../../product/view/product_detail_screen.dart';
 
 class CategoryListItem extends StatefulWidget {
-  const CategoryListItem({Key? key}) : super(key: key);
+  final String category;
+
+  const CategoryListItem({
+    required this.category,
+    Key? key
+  }) : super(key: key);
 
   @override
   State<CategoryListItem> createState() => _CategoryListItemState();
@@ -34,15 +40,18 @@ class _CategoryListItemState extends State<CategoryListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Container(
-      margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-      child: Row(
-          children: [
-            renderProductImage(),
-            renderProductInfo(),
-            renderLikeButton(),
-          ],
+    return GestureDetector(
+      onTap: didTapItem,
+      child: IntrinsicHeight(
+        child: Container(
+        margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+        child: Row(
+            children: [
+              renderProductImage(),
+              renderProductInfo(),
+              renderLikeButton(),
+            ],
+          ),
         ),
       ),
     );
@@ -100,4 +109,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
     });
   }
 
+  void didTapItem() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category,)));
+  }
 }
