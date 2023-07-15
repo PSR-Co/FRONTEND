@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
 
-class DeclarationDialog extends StatelessWidget {
+class DeclarationDialog extends StatefulWidget {
+  const DeclarationDialog({Key? key}) : super(key: key);
 
-  final String? selectedReason;
+  @override
+  State<DeclarationDialog> createState() => _DeclarationDialogState();
+}
 
-  const DeclarationDialog({
-    this.selectedReason,
-    Key? key
-  }) : super(key: key);
+class _DeclarationDialogState extends State<DeclarationDialog> {
+  String? selectedReason;
 
   @override
   Widget build(BuildContext context) {
@@ -74,31 +76,31 @@ class DeclarationDialog extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 12),
                       child: GridView.count(
                         physics: NeverScrollableScrollPhysics(),
                         crossAxisCount: 2,
-                        childAspectRatio: 140/40, /// 가로/세로 비율
+                        childAspectRatio: 130/40, /// 가로/세로 비율
                         children: reasonList.map((e) =>
-                            Container(
-                                // color: Colors.green,
-                                height: 20,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                        onPressed: (){},
-                                        icon: Icon(Icons.circle, color: GRAY_0_COLOR),
-                                      style: IconButton.styleFrom(
-                                        padding: EdgeInsets.zero
-                                      ),
-                                    ),
-                                    Text(e, style: TextStyle(
-                                      fontSize: 12
+                            Row(
+                                children: [
+                                  TextButton.icon(
+                                    onPressed: (){ selectReason(e); },
+                                    icon: (selectedReason == e)
+                                        ? SvgPicture.asset('asset/icons/custom_dialog/circle_check.fill.svg', width: 20,)
+                                        : SvgPicture.asset('asset/icons/custom_dialog/circle_check.svg', width: 20,),
+                                    label: Text(e, style: TextStyle(
+                                        fontSize: 12,
+                                        color: GRAY_4_COLOR
                                     ),),
-                                  ],
-                                )
+                                    style: TextButton.styleFrom(
+                                      padding: EdgeInsets.only(left: 10),
+                                      iconColor: GRAY_1_COLOR,
+
+                                    ),
+                                  )
+                                ]
                             )
                         ).toList(),
                       ),
@@ -111,6 +113,7 @@ class DeclarationDialog extends StatelessWidget {
 
             Positioned(
               bottom: 20, right: 5, left: 5,
+              height: 40,
               child: Container(
                 // width: MediaQuery.of(context).size.width - 30,
                 margin: EdgeInsets.symmetric(horizontal: 15),
@@ -134,9 +137,16 @@ class DeclarationDialog extends StatelessWidget {
   }
 
   /// event methods
+  void selectReason(String selected) {
+    setState(() {
+      selectedReason = selected;
+    });
+  }
+
   void didTapDeclarationButton() {
     if (selectedReason != null) {
-      print("신고하기 버튼 탭 -> 선택된 신고 사유 : $selectedReason");
+      print("신고하기 버튼 탭 -> 선택된 신고 사유 : ${selectedReason}");
+      Navigator.pop(context);
     } else {
       print("신고하기 버튼 탭 -> 선택된 신고 사유 없음");
     }

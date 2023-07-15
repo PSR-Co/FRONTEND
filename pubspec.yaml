@@ -66,6 +66,7 @@ flutter:
     - asset/icons/
     - asset/icons/tabbar/
     - asset/icons/common/
+    - asset/icons/custom_dialog/
     - asset/icons/shopping/
     - asset/images/
   fonts:
