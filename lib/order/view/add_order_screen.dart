@@ -73,7 +73,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
           title: '요청 상세 설명',
           hintText: '요청 상세 설명을 입력해주세요.',
           maxLine: 5,
-          controller: askController,
+          controller: detailController,
         ),
 
         SizedBox(height: 30,),
