@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psr/product/view/seller_profile_screen.dart';
 
 import '../../common/const/colors.dart';
 
@@ -29,9 +30,7 @@ class _SellerInfoWidgetState extends State<SellerInfoWidget> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           TextButton(
-            onPressed: (){
-              // TODO: 판매자 프로필 화면으로 전환
-            },
+            onPressed: didTapSellerName,
             child: Text(widget.sellerName, style: sellerNameStyle,),
             style: TextButton.styleFrom(
               padding: EdgeInsets.only(left: 8),
@@ -41,15 +40,16 @@ class _SellerInfoWidgetState extends State<SellerInfoWidget> {
           SizedBox(
             width: 10,
             child: IconButton(
-              onPressed: (){
-                // TODO: 판매자 프로필 화면으로 전환
-                print("did tap icon btn");
-              },
+              onPressed: didTapSellerName,
               icon: Icon(Icons.chevron_right, color: GRAY_2_COLOR,),
             ),
           ),
         ],
       ),
     );
+  }
+
+  void didTapSellerName() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => SellerProfileScreen()));
   }
 }
