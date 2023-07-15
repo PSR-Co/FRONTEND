@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/product/view/declaration_dialog.dart';
 
 import '../../common/const/colors.dart';
@@ -32,14 +33,11 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   );
 
   @override
-  PreferredSizeWidget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: Colors.white,
-      title: Text(getTrimmedCategory(), style: titleStyle,),
-      centerTitle: true,
-      leading: renderleftItem(),
-      actions: renderRightItems(),
-      elevation: 0,
+  DefaultAppBarLayout build(BuildContext context) {
+    return DefaultAppBarLayout(
+        titleText: getTrimmedCategory(),
+        leftItem: renderleftItem(),
+        rightItems: renderRightItems()
     );
   }
 
