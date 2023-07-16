@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/common/layout/purple_bottom_button.dart';
 import 'package:psr/order/component/order_info_input_widget.dart';
 
 class AddOrderScreen extends StatefulWidget {
@@ -36,7 +37,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
       backgroundColor: Colors.white,
       appBar: DefaultAppBarLayout(titleText: '요청하기',),
       body: renderBody(),
-      bottomNavigationBar: renderBottomButton(),
+      bottomNavigationBar: PurpleBottomButton(title: '판매자에게 요청하기', onPressed: didTapOrderButton,),
     );
   }
 
@@ -73,7 +74,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
           title: '요청 상세 설명',
           hintText: '요청 상세 설명을 입력해주세요.',
           maxLine: 5,
-          controller: askController,
+          controller: detailController,
         ),
 
         SizedBox(height: 30,),
@@ -90,30 +91,6 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
           child: Text(widget.productName, style: defaultStyle),
         )
       ],
-    );
-  }
-
-  Widget renderBottomButton() {
-    final titleStyle = TextStyle(
-        fontSize: 15,
-        fontWeight: FontWeight.w700,
-        color: Colors.white
-    );
-
-    return Container(
-      margin: EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 30),
-      height: 40.0,
-      child: ElevatedButton(
-        onPressed: didTapOrderButton,
-        child: Text('판매자에게 요청하기', style: titleStyle,),
-        style: ElevatedButton.styleFrom(
-            elevation: 0,
-            backgroundColor: PURPLE_COLOR,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            )
-        ),
-      ),
     );
   }
 

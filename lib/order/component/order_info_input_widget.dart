@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psr/common/layout/purple_outlined_text_field.dart';
 
 import '../../common/const/colors.dart';
 
@@ -30,10 +31,10 @@ class _OrderInfoInputViewState extends State<OrderInfoInputView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         renderTitleText(widget.title, widget.option),
-        renderCustomTextField(
-            widget.maxLine,
-            widget.hintText,
-            widget.controller
+        PurpleOutlinedTextField(
+            maxLine: widget.maxLine,
+            hintText: widget.hintText,
+            controller: widget.controller
         ),
         SizedBox(height: 15,),
       ],
@@ -66,36 +67,4 @@ class _OrderInfoInputViewState extends State<OrderInfoInputView> {
     );
   }
 
-  Widget renderCustomTextField(int maxLine, String hintText, TextEditingController controller) {
-    final defaultStyle = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide(
-          color: PURPLE_COLOR.withOpacity(0.5),
-          width: 1.0,
-        )
-    );
-
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-      width: MediaQuery.of(context).size.width - 40,
-      height: (maxLine == 1) ? 45.0 : 140.0,
-      child: TextField(
-        controller: controller,
-        scrollPhysics: NeverScrollableScrollPhysics(),
-        showCursor: false,
-        maxLines: (maxLine > 5) ? 5 : maxLine,
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: TextStyle(
-              fontSize: 14,
-              color: GRAY_1_COLOR
-          ),
-          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          enabledBorder: defaultStyle,
-          border: defaultStyle,
-          focusedBorder: defaultStyle,
-        ),
-      ),
-    );
-  }
 }
