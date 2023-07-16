@@ -66,7 +66,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
         const CustomTitleText(title: '상품 설명', option: null,),
         PurpleOutlinedTextField(
-          maxLine: 5,
+          maxLine: 15,
           maxLength: 5000,
           hintText: '상품 설명을 입력해주세요.',
           controller: detailController,

@@ -144,7 +144,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       children: [
         const CustomTitleText(title: '상세한 후기를 써주세요.', option: null,),
         PurpleOutlinedTextField(
-            maxLine: 5,
+            maxLine: 15,
             maxLength: 5000,
             hintText: '구매하신 상품의 후기를 20자 이상 남겨주시면 다른 구매자들에게도 도움이 됩니다.',
             controller: reviewController

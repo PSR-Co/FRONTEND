@@ -43,26 +43,30 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
     List<Widget> children = [];
     children.add(
         Container(
-            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
             width: MediaQuery.of(context).size.width - 40,
             height: (widget.maxLine == 1) ? 45.0 : 140.0,
             child: TextField(
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black,
+              ),
               onChanged: (text) {
                 setState(() {
                   currentTextLength = text.length;
                 });
               },
               controller: widget.controller,
-              scrollPhysics: NeverScrollableScrollPhysics(),
+              scrollPhysics: const NeverScrollableScrollPhysics(),
               showCursor: false,
-              maxLines: (widget.maxLine > 5) ? 5 : widget.maxLine,
+              maxLines: widget.maxLine,
               decoration: InputDecoration(
                 hintText: widget.hintText,
-                hintStyle: TextStyle(
+                hintStyle: const TextStyle(
                     fontSize: 14,
                     color: GRAY_1_COLOR
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                 enabledBorder: defaultStyle,
                 border: defaultStyle,
                 focusedBorder: defaultStyle,
@@ -76,10 +80,13 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
           Positioned(
               bottom: 20,
               right: 35,
-              child: Text('${currentTextLength}/${widget.maxLength}', style: TextStyle(
-                fontSize: 12,
-                color: GRAY_1_COLOR,
-              ),)
+              child: Text(
+                '${currentTextLength}/${widget.maxLength}',
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: GRAY_1_COLOR,
+                ),
+              )
           )
       );
     }
