@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:psr/review/view/add_review_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../review/view/review_screen.dart';
@@ -90,5 +91,14 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
   /// event methods
   void didTapReviewCntButton() {
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => ReviewScreen()));
+
+    /*** 이하는 리뷰 작성 화면 테스트 용 추가 코드 ***/
+    // Navigator.of(context).push(MaterialPageRoute(
+    //     builder: (_) => AddReviewScreen(
+    //       sellerName: '루시 앤플 셀러',
+    //       productName: '폴로랄프로렌 목도리',
+    //       productImgKey: 'asset/images/product_sample.png',
+    //     )
+    // ));
   }
 }
