@@ -35,7 +35,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DefaultAppBarLayout(titleText: '리뷰 작성',),
+      appBar: const DefaultAppBarLayout(titleText: '리뷰 작성',),
       body: renderBody(),
       bottomNavigationBar: PurpleBottomButton(title: '등록하기', onPressed: didTapAddReviewButton,),
     );
@@ -56,12 +56,12 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   }
 
   Widget renderProductInfoView() {
-    final TextStyle sellerNameStyle = TextStyle(
+    const TextStyle sellerNameStyle = TextStyle(
       fontSize: 13,
       color: GRAY_3_COLOR,
     );
 
-    final TextStyle productNameStyle = TextStyle(
+    const TextStyle productNameStyle = TextStyle(
       fontSize: 16,
       color: GRAY_4_COLOR,
     );
@@ -82,9 +82,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  child: Text(widget.sellerName, style: sellerNameStyle,),
-                ),
+                Text(widget.sellerName, style: sellerNameStyle,),
                 Container(
                   margin: const EdgeInsets.only(top: 3),
                   child: Text(widget.productName, style: productNameStyle,),
@@ -98,7 +96,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   }
 
   Widget renderInputReviewView() {
-    return Container(
+    return SizedBox(
       height: 1000,
       child: ListView(
         children: [
