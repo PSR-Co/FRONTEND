@@ -102,7 +102,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
     return SizedBox(
       height: 550,
       child: ListView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           renderInputRatingView(),
           const SizedBox(height: 18,),
@@ -163,7 +163,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
     );
   }
 
-
+  /// getting custom component methods
   Widget getStarButtonList() {
     return Container(
       height: 50,
