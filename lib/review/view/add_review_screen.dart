@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/common/layout/pick_img_widget.dart';
 import 'package:psr/common/layout/purple_outlined_text_field.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/const/constants.dart';
+import '../../common/layout/custom_title_text.dart';
 import '../../common/layout/purple_bottom_button.dart';
 
 class AddReviewScreen extends StatefulWidget {
@@ -27,6 +29,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   static const double PROFILE_IMG_SIZE = 64.0;
   final TextEditingController reviewController = TextEditingController();
 
+  List<String> imgKeyList = [];
 
   int selectedRating = 0;
   String selectedRatingInfoText = '별점을 선택해주세요.';
@@ -97,10 +100,11 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
 
   Widget renderInputReviewView() {
     return SizedBox(
-      height: 1000,
+      height: 550,
       child: ListView(
+        physics: NeverScrollableScrollPhysics(),
         children: [
-          renderTitleText('상품은 어떠셧나요?'),
+          const CustomTitleText(title: '상품은 어떠셧나요?', option: null,),
           renderStarButtonList(),
 
           Container(
@@ -113,9 +117,9 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             ),
           ),
 
-          const SizedBox(height: 20,),
+          const SizedBox(height: 18,),
 
-          renderTitleText('상세한 후기를 써주세요.'),
+          const CustomTitleText(title: '상세한 후기를 써주세요.', option: null,),
           PurpleOutlinedTextField(
               maxLine: 5,
               maxLength: 5000,
@@ -123,21 +127,15 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
               controller: reviewController
           ),
 
+          const SizedBox(height: 18,),
+
+          const CustomTitleText(title: '사진을 올려주세요.', option: ' (선택)',),
+          PickImgView(imgKeyList: imgKeyList,),
+
+          const SizedBox(height: 100,),
+
         ],
       ),
-    );
-  }
-
-  Widget renderTitleText(String title) {
-    const TextStyle titleStyle = TextStyle(
-      fontSize: 19,
-      fontWeight: FontWeight.w500,
-      color: Colors.black,
-    );
-
-    return Container(
-      margin: const EdgeInsets.only(top: 15, bottom: 5, left: 20, right: 20),
-      child: Text(title, style: titleStyle,),
     );
   }
 
@@ -189,5 +187,6 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   void didTapAddReviewButton() {
     print('didTapAddReviewButton');
     print('입력된 리뷰 정보 -> ${selectedRating}점 / 후기 상세 : ${reviewController.text}');
+    print('선택된 사진 정보 -> ${imgKeyList}');
   }
 }
