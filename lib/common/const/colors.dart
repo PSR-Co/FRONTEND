@@ -14,3 +14,5 @@ const SHADOW_COLOR = Color(0x4DBFBFBF);
 const PURPLE_COLOR_20 = Color(0x339A7CB6);
 const SKY_COLOR_20 = Color(0x335AC2D8);
 const PINK_COLOR_20 = Color(0x33EB6DA5);
+
+const ORANGE_COLOR = Color(0xFFFFA53F);
