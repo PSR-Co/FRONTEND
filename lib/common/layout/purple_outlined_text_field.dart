@@ -81,7 +81,7 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
               bottom: 20,
               right: 35,
               child: Text(
-                '${currentTextLength}/${widget.maxLength}',
+                '$currentTextLength/${widget.maxLength}',
                 style: const TextStyle(
                   fontSize: 12,
                   color: GRAY_1_COLOR,
