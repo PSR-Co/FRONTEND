@@ -62,7 +62,7 @@ class _MainAppBarLayoutState extends State<MainAppBarLayout> {
       padding: EdgeInsets.only(top: 4, bottom: 4),
       child: TextField(
         onTap: didTapSearchField(),
-        cursorColor: PURPLE_COLOR,
+        showCursor: false,
         decoration: InputDecoration(
           hintText: '검색어를 입력해주세요.',
           hintStyle: TextStyle(
@@ -93,7 +93,7 @@ class _MainAppBarLayoutState extends State<MainAppBarLayout> {
   /// 검색창 탭했을 경우 이벤트 정의
   VoidCallback didTapSearchField() {
     return () {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchFieldWidget()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => SearchDetailScreen()));
     };
   }
 
