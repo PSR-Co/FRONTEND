@@ -104,34 +104,13 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       child: ListView(
         physics: NeverScrollableScrollPhysics(),
         children: [
-          const CustomTitleText(title: '상품은 어떠셧나요?', option: null,),
-          renderStarButtonList(),
-
-          Container(
-            margin: const EdgeInsets.only(top: 5, bottom: 5, left: 20),
-            child: (selectedRating > 0) ? renderSelectedRatingText() :
-            Text('별점을 선택해주세요.', style: TextStyle(
-              fontSize: 14,
-              color: (selectedRating == 0) ? GRAY_1_COLOR : ORANGE_COLOR,
-            ),
-            ),
-          ),
-
+          renderInputRatingView(),
           const SizedBox(height: 18,),
 
-          const CustomTitleText(title: '상세한 후기를 써주세요.', option: null,),
-          PurpleOutlinedTextField(
-              maxLine: 5,
-              maxLength: 5000,
-              hintText: '구매하신 상품의 후기를 20자 이상 남겨주시면 다른 구매자들에게도 도움이 됩니다.',
-              controller: reviewController
-          ),
-
+          renderInputDetailView(),
           const SizedBox(height: 18,),
 
-          const CustomTitleText(title: '사진을 올려주세요.', option: ' (선택)',),
-          PickImgView(imgKeyList: imgKeyList,),
-
+          renderPickImgView(),
           const SizedBox(height: 100,),
 
         ],
@@ -139,7 +118,53 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
     );
   }
 
-  Widget renderStarButtonList() {
+  Widget renderInputRatingView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 15,),
+        const CustomTitleText(title: '상품은 어떠셨나요?', option: null,),
+        getStarButtonList(),
+
+        Container(
+          margin: const EdgeInsets.only(top: 5, bottom: 5, left: 20),
+          child: (selectedRating > 0) ? getSelectedRatingText() :
+          Text('별점을 선택해주세요.', style: TextStyle(
+            fontSize: 14,
+            color: (selectedRating == 0) ? GRAY_1_COLOR : ORANGE_COLOR,
+          ),),
+        )
+      ],
+    );
+  }
+
+  Widget renderInputDetailView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const CustomTitleText(title: '상세한 후기를 써주세요.', option: null,),
+        PurpleOutlinedTextField(
+            maxLine: 5,
+            maxLength: 5000,
+            hintText: '구매하신 상품의 후기를 20자 이상 남겨주시면 다른 구매자들에게도 도움이 됩니다.',
+            controller: reviewController
+        ),
+      ],
+    );
+  }
+
+  Widget renderPickImgView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const CustomTitleText(title: '사진을 올려주세요.', option: ' (선택)',),
+        PickImgView(imgKeyList: imgKeyList,),
+      ],
+    );
+  }
+
+
+  Widget getStarButtonList() {
     return Container(
       height: 50,
       margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -163,7 +188,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
     );
   }
 
-  Widget renderSelectedRatingText() {
+  Widget getSelectedRatingText() {
     final defaultStyle = TextStyle(
         fontSize: 14,
         color: (selectedRating == 0) ? GRAY_1_COLOR : ORANGE_COLOR,
