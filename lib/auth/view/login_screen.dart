@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:psr/auth/view/sign_up_screen.dart';
 import 'package:psr/common/const/colors.dart';
 
 import '../../common/layout/purple_filled_button.dart';
 import '../../common/view/root_tab.dart';
+import 'find_id_screen.dart';
+import 'find_pw_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -110,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 const SizedBox(width: 2,),
                 TextButton(
-                    onPressed: didTapSignUpButton,
+                    onPressed: didTapFindIDButton,
                     style: TextButton.styleFrom(
                         padding: EdgeInsets.zero
                     ),
@@ -195,15 +197,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void didTapSignUpButton() {
     print('didTapJoinButton');
-    // Navigator.of(context).pushAndRemoveUntil(
-    //     MaterialPageRoute(builder: (_) => const SignUp()
-    //     ), (route) => false);
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SignUpScreen()));
+  }
+
+  void didTapFindIDButton() {
+    print('didTapFindPWButton');
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FindIDScreen()));
   }
 
   void didTapFindPWButton() {
     print('didTapFindPWButton');
-    // Navigator.of(context).pushAndRemoveUntil(
-    //     MaterialPageRoute(builder: (_) => const FindPassword()
-    //     ), (route) => false);
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FindPWScreen()));
   }
 }
