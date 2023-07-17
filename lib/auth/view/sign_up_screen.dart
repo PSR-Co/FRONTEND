@@ -55,7 +55,6 @@ class SignUpScreenState extends State<SignUpScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // TODO: add custom progress bar
         getProgressBar(),
         getGuideTitle(SIGNUP_GUIDE_TITLE.elementAt(currentPageIndex)),
         bodyWidgets.elementAt(currentPageIndex),
@@ -64,8 +63,6 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget getProgressBar() {
-    print('currentPageIndex -> ${currentPageIndex}');
-    print('SIGNUP_GUIDE_TITLE.length - 1 -> ${SIGNUP_GUIDE_TITLE.length - 1}');
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 5,
