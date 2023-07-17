@@ -5,6 +5,10 @@ import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/purple_filled_button.dart';
 
 import '../../common/const/constants.dart';
+import '../component/input_accout_info.dart';
+import '../component/set_interest_list.dart';
+import '../component/set_nickname.dart';
+import '../component/validate_phone_num.dart';
 
 class SignUpScreen extends StatefulWidget {
 
@@ -21,7 +25,11 @@ class SignUpScreenState extends State<SignUpScreen> {
   int currentPageIndex = 0;
 
   final List<Widget> bodyWidgets = [
-    RoleButtonList(),
+    const RoleButtonList(),
+    const InputAccountInfo(),
+    const ValidatePhoneNum(),
+    const SetNickname(),
+    const SetInterestList(),
   ];
 
   @override
@@ -33,7 +41,11 @@ class SignUpScreenState extends State<SignUpScreen> {
       bottomNavigationBar: PurpleFilledButton(
         title: '다음',
         // onPressed: bodyWidgets.elementAt(current_page_index).getNextAction()!,
-        onPressed: didTapNextButton ?? () {},
+        onPressed: () {
+          setState(() {
+            currentPageIndex += 1;
+          });
+        },
         height: 40,
       ),
     );
@@ -44,9 +56,31 @@ class SignUpScreenState extends State<SignUpScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // TODO: add custom progress bar
+        getProgressBar(),
         getGuideTitle(SIGNUP_GUIDE_TITLE.elementAt(currentPageIndex)),
         bodyWidgets.elementAt(currentPageIndex),
       ],
+    );
+  }
+
+  Widget getProgressBar() {
+    print('currentPageIndex -> ${currentPageIndex}');
+    print('SIGNUP_GUIDE_TITLE.length - 1 -> ${SIGNUP_GUIDE_TITLE.length - 1}');
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: 5,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: SIGNUP_GUIDE_TITLE.length - 1,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            margin: const EdgeInsets.symmetric(vertical: 1),
+            width: MediaQuery.of(context).size.width / (SIGNUP_GUIDE_TITLE.length - 1),
+            height: 1.5,
+            color: (currentPageIndex >= index) ? PURPLE_COLOR : GRAY_1_COLOR,
+          );
+        },
+      ),
     );
   }
 
