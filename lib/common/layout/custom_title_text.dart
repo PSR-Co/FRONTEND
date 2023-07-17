@@ -9,7 +9,7 @@ class CustomTitleText extends StatefulWidget {
 
   const CustomTitleText({
     required this.title,
-    required this.option,
+    this.option,
     Key? key
   }) : super(key: key);
 

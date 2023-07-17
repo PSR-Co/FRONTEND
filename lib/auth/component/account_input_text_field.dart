@@ -7,11 +7,15 @@ class AccountInputTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final bool isNeededForHidden;
+  final Color? backgroundColor;
+  final Color? borderColor;
 
   const AccountInputTextField({
     required this.controller,
     required this.hintText,
     required this.isNeededForHidden,
+    this.backgroundColor,
+    this.borderColor,
     Key? key
   }) : super(key: key);
 
@@ -22,18 +26,18 @@ class AccountInputTextField extends StatefulWidget {
 class _AccountInputTextFieldState extends State<AccountInputTextField> {
   bool isVisible = true;
 
-  final defaultStyle = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(
-          color: Colors.transparent
-      )
-  );
-
   @override
   Widget build(BuildContext context) {
+    final defaultStyle = OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(
+          color: widget.borderColor ??  Colors.transparent,
+        )
+    );
+
     return Container(
       decoration: BoxDecoration(
-          color: GRAY_1_COLOR.withOpacity(0.2),
+          color: widget.backgroundColor ?? GRAY_1_COLOR.withOpacity(0.2),
           borderRadius: BorderRadius.circular(12)
       ),
       width: MediaQuery.of(context).size.width - 40,

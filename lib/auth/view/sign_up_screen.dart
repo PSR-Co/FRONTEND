@@ -91,7 +91,7 @@ class SignUpScreenState extends State<SignUpScreen> {
       color: GRAY_4_COLOR,
     );
     return Container(
-        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 18),
         child: Text(title, style: titleStyle,)
     );
   }
