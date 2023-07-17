@@ -58,7 +58,7 @@ class _OrderListTabState extends State<OrderListTab> with SingleTickerProviderSt
       backgroundColor: Colors.white,
       body: Container(
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
+        margin: EdgeInsets.only(top:1.0, bottom: 15.0),
         child: Column(
           children: [
             renderTabBar(),
