@@ -7,7 +7,7 @@ import '../layout/large_detail_bar_layout.dart';
 class BodyTab extends StatefulWidget {
   List<String> titleList;
   List<Widget> tabBarViewChild;
-  String tabTitle;
+  Widget tabTitle;
   BodyTab({required this.titleList, required this.tabTitle, required this.tabBarViewChild, Key? key}):super(key: key);
 
   @override
@@ -40,9 +40,10 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin{
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0.0,
-        title: LargeDetailBar(title: widget.tabTitle),
+        title: widget.tabTitle,
         bottom: PreferredSize(
             preferredSize: Size.fromHeight(55.0),
             child: renderTabBar(titleList: widget.titleList)),

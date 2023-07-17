@@ -25,3 +25,6 @@ const RATING_DETAIL = {
 
 /// 요청 목록 탭 상수
 const ORDER_LIST_TAB = [ "요청받은 상품", "요청한 상품"];
+
+/// 내 문의내역 탭 상수
+const MY_INQUIRY_LIST_TAB = [ "진행중 문의", "완료된 문의"];

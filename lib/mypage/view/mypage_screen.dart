@@ -1,12 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:psr/common/layout/large_detail_bar_layout.dart';
-import 'package:psr/home/component/card_slider.dart';
 import 'package:psr/mypage/view/order_list_tab.dart';
+import 'package:psr/shopping/view/service_center_screen.dart';
 
 import '../../common/const/colors.dart';
-import '../component/order_list_item.dart';
+import '../../common/layout/division.dart';
 
 class MypageScreen extends StatefulWidget {
   const MypageScreen({Key? key}) : super(key: key);
@@ -34,8 +33,10 @@ class _MypageScreenState extends State<MypageScreen> {
               myPageHeader(),
               profile(),
               category(),
-              division(),
-              // LargeDetailBar(title: "요청목록"),
+              Padding(
+                padding: const EdgeInsets.only(top:15.0),
+                child: Division(),
+              ),
               Expanded(child: Padding(
                 padding: const EdgeInsets.only(bottom: 30.0),
                 child: OrderListTab(),
@@ -50,7 +51,6 @@ class _MypageScreenState extends State<MypageScreen> {
   Widget myPageHeader(){
     return SizedBox(
       child: Container(
-        // color: Colors.red[100],
         margin: EdgeInsets.fromLTRB(17.0, 5.0, 17.0, 5.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,7 +69,6 @@ class _MypageScreenState extends State<MypageScreen> {
     return SizedBox(
       height: 100.0,
       child: Container(
-        // color: Colors.orange[100],
         margin: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
         child: Row(
           children: [
@@ -99,7 +98,6 @@ class _MypageScreenState extends State<MypageScreen> {
 
   Widget category(){
     return Container(
-      // color: Colors.yellow[100],
       margin: EdgeInsets.fromLTRB(17.0, 10.0, 17.0, 10.0),
       child: SizedBox(
         child: Row(
@@ -127,7 +125,10 @@ class _MypageScreenState extends State<MypageScreen> {
               color: Colors.white
             ),
             child: IconButton.outlined(
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ServiceCenterScreen()));
+                },
                 icon: SvgPicture.asset(imgName),
               style: ButtonStyle(),
             ),
@@ -137,14 +138,5 @@ class _MypageScreenState extends State<MypageScreen> {
       ),
     );
   }
-
-  Widget division(){
-    return Container(
-      height: 4.0,
-      color: GRAY_0_COLOR,
-      margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),
-    );
-  }
-
 }
 
