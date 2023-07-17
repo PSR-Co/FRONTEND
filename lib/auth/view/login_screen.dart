@@ -148,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        color: GRAY_0_COLOR,
+        color: GRAY_1_COLOR.withOpacity(0.2),
         borderRadius: BorderRadius.circular(12)
       ),
       width: MediaQuery.of(context).size.width - 40,
