@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:psr/home/component/product_list_item.dart';
-import 'package:psr/home/component/title_view.dart';
+import 'package:psr/common/layout/detail_bar_layout.dart';
 
 class RecentListItem extends StatefulWidget {
   RecentListItem({super.key});
@@ -17,7 +17,7 @@ class RecentListItemState extends State<RecentListItem> {
       margin: EdgeInsets.only(left: 20),
       child: Column(
         children: [
-          TitleView(title:'따끈따끈한 최신글 둘러보기'),
+          DetailBar(title:'따끈따끈한 최신글 둘러보기'),
           ProductListItem()
         ],
       ),

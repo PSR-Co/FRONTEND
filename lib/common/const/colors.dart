@@ -10,7 +10,7 @@ const GRAY_3_COLOR = Color(0xFF5A5A5A);
 const GRAY_4_COLOR = Color(0xFF414141);
 const GRAY_5_COLOR = Color(0xFF000000);
 const SHADOW_COLOR = Color(0x4DBFBFBF);
-
+const LIGHT_SHADOW_COLOR = Color(0x40666666);
 const PURPLE_COLOR_20 = Color(0x339A7CB6);
 const SKY_COLOR_20 = Color(0x335AC2D8);
 const PINK_COLOR_20 = Color(0x33EB6DA5);
