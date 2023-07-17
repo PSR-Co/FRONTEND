@@ -4,12 +4,14 @@ import 'package:flutter_svg/svg.dart';
 class DefaultAppBarLayout extends StatefulWidget implements PreferredSizeWidget {
   final String? titleText;
   final List<Widget>? rightItems;
+  final bool? isBackItemHidden;
 
   static const double APPBAR_HEIGHT = 50;
 
   const DefaultAppBarLayout({
     required this.titleText,
     this.rightItems,
+    this.isBackItemHidden,
     Key? key
   }) : super(key: key);
 
@@ -37,7 +39,7 @@ class _DefaultAppBarLayoutState extends State<DefaultAppBarLayout> {
       backgroundColor: Colors.white,
       title: (widget.titleText != null) ? Text(widget.titleText!, style: titleStyle,) : Text(""),
       centerTitle: true,
-      leading: renderleftItem(),
+      leading: (widget.isBackItemHidden ?? false) ? null : renderleftItem(),
       actions: widget.rightItems,
       elevation: 0,
     );

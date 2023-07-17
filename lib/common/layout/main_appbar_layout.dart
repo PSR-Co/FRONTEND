@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'search_field_widget.dart';
+import '../view/search_screen.dart';
 import '../const/colors.dart';
 import '../view/root_tab.dart';
 
