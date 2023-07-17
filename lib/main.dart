@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:psr/common/view/root_tab.dart';
 
+import 'common/view/splash_screen.dart';
+
 void main() {
   runApp(const _App());
 }
@@ -18,9 +20,9 @@ class _App extends StatelessWidget {
         primaryColor: Colors.white,
         fontFamily: 'NotoSans',
       ),
-      home: Scaffold(
-        body: RootTab(),
-        // body: SplashScreen(),
+      home: const Scaffold(
+        // body: RootTab(),
+        body: SplashScreen(),
       )
     );
   }

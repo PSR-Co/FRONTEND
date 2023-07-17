@@ -6,12 +6,14 @@ class PurpleOutlinedTextField extends StatefulWidget {
   final int? maxLength;
   final String hintText;
   final TextEditingController controller;
+  final IconButton? suffixIconButton;
 
   const PurpleOutlinedTextField({
     required this.maxLine,
     this.maxLength,
     required this.hintText,
     required this.controller,
+    this.suffixIconButton,
     Key? key
   }) : super(key: key);
 
@@ -70,6 +72,7 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
                 enabledBorder: defaultStyle,
                 border: defaultStyle,
                 focusedBorder: defaultStyle,
+                suffixIcon: widget.suffixIconButton,
               ),
             )
         )
