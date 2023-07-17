@@ -81,19 +81,20 @@ class _OrderListTabState extends State<OrderListTab> with SingleTickerProviderSt
       height: 55,
       // margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
       decoration: tabBarDecoration(),
-      child: Column(
+      child: Row(
         children: [
           TabBar(
             controller: tabController,
             isScrollable: true,
             indicatorColor: PURPLE_COLOR,
             indicatorWeight: 3.0,
-            indicatorPadding: EdgeInsets.only(left: 10, right: 10),
+            indicatorPadding: EdgeInsets.only(left: 17, right: 17),
             labelColor: PURPLE_COLOR,
             labelStyle: tabbedTextStyle,
             unselectedLabelColor: GRAY_1_COLOR,
             unselectedLabelStyle: unTabbedTextStyle,
-            tabs: ORDER_LIST_TAB.map((e) => Tab(child: Text(e, textAlign: TextAlign.center,),)).toList(),
+            tabs: ORDER_LIST_TAB.map((e) =>
+                Tab(child: Text(e, textAlign: TextAlign.center),)).toList(),
           ),
         ],
       ),
