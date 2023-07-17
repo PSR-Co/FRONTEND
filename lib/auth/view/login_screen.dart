@@ -20,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController idController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
 
+  bool isPasswordVisible = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,8 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget getCustomTextField(TextEditingController controller, String hintText, bool isSecured) {
-    bool isVisible = isSecured;
+  Widget getCustomTextField(TextEditingController controller, String hintText, bool isPW) {
 
     final defaultStyle = OutlineInputBorder(
       borderRadius: BorderRadius.circular(12),
@@ -162,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
         scrollPhysics: const NeverScrollableScrollPhysics(),
         showCursor: false,
         maxLines: 1,
-        obscureText: isVisible,
+        obscureText: isPW && isPasswordVisible,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: const TextStyle(
@@ -173,13 +174,13 @@ class _LoginScreenState extends State<LoginScreen> {
           enabledBorder: defaultStyle,
           border: defaultStyle,
           focusedBorder: defaultStyle,
-          suffixIcon: isSecured ?
+          suffixIcon: isPW ?
           IconButton(
-            icon: isVisible ? Icon(CupertinoIcons.eye_fill, color: GRAY_1_COLOR,) : Icon(CupertinoIcons.eye_slash_fill, color: GRAY_1_COLOR,) ,
+            icon: isPasswordVisible ? Icon(CupertinoIcons.eye_fill, color: GRAY_1_COLOR,) : Icon(CupertinoIcons.eye_slash_fill, color: GRAY_1_COLOR,) ,
             onPressed: (){
               setState(() {
-                isVisible = !isVisible;
-                print('비번 보이나? ${isVisible}');
+                isPasswordVisible = !isPasswordVisible;
+                print('비번 보이나? ${isPasswordVisible}');
               });
           },) : null
         ),
@@ -190,9 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void didTapLoginButton() {
     print('didTapLoginButton');
     /// 테스트 토큰이 발급되기 전까지 임시로 홈 화면 연결해둠
-    Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (_) => const RootTab()
-              ), (route) => false);
+    Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
   }
 
   void didTapSignUpButton() {
