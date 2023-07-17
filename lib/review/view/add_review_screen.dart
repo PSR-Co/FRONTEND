@@ -6,7 +6,7 @@ import 'package:psr/common/layout/purple_outlined_text_field.dart';
 import '../../common/const/colors.dart';
 import '../../common/const/constants.dart';
 import '../../common/layout/custom_title_text.dart';
-import '../../common/layout/purple_bottom_button.dart';
+import '../../common/layout/purple_filled_button.dart';
 
 class AddReviewScreen extends StatefulWidget {
 
@@ -40,7 +40,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       backgroundColor: Colors.white,
       appBar: const DefaultAppBarLayout(titleText: '리뷰 작성',),
       body: renderBody(),
-      bottomNavigationBar: PurpleBottomButton(title: '등록하기', onPressed: didTapAddReviewButton,),
+      bottomNavigationBar: PurpleFilledButton(title: '등록하기', onPressed: didTapAddReviewButton,),
     );
   }
 

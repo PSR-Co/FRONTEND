@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
-import 'package:psr/common/layout/purple_bottom_button.dart';
+import 'package:psr/common/layout/purple_filled_button.dart';
 
 import '../../common/layout/custom_title_text.dart';
 import '../../common/layout/pick_img_widget.dart';
@@ -29,7 +29,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       backgroundColor: Colors.white,
       appBar: const DefaultAppBarLayout(titleText: '상품 추가',),
       body: renderBody(),
-      bottomNavigationBar: PurpleBottomButton(title: '등록하기', onPressed: didTapAddButton,),
+      bottomNavigationBar: PurpleFilledButton(title: '등록하기', onPressed: didTapAddButton,),
     );
   }
 

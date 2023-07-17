@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
-import 'package:psr/common/layout/purple_bottom_button.dart';
+import 'package:psr/common/layout/purple_filled_button.dart';
 import 'package:psr/order/component/order_info_input_widget.dart';
 
 class AddOrderScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
       backgroundColor: Colors.white,
       appBar: DefaultAppBarLayout(titleText: '요청하기',),
       body: renderBody(),
-      bottomNavigationBar: PurpleBottomButton(title: '판매자에게 요청하기', onPressed: didTapOrderButton,),
+      bottomNavigationBar: PurpleFilledButton(title: '판매자에게 요청하기', onPressed: didTapOrderButton,),
     );
   }
 
