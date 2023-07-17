@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:psr/home/component/product_list_item.dart';
-import 'package:psr/home/component/title_view.dart';
+import 'package:psr/common/layout/detail_bar_layout.dart';
 
 class BestListItem extends StatefulWidget {
   BestListItem({super.key});
@@ -17,7 +17,7 @@ class BestListItemState extends State<BestListItem> {
       margin: EdgeInsets.only(left: 20, bottom: 3.0),
       child: Column(
         children: [
-          TitleView(title: '인기게시글'),
+          DetailBar(title: '인기게시글'),
           ProductListItem()
         ],
       ),

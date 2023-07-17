@@ -11,3 +11,6 @@ const RATING_DETAIL = {
   4:'좋아요',
   5:'최고에요',
 };
+
+/// 요청 목록 탭 상수
+const ORDER_LIST_TAB = [ "요청받은 상품", "요청한 상품"];

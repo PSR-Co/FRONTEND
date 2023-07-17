@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/main_appbar_layout.dart';
 import 'package:psr/home/component/best_list_item.dart';
-import 'package:psr/home/component/favorite_package_list.dart';
+import 'package:psr/home/component/favorite_package_list_item.dart';
 import 'package:psr/home/component/notice_list_content.dart';
 import 'package:psr/home/component/outlined_btn.dart';
 import 'package:psr/home/component/card_slider.dart';
 import 'package:psr/home/component/recent_list_item.dart';
-import 'package:psr/home/component/title_view.dart';
+import 'package:psr/common/layout/detail_bar_layout.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.only(left: 17),
-        child: TitleView(title: '관심있는 패키지를 골라보세요',)
+        child: DetailBar(title: '관심있는 패키지를 골라보세요',)
     );
   }
 
