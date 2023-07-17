@@ -95,42 +95,51 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
 
             // 회원가입 가이딩 row
-            Row(
-              children: [
-                const SizedBox(width: 5,),
-                const Text('아직 회원이 아니신가요?', style: optionStyle),
-                TextButton(
-                    onPressed: didTapSignUpButton,
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero
-                    ),
-                    child: Text('회원가입', style: optionStyle.copyWith(decoration: TextDecoration.underline),)
-                )
-              ],
+            Container(
+              height: 20,
+              margin: const EdgeInsets.only(top: 15, bottom: 3),
+              child: Row(
+                children: [
+                  const SizedBox(width: 5,),
+                  const Text('아직 회원이 아니신가요?', style: optionStyle),
+                  TextButton(
+                      onPressed: didTapSignUpButton,
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero
+                      ),
+                      child: Text('회원가입', style: optionStyle.copyWith(decoration: TextDecoration.underline),)
+                  )
+                ],
+              ),
             ),
 
             // 아이디 찾기, 비번 재설정 버튼 row
-            Row(
-              children: [
-                const SizedBox(width: 2,),
-                TextButton(
-                    onPressed: didTapFindIDButton,
-                    style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero
-                    ),
-                    child: const Text('아이디 찾기', style: optionStyle,)
-                  // child: ,
-                ),
-                const SizedBox(width: 30,),
-                TextButton(
-                    onPressed: didTapFindPWButton,
-                    style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero
-                    ),
-                    child: const Text('비밀번호 재설정', style: optionStyle,)
-                  // child: getCustomTextField(pwController, '비밀번호'),
-                )
-              ],
+            Container(
+              height: 20,
+              margin: const EdgeInsets.symmetric(vertical: 3),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(width: 2,),
+                  TextButton(
+                      onPressed: didTapFindIDButton,
+                      style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                      ),
+                      child: const Text('아이디 찾기', style: optionStyle,)
+                    // child: ,
+                  ),
+                  const SizedBox(width: 30,),
+                  TextButton(
+                      onPressed: didTapFindPWButton,
+                      style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero
+                      ),
+                      child: const Text('비밀번호 재설정', style: optionStyle,)
+                    // child: getCustomTextField(pwController, '비밀번호'),
+                  )
+                ],
+              ),
             )
           ],
         ),
@@ -180,7 +189,6 @@ class _LoginScreenState extends State<LoginScreen> {
             onPressed: (){
               setState(() {
                 isPasswordVisible = !isPasswordVisible;
-                print('비번 보이나? ${isPasswordVisible}');
               });
           },) : null
         ),
@@ -189,7 +197,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void didTapLoginButton() {
-    print('didTapLoginButton');
     /// 테스트 토큰이 발급되기 전까지 임시로 홈 화면 연결해둠
     Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
   }
