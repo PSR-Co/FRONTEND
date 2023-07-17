@@ -35,8 +35,11 @@ class _MypageScreenState extends State<MypageScreen> {
               profile(),
               category(),
               division(),
-              LargeDetailBar(title: "요청목록"),
-              Flexible(flex: 1,child: OrderListTab()),
+              // LargeDetailBar(title: "요청목록"),
+              Expanded(child: Padding(
+                padding: const EdgeInsets.only(bottom: 30.0),
+                child: OrderListTab(),
+              )),
             ],
           )
         ),

@@ -16,7 +16,7 @@ class LargeDetailBarState extends State<LargeDetailBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 17.0),
+      margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -24,7 +24,7 @@ class LargeDetailBarState extends State<LargeDetailBar> {
           Text(widget.title, style: headerTextStyle,),
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.arrow_forward_ios, size: 20.0,),
+            icon: const Icon(Icons.arrow_forward_ios, size: 20.0, color: GRAY_4_COLOR,),
             padding: EdgeInsets.only(bottom: 2.0),
             constraints: BoxConstraints(),
           )
