@@ -7,9 +7,12 @@ class CustomTitleText extends StatefulWidget {
   final String title;
   final String? option;
 
+  final EdgeInsets? margin;
+
   const CustomTitleText({
     required this.title,
     this.option,
+    this.margin,
     Key? key
   }) : super(key: key);
 
@@ -33,7 +36,7 @@ class _CustomTitleTextState extends State<CustomTitleText> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+      margin: widget.margin ?? const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
       child: RichText(
         text: TextSpan(
             text: widget.title, style: titleStyle,

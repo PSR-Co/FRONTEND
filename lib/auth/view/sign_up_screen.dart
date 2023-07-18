@@ -7,7 +7,7 @@ import 'package:psr/common/layout/purple_filled_button.dart';
 import '../../common/const/constants.dart';
 import '../component/input_accout_info.dart';
 import '../component/set_interest_list.dart';
-import '../component/set_nickname.dart';
+import '../component/input_profile.dart';
 import '../component/input_user_info.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class SignUpScreenState extends State<SignUpScreen> {
     const RoleButtonList(),
     const InputAccountInfo(),
     const InputUserInfo(),
-    const SetNickname(),
+    const InputProfile(),
     const SetInterestList(),
   ];
 
@@ -39,7 +39,7 @@ class SignUpScreenState extends State<SignUpScreen> {
       appBar: const DefaultAppBarLayout(titleText: '회원가입',),
       body: renderBody(),
       bottomNavigationBar: PurpleFilledButton(
-        title: '다음',
+        title: (currentPageIndex < bodyWidgets.length-2) ? '다음' : '완료',
         // onPressed: bodyWidgets.elementAt(current_page_index).getNextAction()!,
         onPressed: () {
           setState(() {
