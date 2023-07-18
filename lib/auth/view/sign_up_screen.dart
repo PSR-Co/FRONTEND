@@ -8,7 +8,7 @@ import '../../common/const/constants.dart';
 import '../component/input_accout_info.dart';
 import '../component/set_interest_list.dart';
 import '../component/set_nickname.dart';
-import '../component/validate_phone_num.dart';
+import '../component/input_user_info.dart';
 
 class SignUpScreen extends StatefulWidget {
 
@@ -27,7 +27,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   final List<Widget> bodyWidgets = [
     const RoleButtonList(),
     const InputAccountInfo(),
-    const ValidatePhoneNum(),
+    const InputUserInfo(),
     const SetNickname(),
     const SetInterestList(),
   ];
@@ -88,6 +88,7 @@ class SignUpScreenState extends State<SignUpScreen> {
       color: GRAY_4_COLOR,
     );
     return Container(
+      margin: const EdgeInsets.only(bottom: 20),
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 18),
         child: Text(title, style: titleStyle,)
     );

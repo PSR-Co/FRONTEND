@@ -16,7 +16,6 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
   final TextEditingController pwController = TextEditingController();
   final TextEditingController pwConfirmController = TextEditingController();
 
-  bool isValidPW = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,26 +29,27 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         getInputView(
-            '이메일',
-            emailController,
-            '이메일을 입력해주세요.',
-            false
+          '이메일',
+          emailController,
+          '이메일을 입력해주세요.',
+          false
         ),
+        const SizedBox(height: 22,),
 
         getInputView(
-            '비밀번호',
-            pwController,
-            '비밀번호를 입력해주세요.',
-            true
+          '비밀번호',
+          pwController,
+          '비밀번호를 입력해주세요.',
+          true
         ),
-        // Container(
-        //   margin: const EdgeInsets.only(left: 20),
-        //   child: const Text('영문,숫자,특수문자만 입력해주세요. (8자이상 15자이내)', style: TextStyle(
-        //     fontSize: 11,
-        //     color: Colors.red,
-        //   ),),
-        // ),
-        // const SizedBox(height: 22,),
+        Container(
+          margin: const EdgeInsets.only(left: 20),
+          child: const Text('영문,숫자,특수문자만 입력해주세요. (8자이상 15자이내)', style: TextStyle(
+            fontSize: 11,
+            color: Colors.red,
+          ),),
+        ),
+        const SizedBox(height: 22,),
 
         getInputView(
           '비밀번호 확인',
@@ -57,7 +57,7 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
           '비밀번호를 다시 입력해주세요.',
           true
         ),
-
+        const SizedBox(height: 22,)
       ],
     );
   }
@@ -85,7 +85,7 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
             borderColor: PURPLE_COLOR.withOpacity(0.5),
           ),
         ),
-        const SizedBox(height: 22,)
+        // const SizedBox(height: 22,)
       ],
     );
   }

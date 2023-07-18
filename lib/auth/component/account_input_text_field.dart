@@ -9,6 +9,7 @@ class AccountInputTextField extends StatefulWidget {
   final bool isNeededForHidden;
   final Color? backgroundColor;
   final Color? borderColor;
+  final VoidCallback? onChange;
 
   const AccountInputTextField({
     required this.controller,
@@ -16,6 +17,7 @@ class AccountInputTextField extends StatefulWidget {
     required this.isNeededForHidden,
     this.backgroundColor,
     this.borderColor,
+    this.onChange,
     Key? key
   }) : super(key: key);
 
