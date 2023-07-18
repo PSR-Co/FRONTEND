@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:psr/myinfo/view/myinfo_screen.dart';
 import 'package:psr/mypage/view/order_list_tab.dart';
 import 'package:psr/shopping/view/service_center_screen.dart';
 
@@ -67,9 +68,10 @@ class _MypageScreenState extends State<MypageScreen> {
 
   Widget profile() {
     return SizedBox(
-      height: 100.0,
+      height: 120.0,
       child: Container(
-        margin: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
+        margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 20.0),
+        height: 90.0,
         child: Row(
           children: [
             ClipOval(
@@ -78,7 +80,7 @@ class _MypageScreenState extends State<MypageScreen> {
             Container(
               margin: EdgeInsets.only(left: 10.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("피에스알님 안녕하세요!", style: welcomeTextStyle,),
@@ -126,8 +128,17 @@ class _MypageScreenState extends State<MypageScreen> {
             ),
             child: IconButton.outlined(
                 onPressed: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ServiceCenterScreen()));
+                  if(categoryName=="내 정보"){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MyInfoScreen()));
+                  }else if(categoryName=="고객센터"){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ServiceCenterScreen()));
+                  }else{
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ServiceCenterScreen()));
+                  }
+
                 },
                 icon: SvgPicture.asset(imgName),
               style: ButtonStyle(),
