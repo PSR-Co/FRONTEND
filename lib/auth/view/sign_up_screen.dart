@@ -63,22 +63,24 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget getProgressBar() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: 5,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: SIGNUP_GUIDE_TITLE.length - 1,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 1),
-            width: MediaQuery.of(context).size.width / (SIGNUP_GUIDE_TITLE.length - 1),
-            height: 1.5,
-            color: (currentPageIndex >= index) ? PURPLE_COLOR : GRAY_1_COLOR,
-          );
-        },
-      ),
-    );
+    return (currentPageIndex < bodyWidgets.length-1)
+        ? SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 5,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: SIGNUP_GUIDE_TITLE.length - 1,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(vertical: 1),
+                  width: MediaQuery.of(context).size.width / (SIGNUP_GUIDE_TITLE.length - 1),
+                  height: 1.5,
+                  color: (currentPageIndex >= index) ? PURPLE_COLOR : GRAY_1_COLOR,
+                );
+              },
+            ),
+          )
+        : Container();
   }
 
   Widget getGuideTitle(String title) {
