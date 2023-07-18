@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/constants.dart';
+import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
 
 import '../../common/const/colors.dart';
@@ -37,7 +38,7 @@ class _OrderListTabState extends State<OrderListTab> with SingleTickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    return BodyTab(tabTitle: "요청목록",
+    return BodyTab(tabTitle: LargeDetailBar(title: "요청목록"),
       tabBarViewChild: [sellProductCardSlider(productList: sellProductList), sellProductCardSlider(productList: orderProductList)],
       titleList: ORDER_LIST_TAB,);
   }
