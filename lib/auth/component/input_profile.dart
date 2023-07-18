@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/layout/custom_title_text.dart';
 import 'package:psr/common/layout/purple_outlined_textfield_with_button.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class InputProfile extends StatefulWidget {
   const InputProfile({Key? key}) : super(key: key);
@@ -11,7 +13,10 @@ class InputProfile extends StatefulWidget {
 }
 
 class _InputProfileState extends State<InputProfile> {
+  static const PROFILE_IMG_SIZE = 88.0;
+
   final TextEditingController nicknameController = TextEditingController();
+  String? profileImgKey;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +25,22 @@ class _InputProfileState extends State<InputProfile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 88,
-            height: 88,
+          Container(
+            width: PROFILE_IMG_SIZE,
+            height: PROFILE_IMG_SIZE,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(44),
+            ),
             child: IconButton(
-                onPressed: (){},
-                icon: SvgPicture.asset('asset/icons/common/pick_profile_img_icon.svg',)
+                onPressed: didTapProfileImgButton,
+                icon: (profileImgKey == null)
+                    ? SvgPicture.asset('asset/icons/common/pick_profile_img_icon.svg',)
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(PROFILE_IMG_SIZE/2),
+                        child: Image.file(File(profileImgKey!),
+                        width: PROFILE_IMG_SIZE, height: PROFILE_IMG_SIZE,
+                        fit: BoxFit.cover),
+                      )
             ),
           ),
           const SizedBox(height: 20,),
@@ -44,6 +59,14 @@ class _InputProfileState extends State<InputProfile> {
 
   void didTapValidationNickname() {
     print('didTapValidationNickname - 닉네임 중복확인');
+  }
+
+  void didTapProfileImgButton() async {
+    var picker = ImagePicker();
+    var image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() { profileImgKey = image.path; });
+    }
   }
 
 }
