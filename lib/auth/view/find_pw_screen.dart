@@ -67,8 +67,4 @@ class _FindPWScreenState extends State<FindPWScreen> {
       }
     });
   }
-
-  void didTapSendCodeButton() {
-    print('didTapSendCodeButton - 인증번호 요청');
-  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psr/auth/component/input_business_info.dart';
 import 'package:psr/auth/component/role_button_list.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
@@ -24,13 +25,22 @@ class SignUpScreenState extends State<SignUpScreen> {
   String? selectedRole;
   int currentPageIndex = 0;
 
-  final List<Widget> bodyWidgets = [
+  bool isBusiness = false;
+
+  List<Widget> bodyWidgets = [
     const RoleButtonList(),
-    const InputAccountInfo(),
+    // const InputAccountInfo(),
+    const InputBusinessInfo(),
     const InputUserInfo(),
     const InputProfile(),
     const SetInterestList(),
   ];
+
+  Widget getInputInfoBody() {
+    print('사업자임? ${isBusiness}');
+    if (isBusiness) { return const InputBusinessInfo(); }
+    else { return const InputAccountInfo(); }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +62,8 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget renderBody() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
+      // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         getProgressBar(),
         getGuideTitle(SIGNUP_GUIDE_TITLE.elementAt(currentPageIndex)),
@@ -63,7 +73,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget getProgressBar() {
-    return (currentPageIndex < bodyWidgets.length-1)
+    return ((currentPageIndex < bodyWidgets.length-1) && !(isBusiness && currentPageIndex == 1))
         ? SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 5,
@@ -89,10 +99,26 @@ class SignUpScreenState extends State<SignUpScreen> {
       fontWeight: FontWeight.w700,
       color: GRAY_4_COLOR,
     );
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 18),
-        child: Text(title, style: titleStyle,)
+    const warningStyle = TextStyle(
+      fontSize: 12,
+      color: Colors.red,
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: (isBusiness && currentPageIndex == 1)
+              ? const EdgeInsets.only(top: 30, left: 18, right: 18)
+              : const EdgeInsets.symmetric(vertical: 30, horizontal: 18),
+          child: Text(title, style: titleStyle,)
+        ),
+        (isBusiness && currentPageIndex == 1)
+        ? Container(
+          margin: const EdgeInsets.only(left: 18, right: 18, top: 10, bottom: 20),
+          child: const Text('사업자 진위 여부 파악을 위해\n사업자 등록증에 표기된 대로 입력해주세요', style: warningStyle,),
+        )
+        : Container()
+      ],
     );
   }
 

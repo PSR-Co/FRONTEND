@@ -83,11 +83,16 @@ class _InputUserInfoState extends State<InputUserInfo> {
               hintText: '휴대폰 번호를 입력해주세요.',
               controller: phoneNumController,
               buttonTitle: '인증요청',
-              onPressed: () {  },
+              onPressed: didTapSendCodeButton,
             ),
         ),
         const SizedBox(height: 22,)
       ],
     );
+  }
+
+  /// event methods
+  void didTapSendCodeButton() {
+    print('didTapSendCodeButton - 인증번호 요청');
   }
 }

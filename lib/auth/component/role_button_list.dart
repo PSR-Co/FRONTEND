@@ -78,6 +78,10 @@ class _RoleButtonListState extends State<RoleButtonList> {
     setState(() {
       selectedRole = roleList.elementAt(index);
       parentWidget.selectedRole = selectedRole;
+
+      if (selectedRole == '사업자') {
+        parentWidget.isBusiness = true;
+      }
       print('parentWidget.selectedRole --> ${parentWidget.selectedRole}');
     });
   }

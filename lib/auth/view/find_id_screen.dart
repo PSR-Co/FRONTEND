@@ -59,8 +59,4 @@ class _FindIDScreenState extends State<FindIDScreen> {
       isFounded = !isFounded;
     });
   }
-
-  // void didTapSendCodeButton() {
-  //   print('didTapSendCodeButton - 인증번호 요청');
-  // }
 }
