@@ -137,7 +137,7 @@ class _MypageScreenState extends State<MypageScreen> {
                         MaterialPageRoute(builder: (context) => ServiceCenterScreen()));
                   }else{
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyPostScreen());
+                        MaterialPageRoute(builder: (context) => MyPostScreen()));
                   }
 
                 },
