@@ -61,10 +61,10 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
             child:
               BodyTab(
                     titleList: MY_INQUIRY_LIST_TAB,
-                    tabTitle: Row(
-                        children: [Text("내 문의내역", style: inquiryTextStyle,), Expanded(child: Spacer())
-                        ]
-                    ),
+                    tabTitle: Container(
+                        width: MediaQuery.of(context).size.width,
+                        alignment: Alignment.centerLeft,
+                        child: Text("내 문의내역", style: inquiryTextStyle,)),
                     tabBarViewChild: [inquiryList(), inquiryList()]),
 
           ),
