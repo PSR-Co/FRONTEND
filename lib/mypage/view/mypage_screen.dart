@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/myinfo/view/myinfo_screen.dart';
+import 'package:psr/mypage/view/likelist_screen.dart';
 import 'package:psr/mypage/view/mypost_screen.dart';
 import 'package:psr/mypage/view/order_list_tab.dart';
 import 'package:psr/servicecenter/service_center_screen.dart';
@@ -60,7 +61,8 @@ class _MypageScreenState extends State<MypageScreen> {
             Text("마이페이지", style: mypageTitleTextStyle,),
             Spacer(flex: 2,),
             IconButton(onPressed: (){}, icon: SvgPicture.asset("asset/icons/common/bell.svg"),),
-            IconButton(onPressed: (){}, icon: SvgPicture.asset("asset/icons/common/filled_heart.svg"), padding: EdgeInsets.only(right: 0.0),constraints: const BoxConstraints(),),
+            IconButton(onPressed: (){Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LikeListScreen()));}, icon: SvgPicture.asset("asset/icons/common/filled_heart.svg"), padding: EdgeInsets.only(right: 0.0),constraints: const BoxConstraints(),),
           ],
         ),
       ),
