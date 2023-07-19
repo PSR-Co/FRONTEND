@@ -6,8 +6,8 @@ import 'package:psr/common/layout/division.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
 
-import '../../common/const/colors.dart';
-import '../../common/const/constants.dart';
+import '../common/const/colors.dart';
+import '../common/const/constants.dart';
 
 class ServiceCenterScreen extends StatefulWidget {
   const ServiceCenterScreen({super.key});
