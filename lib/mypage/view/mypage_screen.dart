@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/myinfo/view/myinfo_screen.dart';
 import 'package:psr/mypage/view/mypost_screen.dart';
 import 'package:psr/mypage/view/order_list_tab.dart';
-import 'package:psr/shopping/view/service_center_screen.dart';
+import 'package:psr/servicecenter/service_center_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/division.dart';
