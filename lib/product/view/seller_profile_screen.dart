@@ -49,7 +49,11 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
             margin: EdgeInsets.only(left: 20, right: 10),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(PROFILE_IMG_SIZE/2),
-              child: Image.asset('asset/images/profile_img_sample.jpg', fit: BoxFit.cover, width: PROFILE_IMG_SIZE,),
+              child: Image.asset(
+                'asset/images/profile_img_sample.jpg',
+                fit: BoxFit.cover,
+                width: PROFILE_IMG_SIZE, height: PROFILE_IMG_SIZE,
+              ),
             ),
           ),
           Column(

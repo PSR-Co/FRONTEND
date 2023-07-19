@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/auth/component/account_input_text_field.dart';
 import 'package:psr/auth/view/sign_up_screen.dart';
@@ -196,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void didTapFindIDButton() {
-    print('didTapFindPWButton');
+    print('didTapFindIDButton');
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FindIDScreen()));
   }
 
