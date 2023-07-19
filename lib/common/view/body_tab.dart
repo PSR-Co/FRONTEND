@@ -45,7 +45,7 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin{
         elevation: 0.0,
         title: widget.tabTitle,
         bottom: PreferredSize(
-            preferredSize: Size.fromHeight(55.0),
+            preferredSize: Size(MediaQuery.of(context).size.width, 55.0),
             child: renderTabBar(titleList: widget.titleList)),
       ),
       body: tabBarView(),
@@ -58,11 +58,11 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin{
       decoration: BoxDecoration(border: Border(bottom: BorderSide(color: GRAY_1_COLOR, width: 1.0))),
       child: TabBar(
         controller: tabController,
-        isScrollable: true,
+        // isScrollable: true,
         indicatorColor: PURPLE_COLOR,
         indicatorSize: TabBarIndicatorSize.tab,
         indicatorWeight: 3.0,
-        indicatorPadding: EdgeInsets.only(left: 17, right: 17),
+        indicatorPadding: EdgeInsets.only(left: 9, right: 9),
         labelColor: PURPLE_COLOR,
         labelStyle: tabbedTextStyle,
         dividerColor: GRAY_1_COLOR,
