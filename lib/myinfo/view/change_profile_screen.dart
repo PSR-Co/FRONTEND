@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/myinfo/component/complete_btn.dart';
 
 import '../../common/const/colors.dart';
 
@@ -18,7 +19,6 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
   final TextStyle newNicknameTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
   final TextStyle checkBtnTextStyle = const TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500, color: PURPLE_COLOR);
   final TextStyle errorTextStyle = const TextStyle(fontSize: 11.0, fontWeight: FontWeight.w400, color: ERROR_COLOR);
-  final TextStyle completeBtnTextStyle = const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700, color: Colors.white);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,8 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
           changeImage(),
           changeNickname(),
           Expanded(child: Container()),
-          completeButton()
+          // completeButton()
+          CompleteBtn()
         ],
       ),
     );
@@ -129,25 +130,25 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
         borderSide: BorderSide(color: PURPLE_COLOR_50, width: 1)
     );
   }
-
-  Widget completeButton() {
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        height: 50.0,
-        child: OutlinedButton(
-          onPressed: () {  },
-          child: Text("완료", style: completeBtnTextStyle,),
-            style: OutlinedButton.styleFrom(
-                backgroundColor: PURPLE_COLOR,
-                foregroundColor: Colors.white,
-                elevation: 0.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    side: BorderSide(color: PURPLE_COLOR, width: 1)
-                )
-            )
-        )
-    );
-  }
+  //
+  // Widget completeButton() {
+  //   return Container(
+  //       width: MediaQuery.of(context).size.width,
+  //       height: 50.0,
+  //       child: OutlinedButton(
+  //         onPressed: () {  },
+  //         child: Text("완료", style: completeBtnTextStyle,),
+  //           style: OutlinedButton.styleFrom(
+  //               backgroundColor: PURPLE_COLOR,
+  //               foregroundColor: Colors.white,
+  //               elevation: 0.0,
+  //               shape: RoundedRectangleBorder(
+  //                   borderRadius: BorderRadius.all(Radius.circular(20.0)),
+  //                   side: BorderSide(color: PURPLE_COLOR, width: 1)
+  //               )
+  //           )
+  //       )
+  //   );
+  // }
 
 }
