@@ -6,7 +6,6 @@ import 'package:psr/common/layout/division.dart';
 import 'package:psr/myinfo/view/change_interest_screen.dart';
 import 'package:psr/myinfo/view/change_profile_screen.dart';
 import 'package:psr/myinfo/view/change_pw_screen.dart';
-import 'package:psr/myinfo/view/logout_screen.dart';
 import 'package:psr/myinfo/view/privacy_policy_screen.dart';
 import 'package:psr/myinfo/view/terms_of_use_screen.dart';
 
@@ -25,6 +24,12 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   final TextStyle withdrawalTextStyle = const TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500, color: GRAY_3_COLOR, decoration: TextDecoration.underline);
   final TextStyle infoBoxTitleStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_2_COLOR);
   final TextStyle infoBoxContentStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
+  final TextStyle headerTextStyle = const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
+  final TextStyle askLogoutTextStyle = const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w400, color: GRAY_3_COLOR);
+  final TextStyle answerLogoutTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_3_COLOR);
+  final TextStyle alertWithdrawalTextStyle = const TextStyle(fontSize: 11.0, fontWeight: FontWeight.w400, color: GRAY_3_COLOR);
+  final TextStyle answerWithdrawalTextStyle = const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500, color: GRAY_3_COLOR);
+  final TextStyle answerTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w700, color: Colors.white);
 
   ///위젯 임시 연결
   @override
@@ -32,6 +37,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
+        bottom: false,
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Column(
@@ -46,7 +52,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "약관 안내", moveTo: TermsOfUseScreen(),),),
                 Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 10.0), child: DetailBar(title: "개인정보 처리방침", moveTo: PrivacyPolicyScreen(),),),
                 Division(),
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: DetailBar(title: "로그아웃", moveTo: LogoutScreen(),),),
+                Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: logout()),
                 Padding(padding: const EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 5.0), child: withdrawal(),)
               ],
             ),
@@ -120,12 +126,128 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     );
   }
 
+  Widget logout(){
+    return SizedBox(
+      height: 50.0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text("로그아웃", style: headerTextStyle,),
+          IconButton(
+            onPressed: (){
+              showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (_) {
+                    return cupertinoAlertDialog(
+                        askTitle: Container(
+                            width: MediaQuery.of(context).size.width,
+                            alignment: Alignment.center,
+                            child: Text('로그아웃 하시겠어요?', style: askLogoutTextStyle,)),
+                        alert: '로그아웃'
+                    );
+                  });
+            },
+            icon: const Icon(Icons.arrow_forward_ios, size: 16.0,),
+            padding: EdgeInsets.only(right: 17.0, bottom: 5.0),
+            constraints: BoxConstraints(),
+          )
+        ],
+      ),
+    );
+  }
+
+  AlertDialog cupertinoAlertDialog({required Widget askTitle, required String alert}) {
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      insetPadding: EdgeInsets.only(top: 600.0),
+      titlePadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.only(top:20.0),
+      buttonPadding: EdgeInsets.symmetric(horizontal: 17.0),
+      content: askTitle,
+      actions: <Widget>[
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 30.0),
+                child: OutlinedButton(
+                        onPressed: () {Navigator.of(context).pop<bool>(true); },
+                        child: Container(
+                          height: 45.0,
+                          alignment: Alignment.center,
+                          child: Text('취소', style: answerLogoutTextStyle, )),
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            foregroundColor: GRAY_1_COLOR,
+                            elevation: 0.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(21.0)),
+                                side: BorderSide(color: GRAY_1_COLOR, width: 1)
+                            )
+                        )
+                    ),
+              ),
+            ),
+            Container(width: 20.0,),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 30.0),
+                child: OutlinedButton(
+                        onPressed: () {  Navigator.of(context).pop();},
+                        child: Container(
+                            height: 45.0,
+                            alignment: Alignment.center,
+                            child: Text(alert, style: answerTextStyle, )),
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: PURPLE_COLOR,
+                            foregroundColor: Colors.white,
+                            elevation: 0.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(21.0)),
+                                side: BorderSide(color: GRAY_1_COLOR, width: 1)
+                            )
+                    )
+                ),
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+
   Widget withdrawal(){
     return Container(
         width: MediaQuery.of(context).size.width,
         alignment: Alignment.centerLeft,
         child: TextButton(
-            onPressed: (){},
-            child: Text("회원탈퇴", style: withdrawalTextStyle, textAlign: TextAlign.start, )));
+            onPressed: (){
+              showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (_) {
+                    return cupertinoAlertDialog(
+                        askTitle: Container(
+                          width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('회원탈퇴시 모든 정보를 잃게 됩니다.', style: alertWithdrawalTextStyle,),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Text('그래도 탈퇴하시겠어요?', style: answerWithdrawalTextStyle,),
+                                ),
+                              ],
+                            )),
+                        alert: '회원탈퇴'
+                    );
+                  });
+            },
+            child: Text("회원탈퇴", style: withdrawalTextStyle)));
   }
 }
