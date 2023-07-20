@@ -6,6 +6,7 @@ import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/purple_filled_button.dart';
 
 import '../../common/const/constants.dart';
+import '../component/agree_terms.dart';
 import '../component/input_accout_info.dart';
 import '../component/set_interest_list.dart';
 import '../component/input_profile.dart';
@@ -29,6 +30,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   bool isOptionView = false;
 
   List<Widget> bodyWidgets = [
+    const AgreeToTerms(),
     const RoleButtonList(),
     const InputBusinessInfo(),
     const InputAccountInfo(),
@@ -67,19 +69,21 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget getProgressBar() {
+    const int optionViewCnt = 2;
+
     return isOptionView ? Container()
         : SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 5,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: SIGNUP_GUIDE_TITLE.length - 1,
+              itemCount: SIGNUP_GUIDE_TITLE.length - optionViewCnt,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 1),
-                  width: MediaQuery.of(context).size.width / (SIGNUP_GUIDE_TITLE.length - 1),
+                  width: MediaQuery.of(context).size.width / (SIGNUP_GUIDE_TITLE.length - optionViewCnt),
                   height: 1.5,
-                  color: (currentPageIndex >= index) ? PURPLE_COLOR : GRAY_1_COLOR,
+                  color: ((currentPageIndex-1) > index) ? PURPLE_COLOR : GRAY_1_COLOR,
                 );
               },
             ),
