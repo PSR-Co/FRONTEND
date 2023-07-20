@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
 import 'package:psr/common/layout/division.dart';
+import 'package:psr/myinfo/view/change_interest_screen.dart';
+import 'package:psr/myinfo/view/change_profile_screen.dart';
+import 'package:psr/myinfo/view/change_pw_screen.dart';
+import 'package:psr/myinfo/view/logout_screen.dart';
+import 'package:psr/myinfo/view/privacy_policy_screen.dart';
+import 'package:psr/myinfo/view/terms_of_use_screen.dart';
 
 import '../../common/const/colors.dart';
 
@@ -20,6 +26,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   final TextStyle infoBoxTitleStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_2_COLOR);
   final TextStyle infoBoxContentStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
 
+  ///위젯 임시 연결
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,13 +40,13 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 profile(),
                 Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 17.0, 0.0), child: infoBox(),),
                 Padding(padding: const EdgeInsets.only(top: 20.0), child: Division(),),
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: DetailBar(title: "프로필 수정"),),
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "비밀번호 변경"),),
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "관심목록 변경"),),
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "약관 안내"),),
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 10.0), child: DetailBar(title: "개인정보 처리방침"),),
+                Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: DetailBar(title: "프로필 수정", moveTo: ChangeProfileScreen(),),),
+                Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "비밀번호 변경", moveTo: ChangePWScreen(),),),
+                Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "관심목록 변경", moveTo: ChangeInterestScreen(),),),
+                Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "약관 안내", moveTo: TermsOfUseScreen(),),),
+                Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 10.0), child: DetailBar(title: "개인정보 처리방침", moveTo: PrivacyPolicyScreen(),),),
                 Division(),
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: DetailBar(title: "로그아웃"),),
+                Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: DetailBar(title: "로그아웃", moveTo: LogoutScreen(),),),
                 Padding(padding: const EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 5.0), child: withdrawal(),)
               ],
             ),

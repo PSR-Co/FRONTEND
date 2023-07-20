@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/home/component/product_list_item.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
+import 'package:psr/servicecenter/view/notice_screen.dart';
 
 import '../../common/const/colors.dart';
 
@@ -24,6 +25,7 @@ class NoticeListContentState extends State<NoticeListContent> {
   final TextStyle noticeContentTextStyle = const TextStyle(
       fontSize: 12.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
 
+  ///위젯 임시 연결
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +33,7 @@ class NoticeListContentState extends State<NoticeListContent> {
       margin: EdgeInsets.only(left: 15, bottom: 3.0),
       child: Column(
         children: [
-          DetailBar(title: '공지사항'),
+          DetailBar(title: '공지사항', moveTo: NoticeScreen(),),
           renderContentList()
         ],
       ),

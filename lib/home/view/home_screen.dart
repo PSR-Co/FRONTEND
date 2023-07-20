@@ -9,6 +9,8 @@ import 'package:psr/home/component/card_slider.dart';
 import 'package:psr/home/component/recent_list_item.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
 
+import '../../auth/component/set_interest_list.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -69,12 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
+///위젯 임시 연결
   Widget renderFavPackageHeader() {
     return Container(
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.only(left: 17),
-        child: DetailBar(title: '관심있는 패키지를 골라보세요',)
+        child: DetailBar(title: '관심있는 패키지를 골라보세요', moveTo: SetInterestList(),)
     );
   }
 
