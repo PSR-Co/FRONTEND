@@ -8,8 +8,10 @@ import 'package:psr/home/component/outlined_btn.dart';
 import 'package:psr/home/component/card_slider.dart';
 import 'package:psr/home/component/recent_list_item.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
+import 'package:psr/servicecenter/view/faq_screen.dart';
 
 import '../../auth/component/set_interest_list.dart';
+import '../../servicecenter/view/service_center_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -223,21 +225,21 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          OutlinedBtnComponent(borderColor : PURPLE_COLOR , borderWidth : 1, radius : 24, width : 170, height : 60, child: buttonContent('자주 묻는 질문')),
-          OutlinedBtnComponent(borderColor : PURPLE_COLOR , borderWidth : 1, radius : 24, width : 170, height : 60, child : buttonContent('문의하기'))
+          OutlinedBtnComponent(borderColor : PURPLE_COLOR , borderWidth : 1, radius : 24, width : 170, height : 60, child: buttonContent('자주 묻는 질문', FAQScreen())),
+          OutlinedBtnComponent(borderColor : PURPLE_COLOR , borderWidth : 1, radius : 24, width : 170, height : 60, child : buttonContent('문의하기', ServiceCenterScreen()))
         ],
       ),
     );
   }
 
-  Widget buttonContent(String content) {
+  Widget buttonContent(String content, Widget moveTo) {
     return Padding(padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 7.0),
       child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(padding: const EdgeInsets.only(left: 6.0), child: Text(content, style: btnGroupTextStyle,)),
               IconButton(
-                onPressed: () {},
+                onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context)=>moveTo));},
                 padding: const EdgeInsets.only(top: 2.0,), // 패딩 설정
                 constraints: const BoxConstraints(),
                 icon: const Icon(Icons.arrow_forward_ios, size: 15.0, color: PURPLE_COLOR),)
