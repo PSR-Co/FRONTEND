@@ -21,7 +21,6 @@ class _RoleButtonListState extends State<RoleButtonList> {
   @override
   Widget build(BuildContext context) {
     parentWidget = context.findAncestorStateOfType<SignUpScreenState>();
-    parentWidget!.setNextTapButtonAction(didTapNextButton);
 
     return Container(
       margin: const EdgeInsets.only(top: 20),

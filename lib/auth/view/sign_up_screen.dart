@@ -26,18 +26,18 @@ class SignUpScreenState extends State<SignUpScreen> {
   int currentPageIndex = 0;
 
   bool isBusiness = false;
+  bool isOptionView = false;
 
   List<Widget> bodyWidgets = [
     const RoleButtonList(),
-    // const InputAccountInfo(),
     const InputBusinessInfo(),
+    const InputAccountInfo(),
     const InputUserInfo(),
     const InputProfile(),
     const SetInterestList(),
   ];
 
   Widget getInputInfoBody() {
-    print('사업자임? ${isBusiness}');
     if (isBusiness) { return const InputBusinessInfo(); }
     else { return const InputAccountInfo(); }
   }
@@ -50,12 +50,7 @@ class SignUpScreenState extends State<SignUpScreen> {
       body: renderBody(),
       bottomNavigationBar: PurpleFilledButton(
         title: (currentPageIndex < bodyWidgets.length-2) ? '다음' : '완료',
-        // onPressed: bodyWidgets.elementAt(current_page_index).getNextAction()!,
-        onPressed: () {
-          setState(() {
-            currentPageIndex += 1;
-          });
-        },
+        onPressed: setNextTapButtonAction,
         height: 40,
       ),
     );
@@ -63,7 +58,6 @@ class SignUpScreenState extends State<SignUpScreen> {
 
   Widget renderBody() {
     return ListView(
-      // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         getProgressBar(),
         getGuideTitle(SIGNUP_GUIDE_TITLE.elementAt(currentPageIndex)),
@@ -73,8 +67,8 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget getProgressBar() {
-    return ((currentPageIndex < bodyWidgets.length-1) && !(isBusiness && currentPageIndex == 1))
-        ? SizedBox(
+    return isOptionView ? Container()
+        : SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 5,
             child: ListView.builder(
@@ -89,8 +83,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                 );
               },
             ),
-          )
-        : Container();
+          );
   }
 
   Widget getGuideTitle(String title) {
@@ -123,7 +116,12 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 
   /// event methods
-  void setNextTapButtonAction(VoidCallback onTap){
-    didTapNextButton = onTap;
+  void setNextTapButtonAction(){
+    setState(() {
+      if (currentPageIndex == 0 && !isBusiness) { currentPageIndex += 2; }
+      else { currentPageIndex += 1; }
+
+      isOptionView = (currentPageIndex == 1) || (currentPageIndex == bodyWidgets.length-1);
+    });
   }
 }

@@ -11,6 +11,7 @@ const REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
 /// auth 관련 상수
 const SIGNUP_GUIDE_TITLE = [
   '아래의 회원 종류 중 하나를\n선택해주세요',
+  '사업자 정보를\n입력해주세요',
   '이메일과 비밀번호를\n입력해주세요',
   '본인인증을 위해 필요한 정보를\n입력해주세요',
   '회원가입이\n완료되었습니다',
