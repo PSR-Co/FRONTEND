@@ -76,11 +76,18 @@ class _RoleButtonListState extends State<RoleButtonList> {
 
   void didTapRoleButton(int index, SignUpScreenState parentWidget) {
     setState(() {
-      selectedRole = roleList.elementAt(index);
-      parentWidget.selectedRole = selectedRole;
 
-      if (selectedRole == '사업자') {
-        parentWidget.isBusiness = true;
+      if (selectedRole ==  roleList.elementAt(index)) {
+        selectedRole = null;
+        parentWidget.selectedRole = null;
+
+      } else {
+        selectedRole = roleList.elementAt(index);
+        parentWidget.selectedRole = selectedRole;
+
+        if (selectedRole == '사업자') {
+          parentWidget.isBusiness = true;
+        }
       }
       print('parentWidget.selectedRole --> ${parentWidget.selectedRole}');
     });
