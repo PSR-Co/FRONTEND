@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
+import 'package:psr/common/view/web_view_screen.dart';
 
 class AgreeToTerms extends StatefulWidget {
   const AgreeToTerms({Key? key}) : super(key: key);
@@ -14,7 +15,8 @@ class _AgreeToTermsState extends State<AgreeToTerms> {
   bool isAgree = false;
   
   final List<List<String>> terms = [
-    ['개인정보 수집 동의', 'www.naver.com',]
+    // TODO: 약관 링크 제공받을 경우 수정할 예정
+    ['개인정보 수집 동의', 'https://www.naver.com',]
   ];
 
   @override
@@ -46,7 +48,7 @@ class _AgreeToTermsState extends State<AgreeToTerms> {
         ]
       ),
       child: ElevatedButton(
-          onPressed: (){ print('${url}로 이동하는 웹뷰 띄우기'); },
+          onPressed: (){ didTapTermButton(title, url); },
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.zero,
             backgroundColor: Colors.white,
@@ -93,5 +95,12 @@ class _AgreeToTermsState extends State<AgreeToTerms> {
           )
       ),
     );
+  }
+
+  void didTapTermButton(String title, String url) {
+    setState(() {
+      isAgree = true;
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => WebViewScreen(appbarTitle: title, url: url)));
+    });
   }
 }
