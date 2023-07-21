@@ -4,6 +4,8 @@ import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/purple_filled_button.dart';
 import 'package:psr/order/component/order_info_input_widget.dart';
 
+import 'complete_order_screen.dart';
+
 class AddOrderScreen extends StatefulWidget {
   final String productImgKey;
   final String productName;
@@ -25,7 +27,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   final TextEditingController askController = TextEditingController();
   final TextEditingController detailController = TextEditingController();
 
-  final defaultStyle = TextStyle(
+  final defaultStyle = const TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 15,
     color: GRAY_4_COLOR,
@@ -35,7 +37,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DefaultAppBarLayout(titleText: '요청하기',),
+      appBar: const DefaultAppBarLayout(titleText: '요청하기',),
       body: renderBody(),
       bottomNavigationBar: PurpleFilledButton(title: '판매자에게 요청하기', onPressed: didTapOrderButton,),
     );
@@ -77,7 +79,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
           controller: detailController,
         ),
 
-        SizedBox(height: 30,),
+        const SizedBox(height: 30,),
       ],
     );
   }
@@ -87,7 +89,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
       children: [
         Image.asset(widget.productImgKey, width: 148, height: 148, fit: BoxFit.cover,),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(widget.productName, style: defaultStyle),
         )
       ],
@@ -102,5 +104,8 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
     print("입력된 URL -> ${urlController.value.text}");
     print("입력된 문의사항 -> ${askController.value.text}");
     print("입력된 요청 상세 설명 -> ${detailController.value.text}");
+
+    // CompleteOrderScreen
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteOrderScreen()));
   }
 }
