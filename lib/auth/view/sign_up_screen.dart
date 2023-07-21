@@ -29,6 +29,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   bool isBusiness = false;
   bool isOptionView = false;
 
+
   List<Widget> bodyWidgets = [
     const AgreeToTerms(),
     const RoleButtonList(),
@@ -48,7 +49,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const DefaultAppBarLayout(titleText: '회원가입',),
+      appBar: DefaultAppBarLayout(titleText: (currentPageIndex == 0) ? '개인정보 수집 동의' : '회원가입',),
       body: renderBody(),
       bottomNavigationBar: PurpleFilledButton(
         title: (currentPageIndex < bodyWidgets.length-2) ? '다음' : '완료',
@@ -122,10 +123,10 @@ class SignUpScreenState extends State<SignUpScreen> {
   /// event methods
   void setNextTapButtonAction(){
     setState(() {
-      if (currentPageIndex == 0 && !isBusiness) { currentPageIndex += 2; }
+      if (currentPageIndex == 1 && !isBusiness) { currentPageIndex += 2; }
       else { currentPageIndex += 1; }
 
-      isOptionView = (currentPageIndex == 1) || (currentPageIndex == bodyWidgets.length-1);
+      isOptionView = (currentPageIndex == 2) || (currentPageIndex == bodyWidgets.length-1);
     });
   }
 }
