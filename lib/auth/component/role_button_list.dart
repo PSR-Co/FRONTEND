@@ -21,7 +21,6 @@ class _RoleButtonListState extends State<RoleButtonList> {
   @override
   Widget build(BuildContext context) {
     parentWidget = context.findAncestorStateOfType<SignUpScreenState>();
-    parentWidget!.setNextTapButtonAction(didTapNextButton);
 
     return Container(
       margin: const EdgeInsets.only(top: 20),
@@ -76,11 +75,18 @@ class _RoleButtonListState extends State<RoleButtonList> {
 
   void didTapRoleButton(int index, SignUpScreenState parentWidget) {
     setState(() {
-      selectedRole = roleList.elementAt(index);
-      parentWidget.selectedRole = selectedRole;
 
-      if (selectedRole == '사업자') {
-        parentWidget.isBusiness = true;
+      if (selectedRole ==  roleList.elementAt(index)) {
+        selectedRole = null;
+        parentWidget.selectedRole = null;
+
+      } else {
+        selectedRole = roleList.elementAt(index);
+        parentWidget.selectedRole = selectedRole;
+
+        if (selectedRole == '사업자') {
+          parentWidget.isBusiness = true;
+        }
       }
       print('parentWidget.selectedRole --> ${parentWidget.selectedRole}');
     });

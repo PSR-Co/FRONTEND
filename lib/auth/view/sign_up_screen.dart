@@ -6,6 +6,7 @@ import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/purple_filled_button.dart';
 
 import '../../common/const/constants.dart';
+import '../component/agree_terms.dart';
 import '../component/input_accout_info.dart';
 import '../component/set_interest_list.dart';
 import '../component/input_profile.dart';
@@ -26,18 +27,20 @@ class SignUpScreenState extends State<SignUpScreen> {
   int currentPageIndex = 0;
 
   bool isBusiness = false;
+  bool isOptionView = false;
+
 
   List<Widget> bodyWidgets = [
+    const AgreeToTerms(),
     const RoleButtonList(),
-    // const InputAccountInfo(),
     const InputBusinessInfo(),
+    const InputAccountInfo(),
     const InputUserInfo(),
     const InputProfile(),
     const SetInterestList(),
   ];
 
   Widget getInputInfoBody() {
-    print('사업자임? ${isBusiness}');
     if (isBusiness) { return const InputBusinessInfo(); }
     else { return const InputAccountInfo(); }
   }
@@ -46,16 +49,11 @@ class SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const DefaultAppBarLayout(titleText: '회원가입',),
+      appBar: DefaultAppBarLayout(titleText: (currentPageIndex == 0) ? '개인정보 수집 동의' : '회원가입',),
       body: renderBody(),
       bottomNavigationBar: PurpleFilledButton(
         title: (currentPageIndex < bodyWidgets.length-2) ? '다음' : '완료',
-        // onPressed: bodyWidgets.elementAt(current_page_index).getNextAction()!,
-        onPressed: () {
-          setState(() {
-            currentPageIndex += 1;
-          });
-        },
+        onPressed: setNextTapButtonAction,
         height: 40,
       ),
     );
@@ -63,7 +61,6 @@ class SignUpScreenState extends State<SignUpScreen> {
 
   Widget renderBody() {
     return ListView(
-      // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         getProgressBar(),
         getGuideTitle(SIGNUP_GUIDE_TITLE.elementAt(currentPageIndex)),
@@ -73,24 +70,25 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget getProgressBar() {
-    return ((currentPageIndex < bodyWidgets.length-1) && !(isBusiness && currentPageIndex == 1))
-        ? SizedBox(
+    const int optionViewCnt = 2;
+
+    return isOptionView ? Container()
+        : SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 5,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: SIGNUP_GUIDE_TITLE.length - 1,
+              itemCount: SIGNUP_GUIDE_TITLE.length - optionViewCnt,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 1),
-                  width: MediaQuery.of(context).size.width / (SIGNUP_GUIDE_TITLE.length - 1),
+                  width: MediaQuery.of(context).size.width / (SIGNUP_GUIDE_TITLE.length - optionViewCnt),
                   height: 1.5,
-                  color: (currentPageIndex >= index) ? PURPLE_COLOR : GRAY_1_COLOR,
+                  color: ((currentPageIndex-1) > index) ? PURPLE_COLOR : GRAY_1_COLOR,
                 );
               },
             ),
-          )
-        : Container();
+          );
   }
 
   Widget getGuideTitle(String title) {
@@ -123,7 +121,12 @@ class SignUpScreenState extends State<SignUpScreen> {
   }
 
   /// event methods
-  void setNextTapButtonAction(VoidCallback onTap){
-    didTapNextButton = onTap;
+  void setNextTapButtonAction(){
+    setState(() {
+      if (currentPageIndex == 1 && !isBusiness) { currentPageIndex += 2; }
+      else { currentPageIndex += 1; }
+
+      isOptionView = (currentPageIndex == 2) || (currentPageIndex == bodyWidgets.length-1);
+    });
   }
 }
