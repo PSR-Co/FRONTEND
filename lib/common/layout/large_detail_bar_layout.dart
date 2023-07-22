@@ -3,7 +3,8 @@ import '../const/colors.dart';
 
 class LargeDetailBar extends StatefulWidget {
   String title;
-  LargeDetailBar({required this.title, Key? key}):super(key: key);
+  Widget moveTo;
+  LargeDetailBar({required this.title, required this.moveTo, Key? key}):super(key: key);
 
   @override
   State<LargeDetailBar> createState() => LargeDetailBarState();
@@ -13,6 +14,7 @@ class LargeDetailBarState extends State<LargeDetailBar> {
 
   final TextStyle headerTextStyle = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
 
+  ///위젯 임시 연결
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +25,9 @@ class LargeDetailBarState extends State<LargeDetailBar> {
         children: [
           Text(widget.title, style: headerTextStyle,),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => widget.moveTo));
+            },
             icon: const Icon(Icons.arrow_forward_ios, size: 20.0, color: GRAY_4_COLOR,),
             padding: EdgeInsets.only(bottom: 2.0),
             constraints: BoxConstraints(),
