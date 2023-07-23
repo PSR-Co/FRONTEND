@@ -12,6 +12,7 @@ import 'package:psr/servicecenter/view/notice_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/const/constants.dart';
+import 'admin_detail_inquiry_screen.dart';
 
 class ServiceCenterScreen extends StatefulWidget {
   const ServiceCenterScreen({super.key});
@@ -94,7 +95,8 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailInquiryScreen()));
+              // Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailInquiryScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminDetailInquiryScreen()));
             },
             title: Container(
               alignment: Alignment.centerLeft, height: 40.0,
