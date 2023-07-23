@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:psr/auth/component/account_input_text_field.dart';
-import 'package:psr/auth/view/signup/agree_terms_screen.dart';
 import 'package:psr/auth/view/sign_up_screen.dart';
 import 'package:psr/common/const/colors.dart';
 
@@ -20,8 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final TextEditingController idController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
-
-  // bool isPasswordVisible = true;
 
   @override
   Widget build(BuildContext context) {

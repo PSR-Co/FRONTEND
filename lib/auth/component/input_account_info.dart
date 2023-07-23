@@ -2,42 +2,67 @@ import 'package:flutter/material.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/custom_title_text.dart';
-import '../../common/layout/purple_outlined_textfield_with_button.dart';
 import 'account_input_text_field.dart';
 
-class InputUserInfo extends StatefulWidget {
+class InputAccountInfo extends StatefulWidget {
 
-  final TextEditingController nameController;
-  final TextEditingController phoneNumController;
-  final TextEditingController validCodeController;
+  final TextEditingController emailController;
+  final TextEditingController pwController;
+  final TextEditingController pwConfirmController;
 
-  const InputUserInfo({
-    required this.nameController,
-    required this.phoneNumController,
-    required this.validCodeController,
+  const InputAccountInfo({
+    required this.emailController,
+    required this.pwController,
+    required this.pwConfirmController,
     Key? key
   }) : super(key: key);
 
   @override
-  State<InputUserInfo> createState() => _InputUserInfoState();
+  State<InputAccountInfo> createState() => _InputAccountInfoState();
 }
 
-class _InputUserInfoState extends State<InputUserInfo> {
-
-  bool isInputValid = false;
-
+class _InputAccountInfoState extends State<InputAccountInfo> {
   @override
   Widget build(BuildContext context) {
     return getCenterBody();
   }
 
   Widget getCenterBody() {
+    bool isVisible = false;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        getInputView('이름', widget.nameController, '이름을 입력해주세요.', false),
-        getPhoneNumInputView('전화번호 인증', widget.phoneNumController, '휴대폰 번호를 입력해주세요.', false),
-        getInputView('인증번호', widget.validCodeController, '휴대폰으로 전송된 인증번호를 입력해주세요.', false),
+        getInputView(
+            '이메일',
+            widget.emailController,
+            '이메일을 입력해주세요.',
+            false
+        ),
+        const SizedBox(height: 22,),
+
+        getInputView(
+            '비밀번호',
+            widget.pwController,
+            '비밀번호를 입력해주세요.',
+            true
+        ),
+        Container(
+          margin: const EdgeInsets.only(left: 20),
+          child: const Text('영문,숫자,특수문자만 입력해주세요. (8자이상 15자이내)', style: TextStyle(
+            fontSize: 11,
+            color: Colors.red,
+          ),),
+        ),
+        const SizedBox(height: 22,),
+
+        getInputView(
+            '비밀번호 확인',
+            widget.pwConfirmController,
+            '비밀번호를 다시 입력해주세요.',
+            true
+        ),
+        const SizedBox(height: 22,)
       ],
     );
   }
@@ -65,45 +90,8 @@ class _InputUserInfoState extends State<InputUserInfo> {
             borderColor: PURPLE_COLOR.withOpacity(0.5),
           ),
         ),
-        const SizedBox(height: 22,)
+        // const SizedBox(height: 22,)
       ],
     );
-  }
-
-  Widget getPhoneNumInputView(
-      String title,
-      TextEditingController controller,
-      String hintText,
-      bool isNeededForHidden,
-      ) {
-
-    List<Widget> widgets = [];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CustomTitleText(title: title),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child:
-          PurpleOutlinedTextFieldWithButton(
-            maxLine: 1,
-            hintText: '휴대폰 번호를 입력해주세요.',
-            controller: widget.phoneNumController,
-            buttonTitle: '인증요청',
-            onPressed: didTapSendCodeButton,
-          ),
-        ),
-        const SizedBox(height: 22,)
-      ],
-    );
-  }
-
-  /// event methods
-  void didTapSendCodeButton() {
-    print('didTapSendCodeButton - 인증번호 요청');
-    setState(() {
-      isInputValid = !isInputValid;
-    });
   }
 }

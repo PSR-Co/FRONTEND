@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/auth/component/custom_progress_bar.dart';
 import 'package:psr/auth/view/signup/input_accout_info_screen.dart';
 import 'package:psr/auth/view/signup/input_business_info_screen.dart';
-import 'package:psr/auth/view/signup/input_user_info_screen.dart';
 
 import '../../../common/const/colors.dart';
 import '../../../common/const/constants.dart';

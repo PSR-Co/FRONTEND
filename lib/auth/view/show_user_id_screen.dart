@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:psr/auth/view/login_screen.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/custom_title_text.dart';
-import 'package:psr/common/view/root_tab.dart';
 
 import '../../common/layout/default_appbar_layout.dart';
 import '../../common/layout/purple_filled_button.dart';
@@ -69,7 +69,7 @@ class _ShowUserIDScreenState extends State<ShowUserIDScreen> {
   /// event methods
   void didTapNextButton() {
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => const RootTab()), (route) => false
+        MaterialPageRoute(builder: (_) => const LoginScreen()), (route) => false
     );
   }
 }
