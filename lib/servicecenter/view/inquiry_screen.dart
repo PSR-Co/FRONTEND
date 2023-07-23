@@ -31,7 +31,7 @@ class _InquiryScreenState extends State<InquiryScreen> {
             Expanded(child: Container(width: MediaQuery.of(context).size.width,)),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17.0),
-              child: CompleteBtn(btnTitle: '등록하기'),
+              child: CompleteBtn(btnTitle: '등록하기', isVisible: true,),
             )
           ],
         ),

@@ -55,7 +55,7 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
           newPW(),
           checkNewPW(),
           Expanded(child: Container()),
-          CompleteBtn(btnTitle: '완료',)
+          CompleteBtn(btnTitle: '완료', isVisible: true,)
         ],
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/myinfo/component/complete_btn.dart';
 
 import '../component/inquiry_list.dart';
 
@@ -29,8 +30,12 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
     Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
   ];
 
+  bool readOnly = true;
+  bool isActivated = false;
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -84,10 +89,15 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                       border: InputBorder.none
                     ),
                     style: contentTextStyle,
-                    readOnly: true,
+                    readOnly: readOnly,
                   ),
                 ),
               ],
+            ),
+            Expanded(child: Container()),
+            Padding(
+              padding: const EdgeInsets.only(left: 17.0, right: 17.0, bottom: 40.0),
+              child: CompleteBtn(btnTitle: '답변하기', isVisible: isActivated,),
             )
           ],
         )
@@ -121,13 +131,32 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              TextButton(onPressed: (){}, child: Text("답변", style: answerTextStyle,)),
+              TextButton(onPressed: (){
+                changeEditable();
+                activateBtn();
+                Navigator.pop(context);
+                },
+                  child: Text("답변", style: answerTextStyle,)),
               Container(height: 1, color: GRAY_0_COLOR,),
-              TextButton(onPressed: (){}, child: Text("삭제", style: removeTextStyle,))
+              TextButton(onPressed: (){
+                Navigator.pop(context);
+              }, child: Text("삭제", style: removeTextStyle,))
             ],
           ),
         )
       ],
     );
+  }
+
+  void changeEditable(){
+    setState(() {
+      readOnly = !readOnly;
+    });
+  }
+
+  void activateBtn(){
+    setState(() {
+      isActivated = !isActivated;
+    });
   }
 }
