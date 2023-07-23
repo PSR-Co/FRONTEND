@@ -1,28 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/auth/component/account_input_text_field.dart';
+import 'package:psr/auth/component/input_account_info.dart';
+import 'package:psr/auth/view/signup/input_user_info_screen.dart';
 
-import '../../common/const/colors.dart';
-import '../../common/layout/custom_title_text.dart';
+import '../../../common/const/colors.dart';
+import '../../../common/const/constants.dart';
+import '../../../common/layout/custom_title_text.dart';
+import '../../../common/layout/default_appbar_layout.dart';
+import '../../../common/layout/purple_filled_button.dart';
+import '../../component/custom_progress_bar.dart';
+import '../../component/guide_title.dart';
 
-class InputAccountInfo extends StatefulWidget {
-  const InputAccountInfo({Key? key}) : super(key: key);
+class InputAccountInfoScreen extends StatefulWidget {
+  const InputAccountInfoScreen({Key? key}) : super(key: key);
 
   @override
-  State<InputAccountInfo> createState() => _InputAccountInfoState();
+  State<InputAccountInfoScreen> createState() => _InputAccountInfoScreenState();
 }
 
-class _InputAccountInfoState extends State<InputAccountInfo> {
+class _InputAccountInfoScreenState extends State<InputAccountInfoScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
   final TextEditingController pwConfirmController = TextEditingController();
 
+  bool isInputValid = true;
 
   @override
   Widget build(BuildContext context) {
-    return renderBody();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: const DefaultAppBarLayout(titleText: '회원가입',),
+      body: renderBody(),
+      bottomNavigationBar: PurpleFilledButton(
+        title: '다음',
+        onPressed: didTapNextButton,
+        height: 40,
+      ),
+    );
   }
 
   Widget renderBody() {
+    return ListView(
+      children: [
+        const CustomProgressBar(currentPage: 2),
+        GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(3),),
+        const SizedBox(height: 30,),
+        getCenterBody(),
+      ],
+    );
+  }
+
+  Widget getCenterBody() {
     bool isVisible = false;
 
     return Column(
@@ -88,5 +117,15 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
         // const SizedBox(height: 22,)
       ],
     );
+  }
+
+
+  /// event methods
+  void didTapNextButton() {
+    if(isInputValid) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InputUserInfoScreen()));
+    } else {
+      Fluttertoast.showToast(msg: '입력 정보를 확인해주세요!');
+    }
   }
 }

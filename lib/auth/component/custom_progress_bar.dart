@@ -18,7 +18,7 @@ class CustomProgressBar extends StatefulWidget {
 }
 
 class _CustomProgressBarState extends State<CustomProgressBar> {
-  final totalPageCnt = 5;
+  final totalPageCnt = 4;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class _CustomProgressBarState extends State<CustomProgressBar> {
             margin: const EdgeInsets.symmetric(vertical: 1),
             width: MediaQuery.of(context).size.width / totalPageCnt,
             height: 1.5,
-            // color: ((currentPageIndex-1) > index) ? PURPLE_COLOR : GRAY_1_COLOR,
+            // color: ((widget.currentPage-1) > index) ? PURPLE_COLOR : GRAY_1_COLOR,
             color: (widget.currentPage > index) ? PURPLE_COLOR : GRAY_1_COLOR,
           );
         },

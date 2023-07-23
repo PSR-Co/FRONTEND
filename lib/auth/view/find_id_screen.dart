@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psr/auth/component/input_user_info.dart';
+import 'package:psr/auth/view/signup/input_user_info_screen.dart';
 import 'package:psr/auth/view/login_screen.dart';
 
 import '../../common/layout/default_appbar_layout.dart';
@@ -40,7 +40,7 @@ class _FindIDScreenState extends State<FindIDScreen> {
         : const Column(
           children: [
             SizedBox(height: 40,),
-            InputUserInfo(),
+            InputUserInfoScreen(),
           ],
         );
   }

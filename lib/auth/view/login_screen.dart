@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psr/auth/component/account_input_text_field.dart';
+import 'package:psr/auth/view/signup/agree_terms_screen.dart';
 import 'package:psr/auth/view/sign_up_screen.dart';
 import 'package:psr/common/const/colors.dart';
 

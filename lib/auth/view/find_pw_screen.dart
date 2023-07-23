@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../common/layout/default_appbar_layout.dart';
 import '../../common/layout/purple_filled_button.dart';
 import '../component/complete_reset_pw.dart';
-import '../component/input_user_info.dart';
+import 'signup/input_user_info_screen.dart';
 import '../component/reset_password.dart';
 import 'login_screen.dart';
 
@@ -45,7 +45,7 @@ class _FindPWScreenState extends State<FindPWScreen> {
       return const Column(
         children: [
           SizedBox(height: 40,),
-          InputUserInfo(),
+          InputUserInfoScreen(),
         ],
       );
     }
