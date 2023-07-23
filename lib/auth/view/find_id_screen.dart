@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:psr/auth/component/input_user_info.dart';
-import 'package:psr/auth/view/login_screen.dart';
 
 import '../../common/layout/default_appbar_layout.dart';
 import '../../common/layout/purple_filled_button.dart';
-import '../component/show_user_id.dart';
+import '../component/input_user_info.dart';
+import 'show_user_id_screen.dart';
 
 class FindIDScreen extends StatefulWidget {
   const FindIDScreen({Key? key}) : super(key: key);
@@ -15,10 +14,11 @@ class FindIDScreen extends StatefulWidget {
 
 class _FindIDScreenState extends State<FindIDScreen> {
   bool isFounded = false;
+  bool isInputValid = true; // for test
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneNumController = TextEditingController();
-  final TextEditingController codeController = TextEditingController();
+  final TextEditingController validCodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class _FindIDScreenState extends State<FindIDScreen> {
       appBar: const DefaultAppBarLayout(titleText: '아이디 찾기',),
       body: renderBody(),
       bottomNavigationBar: PurpleFilledButton(
-        title: (isFounded) ? '로그인' : '다음',
+        title: '다음',
         onPressed: didTapNextButton,
         height: 40,
       ),
@@ -35,28 +35,28 @@ class _FindIDScreenState extends State<FindIDScreen> {
   }
 
   Widget renderBody() {
-    return (isFounded)
-        ? const ShowUserID()
-        : const Column(
-          children: [
-            SizedBox(height: 40,),
-            InputUserInfo(),
-          ],
-        );
+    return ListView(
+      children: [
+        const SizedBox(height: 50,),
+        InputUserInfo(
+          nameController: nameController,
+          phoneNumController: phoneNumController,
+          validCodeController: validCodeController,
+        ),
+      ],
+    );
   }
 
 
   /// event methods
   void didTapNextButton() {
     setState(() {
-      if (isFounded) {
+      if (isInputValid) {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-                builder: (_) => const LoginScreen()
-            ), (route) => false
+            MaterialPageRoute(builder: (_) => const ShowUserIDScreen()), (route) => false
         );
       }
-      isFounded = !isFounded;
     });
   }
+
 }

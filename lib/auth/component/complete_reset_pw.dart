@@ -17,8 +17,6 @@ class _CompleteResetPWState extends State<CompleteResetPW> {
       child: const Column(
         children: [
           SizedBox(
-              // width: 40.0,
-              // height: 40.0,
               child: Icon(CupertinoIcons.check_mark_circled_solid, color: PURPLE_COLOR, size: 40,)
           ),
           SizedBox(height: 20,),

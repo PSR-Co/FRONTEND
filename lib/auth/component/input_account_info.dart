@@ -1,46 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:psr/auth/component/account_input_text_field.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/custom_title_text.dart';
+import 'account_input_text_field.dart';
 
 class InputAccountInfo extends StatefulWidget {
-  const InputAccountInfo({Key? key}) : super(key: key);
+
+  final TextEditingController emailController;
+  final TextEditingController pwController;
+  final TextEditingController pwConfirmController;
+
+  const InputAccountInfo({
+    required this.emailController,
+    required this.pwController,
+    required this.pwConfirmController,
+    Key? key
+  }) : super(key: key);
 
   @override
   State<InputAccountInfo> createState() => _InputAccountInfoState();
 }
 
 class _InputAccountInfoState extends State<InputAccountInfo> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController pwController = TextEditingController();
-  final TextEditingController pwConfirmController = TextEditingController();
-
-
   @override
   Widget build(BuildContext context) {
-    return renderBody();
+    return getCenterBody();
   }
 
-  Widget renderBody() {
+  Widget getCenterBody() {
     bool isVisible = false;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         getInputView(
-          '이메일',
-          emailController,
-          '이메일을 입력해주세요.',
-          false
+            '이메일',
+            widget.emailController,
+            '이메일을 입력해주세요.',
+            false
         ),
         const SizedBox(height: 22,),
 
         getInputView(
-          '비밀번호',
-          pwController,
-          '비밀번호를 입력해주세요.',
-          true
+            '비밀번호',
+            widget.pwController,
+            '비밀번호를 입력해주세요.',
+            true
         ),
         Container(
           margin: const EdgeInsets.only(left: 20),
@@ -52,10 +57,10 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
         const SizedBox(height: 22,),
 
         getInputView(
-          '비밀번호 확인',
-          pwConfirmController,
-          '비밀번호를 다시 입력해주세요.',
-          true
+            '비밀번호 확인',
+            widget.pwConfirmController,
+            '비밀번호를 다시 입력해주세요.',
+            true
         ),
         const SizedBox(height: 22,)
       ],

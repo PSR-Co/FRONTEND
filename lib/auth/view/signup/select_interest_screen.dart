@@ -1,23 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/const/colors.dart';
+import 'package:psr/common/view/root_tab.dart';
 
-import '../../common/const/constants.dart';
+import '../../../common/const/constants.dart';
+import '../../../common/layout/default_appbar_layout.dart';
+import '../../../common/layout/purple_filled_button.dart';
+import '../../component/guide_title.dart';
 
-class SetInterestList extends StatefulWidget {
-  const SetInterestList({Key? key}) : super(key: key);
+class SelectInterestScreen extends StatefulWidget {
+  const SelectInterestScreen({Key? key}) : super(key: key);
 
   @override
-  State<SetInterestList> createState() => _SetInterestListState();
+  State<SelectInterestScreen> createState() => _SelectInterestScreenState();
 }
 
-class _SetInterestListState extends State<SetInterestList> {
+class _SelectInterestScreenState extends State<SelectInterestScreen> {
 
   List<String> selectedList = [];
 
+  bool isItemSelected = false;
+
   @override
   Widget build(BuildContext context) {
-    double containerSize = MediaQuery.of(context).size.width;
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: const DefaultAppBarLayout(titleText: '관심 목록 선택',),
+      body: renderBody(),
+      bottomNavigationBar: PurpleFilledButton(
+        title: '완료',
+        onPressed: didTapNextButton,
+        height: 40,
+      ),
+    );
+  }
 
+  Widget renderBody() {
+    return ListView(
+      children: [
+        GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(6),),
+        const SizedBox(height: 50,),
+        getCenterBody(),
+      ],
+    );
+  }
+
+  Widget getCenterBody() {
+    double containerSize = MediaQuery.of(context).size.width;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -40,7 +69,8 @@ class _SetInterestListState extends State<SetInterestList> {
     );
   }
 
-  Widget getCategoryItem(String title) {
+
+    Widget getCategoryItem(String title) {
     double itemSize = (MediaQuery.of(context).size.width - 30) / 3;
 
     return Container(
@@ -81,11 +111,21 @@ class _SetInterestListState extends State<SetInterestList> {
   }
 
 
+  /// event methods
+  void didTapNextButton() {
+    if(selectedList.isNotEmpty) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const RootTab()));
+    } else {
+      Fluttertoast.showToast(msg: '한 개 이상의 관심 주제를 선택해주세요!');
+    }
+  }
+
   void didTapCategoryItem(String selected) {
     setState(() {
       selectedList.contains(selected)
           ? selectedList.remove(selected)
           : selectedList.add(selected);
+
     });
   }
 }

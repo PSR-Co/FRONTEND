@@ -20,8 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController idController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
 
-  // bool isPasswordVisible = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

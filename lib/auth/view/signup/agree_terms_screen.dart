@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:psr/auth/view/signup/select_role_screen.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/view/web_view_screen.dart';
 
-class AgreeToTerms extends StatefulWidget {
-  const AgreeToTerms({Key? key}) : super(key: key);
+import '../../../common/const/constants.dart';
+import '../../../common/layout/default_appbar_layout.dart';
+import '../../../common/layout/purple_filled_button.dart';
+import '../sign_up_screen.dart';
+import '../../component/custom_progress_bar.dart';
+import '../../component/guide_title.dart';
+
+class AgreeToTermsScreen extends StatefulWidget {
+  const AgreeToTermsScreen({Key? key}) : super(key: key);
 
   @override
-  State<AgreeToTerms> createState() => _AgreeToTermsState();
+  State<AgreeToTermsScreen> createState() => _AgreeToTermsScreenState();
 }
 
-class _AgreeToTermsState extends State<AgreeToTerms> {
+class _AgreeToTermsScreenState extends State<AgreeToTermsScreen> {
 
+  SignUpScreenState? parentWidget;
   bool isAgree = false;
   
   final List<List<String>> terms = [
@@ -21,10 +30,33 @@ class _AgreeToTermsState extends State<AgreeToTerms> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: const DefaultAppBarLayout(titleText: '개인정보 수집 동의',),
+      body: renderBody(),
+      bottomNavigationBar: PurpleFilledButton(
+        title: '다음',
+        onPressed: didTapNextButton,
+        height: 40,
+      ),
+    );
+  }
+
+  Widget renderBody() {
+    return ListView(
+      children: [
+        const CustomProgressBar(currentPage: 0),
+        GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(0),),
+        getCenterBody(),
+      ],
+    );
+  }
+
+  Widget getCenterBody() {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: 50.0 * terms.length,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
       child: ListView(
         children: terms.map(
                 (e) => getTermButton(e.elementAt(0), e.elementAt(1)))
@@ -101,6 +133,16 @@ class _AgreeToTermsState extends State<AgreeToTerms> {
     setState(() {
       isAgree = true;
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => WebViewScreen(appbarTitle: title, url: url)));
+    });
+  }
+
+  void didTapNextButton() {
+    setState(() {
+      if (isAgree) {
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SelectRoleScreen()));
+      } else {
+        Fluttertoast.showToast(msg: '필수 약관에 동의해주세요!');
+      }
     });
   }
 }
