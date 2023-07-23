@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../const/colors.dart';
-import '../layout/large_detail_bar_layout.dart';
 
 class BodyTab extends StatefulWidget {
   List<String> titleList;
@@ -27,7 +26,7 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin{
   void initState() {
     super.initState();
     tabController = TabController(
-        length: 2,
+        length: widget.titleList.length,
         vsync: this
     );
     tabController.addListener(() {
