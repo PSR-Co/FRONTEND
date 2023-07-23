@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psr/auth/view/signup/select_interest_screen.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/main_appbar_layout.dart';
 import 'package:psr/home/component/best_list_item.dart';
@@ -9,8 +10,6 @@ import 'package:psr/home/component/card_slider.dart';
 import 'package:psr/home/component/recent_list_item.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
 import 'package:psr/servicecenter/view/faq_screen.dart';
-
-import '../../auth/component/set_interest_list.dart';
 import '../../servicecenter/view/service_center_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -78,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.only(left: 17),
-        child: DetailBar(title: '관심있는 패키지를 골라보세요', moveTo: SetInterestList(),)
+        child: DetailBar(title: '관심있는 패키지를 골라보세요', moveTo: SelectInterestScreen(),)
     );
   }
 

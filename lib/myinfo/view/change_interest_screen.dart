@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:psr/auth/component/set_interest_list.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/myinfo/component/complete_btn.dart';
 
+import '../../auth/view/signup/select_interest_screen.dart';
 import '../../common/const/colors.dart';
 
 class ChangeInterestScreen extends StatefulWidget {
@@ -25,7 +25,7 @@ class _ChangeInterestScreenState extends State<ChangeInterestScreen> {
           children: [
             DefaultAppBarLayout(titleText: "관심목록 변경"),
             titleView(),
-            SetInterestList(),
+            SelectInterestScreen(),
             Expanded(child: Container(width: MediaQuery.of(context).size.width,)),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17.0),
