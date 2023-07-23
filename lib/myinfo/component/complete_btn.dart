@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import '../../common/const/colors.dart';
 
 class CompleteBtn extends StatefulWidget {
-  const CompleteBtn({super.key});
+  String btnTitle;
+  CompleteBtn({required this.btnTitle, Key? key}):super(key: key);
 
   @override
   State<CompleteBtn> createState() => _CompleteBtnState();
@@ -20,7 +21,7 @@ class _CompleteBtnState extends State<CompleteBtn> {
         height: 50.0,
         child: OutlinedButton(
             onPressed: () {  },
-            child: Text("완료", style: completeBtnTextStyle,),
+            child: Text(widget.btnTitle, style: completeBtnTextStyle,),
             style: OutlinedButton.styleFrom(
                 backgroundColor: PURPLE_COLOR,
                 foregroundColor: Colors.white,

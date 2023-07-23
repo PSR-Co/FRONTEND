@@ -47,8 +47,7 @@ class _ChangeProfileScreenState extends State<ChangeProfileScreen> {
           changeImage(),
           changeNickname(),
           Expanded(child: Container()),
-          // completeButton()
-          CompleteBtn()
+          CompleteBtn(btnTitle: '완료',)
         ],
       ),
     );
