@@ -5,6 +5,7 @@ import 'package:psr/common/layout/detail_bar_layout.dart';
 import 'package:psr/common/layout/division.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
+import 'package:psr/servicecenter/view/detail_inquiry_screen.dart';
 import 'package:psr/servicecenter/view/faq_screen.dart';
 import 'package:psr/servicecenter/view/inquiry_screen.dart';
 import 'package:psr/servicecenter/view/notice_screen.dart';
@@ -23,7 +24,7 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
   final TextStyle inquiryTextStyle = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
   final TextStyle inquiryContentTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
 
-  List<String> inquiryContent = [
+  List<String> inquiryTitleList = [
     '질문은 질문이에요?',
     '질문은 질문이에요?',
     '질문은 질문이에요?',
@@ -88,14 +89,16 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
     return Container(
       child: ListView.builder(
         scrollDirection: Axis.vertical,
-        itemCount: inquiryContent.length,
+        itemCount: inquiryTitleList.length,
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailInquiryScreen()));
+            },
             title: Container(
               alignment: Alignment.centerLeft, height: 40.0,
-              child: Text(inquiryContent[index], style: inquiryContentTextStyle,),
+              child: Text(inquiryTitleList[index], style: inquiryContentTextStyle,),
             ),
             contentPadding: const EdgeInsets.symmetric(
                 vertical: 5.0, horizontal: 17.0),
