@@ -10,6 +10,8 @@ import 'package:psr/servicecenter/view/service_center_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/division.dart';
+import '../component/mypage.dart';
+import '../component/order_list_item.dart';
 
 class MypageScreen extends StatefulWidget {
   const MypageScreen({Key? key}) : super(key: key);
@@ -25,6 +27,27 @@ class _MypageScreenState extends State<MypageScreen> {
   final TextStyle categoryTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
   final TextStyle listHeaderTextStyle = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
 
+  MyPage userDate = 
+    MyPage('사업자', 'asset/images/profile_img_sample.jpg', '웨이드에옹',
+       [SellProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
+         SellProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
+         SellProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
+       ],
+        [OrderProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
+          OrderProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
+          OrderProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
+        ]);
+  MyPage adminDate = 
+    MyPage('관리자', 'asset/images/profile_img_sample.jpg', '관리자에옹',
+        [SellProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
+          SellProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
+          SellProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
+        ],
+        [OrderProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
+          OrderProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
+          OrderProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
+        ]);
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +66,7 @@ class _MypageScreenState extends State<MypageScreen> {
               ),
               Expanded(child: Padding(
                 padding: const EdgeInsets.only(bottom: 30.0),
-                child: OrderListTab(),
+                child: OrderListTab(myPageData: userDate)
               )),
             ],
           )
@@ -88,12 +111,12 @@ class _MypageScreenState extends State<MypageScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("피에스알님 안녕하세요!", style: welcomeTextStyle,),
+                  Text("${userDate.nickname}님 안녕하세요!", style: welcomeTextStyle,),
                   Container(
                     width: 55.0, height: 25.0,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(color: PINK_COLOR_20, borderRadius: BorderRadius.all(Radius.circular(12.0)) ),
-                    child: Text("사업자", style: userTypeTextStyle,),)
+                    child: Text("${userDate.userType}", style: userTypeTextStyle,),)
                 ],
               ),
             )
