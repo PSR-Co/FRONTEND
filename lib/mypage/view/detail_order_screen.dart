@@ -12,7 +12,8 @@ class DetailOrderScreen extends StatefulWidget {
   String productName;
   String btnOption1;
   String btnOption2;
-  DetailOrderScreen({required this.selectedValue, required this.orderDate, required this.productName, required this.btnOption1, required this.btnOption2, Key? key}):super(key: key);
+  Widget? child;
+  DetailOrderScreen({required this.selectedValue, required this.orderDate, required this.productName, required this.btnOption1, required this.btnOption2,  required this.child, Key? key}):super(key: key);
 
   @override
   State<DetailOrderScreen> createState() => _DetailOrderScreenState();
@@ -37,22 +38,41 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: DefaultAppBarLayout(titleText: '요청 상세'),
-      body: SafeArea(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-                children: [
-                  orderDetailHeader(),
-                  Division(),
-                  orderDetailView(),
-                  buttonView()
-                ],
-              ),
-          ),
+          backgroundColor: Colors.white,
+          appBar: DefaultAppBarLayout(titleText: '요청 상세'),
+          body: SafeArea(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              child: optionBody(widget.child)
+            ),
           )
-    );
+      );
+  }
+
+  Widget optionBody(Widget? child){
+    if(child != null) {
+      return Column(
+        children: [
+          orderDetailHeader(),
+          Division(),
+          orderDetailView(),
+          buttonView(),
+          Padding(
+            padding: const EdgeInsets.only(top: 18.0),
+            child: child,
+          )
+        ],
+      );
+    }else {
+      return Column(
+        children: [
+          orderDetailHeader(),
+          Division(),
+          orderDetailView(),
+          buttonView(),
+        ],
+      );
+    }
   }
 
   Widget orderDetailHeader(){

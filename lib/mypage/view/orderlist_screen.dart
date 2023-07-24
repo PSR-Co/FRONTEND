@@ -7,6 +7,7 @@ import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
 import 'package:psr/mypage/component/order_list_item.dart';
+import 'package:psr/mypage/view/seller_detail_order_screen.dart';
 import 'package:psr/review/view/add_review_screen.dart';
 import 'package:psr/review/view/review_screen.dart';
 import '../../common/const/colors.dart';
@@ -74,7 +75,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                               child: LargeDetailBar(
 ///판매자 상세 화면 + 요청대기
                                   title: sellProductList[index].productName,
-                                  moveTo: DetailOrderScreen(selectedValue: selectedValue, orderDate: sellProductList[index].orderDate, productName: sellProductList[index].productName, btnOption1: '진행완료', btnOption2: '진행취소',)),
+                                  moveTo: SellerDetailOrderSccreen(selectedValue: selectedValue, orderDate: sellProductList[index].orderDate, productName: sellProductList[index].productName, btnOption1: '요청승인', btnOption2: '요청거절',)),
 ///구매자 상세 화면
                               // LargeDetailBar(
                               //     title: sellProductList[index].productName,
