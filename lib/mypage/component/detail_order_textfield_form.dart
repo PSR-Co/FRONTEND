@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../common/const/colors.dart';
 
-class DetailOrderForm extends StatefulWidget {
+class DetailOrderTextFieldForm extends StatefulWidget {
   final String title;
   final String? option;
   final int maxLine;
@@ -12,7 +12,7 @@ class DetailOrderForm extends StatefulWidget {
   final TextEditingController controller;
   bool readOnly;
 
-  DetailOrderForm({
+  DetailOrderTextFieldForm({
     required this.title,
     this.option,
   required this.maxLine,
@@ -24,10 +24,10 @@ class DetailOrderForm extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DetailOrderForm> createState() => _DetailOrderFormState();
+  State<DetailOrderTextFieldForm> createState() => _DetailOrderTextFieldFormState();
 }
 
-class _DetailOrderFormState extends State<DetailOrderForm> {
+class _DetailOrderTextFieldFormState extends State<DetailOrderTextFieldForm> {
   int currentTextLength = 0;
 
   @override

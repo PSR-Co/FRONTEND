@@ -71,7 +71,19 @@ class _OrderListScreenState extends State<OrderListScreen> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 5.0, bottom: 30.0),
-                              child: LargeDetailBar(title: sellProductList[index].productName, moveTo: DetailOrderScreen(selectedValue: selectedValue, orderDate: sellProductList[index].orderDate, productName: sellProductList[index].productName,)),
+                              child: LargeDetailBar(
+///판매자 상세 화면 + 요청대기
+                                  title: sellProductList[index].productName,
+                                  moveTo: DetailOrderScreen(selectedValue: selectedValue, orderDate: sellProductList[index].orderDate, productName: sellProductList[index].productName, btnOption1: '진행완료', btnOption2: '진행취소',)),
+///구매자 상세 화면
+                              // LargeDetailBar(
+                              //     title: sellProductList[index].productName,
+                              //     moveTo: DetailOrderScreen(selectedValue: selectedValue, orderDate: sellProductList[index].orderDate, productName: sellProductList[index].productName, btnOption1: '요청수정', btnOption2: '요청취소',)),
+///판매자 상세 화면 + 진행중
+                              // LargeDetailBar(
+                              //     title: sellProductList[index].productName,
+                              //     moveTo: DetailOrderScreen(selectedValue: selectedValue, orderDate: sellProductList[index].orderDate, productName: sellProductList[index].productName, btnOption1: '진행완료', btnOption2: '진행취소',)),
+
                             )
                           ],
                         ),
@@ -159,7 +171,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                           DropdownMenuItem(value: item, child: Text(item, style: dropdownBtnTextStyle,))
                       ).toList(),
                       onChanged: (value) {
-                        setState(() {selectedValue = value;});
+                        setState(() {setSelectedValue(value!);});
                         print(selectedValue);
                       },
                     dropdownStyleData: DropdownStyleData(
@@ -185,5 +197,10 @@ class _OrderListScreenState extends State<OrderListScreen> {
             ]
         )
     );
+  }
+  setSelectedValue(String value){
+    setState(() {
+      selectedValue = value;
+    });
   }
 }

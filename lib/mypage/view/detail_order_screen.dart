@@ -2,19 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/division.dart';
-import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/mypage/component/action_btn.dart';
-import 'package:psr/mypage/component/detail_order_form.dart';
-import 'package:psr/product/view/product_detail_screen.dart';
-
+import 'package:psr/mypage/component/detail_order_textfield_form.dart';
 import '../../common/const/colors.dart';
-import '../../order/component/order_info_input_widget.dart';
 
 class DetailOrderScreen extends StatefulWidget {
   String? selectedValue;
   String orderDate;
   String productName;
-  DetailOrderScreen({required this.selectedValue, required this.orderDate, required this.productName, Key? key}):super(key: key);
+  String btnOption1;
+  String btnOption2;
+  DetailOrderScreen({required this.selectedValue, required this.orderDate, required this.productName, required this.btnOption1, required this.btnOption2, Key? key}):super(key: key);
 
   @override
   State<DetailOrderScreen> createState() => _DetailOrderScreenState();
@@ -59,7 +57,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
 
   Widget orderDetailHeader(){
     String selectedValue;
-    if(widget.selectedValue == null){selectedValue = '일반회원';}
+    if(widget.selectedValue == null){selectedValue = '요청대기';}
     else{selectedValue=widget.selectedValue!;}
     return Container(
         width: MediaQuery.of(context).size.width,
@@ -72,7 +70,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween ,
                   children: [
                     Container(
-                      width: 55.0, height: 25.0,
+                      width: 70.0, height: 25.0,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(color: PINK_COLOR_20, borderRadius: BorderRadius.all(Radius.circular(12.0)) ),
                       child: Text(selectedValue, style: userTypeTextStyle,),),
@@ -116,7 +114,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
       child: ListView(
         shrinkWrap: true,
         children: [
-          DetailOrderForm(
+          DetailOrderTextFieldForm(
             title: '이름',
             hintText: '이름을 입력해주세요.',
             maxLine: 1,
@@ -124,7 +122,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
             readOnly: readOnly,
           ),
 
-          DetailOrderForm(
+          DetailOrderTextFieldForm(
             title: '사업자/쇼핑몰 URL',
             option: ' (선택)',
             hintText: 'URL을 입력해주세요.',
@@ -133,7 +131,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
             readOnly: readOnly,
           ),
 
-          DetailOrderForm(
+          DetailOrderTextFieldForm(
             title: '문의사항',
             hintText: '문의사항을 입력해주세요.',
             maxLine: 5,
@@ -141,7 +139,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
             readOnly: readOnly,
           ),
 
-          DetailOrderForm(
+          DetailOrderTextFieldForm(
             title: '요청 상세 설명',
             hintText: '요청 상세 설명을 입력해주세요.',
             maxLine: 5,
@@ -161,10 +159,10 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TextButton(onPressed: (){changeEditable();},
-                child: Text('요청수정', style: btnTypeTextStyle,)),
+                child: Text(widget.btnOption1, style: btnTypeTextStyle,)),
             Container(width: 1.0, height: 17.0, color: PURPLE_COLOR,),
             TextButton(onPressed: (){Navigator.pop(context, false);},
-                child: Text('요청취소', style: btnTypeTextStyle,)),
+                child: Text(widget.btnOption2, style: btnTypeTextStyle,)),
           ],
         )
     );
