@@ -31,6 +31,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
 
   List<String> dropDownBtnTitle = ['요청대기','진행중','진행완료','요청취소'];
   String isReviewed = "리뷰 쓰기";
+  String? selectedValue;
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +144,6 @@ class _OrderListScreenState extends State<OrderListScreen> {
   }
 
   Widget orderView(Widget child) {
-    String? selectedValue = dropDownBtnTitle.first;
     return Container(
         child: Column(
             children: [
@@ -153,12 +153,14 @@ class _OrderListScreenState extends State<OrderListScreen> {
                 padding: EdgeInsets.only(right: 20.0, bottom: 10.0, top: 5.0),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton2(
+                    hint: Text('요청대기', style: dropdownBtnTextStyle,),
                       value: selectedValue,
                       items: dropDownBtnTitle.map((String item) =>
                           DropdownMenuItem(value: item, child: Text(item, style: dropdownBtnTextStyle,))
                       ).toList(),
                       onChanged: (value) {
                         setState(() {selectedValue = value;});
+                        print(selectedValue);
                       },
                     dropdownStyleData: DropdownStyleData(
                       width: 80.0,
@@ -170,6 +172,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                       ),
                       useSafeArea: true,
                       padding: EdgeInsets.zero,
+
                     ),
                     iconStyleData: IconStyleData(
                       icon: SvgPicture.asset('asset/icons/common/toggle_down.svg'),
