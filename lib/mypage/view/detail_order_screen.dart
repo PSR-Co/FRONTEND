@@ -6,6 +6,9 @@ import 'package:psr/mypage/component/action_btn.dart';
 import 'package:psr/mypage/component/detail_order_textfield_form.dart';
 import '../../common/const/colors.dart';
 
+
+///요청 상세 기본틀 => (요청상태 대기)판매자와 구매자 상세 화면
+///추후 유저타입, 진행상태에 따른 로직 생성 예정
 class DetailOrderScreen extends StatefulWidget {
   String? selectedValue;
   String orderDate;

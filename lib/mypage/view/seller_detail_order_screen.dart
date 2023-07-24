@@ -17,7 +17,9 @@ class SellerDetailOrderSccreen extends StatefulWidget {
   @override
   State<SellerDetailOrderSccreen> createState() => _SellerDetailOrderSccreenState();
 }
+
 ///TO-DO : 채팅 연결
+///요청 상태가 진행 중 일 때 연결되는 화면
 class _SellerDetailOrderSccreenState extends State<SellerDetailOrderSccreen> {
   final TextStyle btnTypeTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
   bool readOnly = true;
