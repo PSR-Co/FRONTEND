@@ -29,7 +29,7 @@ class _ChangeInterestScreenState extends State<ChangeInterestScreen> {
             Expanded(child: Container(width: MediaQuery.of(context).size.width,)),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17.0),
-              child: CompleteBtn(),
+              child: CompleteBtn(btnTitle: '완료', isVisible: true,),
             )
           ],
         ),
