@@ -65,13 +65,13 @@ class _OrderListScreenState extends State<OrderListScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween ,
                                 children: [
                                   Container(child: Text('요청자 ${sellProductList[index].ordererName}님', style: ordererNameTextStyle,)),
-                                  Container(child: Text('${sellProductList[index].orderDate}', style: dateTextStyle,)),
+                                  Container(child: Text(sellProductList[index].orderDate, style: dateTextStyle,)),
                                 ],
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 5.0, bottom: 30.0),
-                              child: LargeDetailBar(title: '${sellProductList[index].productName}', moveTo: DetailOrderScreen()),
+                              child: LargeDetailBar(title: sellProductList[index].productName, moveTo: DetailOrderScreen(selectedValue: selectedValue, orderDate: sellProductList[index].orderDate, productName: sellProductList[index].productName,)),
                             )
                           ],
                         ),
