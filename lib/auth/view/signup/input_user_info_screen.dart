@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:psr/auth/view/signup/set_profile_screen.dart';
+import 'package:psr/auth/view/signup/select_interest_screen.dart';
 
 import '../../../common/const/constants.dart';
 import '../../../common/layout/default_appbar_layout.dart';
@@ -57,7 +57,7 @@ class _InputUserInfoScreenState extends State<InputUserInfoScreen> {
   /// event methods
   void didTapNextButton() {
     if (isInputValid) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SetProfile()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SelectInterestScreen()));
     } else {
       Fluttertoast.showToast(msg: '입력된 개인정보를 확인해주세요!');
     }

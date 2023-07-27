@@ -3,7 +3,7 @@ import 'package:psr/auth/component/input_user_info.dart';
 
 import '../../common/layout/default_appbar_layout.dart';
 import '../../common/layout/purple_filled_button.dart';
-import '../component/complete_reset_pw.dart';
+import '../component/complete_widget.dart';
 import '../component/reset_password.dart';
 import 'login_screen.dart';
 
@@ -38,7 +38,7 @@ class _FindPWScreenState extends State<FindPWScreen> {
 
   Widget renderBody() {
     if (isInfoInputted && isReset) {
-      return const CompleteResetPW();
+      return const CompleteWidget(mainText: '비밀번호 재설정이\n완료되었습니다.',);
     } else if (isInfoInputted && !isReset) {
       return const ResetPassword();
     } else {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:psr/auth/view/signup/select_interest_screen.dart';
 import 'package:psr/common/layout/custom_title_text.dart';
 import 'package:psr/common/layout/purple_outlined_textfield_with_button.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,15 +11,16 @@ import '../../../common/layout/default_appbar_layout.dart';
 import '../../../common/layout/purple_filled_button.dart';
 import '../../component/custom_progress_bar.dart';
 import '../../component/guide_title.dart';
+import 'complete_signup_screen.dart';
 
-class SetProfile extends StatefulWidget {
-  const SetProfile({Key? key}) : super(key: key);
+class SetProfileScreen extends StatefulWidget {
+  const SetProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<SetProfile> createState() => _SetProfileState();
+  State<SetProfileScreen> createState() => _SetProfileScreenState();
 }
 
-class _SetProfileState extends State<SetProfile> {
+class _SetProfileScreenState extends State<SetProfileScreen> {
   static const PROFILE_IMG_SIZE = 88.0;
 
   final TextEditingController nicknameController = TextEditingController();
@@ -45,7 +45,7 @@ class _SetProfileState extends State<SetProfile> {
   Widget renderBody() {
     return ListView(
       children: [
-        const CustomProgressBar(currentPage: 4),
+        const CustomProgressBar(currentPage: 5),
         GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(5),),
         const SizedBox(height: 30,),
         getCenterBody(),
@@ -94,7 +94,7 @@ class _SetProfileState extends State<SetProfile> {
   /// event methods
   void didTapNextButton() {
     if (isInputValid) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SelectInterestScreen()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen()));
     } else {
       Fluttertoast.showToast(msg: '입력된 정보를 확인해주세요!');
     }
