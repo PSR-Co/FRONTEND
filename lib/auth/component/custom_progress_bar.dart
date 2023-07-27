@@ -4,11 +4,9 @@ import '../../common/const/colors.dart';
 
 class CustomProgressBar extends StatefulWidget {
 
-  // final int totalPageCnt;
   final int currentPage;
 
   const CustomProgressBar({
-    // required this.totalPageCnt,
     required this.currentPage,
     Key? key
   }) : super(key: key);
@@ -18,7 +16,7 @@ class CustomProgressBar extends StatefulWidget {
 }
 
 class _CustomProgressBarState extends State<CustomProgressBar> {
-  final totalPageCnt = 4;
+  final totalPageCnt = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +24,6 @@ class _CustomProgressBarState extends State<CustomProgressBar> {
   }
 
   Widget getProgressBar() {
-    const int optionViewCnt = 2;
-
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 5,
@@ -39,7 +35,6 @@ class _CustomProgressBarState extends State<CustomProgressBar> {
             margin: const EdgeInsets.symmetric(vertical: 1),
             width: MediaQuery.of(context).size.width / totalPageCnt,
             height: 1.5,
-            // color: ((widget.currentPage-1) > index) ? PURPLE_COLOR : GRAY_1_COLOR,
             color: (widget.currentPage > index) ? PURPLE_COLOR : GRAY_1_COLOR,
           );
         },

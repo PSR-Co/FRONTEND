@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:psr/auth/view/signup/input_user_info_screen.dart';
+import 'package:psr/auth/view/signup/input_accout_info_screen.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/custom_title_text.dart';
 import 'package:psr/common/layout/purple_outlined_text_field.dart';
@@ -113,7 +113,7 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
   void didTapNextButton() {
     setState(() {
       if (isValidInput) {
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InputUserInfoScreen()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InputAccountInfoScreen()));
       } else {
         Fluttertoast.showToast(msg: '입력된 사업자 정보를 확인해주세요!');
       }

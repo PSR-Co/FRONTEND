@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:psr/auth/view/signup/set_profile_screen.dart';
 import 'package:psr/common/const/colors.dart';
-import 'package:psr/common/view/root_tab.dart';
 
 import '../../../common/const/constants.dart';
 import '../../../common/layout/default_appbar_layout.dart';
 import '../../../common/layout/purple_filled_button.dart';
+import '../../component/custom_progress_bar.dart';
 import '../../component/guide_title.dart';
 
 class SelectInterestScreen extends StatefulWidget {
@@ -38,6 +39,7 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
   Widget renderBody() {
     return ListView(
       children: [
+        const CustomProgressBar(currentPage: 4),
         GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(6),),
         const SizedBox(height: 50,),
         getCenterBody(),
@@ -114,7 +116,7 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
   /// event methods
   void didTapNextButton() {
     if(selectedList.isNotEmpty) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const RootTab()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SetProfileScreen()));
     } else {
       Fluttertoast.showToast(msg: '한 개 이상의 관심 주제를 선택해주세요!');
     }
@@ -125,7 +127,6 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
       selectedList.contains(selected)
           ? selectedList.remove(selected)
           : selectedList.add(selected);
-
     });
   }
 }
