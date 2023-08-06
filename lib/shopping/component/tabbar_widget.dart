@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:psr/presenter/shopping/shopping_service.dart';
 import 'package:psr/shopping/component/popular_list_item.dart';
 
+
+import '../../model/data/shopping/product_model.dart';
 import 'category_list_item.dart';
 
 class ShoppingTabBarWidget extends StatefulWidget {
@@ -16,7 +19,16 @@ class ShoppingTabBarWidget extends StatefulWidget {
 }
 
 class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
-  final titleStyle = TextStyle(
+
+  ProductModel? data;
+  List<PopularProduct> popularList = [];
+  List<Product> productList = [];
+
+  Future<dynamic> fetchData() async {
+    return await ShoppingService().getShoppingMainData(widget.categoryName);
+  }
+
+  final titleStyle = const TextStyle(
     color: Colors.black,
     fontSize: 18.0,
     fontWeight: FontWeight.w500
@@ -26,19 +38,46 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        // TODO: api 호출
-        print('refresh tabBar view');
+        fetchData();
       },
-      child: ListView(
-        scrollDirection: Axis.vertical,
-        children: [
-          renderTitle('📌 인기목록'),
-          renderPopularListView(),
-          SizedBox(height: 5.0),
-          renderTitle(widget.categoryName),
-          renderCategoryListView(),
-        ],
-      ),
+      child: FutureBuilder<dynamic> (
+          future: fetchData(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            print('${widget.categoryName} :: FutureBuilder called');
+            if (snapshot.hasData) {
+              data = ProductModel.fromJson(json: snapshot.data);
+              popularList = data!.data.popularList;
+              productList = data!.data.productList;
+
+              print('${widget.categoryName}');
+              print('data -> ${snapshot.data}');
+              print('popularList -> ${popularList}');
+              print('productList -> ${productList}');
+              if (data?.code != 200
+                  || popularList.isEmpty && productList.isEmpty) {
+                return const Center(
+                  child: Text('불러올 상품 정보가 없습니다.'),
+                );
+              }
+
+            } else {
+                return const Center(
+                  child: Text('상품 정보를 불러오는데 실패하였습니다.'),
+                );
+            }
+
+            return ListView(
+              scrollDirection: Axis.vertical,
+              children: [
+                renderTitle('📌 인기목록'),
+                renderPopularListView(popularList),
+                const SizedBox(height: 5.0),
+                renderTitle(widget.categoryName),
+                renderCategoryListView(productList),
+              ],
+            );
+          }
+      )
     );
   }
 
@@ -48,47 +87,49 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
       titleStr = titleStr.replaceAll('\n', ' ');
     }
     return Container(
-      // padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
-      padding: EdgeInsets.only(left: 18.0, right: 8.0, top: 18.0, bottom: 12.0),
+      padding: const EdgeInsets.only(left: 18.0, right: 8.0, top: 18.0, bottom: 12.0),
       color: Colors.white,
       child: Text(titleStr, style: titleStyle),
     );
   }
 
   /// 인기목록 아이템 리스트 컴포넌트 반환
-  Widget renderPopularListView() {
+  Widget renderPopularListView(List<PopularProduct> data) {
     return Container(
-      padding: EdgeInsets.only(left: 10.0),
+      padding: const EdgeInsets.only(left: 10.0),
       color: Colors.white,
       height: 265,
-      child: ListView(
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        children: [
-          // TODO: api연결 후 수정
-          PopularListItem(category: widget.categoryName,),
-          PopularListItem(category: widget.categoryName,),
-          PopularListItem(category: widget.categoryName,),
-          PopularListItem(category: widget.categoryName,),
-          PopularListItem(category: widget.categoryName,),
-        ],
+        itemCount: data.length,
+        itemBuilder: (BuildContext context, int index) {
+          return PopularListItem(
+            category: widget.categoryName,
+            index: index,
+            data: data[index],
+          );
+        },
       ),
     );
   }
 
   /// 카테고리별 아이템 리스트 컴포넌트 반환
-  Widget renderCategoryListView() {
+  Widget renderCategoryListView(List<Product> data) {
     return Container(
+      height: 100.0 * data.length,
       color: Colors.white,
-      child: Column(
-        children: [
-          // TODO: api연결 후 수정
-          CategoryListItem(category: widget.categoryName,),
-          CategoryListItem(category: widget.categoryName,),
-          CategoryListItem(category: widget.categoryName,),
-          CategoryListItem(category: widget.categoryName,),
-          CategoryListItem(category: widget.categoryName,),
-          CategoryListItem(category: widget.categoryName,),
-        ],
+      child:
+      ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        itemCount: data.length,
+        itemBuilder: (BuildContext context, int index) {
+          return CategoryListItem(
+            category: widget.categoryName,
+            index: index,
+            data: data[index],
+          );
+        },
       ),
     );
   }

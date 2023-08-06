@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../common/const/colors.dart';
+import '../../model/data/shopping/product_model.dart';
 import '../../product/view/product_detail_screen.dart';
 
 class CategoryListItem extends StatefulWidget {
   final String category;
-  final String? name;
+  final int? index;
+  final Product data;
 
   const CategoryListItem({
     required this.category,
-    this.name,
+    this.index,
+    required this.data,
     Key? key
   }) : super(key: key);
 
@@ -70,6 +73,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
           ),
           borderRadius: BorderRadius.circular(12.0),
         ),
+        // TODO: data의 imgKey로 변경
         child: Image.asset('asset/images/product_sample.png', width: 90, height: 90,)
     );
   }
@@ -80,9 +84,9 @@ class _CategoryListItemState extends State<CategoryListItem> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text((widget.name == null) ? '루시 앤플 셀러' : widget.name!, style: brandNameTextStyle,),
-          Text('폴로랄프로렌 목도리 Red Color', style: productNameTextStyle,),
-          Text('79,000원', style: priceTextStyle,),
+          Text(widget.data.nickname, style: brandNameTextStyle,),
+          Text(widget.data.name, style: productNameTextStyle,),
+          Text('${widget.data.price}원', style: priceTextStyle,),
         ],
       ),
     );
