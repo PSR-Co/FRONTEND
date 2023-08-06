@@ -45,7 +45,7 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             print('${widget.categoryName} :: FutureBuilder called');
             if (snapshot.hasData) {
-              data = ProductModel.fromJson(json: snapshot.data);
+              data = ProductModel.fromJson(snapshot.data);
               popularList = data!.data.popularList;
               productList = data!.data.productList;
 
