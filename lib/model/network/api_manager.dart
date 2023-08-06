@@ -26,21 +26,23 @@ class APIManager {
       Map<String, dynamic>? data,
       ) async {
 
-    if (options != null) { options.headers = defaultOptions.headers; }
+    if (options != null && options.headers != null) {
+      defaultOptions.headers!.addAll(options.headers!);
+    }
 
     dynamic response;
     switch (requestType) {
       case RequestType.GET :
         response = await dio.get(
             BASE_URL + path,
-            options: options ?? defaultOptions,
+            options: defaultOptions,
             queryParameters: queryParameters
         );
 
       case RequestType.POST :
         response = await dio.post(
             BASE_URL + path,
-            options: options ?? defaultOptions,
+            options: defaultOptions,
             queryParameters: queryParameters,
             data: data
         );
@@ -48,14 +50,14 @@ class APIManager {
       case RequestType.PATCH :
         response = await dio.patch(
             BASE_URL + path,
-            options: options ?? defaultOptions,
+            options: defaultOptions,
             queryParameters: queryParameters
         );
 
       case RequestType.DELETE :
         response = await dio.delete(
             BASE_URL + path,
-            options: options ?? defaultOptions,
+            options: defaultOptions,
             queryParameters: queryParameters
         );
     }
@@ -81,6 +83,7 @@ class APIManager {
   Future<bool> checkToken() async {
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+    // final accessToken = await '포맨으로 받아온 액세스 토큰값 입력 (토큰값은 커밋에서 제외시켜주세여)';
 
     if (refreshToken == null && accessToken == null) {
       return false;
