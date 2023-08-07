@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:psr/common/view/root_tab.dart';
 import 'package:psr/auth/view/login_screen.dart';
 
-import '../const/constants.dart';
+import '../../model/network/api_manager.dart';
+import '../../model/network/constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -20,23 +21,19 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkToken() async {
+    // storage.deleteAll(); // 로그인 화면으로 돌아갈 때 주석 해제
 
-    final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
-    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
-
-    // TODO: Access / Refresh Token 저장 여부 확인 (있으면 홈 화면, 없으면 로그인 화면으로 전환)
-    if (refreshToken == null && accessToken == null) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => LoginScreen()),
-              (route) => false);
-
-    } else {
+    /// Access / Refresh Token 저장 여부 확인 (있으면 홈 화면, 없으면 로그인 화면으로 전환)
+    if (await APIManager().checkToken()) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => RootTab()
           ), (route) => false);
 
+    } else {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => LoginScreen()),
+              (route) => false);
     }
-
   }
 
   @override

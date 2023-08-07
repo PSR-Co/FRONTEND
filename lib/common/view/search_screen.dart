@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../model/data/shopping/product_model.dart';
 import '../../shopping/component/category_list_item.dart';
 import '../const/colors.dart';
 
@@ -32,7 +33,7 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
 
   Widget? renderResultListView() {
     for (var element in nameList) {
-      if (_controller.text != null && element!.contains(_controller.text!)) {
+      if (element.contains(_controller.text)) {
         _results.add(element);
       }
     }
@@ -41,7 +42,17 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
         itemCount: _results.length,
         itemBuilder: (BuildContext context, int index) {
           // TODO: 데이터 패치 후 카테고리 값 변경
-          return CategoryListItem(category: '관심목록', name: _results.elementAt(index),);
+          // return CategoryListItem(category: '관심목록', name: _results.elementAt(index),);
+          return CategoryListItem(category: '관심목록', data: Product(
+            /// 임시 데이터
+              productId: 0,
+              imgKey: 'imgKey',
+              userIdx: 0,
+              nickname: 'nickname',
+              name: 'name',
+              price: 0,
+              isLike: false),
+          );
         },
       );
     } else { return Container(); }

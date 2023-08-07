@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:psr/common/const/colors.dart';
 
+import '../../model/data/shopping/product_model.dart';
 import '../../product/view/product_detail_screen.dart';
 
 class PopularListItem extends StatefulWidget {
   final String category;
+  final int index;
+  final PopularProduct data;
 
   // TODO: api 연결 후 속성값(상품이름,가격,평균리뷰점수, 리뷰개수, 좋아요 여부) 추가 및 수정
   const PopularListItem({
     required this.category,
+    required this.index,
+    required this.data,
     Key? key
   }) : super(key: key);
 
@@ -21,31 +26,31 @@ class _PopularListItemState extends State<PopularListItem> {
   bool isLiked = false;
 
   /// TextStyle 정의
-  final productNameTextStyle = TextStyle(
+  final productNameTextStyle = const TextStyle(
     color: GRAY_4_COLOR,
     fontSize: 14.0,
     fontWeight: FontWeight.w400,
   );
 
-  final itemOrderTextStyle = TextStyle(
+  final itemOrderTextStyle = const TextStyle(
     color: GRAY_4_COLOR,
     fontSize: 12.0,
     fontWeight: FontWeight.w500,
   );
 
-  final priceTextStyle = TextStyle(
+  final priceTextStyle = const TextStyle(
     color: GRAY_4_COLOR,
     fontSize: 15.0,
     fontWeight: FontWeight.w500,
   );
 
-  final reviewPointTextStyle = TextStyle(
+  final reviewPointTextStyle = const TextStyle(
     color: Colors.black,
     fontSize: 11.0,
     fontWeight: FontWeight.w500,
   );
 
-  final reviewCountTextStyle = TextStyle(
+  final reviewCountTextStyle = const TextStyle(
     color: GRAY_2_COLOR,
     fontSize: 11.0,
     fontWeight: FontWeight.w400,
@@ -54,6 +59,7 @@ class _PopularListItemState extends State<PopularListItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: didTapItem,
       child: Container(
         width: 170,
         child: Column(
@@ -65,7 +71,6 @@ class _PopularListItemState extends State<PopularListItem> {
           ],
         ),
       ),
-      onTap: didTapItem,
     );
   }
 
@@ -73,6 +78,7 @@ class _PopularListItemState extends State<PopularListItem> {
   Widget renderProductImageItem() {
     return Stack(
       children: [
+        // TODO: imgKey값으로 변경
         renderProductImage('asset/images/product_sample.png'),
         renderLikeButton(),
       ],
@@ -95,7 +101,7 @@ class _PopularListItemState extends State<PopularListItem> {
 
   Widget renderLikeButton() {
     Widget likeIcon;
-    if (isLiked) {
+    if (widget.data.isLike) {
       likeIcon = SvgPicture.asset('asset/icons/common/favorite_border.fill.svg', width: 20, height: 20,);
     } else {
       likeIcon = SvgPicture.asset('asset/icons/common/favorite_border.svg', width: 20, height: 20,);
@@ -106,7 +112,7 @@ class _PopularListItemState extends State<PopularListItem> {
       right: 0,
       child: IconButton(
           onPressed: didTapLikeButton,
-          icon: likeIcon!
+          icon: likeIcon
       ),
     );
   }
@@ -115,28 +121,28 @@ class _PopularListItemState extends State<PopularListItem> {
   Widget renderItemOrder() {
     return Container(
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 3),
-        child: Text('01', style: itemOrderTextStyle,)
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3),
+        child: Text('${widget.index}', style: itemOrderTextStyle,)
     );
   }
 
   /// 구분선 구현 메소드
   Widget renderDivider() {
     return Container(
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
-        child: Divider(thickness: 1, height: 1,color: GRAY_0_COLOR)
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: const Divider(thickness: 1, height: 1,color: GRAY_0_COLOR)
     );
   }
 
   /// 제품 정보 구현 관련 메소드
   Widget renderProductInfo() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('폴로랄프로렌 목도리', style: productNameTextStyle,),
-          Text('79,000원', style: priceTextStyle,),
+          Text(widget.data.name, style: productNameTextStyle,),
+          Text('${widget.data.price}원', style: priceTextStyle,),
           renderReviewInfo()
         ],
       ),
@@ -145,19 +151,19 @@ class _PopularListItemState extends State<PopularListItem> {
 
   Widget renderReviewInfo() {
     return Padding(
-      padding: EdgeInsets.only(top: 4, bottom: 3),
+      padding: const EdgeInsets.only(top: 4, bottom: 3),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 3, top: 1),
+          const Padding(
+            padding: EdgeInsets.only(right: 3, top: 1),
             child: Icon(Icons.star, color: Color(0xFFFFA939), size: 12.0,),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 2),
-            child: Text('5.0', style: reviewPointTextStyle,),
+            child: Text('${widget.data.avgOfRating}', style: reviewPointTextStyle,),
           ),
-          Text('(1)', style: reviewCountTextStyle,),
+          Text('(${widget.data.numOfReview})', style: reviewCountTextStyle,),
         ],
       ),
     );

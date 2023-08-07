@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:psr/auth/component/account_input_text_field.dart';
 import 'package:psr/auth/view/sign_up_screen.dart';
 import 'package:psr/common/const/colors.dart';
+import 'package:psr/presenter/auth/auth_service.dart';
 
 import '../../common/layout/purple_filled_button.dart';
 import '../../common/view/root_tab.dart';
+import '../../model/network/constants.dart';
 import 'find_id_screen.dart';
 import 'find_pw_screen.dart';
 
@@ -16,6 +18,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  // final dio = Dio();
 
   final TextEditingController idController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
@@ -182,9 +186,31 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   /// event methods
-  void didTapLoginButton() {
-    // 테스트 토큰이 발급되기 전까지 임시로 홈 화면 연결해둠
-    Navigator.of(context).pushAndRemoveUntil( MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
+  void didTapLoginButton() async {
+   final result = await AuthService().login(idController.value.text, pwController.value.text);
+    if (result) {
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
+
+    } else {
+      showDialog(context: context, builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(
+            child: Text('로그인 실패', style: TextStyle(fontSize: 16),),
+          ),
+          content: Text('아이디 혹은 비밀번호를 확인해주세요.', style: TextStyle(fontSize: 14), textAlign: TextAlign.center),
+          actions: <Widget>[
+            Center(
+              child: TextButton(
+                child: const Text("확인"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
+        );
+      });
+    }
   }
 
   void didTapSignUpButton() {
@@ -200,5 +226,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void didTapFindPWButton() {
     print('didTapFindPWButton');
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FindPWScreen()));
+  }
+
+  void setToken(String accessToken, String refreshToken) {
+    storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
+    storage.write(key: REFRESH_TOKEN_KEY, value: refreshToken);
   }
 }
