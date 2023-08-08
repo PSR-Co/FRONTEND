@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 
@@ -14,36 +13,58 @@ class MyPostScreen extends StatefulWidget {
 
 class _MyPostScreenState extends State<MyPostScreen> {
   // 제품 정보 텍스트 스타일 정의
-  final brandNameTextStyle = TextStyle(fontSize: 12.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR,);
+  final brandNameTextStyle = const TextStyle(
+    fontSize: 12.0,
+    fontWeight: FontWeight.w500,
+    color: GRAY_4_COLOR,
+  );
 
-  final productNameTextStyle = TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR,);
+  final productNameTextStyle = const TextStyle(
+    fontSize: 12.0,
+    fontWeight: FontWeight.w400,
+    color: GRAY_4_COLOR,
+  );
 
-  final priceTextStyle = TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500, color: Colors.black,);
- 
+  final priceTextStyle = const TextStyle(
+    fontSize: 14.0,
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+  );
+
   List<MyPost> postList = [
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱", "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱", "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱", "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱", "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱", "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱", "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱", "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱", "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱", "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱", "폴로랄프로렌 목도리 Red Color", 79000)
+    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
+        "폴로랄프로렌 목도리 Red Color", 79000),
+    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
+        "폴로랄프로렌 목도리 Red Color", 79000),
+    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
+        "폴로랄프로렌 목도리 Red Color", 79000),
+    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
+        "폴로랄프로렌 목도리 Red Color", 79000),
+    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
+        "폴로랄프로렌 목도리 Red Color", 79000),
+    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
+        "폴로랄프로렌 목도리 Red Color", 79000),
+    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
+        "폴로랄프로렌 목도리 Red Color", 79000),
+    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
+        "폴로랄프로렌 목도리 Red Color", 79000),
+    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
+        "폴로랄프로렌 목도리 Red Color", 79000),
+    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
+        "폴로랄프로렌 목도리 Red Color", 79000)
   ];
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         bottom: false,
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              DefaultAppBarLayout(titleText: "내 게시글"),
+              const DefaultAppBarLayout(titleText: "내 게시글"),
               Expanded(child: postListView())
             ],
           ),
@@ -52,9 +73,9 @@ class _MyPostScreenState extends State<MyPostScreen> {
     );
   }
 
-  Widget postListView(){
+  Widget postListView() {
     return Container(
-      margin: EdgeInsets.only(top: 15.0),
+      margin: const EdgeInsets.only(top: 15.0),
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         itemCount: postList.length,
@@ -63,10 +84,14 @@ class _MyPostScreenState extends State<MyPostScreen> {
           return ListTile(
             onTap: () {},
             title: GestureDetector(
-              child: postListItem(postList[index].productImgKey, postList[index].category, postList[index].name, postList[index].price),
+              child: postListItem(
+                  postList[index].productImgKey,
+                  postList[index].category,
+                  postList[index].name,
+                  postList[index].price),
             ),
-            contentPadding: const EdgeInsets.symmetric(
-                vertical: 5.0, horizontal: 17.0),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 17.0),
           );
         },
       ),
@@ -85,25 +110,34 @@ class _MyPostScreenState extends State<MyPostScreen> {
 
   Widget renderProductImage(String imgKey) {
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 5.0),
+        margin: const EdgeInsets.symmetric(horizontal: 5.0),
         decoration: BoxDecoration(
-          border: Border.all(
-              width: 1.0,
-              color: GRAY_0_COLOR
-          ),
+          border: Border.all(width: 1.0, color: GRAY_0_COLOR),
           borderRadius: BorderRadius.circular(12.0),
         ),
-        child: Image.asset(imgKey, width: 90, height: 90,)
-    );
+        child: Image.asset(
+          imgKey,
+          width: 90,
+          height: 90,
+        ));
   }
 
   Widget renderProductInfo(String category, String name, int price) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(category, style: brandNameTextStyle,),
-        Text(name, style: productNameTextStyle,),
-        Text(priceConverter(price), style: priceTextStyle,),
+        Text(
+          category,
+          style: brandNameTextStyle,
+        ),
+        Text(
+          name,
+          style: productNameTextStyle,
+        ),
+        Text(
+          priceConverter(price),
+          style: priceTextStyle,
+        ),
       ],
     );
   }

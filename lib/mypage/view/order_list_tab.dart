@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/constants.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
@@ -30,20 +29,6 @@ class _OrderListTabState extends State<OrderListTab>
       fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_2_COLOR);
 
   final controller = SliderController();
-
-  //요청받은 상품 리스트
-  // List<OrderProduct> sellProductList = [
-  //   OrderProduct("asset/images/profile_img_sample.jpg", "누구게", "asset/images/product_sample.png","요청 상품명", "요청일"),
-  //   OrderProduct("asset/images/profile_img_sample.jpg", "누구게", "asset/images/product_sample.png","요청 상품명", "요청일"),
-  //   OrderProduct("asset/images/profile_img_sample.jpg", "누구게", "asset/images/product_sample.png","요청 상품명", "요청일"),
-  // ];
-
-  //요청한 상품 리스트
-  // List<OrderProduct> orderProductList = [
-  //   OrderProduct("asset/images/profile_img_sample.jpg", "누구게", "asset/images/product_sample.png","요청 상품명", "요청일"),
-  //   OrderProduct("asset/images/profile_img_sample.jpg", "누구게", "asset/images/product_sample.png","요청 상품명", "요청일"),
-  //   OrderProduct("asset/images/profile_img_sample.jpg", "누구게", "asset/images/product_sample.png","요청 상품명", "요청일"),
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +89,8 @@ class _OrderListTabState extends State<OrderListTab>
     );
   }
 
-  Widget cardContent(String ordererName, String productImg, String productName, String orderDate) {
+  Widget cardContent(String ordererName, String productImg, String productName,
+      String orderDate) {
     return GestureDetector(
       onTap: () {
         Navigator.push(

@@ -21,8 +21,8 @@ class _App extends StatelessWidget {
         fontFamily: 'NotoSans',
       ),
       home: const Scaffold(
-        body: RootTab(),
-        // body: SplashScreen(),
+        // body: RootTab(),
+        body: SplashScreen(),
       )
     );
   }
