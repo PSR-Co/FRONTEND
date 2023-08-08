@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/layout/custom_title_text.dart';
 import 'package:psr/common/layout/purple_outlined_textfield_with_button.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:psr/presenter/auth/signup_service.dart';
 import 'dart:io';
 
 import '../../../common/const/constants.dart';
@@ -86,6 +87,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
               buttonTitle: '중복확인',
               onPressed: didTapValidationNickname
           )
+
         ],
       ),
     );
@@ -100,10 +102,16 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     }
   }
 
-  void didTapValidationNickname() {
-    print('didTapValidationNickname - 닉네임 중복확인');
-    setState(() {
-      isInputValid = !isInputValid;
+  void didTapValidationNickname() async {
+    bool? result = await validateNickname();
+    setState(()  {
+      if (result != null) {
+        isInputValid = result;
+        Fluttertoast.showToast(msg: result ? "사용 가능한 닉네임입니다!" : "이미 존재하는 닉네임입니다.");
+      } else {
+        isInputValid = false;
+        Fluttertoast.showToast(msg: "1자 이상의 닉네임을 입력해주세요.");
+      }
     });
   }
 
@@ -115,4 +123,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     }
   }
 
+  Future<bool?> validateNickname() async {
+    return await SignupService().validateNickname(nicknameController.value.text);
+  }
 }

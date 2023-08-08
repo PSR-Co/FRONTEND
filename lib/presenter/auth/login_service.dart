@@ -3,13 +3,13 @@ import 'package:psr/model/data/auth/login_model.dart';
 
 import '../../model/network/api_manager.dart';
 
-class AuthService {
+class LoginService {
   final LOGIN_URL = '/users/login';
 
   /// Singleton Pattern
-  static final AuthService _authService = AuthService._();
-  AuthService._();
-  factory AuthService() {
+  static final LoginService _authService = LoginService._();
+  LoginService._();
+  factory LoginService() {
     return _authService;
   }
 
