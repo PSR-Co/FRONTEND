@@ -1,18 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_model.dart';
+part of 'login_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-AuthModel _$AuthModelFromJson(Map<String, dynamic> json) => AuthModel(
+LoginModel _$LoginModelFromJson(Map<String, dynamic> json) => LoginModel(
       code: json['code'] as int,
       message: json['message'] as String,
       data: LoginResponse.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$AuthModelToJson(AuthModel instance) => <String, dynamic>{
+Map<String, dynamic> _$LoginModelToJson(LoginModel instance) =>
+    <String, dynamic>{
       'code': instance.code,
       'message': instance.message,
       'data': instance.data,

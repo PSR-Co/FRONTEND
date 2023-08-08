@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:psr/model/data/auth/auth_model.dart';
+import 'package:psr/model/data/auth/login_model.dart';
 
 import '../../model/network/api_manager.dart';
 
@@ -20,7 +20,7 @@ class AuthService {
         .catchError((error) { debugPrint('error : ${error}'); });
 
     if (response != null) {
-      final data = AuthModel.fromJson(response);
+      final data = LoginModel.fromJson(response);
       APIManager().writeToken(data.data.accessToken, data.data.refreshToken);
       return true;
 
