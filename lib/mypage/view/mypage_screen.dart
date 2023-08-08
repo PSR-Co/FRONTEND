@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/myinfo/view/myinfo_screen.dart';
@@ -21,33 +20,50 @@ class MypageScreen extends StatefulWidget {
 }
 
 class _MypageScreenState extends State<MypageScreen> {
-  final TextStyle mypageTitleTextStyle = const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w700, color: Colors.black);
-  final TextStyle welcomeTextStyle = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700, color: GRAY_4_COLOR);
-  final TextStyle userTypeTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w700, color: PINK_COLOR);
-  final TextStyle categoryTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
-  final TextStyle listHeaderTextStyle = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
+  final TextStyle mypageTitleTextStyle = const TextStyle(
+      fontSize: 16.0, fontWeight: FontWeight.w700, color: Colors.black);
+  final TextStyle welcomeTextStyle = const TextStyle(
+      fontSize: 18.0, fontWeight: FontWeight.w700, color: GRAY_4_COLOR);
+  final TextStyle userTypeTextStyle = const TextStyle(
+      fontSize: 13.0, fontWeight: FontWeight.w700, color: PINK_COLOR);
+  final TextStyle categoryTextStyle = const TextStyle(
+      fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
+  final TextStyle listHeaderTextStyle = const TextStyle(
+      fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
 
-  MyPage userDate = 
-    MyPage('사업자', 'asset/images/profile_img_sample.jpg', '웨이드에옹',
-       [SellProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
-         SellProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
-         SellProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
-       ],
-        [OrderProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
-          OrderProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
-          OrderProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
-        ]);
-  MyPage adminDate = 
-    MyPage('관리자', 'asset/images/profile_img_sample.jpg', '관리자에옹',
-        [SellProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
-          SellProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
-          SellProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
-        ],
-        [OrderProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
-          OrderProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
-          OrderProduct("누구게","asset/images/profile_img_sample.jpg","","요청 상품명", "asset/images/product_sample.png","요청일"),
-        ]);
-  
+  MyPage userDate =
+      MyPage('사업자', 'asset/images/profile_img_sample.jpg', '웨이드에옹', [
+    SellProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
+        "asset/images/product_sample.png", "요청일"),
+    SellProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
+        "asset/images/product_sample.png", "요청일"),
+    SellProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
+        "asset/images/product_sample.png", "요청일"),
+  ], [
+    OrderProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
+        "asset/images/product_sample.png", "요청일"),
+    OrderProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
+        "asset/images/product_sample.png", "요청일"),
+    OrderProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
+        "asset/images/product_sample.png", "요청일"),
+  ]);
+  MyPage adminDate =
+      MyPage('관리자', 'asset/images/profile_img_sample.jpg', '관리자에옹', [
+    SellProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
+        "asset/images/product_sample.png", "요청일"),
+    SellProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
+        "asset/images/product_sample.png", "요청일"),
+    SellProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
+        "asset/images/product_sample.png", "요청일"),
+  ], [
+    OrderProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
+        "asset/images/product_sample.png", "요청일"),
+    OrderProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
+        "asset/images/product_sample.png", "요청일"),
+    OrderProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
+        "asset/images/product_sample.png", "요청일"),
+  ]);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,38 +72,56 @@ class _MypageScreenState extends State<MypageScreen> {
         child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Column(
-            children: [
-              myPageHeader(),
-              profile(),
-              category(),
-              Padding(
-                padding: const EdgeInsets.only(top:15.0),
-                child: Division(),
-              ),
-              Expanded(child: Padding(
-                padding: const EdgeInsets.only(bottom: 30.0),
-                child: OrderListTab(myPageData: userDate)
-              )),
-            ],
-          )
-        ),
+              children: [
+                myPageHeader(),
+                profile(),
+                category(),
+                const Padding(
+                  padding: EdgeInsets.only(top: 15.0),
+                  child: Division(),
+                ),
+                Expanded(
+                    child: Padding(
+                        padding: const EdgeInsets.only(bottom: 30.0),
+                        child: OrderListTab(myPageData: userDate))),
+              ],
+            )),
       ),
     );
   }
 
-  Widget myPageHeader(){
+  Widget myPageHeader() {
     return SizedBox(
       child: Container(
-        margin: EdgeInsets.fromLTRB(17.0, 5.0, 17.0, 5.0),
+        margin: const EdgeInsets.fromLTRB(17.0, 5.0, 17.0, 5.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("마이페이지", style: mypageTitleTextStyle,),
-            Spacer(flex: 2,),
-            IconButton(onPressed: (){Navigator.push(context,
-                MaterialPageRoute(builder: (context) => NotificationListScreen()));}, icon: SvgPicture.asset("asset/icons/common/bell.svg"),),
-            IconButton(onPressed: (){Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LikeListScreen()));}, icon: SvgPicture.asset("asset/icons/common/filled_heart.svg"), padding: EdgeInsets.only(right: 0.0),constraints: const BoxConstraints(),),
+            Text(
+              "마이페이지",
+              style: mypageTitleTextStyle,
+            ),
+            const Spacer(
+              flex: 2,
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationListScreen()));
+              },
+              icon: SvgPicture.asset("asset/icons/common/bell.svg"),
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const LikeListScreen()));
+              },
+              icon: SvgPicture.asset("asset/icons/common/filled_heart.svg"),
+              padding: const EdgeInsets.only(right: 0.0),
+              constraints: const BoxConstraints(),
+            ),
           ],
         ),
       ),
@@ -98,25 +132,39 @@ class _MypageScreenState extends State<MypageScreen> {
     return SizedBox(
       height: 120.0,
       child: Container(
-        margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 20.0),
+        margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 20.0),
         height: 90.0,
         child: Row(
           children: [
             ClipOval(
-              child: Image.asset("asset/images/default_profile.png", width: 90.0, height: 90.0, ),
+              child: Image.asset(
+                "asset/images/default_profile.png",
+                width: 90.0,
+                height: 90.0,
+              ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 10.0),
+              margin: const EdgeInsets.only(left: 10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${userDate.nickname}님 안녕하세요!", style: welcomeTextStyle,),
+                  Text(
+                    "${userDate.nickname}님 안녕하세요!",
+                    style: welcomeTextStyle,
+                  ),
                   Container(
-                    width: 55.0, height: 25.0,
+                    width: 55.0,
+                    height: 25.0,
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(color: PINK_COLOR_20, borderRadius: BorderRadius.all(Radius.circular(12.0)) ),
-                    child: Text("${userDate.userType}", style: userTypeTextStyle,),)
+                    decoration: const BoxDecoration(
+                        color: PINK_COLOR_20,
+                        borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                    child: Text(
+                      userDate.userType,
+                      style: userTypeTextStyle,
+                    ),
+                  )
                 ],
               ),
             )
@@ -126,9 +174,9 @@ class _MypageScreenState extends State<MypageScreen> {
     );
   }
 
-  Widget category(){
+  Widget category() {
     return Container(
-      margin: EdgeInsets.fromLTRB(17.0, 10.0, 17.0, 10.0),
+      margin: const EdgeInsets.fromLTRB(17.0, 10.0, 17.0, 10.0),
       child: SizedBox(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -142,40 +190,45 @@ class _MypageScreenState extends State<MypageScreen> {
     );
   }
 
-  Widget categoryItem(String imgName, String categoryName){
+  Widget categoryItem(String imgName, String categoryName) {
     return SizedBox(
       child: Column(
         children: [
           Container(
-            width: 55.0, height: 55.0,
-            margin: EdgeInsets.only(bottom: 5.0),
-            decoration: BoxDecoration(
-              boxShadow: [BoxShadow(color: LIGHT_SHADOW_COLOR, blurRadius: 4.0)],
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              color: Colors.white
-            ),
+            width: 55.0,
+            height: 55.0,
+            margin: const EdgeInsets.only(bottom: 5.0),
+            decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(color: LIGHT_SHADOW_COLOR, blurRadius: 4.0)
+                ],
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                color: Colors.white),
             child: IconButton.outlined(
-                onPressed: (){
-                  if(categoryName=="내 정보"){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyInfoScreen()));
-                  }else if(categoryName=="고객센터"){
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ServiceCenterScreen()));
-                  }else{
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MyPostScreen()));
-                  }
-
-                },
-                icon: SvgPicture.asset(imgName),
-              style: ButtonStyle(),
+              onPressed: () {
+                if (categoryName == "내 정보") {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const MyInfoScreen()));
+                } else if (categoryName == "고객센터") {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ServiceCenterScreen()));
+                } else {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const MyPostScreen()));
+                }
+              },
+              icon: SvgPicture.asset(imgName),
+              style: const ButtonStyle(),
             ),
           ),
-          Text(categoryName, style: categoryTextStyle,),
+          Text(
+            categoryName,
+            style: categoryTextStyle,
+          ),
         ],
       ),
     );
   }
 }
-

@@ -1,15 +1,3 @@
-//요청 상품 목록
-// class OrderProduct{
-//   String ordererImg;
-//   String ordererName;
-//   String productImg;
-//   String productName;
-//   String orderDate;
-//
-//   OrderProduct(this.ordererImg, this.ordererName, this.productImg, this.productName, this.orderDate);
-// }
-//
-
 ///요청 받은/한 상품 목록
 ///productId는 임시로 String으로 해둠
 class Order{
