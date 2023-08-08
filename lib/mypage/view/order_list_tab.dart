@@ -60,7 +60,7 @@ class _OrderListTabState extends State<OrderListTab> with SingleTickerProviderSt
         proximity: 0.53,
         sizeDistinction: 0.4,
         itemBuilder: (context, index, activeIndex) {
-          return cardContent(productList[index].ordererProfileImgKey, productList[index].ordererName, productList[index].productImgKey, productList[index].productName, productList[index].orderDate);
+          return cardContent(productList[index].ordererName, productList[index].productImgKey, productList[index].productName, productList[index].orderDate);
         },
       ),
     );
@@ -76,13 +76,13 @@ class _OrderListTabState extends State<OrderListTab> with SingleTickerProviderSt
         proximity: 0.53,
         sizeDistinction: 0.4,
         itemBuilder: (context, index, activeIndex) {
-          return cardContent(productList[index].sellerProfileImgKey, productList[index].sellerName, productList[index].productImgKey, productList[index].productName, productList[index].orderDate);
+          return cardContent(productList[index].sellerName, productList[index].productImgKey, productList[index].productName, productList[index].orderDate);
         },
       ),
     );
   }
 
-  Widget cardContent(String ordererImg, String ordererName, String productImg, String productName, String orderDate){
+  Widget cardContent(String ordererName, String productImg, String productName, String orderDate){
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -104,15 +104,7 @@ class _OrderListTabState extends State<OrderListTab> with SingleTickerProviderSt
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        ClipOval(child: Image.asset(ordererImg, width: 35.0, height: 35.0, ),),
-                        Container(margin:EdgeInsets.only(left: 8.0),child: Text("${ordererName}님의 요청", style: orderTextStyle,))
-                      ],
-                    ),
+                    Container(margin:EdgeInsets.only(left: 8.0),child: Text("${ordererName}님의 요청", style: orderTextStyle,)),
                     Container(
                         width: 170.0,
                         height: 170.0,
