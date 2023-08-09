@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/constants.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/model/data/cs/notice_model.dart';
+import 'package:psr/presenter/cs/cs_service.dart';
 import 'package:psr/servicecenter/component/notice_list.dart';
 import 'package:toggle_list/toggle_list.dart';
 
@@ -20,13 +22,19 @@ class _NoticeScreenState extends State<NoticeScreen> {
   final TextStyle noticeContentTextStyle = const TextStyle(fontSize: 12.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
 
 
-  List<Notice> noticeList = [
-    Notice([], '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)', "2023-06-12"),
-    Notice([], '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)', "2023-06-12"),
-    Notice([], '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)', "2023-06-12"),
-    Notice([], '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)', "2023-06-12"),
-    Notice([], '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)', "2023-06-12"),
-  ];
+  // List<Notice> noticeList = [
+  //   Notice([], '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)', "2023-06-12"),
+  //   Notice([], '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)', "2023-06-12"),
+  //   Notice([], '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)', "2023-06-12"),
+  //   Notice([], '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)', "2023-06-12"),
+  //   Notice([], '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)', "2023-06-12"),
+  // ];
+  NoticeModel? data;
+  // List noticeList = [];
+
+  Future<dynamic> fetchData() async {
+    return await CSService().getNoticeMainData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +45,22 @@ class _NoticeScreenState extends State<NoticeScreen> {
         child: Column(
           children: [
             DefaultAppBarLayout(titleText: "공지사항"),
-            Expanded(child: mainNoticeView())
+            Expanded(
+                child: FutureBuilder(
+                  future: fetchData(),
+                  builder: (context, snapshot) {
+                    List<NoticeModel> noticeList = snapshot.data;
+                    return mainNoticeView(noticeList);
+                  }
+              )
+            )
           ]
         ),
       ),
     );
   }
 
-  Widget mainNoticeView(){
+  Widget mainNoticeView(List<NoticeModel> noticeList){
     return ToggleList(
       innerPadding: EdgeInsets.zero,
         divider: Container(width:MediaQuery.of(context).size.width , height:1, color: GRAY_0_COLOR,),
@@ -63,11 +79,11 @@ class _NoticeScreenState extends State<NoticeScreen> {
                     Container(
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.only(top: 5.0),
-                        child: Text(e.date, style: noticeDateTextStyle,)),
+                        child: Text(e.data.date as String, style: noticeDateTextStyle,)),
                     Container(
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.only(bottom: 5.0),
-                        child: Text(e.title, style: noticeTitleTextStyle,)),
+                        child: Text(e.data.title, style: noticeTitleTextStyle,)),
                   ],
                 ),
             ),
@@ -82,4 +98,6 @@ class _NoticeScreenState extends State<NoticeScreen> {
       ).toList()
     );
   }
+
+  getFromDateTimeFormat(){}
 }
