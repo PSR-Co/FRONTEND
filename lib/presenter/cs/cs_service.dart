@@ -5,19 +5,16 @@ class CSService {
 
   /// Singleton Pattern
   static final CSService _csService = CSService._();
+
   CSService._();
+
   factory CSService() {
     return _csService;
   }
 
   Future<dynamic> getNoticeMainData() async {
-    final response = await APIManager().request(
-        RequestType.GET,
-        NOTICE_MAIN_URL,
-        null,
-        null,
-        null
-    );
+    final response = await APIManager()
+        .request(RequestType.GET, NOTICE_MAIN_URL, null, null, null);
     return response;
   }
 }

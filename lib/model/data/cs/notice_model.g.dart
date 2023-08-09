@@ -25,7 +25,7 @@ NoticeData _$NoticeDataFromJson(Map<String, dynamic> json) => NoticeData(
         .toList());
 
 Map<String, dynamic> _$NoticeDataToJson(NoticeData instance) =>
-    <String, dynamic>{'noticeLists': instance.noticeLists };
+    <String, dynamic>{'noticeLists': instance.noticeLists};
 
 Notice _$NoticeFromJson(Map<String, dynamic> json) => Notice(
     noticeId: json['noticeId'] as int,
