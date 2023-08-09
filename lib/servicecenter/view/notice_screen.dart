@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:psr/common/const/constants.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/model/data/cs/notice_model.dart';
 import 'package:psr/presenter/cs/cs_service.dart';
@@ -82,33 +81,32 @@ class _NoticeScreenState extends State<NoticeScreen> {
         children: noticeList
             .map(
               (e) => ToggleListItem(
-                title: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 17.0),
-                  width: MediaQuery.of(context).size.width,
-                  alignment: Alignment.centerLeft,
-                  height: 100.0,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.only(top: 5.0),
-                          child: Text(
-                            e.date,
-                            style: noticeDateTextStyle,
-                          )),
-                      Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.only(bottom: 5.0),
-                          child: Text(
-                            e.title,
-                            style: noticeTitleTextStyle,
-                          )),
-                    ],
+                  title: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 17.0),
+                    width: MediaQuery.of(context).size.width,
+                    alignment: Alignment.centerLeft,
+                    height: 100.0,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: const EdgeInsets.only(top: 5.0),
+                            child: Text(
+                              e.date,
+                              style: noticeDateTextStyle,
+                            )),
+                        Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: const EdgeInsets.only(bottom: 5.0),
+                            child: Text(
+                              e.title,
+                              style: noticeTitleTextStyle,
+                            )),
+                      ],
+                    ),
                   ),
-                ),
-                content: DetailNoticeScreen(noticeId: e.noticeId)
-              ),
+                  content: DetailNoticeScreen(noticeId: e.noticeId)),
             )
             .toList());
   }
