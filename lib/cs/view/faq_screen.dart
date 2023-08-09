@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/constants.dart';
 import 'package:psr/common/view/body_tab.dart';
-import 'package:psr/servicecenter/component/faq_list.dart';
+import 'package:psr/cs/component/faq_list.dart';
 import 'package:toggle_list/toggle_list.dart';
 
 import '../../common/const/colors.dart';

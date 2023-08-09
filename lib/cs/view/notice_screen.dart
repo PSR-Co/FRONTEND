@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/model/data/cs/notice_model.dart';
 import 'package:psr/presenter/cs/cs_service.dart';
-import 'package:psr/servicecenter/view/detail_notice_screen.dart';
 import 'package:toggle_list/toggle_list.dart';
 
 import '../../common/const/colors.dart';
+import 'detail_notice_screen.dart';
 
 class NoticeScreen extends StatefulWidget {
   const NoticeScreen({super.key});
