@@ -1,10 +1,10 @@
-class Notice {
-  List? noticeLists;
-  String title;
-  String date;
-
-  Notice(this.noticeLists, this.title, this.date);
-}
+// class Notice {
+//   List? noticeLists;
+//   String title;
+//   String date;
+//
+//   Notice(this.noticeLists, this.title, this.date);
+// }
 
 class DetailNotice {
   String title;

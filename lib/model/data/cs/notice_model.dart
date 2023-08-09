@@ -15,16 +15,26 @@ class NoticeModel extends GeneralModel{
 
 @JsonSerializable()
 class NoticeData {
+  final List<Notice> noticeLists;
+
+  NoticeData({required this.noticeLists});
+
+  factory NoticeData.fromJson(Map<String, dynamic> json)
+  => _$NoticeDataFromJson(json);
+}
+
+@JsonSerializable()
+class Notice {
   final int noticeId;
   final String title;
-  final DateTime date;
+  final String date;
 
-  NoticeData({
+  Notice({
     required this.noticeId,
     required this.title,
     required this.date
   });
 
-  factory NoticeData.fromJson(Map<String, dynamic> json)
-  => _$NoticeDataFromJson(json);
+  factory Notice.fromJson(Map<String, dynamic> json)
+  => _$NoticeFromJson(json);
 }

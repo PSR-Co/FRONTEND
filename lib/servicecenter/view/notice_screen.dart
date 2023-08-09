@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/constants.dart';
@@ -30,7 +32,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
   //   Notice([], '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)', "2023-06-12"),
   // ];
   NoticeModel? data;
-  // List noticeList = [];
+  List<Notice> noticeList = [];
 
   Future<dynamic> fetchData() async {
     return await CSService().getNoticeMainData();
@@ -44,12 +46,31 @@ class _NoticeScreenState extends State<NoticeScreen> {
         bottom: false,
         child: Column(
           children: [
-            DefaultAppBarLayout(titleText: "공지사항"),
+            const DefaultAppBarLayout(titleText: "공지사항"),
             Expanded(
-                child: FutureBuilder(
+                child: FutureBuilder<dynamic>(
                   future: fetchData(),
                   builder: (context, snapshot) {
-                    List<NoticeModel> noticeList = snapshot.data;
+                    if(snapshot.hasError) {
+                      print(snapshot.error);
+                      return const Center(
+                        child: Text('에러가 있습니다'),
+                      );
+                    }
+                    if(snapshot.hasData) {
+                      data = NoticeModel.fromJson(json: snapshot.data);
+                      noticeList = data!.data.noticeLists;
+
+                      if (data?.code != 200 || noticeList.isEmpty) {
+                        return const Center(
+                          child: Text('공지사항이 없습니다.'),
+                        );
+                      }
+                    }else {
+                      return const Center(
+                        child: Text('공지사항을 불러오는데 실패하였습니다.'),
+                      );
+                    }
                     return mainNoticeView(noticeList);
                   }
               )
@@ -60,16 +81,16 @@ class _NoticeScreenState extends State<NoticeScreen> {
     );
   }
 
-  Widget mainNoticeView(List<NoticeModel> noticeList){
+  Widget mainNoticeView(List<Notice> noticeList){
     return ToggleList(
       innerPadding: EdgeInsets.zero,
         divider: Container(width:MediaQuery.of(context).size.width , height:1, color: GRAY_0_COLOR,),
-        toggleAnimationDuration: Duration(milliseconds: 10),
-        trailing: Text(""),
+        toggleAnimationDuration: const Duration(milliseconds: 10),
+        trailing: const Text(""),
         children: noticeList.map((e) =>
           ToggleListItem(
             title: Container(
-                margin: EdgeInsets.symmetric(horizontal: 17.0),
+                margin: const EdgeInsets.symmetric(horizontal: 17.0),
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.centerLeft,
                 height: 100.0,
@@ -78,26 +99,28 @@ class _NoticeScreenState extends State<NoticeScreen> {
                   children: [
                     Container(
                         width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.only(top: 5.0),
-                        child: Text(e.data.date as String, style: noticeDateTextStyle,)),
+                        margin: const EdgeInsets.only(top: 5.0),
+                        child: Text(e.date, style: noticeDateTextStyle,)),
                     Container(
                         width: MediaQuery.of(context).size.width,
-                        margin: EdgeInsets.only(bottom: 5.0),
-                        child: Text(e.data.title, style: noticeTitleTextStyle,)),
+                        margin: const EdgeInsets.only(bottom: 5.0),
+                        child: Text(e.title, style: noticeTitleTextStyle,)),
                   ],
                 ),
             ),
             content: Container(
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 30.0),
+              padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 30.0),
               alignment: Alignment.centerLeft,
               color: PURPLE_COLOR_10,
-              child: Text(CONTENT),
+              child: const Text(CONTENT),
             ),
           ),
       ).toList()
     );
   }
 
-  getFromDateTimeFormat(){}
+  getFromDateTimeFormat({required DateTime dateTime}){
+    return '${dateTime.year}-${dateTime.month}-${dateTime.day}';
+  }
 }
