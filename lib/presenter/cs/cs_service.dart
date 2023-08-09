@@ -17,4 +17,10 @@ class CSService {
         .request(RequestType.GET, NOTICE_MAIN_URL, null, null, null);
     return response;
   }
+
+  Future<dynamic> getNoticeDetailData(int noticeId) async {
+    final response = await APIManager().request(
+        RequestType.GET, '$NOTICE_MAIN_URL/${noticeId.toString()}', null, null, null);
+    return response;
+  }
 }
