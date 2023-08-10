@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:psr/presenter/auth/signup_service.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/custom_title_text.dart';
@@ -106,8 +108,10 @@ class _InputUserInfoState extends State<InputUserInfo> {
   }
 
   /// event methods
-  void didTapSendCodeButton() {
-    print('didTapSendCodeButton - 인증번호 요청');
+  Future<void> didTapSendCodeButton() async {
+    Future<bool> result = SignupService().requestValidationCode(widget.phoneNumController.value.text);
+    Fluttertoast.showToast(msg: await result ? "인증번호를 발송했습니다!" : "인증번호 요청을 실패하였습니다.");
+
     setState(() {
       isInputValid = !isInputValid;
     });
