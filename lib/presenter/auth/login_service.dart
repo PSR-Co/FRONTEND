@@ -31,10 +31,9 @@ class LoginService {
   Future<SearchEmailResponse?> searchEmail(String name, String smsKey, String phoneNum) async {
     final body = SearchEmailRequest(name: name, smsKey: smsKey, phone: phoneNum).toJson();
     final response = await
-      APIManager().request(RequestType.POST, SEARCH_EMAIL_URL, null, null, body);
-        // .catchError((error) { debugPrint('error : $error'); });
+      APIManager().request(RequestType.POST, SEARCH_EMAIL_URL, null, null, body)
+        .catchError((error) { debugPrint('error : $error'); });
 
-    print(response);
     return (response == null) ? null : SearchEmailResponse.fromJson(response);
   }
 }
