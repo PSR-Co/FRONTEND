@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/auth/component/custom_progress_bar.dart';
 import 'package:psr/auth/view/signup/input_accout_info_screen.dart';
 import 'package:psr/auth/view/signup/input_business_info_screen.dart';
+import 'package:psr/presenter/auth/signup_service.dart';
 
 import '../../../common/const/colors.dart';
 import '../../../common/const/constants.dart';
@@ -102,6 +103,7 @@ class _SelectRoleScreenState extends State<SelectRoleScreen> {
   void didTapNextButton() {
     setState(() {
       if (selectedRole != null) {
+        SignupService().setRole((selectedRole! == "일반회원") ? "일반" : selectedRole!);
         Navigator.of(context).push(
             MaterialPageRoute(builder: (_) =>
             isBusiness ? const InputBusinessInfo() : const InputAccountInfoScreen())

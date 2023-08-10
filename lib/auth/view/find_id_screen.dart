@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:psr/presenter/auth/login_service.dart';
 
 import '../../common/layout/default_appbar_layout.dart';
 import '../../common/layout/purple_filled_button.dart';
+import '../../model/data/auth/login_model.dart';
 import '../component/input_user_info.dart';
 import 'show_user_id_screen.dart';
 
@@ -49,14 +52,26 @@ class _FindIDScreenState extends State<FindIDScreen> {
 
 
   /// event methods
-  void didTapNextButton() {
-    setState(() {
-      if (isInputValid) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (_) => const ShowUserIDScreen()), (route) => false
+  Future<void> didTapNextButton() async {
+    SearchEmailResponse? result = await LoginService().searchEmail(
+        nameController.value.text,
+        validCodeController.value.text,
+        phoneNumController.value.text
+    );
+    if (result != null) {
+      if (result.code == 200){
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) =>
+            ShowUserIDScreen(
+                name: nameController.value.text,
+                email: result.data.email
+            )), (route) => false
         );
+      } else {
+        Fluttertoast.showToast(msg: result.message);
       }
-    });
+    } else {
+      Fluttertoast.showToast(msg: "네트워크 오류가 발생하였습니다.");
+    }
   }
 
 }

@@ -21,7 +21,12 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
 
   final TextEditingController businessNameController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+
+  final TextEditingController yearController = TextEditingController();
+  final TextEditingController monthController = TextEditingController();
+  final TextEditingController dayController = TextEditingController();
+  // final TextEditingController addressController = TextEditingController();
+
   final TextEditingController registeredCodeController = TextEditingController();
 
   bool isValidInput = false;
@@ -70,8 +75,22 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
         PurpleOutlinedTextField(maxLine: 1, hintText: '대표자명을 입력해주세요.', controller: nameController),
         const SizedBox(height: 20,),
 
-        const CustomTitleText(title: '사업자 주소'),
-        PurpleOutlinedTextField(maxLine: 1, hintText: '사업자 주소 입력해주세요.', controller: addressController),
+        // TODO: DatePicker로 변경
+        const CustomTitleText(title: '개업일자'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            PurpleOutlinedTextField(maxLine: 1, hintText: '년(4자)', controller: yearController,
+              width: (MediaQuery.of(context).size.width - 50.0)/3, margin: 5,
+            ),
+            PurpleOutlinedTextField(maxLine: 1, hintText: '월', controller: monthController,
+              width: (MediaQuery.of(context).size.width - 50.0)/3, margin: 5,
+            ),
+            PurpleOutlinedTextField(maxLine: 1, hintText: '일', controller: dayController,
+              width: (MediaQuery.of(context).size.width - 50.0)/3, margin: 5,
+            ),
+          ],
+        ),
         const SizedBox(height: 20,),
 
         const CustomTitleText(title: '사업자 등록번호'),

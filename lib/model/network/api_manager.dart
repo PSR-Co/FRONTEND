@@ -51,7 +51,8 @@ class APIManager {
         response = await dio.patch(
             BASE_URL + path,
             options: defaultOptions,
-            queryParameters: queryParameters
+            queryParameters: queryParameters,
+            data: data
         );
 
       case RequestType.DELETE :

@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/layout/custom_title_text.dart';
 import 'package:psr/common/layout/purple_outlined_textfield_with_button.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:psr/presenter/auth/signup_service.dart';
 import 'dart:io';
 
 import '../../../common/const/constants.dart';
@@ -27,6 +28,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   String? profileImgKey;
 
   bool isInputValid = false;
+  bool isValidNickname = false;
 
   @override
   Widget build(BuildContext context) {
@@ -86,24 +88,38 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
               buttonTitle: '중복확인',
               onPressed: didTapValidationNickname
           )
+
         ],
       ),
     );
   }
 
   /// event methods
-  void didTapNextButton() {
+  Future<void> didTapNextButton() async {
     if (isInputValid) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen()));
+      Future<bool> result = SignupService().signup();
+      if (await result) {
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen()));
+      } else {
+        Fluttertoast.showToast(msg: '회원가입에 실패하였습니다.');
+      }
+
     } else {
       Fluttertoast.showToast(msg: '입력된 정보를 확인해주세요!');
     }
   }
 
-  void didTapValidationNickname() {
-    print('didTapValidationNickname - 닉네임 중복확인');
-    setState(() {
-      isInputValid = !isInputValid;
+  void didTapValidationNickname() async {
+    bool? result = await validateNickname();
+    setState(()  {
+      if (result != null) {
+        isInputValid = result;
+        if (isInputValid) { SignupService().setNickname(nicknameController.value.text); }
+        Fluttertoast.showToast(msg: result ? "사용 가능한 닉네임입니다!" : "이미 존재하는 닉네임입니다.");
+      } else {
+        isInputValid = false;
+        Fluttertoast.showToast(msg: "1자 이상의 닉네임을 입력해주세요.");
+      }
     });
   }
 
@@ -111,8 +127,14 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     var picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      setState(() { profileImgKey = image.path; });
+      setState(() {
+        profileImgKey = image.path;
+        SignupService().setProfileImage(profileImgKey);
+      });
     }
   }
 
+  Future<bool?> validateNickname() async {
+    return await SignupService().validateNickname(nicknameController.value.text);
+  }
 }

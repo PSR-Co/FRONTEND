@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:psr/auth/component/account_input_text_field.dart';
 import 'package:psr/auth/view/sign_up_screen.dart';
 import 'package:psr/common/const/colors.dart';
-import 'package:psr/presenter/auth/auth_service.dart';
+import 'package:psr/presenter/auth/login_service.dart';
 
 import '../../common/layout/purple_filled_button.dart';
 import '../../common/view/root_tab.dart';
@@ -187,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   /// event methods
   void didTapLoginButton() async {
-   final result = await AuthService().login(idController.value.text, pwController.value.text);
+   final result = await LoginService().login(idController.value.text, pwController.value.text);
     if (result) {
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
 
