@@ -13,7 +13,6 @@ import 'package:psr/cs/view/notice_screen.dart';
 import '../../common/const/colors.dart';
 import '../../common/const/constants.dart';
 import 'admin_detail_inquiry_screen.dart';
-import 'new_faq_screen.dart';
 
 class ServiceCenterScreen extends StatefulWidget {
   const ServiceCenterScreen({super.key});
@@ -58,8 +57,7 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
             child: DetailBar(title: "공지사항", moveTo: NoticeScreen(), ),),
           Padding(
               padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0),
-            // child: DetailBar(title: "자주 묻는 질문", moveTo: FAQScreen(),)),
-              child: DetailBar(title: "자주 묻는 질문", moveTo: NewFAQScreen(),)),
+            child: DetailBar(title: "자주 묻는 질문", moveTo: FAQScreen(),)),
 
           Padding(
               padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0),
