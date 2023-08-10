@@ -4,7 +4,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/layout/custom_title_text.dart';
 import 'package:psr/common/layout/purple_outlined_textfield_with_button.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:psr/model/data/auth/user_model.dart';
 import 'package:psr/presenter/auth/signup_service.dart';
+import 'package:psr/presenter/auth/user_service.dart';
 import 'dart:io';
 
 import '../../../common/const/constants.dart';
@@ -28,63 +30,52 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   final TextEditingController nicknameController = TextEditingController();
   String? profileImgKey;
 
+  bool isLoginUser = false;
+
   bool isInputValid = false;
   bool isValidNickname = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: const DefaultAppBarLayout(titleText: '회원가입',),
-      body: renderBody(),
-      bottomNavigationBar: getBottomButton(),
-    );
-  }
-
-  Widget getBottomButton() {
     return FutureBuilder<dynamic> (
-        future: isLoginUser(),
+        future: fetchData(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          return  PurpleFilledButton(title: snapshot.data ?'완료':'다음', onPressed: didTapNextButton, height: 40,);
+          if (snapshot.hasData) { isLoginUser = true; }
+
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: DefaultAppBarLayout(titleText: isLoginUser ? '프로필 수정' : '회원가입',),
+            body: renderBody(profile: snapshot.data),
+            bottomNavigationBar: PurpleFilledButton(title: isLoginUser ? '완료' : '다음', onPressed: didTapNextButton, height: 40,),
+          );
         }
     );
   }
 
   Widget getProgressBar() {
-    return FutureBuilder<dynamic> (
-        future: isLoginUser(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          return snapshot.data
-              ? const SizedBox(height: 0, width: 0,)
-              : const CustomProgressBar(currentPage: 4);
-        }
-    );
+    return isLoginUser
+        ? const SizedBox(height: 0, width: 0,)
+        : const CustomProgressBar(currentPage: 4);
   }
 
   Widget getTitleGuide() {
-    return FutureBuilder<dynamic> (
-        future: isLoginUser(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          return snapshot.data
-              ? const SizedBox(height: 0, width: 0,)
-              : GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(5),);
-        }
-    );
+   return isLoginUser
+        ? const SizedBox(height: 0, width: 0,)
+        : GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(5),);
   }
 
-  Widget renderBody() {
+  Widget renderBody({required profile}) {
     return ListView(
       children: [
         getProgressBar(),
-        // GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(5),),
         getTitleGuide(),
         const SizedBox(height: 30,),
-        getCenterBody(),
+        getCenterBody(profile: profile),
       ],
     );
   }
 
-  Widget getCenterBody() {
+  Widget getCenterBody({required profile}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -98,11 +89,11 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
             ),
             child: IconButton(
                 onPressed: didTapProfileImgButton,
-                icon: (profileImgKey == null)
+                icon: (profile?.imgUrl == null)
                     ? SvgPicture.asset('asset/icons/common/pick_profile_img_icon.svg',)
                     : ClipRRect(
                   borderRadius: BorderRadius.circular(PROFILE_IMG_SIZE/2),
-                  child: Image.file(File(profileImgKey!),
+                  child: Image.network(profile!.imgUrl,
                       width: PROFILE_IMG_SIZE, height: PROFILE_IMG_SIZE,
                       fit: BoxFit.cover),
                 )
@@ -113,6 +104,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
           PurpleOutlinedTextFieldWithButton(
               maxLine: 1,
               hintText: '닉네임을 입력해주세요.',
+              text: (profile?.email == null) ? null : profile!.email,
               controller: nicknameController,
               buttonTitle: '중복확인',
               onPressed: didTapValidationNickname
@@ -122,9 +114,6 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
       ),
     );
   }
-
-  /// helper methods
-  Future<bool> isLoginUser() { return APIManager().checkToken(); }
 
   /// event methods
   Future<void> didTapNextButton() async {
@@ -166,7 +155,17 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     }
   }
 
+  /// helper methods
+  Future<UserProfile?> fetchData() async {
+    if (await APIManager().checkToken()) {
+      return UserService().getUserProfile();
+    }
+    else { return null; }
+  }
+
   Future<bool?> validateNickname() async {
     return await SignupService().validateNickname(nicknameController.value.text);
   }
+
+
 }

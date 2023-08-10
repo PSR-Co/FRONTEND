@@ -19,3 +19,43 @@ Map<String, dynamic> _$EditInterestsRequestToJson(
     <String, dynamic>{
       'interestList': instance.interestList,
     };
+
+EditUserProfileRequest _$EditUserProfileRequestFromJson(
+        Map<String, dynamic> json) =>
+    EditUserProfileRequest(
+      nickname: json['nickname'] as String,
+      profileImgKey: json['profileImgKey'] as String,
+    );
+
+Map<String, dynamic> _$EditUserProfileRequestToJson(
+        EditUserProfileRequest instance) =>
+    <String, dynamic>{
+      'nickname': instance.nickname,
+      'profileImgKey': instance.profileImgKey,
+    };
+
+UserProfileResponse _$UserProfileResponseFromJson(Map<String, dynamic> json) =>
+    UserProfileResponse(
+      code: json['code'] as int,
+      message: json['message'] as String,
+      data: UserProfile.fromJson(json['data'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$UserProfileResponseToJson(
+        UserProfileResponse instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+      'data': instance.data,
+    };
+
+UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
+      email: json['email'] as String,
+      imgUrl: json['imgUrl'] as String?,
+    );
+
+Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+      'imgUrl': instance.imgUrl,
+    };
