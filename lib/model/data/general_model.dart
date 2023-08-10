@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'general_model.g.dart';
+
+@JsonSerializable()
 class GeneralModel {
   final int code;
   final String message;
@@ -7,12 +12,6 @@ class GeneralModel {
     required this.message,
   });
 
-  factory GeneralModel.fromJson({
-    required Map<String, dynamic> json,
-  }) {
-    return GeneralModel(
-      code: json['code'],
-      message: json['message'],
-    );
-  }
+  factory GeneralModel.fromJson(Map<String, dynamic> json)
+  => _$GeneralModelFromJson(json);
 }
