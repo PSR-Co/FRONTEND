@@ -10,6 +10,7 @@ import 'dart:io';
 import '../../../common/const/constants.dart';
 import '../../../common/layout/default_appbar_layout.dart';
 import '../../../common/layout/purple_filled_button.dart';
+import '../../../model/network/api_manager.dart';
 import '../../component/custom_progress_bar.dart';
 import '../../component/guide_title.dart';
 import 'complete_signup_screen.dart';
@@ -36,19 +37,47 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
       backgroundColor: Colors.white,
       appBar: const DefaultAppBarLayout(titleText: '회원가입',),
       body: renderBody(),
-      bottomNavigationBar: PurpleFilledButton(
-        title: '다음',
-        onPressed: didTapNextButton,
-        height: 40,
-      ),
+      bottomNavigationBar: getBottomButton(),
+    );
+  }
+
+  Widget getBottomButton() {
+    return FutureBuilder<dynamic> (
+        future: isLoginUser(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          return  PurpleFilledButton(title: snapshot.data ?'완료':'다음', onPressed: didTapNextButton, height: 40,);
+        }
+    );
+  }
+
+  Widget getProgressBar() {
+    return FutureBuilder<dynamic> (
+        future: isLoginUser(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          return snapshot.data
+              ? const SizedBox(height: 0, width: 0,)
+              : const CustomProgressBar(currentPage: 4);
+        }
+    );
+  }
+
+  Widget getTitleGuide() {
+    return FutureBuilder<dynamic> (
+        future: isLoginUser(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          return snapshot.data
+              ? const SizedBox(height: 0, width: 0,)
+              : GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(5),);
+        }
     );
   }
 
   Widget renderBody() {
     return ListView(
       children: [
-        const CustomProgressBar(currentPage: 5),
-        GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(5),),
+        getProgressBar(),
+        // GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(5),),
+        getTitleGuide(),
         const SizedBox(height: 30,),
         getCenterBody(),
       ],
@@ -93,6 +122,9 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
       ),
     );
   }
+
+  /// helper methods
+  Future<bool> isLoginUser() { return APIManager().checkToken(); }
 
   /// event methods
   Future<void> didTapNextButton() async {
