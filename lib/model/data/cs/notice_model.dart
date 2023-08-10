@@ -3,6 +3,7 @@ import 'package:psr/model/data/general_model.dart';
 
 part 'notice_model.g.dart';
 
+///Notice Main
 @JsonSerializable()
 class NoticeModel extends GeneralModel {
   final NoticeData data;
@@ -33,4 +34,27 @@ class Notice {
   Notice({required this.noticeId, required this.title, required this.date});
 
   factory Notice.fromJson(Map<String, dynamic> json) => _$NoticeFromJson(json);
+}
+
+///Notice Detail
+@JsonSerializable()
+class DetailNoticeModel extends GeneralModel {
+  final DetailNoticeData data;
+
+  DetailNoticeModel(
+      {required super.code, required super.message, required this.data});
+
+  factory DetailNoticeModel.fromJson(Map<String, dynamic> json) =>
+      _$DetailNoticeModelFromJson(json);
+}
+
+@JsonSerializable()
+class DetailNoticeData {
+  final int noticeId;
+  final String title;
+  final String date;
+
+  DetailNoticeData({required this.noticeId, required this.title, required this.date});
+
+  factory DetailNoticeData.fromJson(Map<String, dynamic> json) => _$DetailNoticeDataFromJson(json);
 }
