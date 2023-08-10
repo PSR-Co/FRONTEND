@@ -5,7 +5,14 @@ import '../../common/const/colors.dart';
 import 'account_input_text_field.dart';
 
 class ResetPassword extends StatefulWidget {
-  const ResetPassword({Key? key}) : super(key: key);
+  final TextEditingController pwController;
+  final TextEditingController pwValidController;
+
+  const ResetPassword({
+    required this.pwController,
+    required this.pwValidController,
+    Key? key
+  }) : super(key: key);
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -13,17 +20,14 @@ class ResetPassword extends StatefulWidget {
 
 class _ResetPasswordState extends State<ResetPassword> {
 
-  final TextEditingController pwController = TextEditingController();
-  final TextEditingController pwValidController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 40,),
-        getPwInputView('비밀번호', '비밀번호를 입력해주세요.', pwController),
-        getPwInputView('비밀번호 확인', '비밀번호를 다시 입력해주세요.', pwValidController),
+        getPwInputView('비밀번호', '비밀번호를 입력해주세요.', widget.pwController),
+        getPwInputView('비밀번호 확인', '비밀번호를 다시 입력해주세요.', widget.pwValidController),
       ],
     );
   }

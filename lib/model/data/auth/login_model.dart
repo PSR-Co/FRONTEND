@@ -87,3 +87,35 @@ class UserEmail {
   factory UserEmail.fromJson(Map<String, dynamic> json)
   => _$UserEmailFromJson(json);
 }
+
+@JsonSerializable()
+class ValidateForResetPWRequest {
+  final String email;
+  final String smsKey;
+  final String phone;
+
+  ValidateForResetPWRequest({
+    required this.email,
+    required this.smsKey,
+    required this.phone,
+  });
+
+  factory ValidateForResetPWRequest.fromJson(Map<String, dynamic> json)
+  => _$ValidateForResetPWRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$ValidateForResetPWRequestToJson(this);
+}
+
+@JsonSerializable()
+class ResetPWRequest {
+  final String email;
+  final String password;
+  final String phone;
+
+  ResetPWRequest({
+    required this.email,
+    required this.password,
+    required this.phone,
+  });
+
+  Map<String, dynamic> toJson() => _$ResetPWRequestToJson(this);
+}

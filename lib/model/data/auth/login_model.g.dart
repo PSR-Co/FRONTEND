@@ -80,3 +80,33 @@ UserEmail _$UserEmailFromJson(Map<String, dynamic> json) => UserEmail(
 Map<String, dynamic> _$UserEmailToJson(UserEmail instance) => <String, dynamic>{
       'email': instance.email,
     };
+
+ValidateForResetPWRequest _$ValidateForResetPWRequestFromJson(
+        Map<String, dynamic> json) =>
+    ValidateForResetPWRequest(
+      email: json['email'] as String,
+      smsKey: json['smsKey'] as String,
+      phone: json['phone'] as String,
+    );
+
+Map<String, dynamic> _$ValidateForResetPWRequestToJson(
+        ValidateForResetPWRequest instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+      'smsKey': instance.smsKey,
+      'phone': instance.phone,
+    };
+
+ResetPWRequest _$ResetPWRequestFromJson(Map<String, dynamic> json) =>
+    ResetPWRequest(
+      email: json['email'] as String,
+      password: json['password'] as String,
+      phone: json['phone'] as String,
+    );
+
+Map<String, dynamic> _$ResetPWRequestToJson(ResetPWRequest instance) =>
+    <String, dynamic>{
+      'email': instance.email,
+      'password': instance.password,
+      'phone': instance.phone,
+    };

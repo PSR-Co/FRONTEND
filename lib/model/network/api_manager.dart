@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'constants.dart';
 
@@ -30,6 +29,7 @@ class APIManager {
     if (options != null && options.headers != null) {
       defaultOptions.headers!.addAll(options.headers!);
     }
+    print('url -> ${BASE_URL + path}');
 
     dynamic response;
     switch (requestType) {
@@ -52,7 +52,8 @@ class APIManager {
         response = await dio.patch(
             BASE_URL + path,
             options: defaultOptions,
-            queryParameters: queryParameters
+            queryParameters: queryParameters,
+            data: data
         );
 
       case RequestType.DELETE :
