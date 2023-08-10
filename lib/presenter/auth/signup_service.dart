@@ -5,12 +5,14 @@ import 'package:psr/model/network/api_manager.dart';
 import 'package:psr/presenter/auth/user_service.dart';
 
 class SignupService {
+  final VALIDATE_EID = "/users/eid";
   final REQUEST_VALIDATION_CODE = "/users/phone/check";
   final VALIDATE_CODE = "/users/phone/validation";
   final VALIDATE_NICKNAME_URL = "/users/nickname";
   final SIGNUP_URL = "/users/signup";
 
-
+  bool isBusiness = false;
+  EntreInfo? _eid = EntreInfo(number: '', companyDate: '', ownerName: '', companyName: '');
   SignupRequest _signupRequest = SignupRequest(email: '', password: '', type: '', phone: '', name: '', profileImgKey: null, nickname: '', marketing: true, notification: true, interestList: []);
 
   /// Singleton Pattern
@@ -26,6 +28,7 @@ class SignupService {
   /// Setter Methods
   void setRole(String selected) {
     _signupRequest.type = selected;
+    isBusiness = (selected == '사업자');
   }
 
   void setAccountInfo(String email, String pw) {
@@ -57,12 +60,29 @@ class SignupService {
 
 
   /// helper methods
+  String getTotalDateStr(String year, String month, String day) {
+    if (month.length == 1) { month = '0$month'; }
+    if (day.length == 1) { day = '0$day'; }
+    return year+month+day;
+  }
+
   String getTrimmedCategory(String category) {
     if (category.length > 5) { return category.replaceAll('\n', ' '); }
     else { return category.replaceAll(' ', ''); }
   }
 
   /// Request Methods
+  Future<bool> validateEid(String number, String year, String month, String day, String ownerName, String companyName) async {
+    final eid = EntreInfo(number: number, companyDate: getTotalDateStr(year,month,day), ownerName: ownerName, companyName: companyName);
+    final response = await APIManager().request(RequestType.POST, VALIDATE_EID, null, null, eid.toJson())
+        .catchError((error) { debugPrint('error : $error'); });
+    if ((response != null) && (response['code'] == 200)) {
+      _eid = eid;
+      return true;
+    }
+    else { return false; }
+  }
+
   Future<bool> requestValidationCode(String phoneNum) async {
     final body = {"phone": phoneNum};
     final response = await APIManager().request(RequestType.POST, REQUEST_VALIDATION_CODE, null, null, body)
@@ -93,8 +113,11 @@ class SignupService {
   }
 
   Future<bool> signup() async {
+    if (isBusiness) { _signupRequest.entreInfo = _eid; }
+
     final response = await
-      APIManager().request(RequestType.POST, SIGNUP_URL, null, null, _signupRequest.toJson());
+      APIManager().request(RequestType.POST,SIGNUP_URL, null, null, _signupRequest.toJson())
+          .catchError((error) { debugPrint('error : $error'); });
     return ((response != null) && (response['code'] == 200));
   }
 }

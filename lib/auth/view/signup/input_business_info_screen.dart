@@ -8,6 +8,7 @@ import 'package:psr/common/layout/purple_outlined_text_field.dart';
 import '../../../common/const/constants.dart';
 import '../../../common/layout/default_appbar_layout.dart';
 import '../../../common/layout/purple_filled_button.dart';
+import '../../../presenter/auth/signup_service.dart';
 import '../../component/guide_title.dart';
 
 class InputBusinessInfo extends StatefulWidget {
@@ -139,10 +140,27 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
     });
   }
 
-  void didTapValidationButton() {
+  void didTapValidationButton() async {
+    bool? result = await validateEid();
     setState(() {
-      // TODO: 인증 성공하면 canPushNextView 값을 true로 변경하기
-      isValidInput = !isValidInput;
+      if (result != null) {
+        isValidInput = result;
+        Fluttertoast.showToast(msg: result ? "인증에 성공하였습니다!" : "인증에 실패하였습니다.");
+      } else {
+        isValidInput = false;
+        Fluttertoast.showToast(msg: "네트워크 오류가 발생하였습니다.");
+      }
     });
+  }
+
+  Future<bool?> validateEid() async {
+    return await SignupService().validateEid(
+        registeredCodeController.value.text,
+        yearController.value.text,
+        monthController.value.text,
+        dayController.value.text,
+        nameController.value.text,
+        businessNameController.value.text
+    );
   }
 }
