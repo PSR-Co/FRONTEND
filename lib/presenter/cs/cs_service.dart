@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
+
 import '../../model/network/api_manager.dart';
 
 class CSService {
   final NOTICE_MAIN_URL = '/cs/notices';
+  final FAQ_MAIN_URL = '/cs/faqs';
 
   /// Singleton Pattern
   static final CSService _csService = CSService._();
@@ -19,8 +22,17 @@ class CSService {
   }
 
   Future<dynamic> getNoticeDetailData(int noticeId) async {
-    final response = await APIManager().request(
-        RequestType.GET, '$NOTICE_MAIN_URL/${noticeId.toString()}', null, null, null);
+    final response = await APIManager().request(RequestType.GET,
+        '$NOTICE_MAIN_URL/${noticeId.toString()}', null, null, null);
     return response;
+  }
+
+  Future<dynamic> getFAQData(Map<String, String>? queryParameters) async {
+    final response = await APIManager()
+        .request(RequestType.GET, FAQ_MAIN_URL, null, queryParameters, null);
+    print('response : $response');
+
+    if(response['data']['faqLists']!=null) {return response;}
+
   }
 }

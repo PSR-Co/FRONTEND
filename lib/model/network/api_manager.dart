@@ -61,6 +61,8 @@ class APIManager {
             queryParameters: queryParameters
         );
     }
+    print('api + ${response}');
+    print('api + ${response.data}');
 
     return response.data;
   }
