@@ -6,7 +6,7 @@ import 'package:psr/common/layout/main_appbar_layout.dart';
 import 'package:psr/cs/view/faq_screen.dart';
 import 'package:psr/home/component/best_list_item.dart';
 import 'package:psr/home/component/card_slider.dart';
-import 'package:psr/home/component/favorite_package_list_item.dart';
+import 'package:psr/home/component/fav_package_footer_item.dart';
 import 'package:psr/home/component/notice_list_content.dart';
 import 'package:psr/home/component/outlined_btn.dart';
 import 'package:psr/home/component/recent_list_item.dart';
@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
         margin: const EdgeInsets.only(left: 17),
         child: DetailBar(
           title: '관심있는 패키지를 골라보세요',
-          moveTo: SelectInterestScreen(),
+          moveTo: const SelectInterestScreen(),
         ));
   }
 
@@ -240,103 +240,111 @@ class _HomeScreenState extends State<HomeScreen> {
               borderColor: SHADOW_COLOR,
               borderWidth: 2,
               radius: 10,
-              width: 120,
+              width: MediaQuery.of(context).size.width / 3.5,
               height: 70,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(left: 10.0),
-                      child: Text(
-                        favPackageBtn[0].title1,
-                        style: packageBtnTextStyle,
-                      )),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.arrow_forward_ios,
-                        size: 15.0, color: GRAY_3_COLOR),
-                  ),
-                ],
-              )),
-          OutlinedBtnComponent(
-              borderColor: SHADOW_COLOR,
-              borderWidth: 2,
-              radius: 10,
-              width: 120,
-              height: 70,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(left: 14.0),
-                      child: Text(
-                        favPackageBtn[1].title1,
-                        style: packageBtnTextStyle,
-                      )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: SizedBox(
+                  height: 70,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        favPackageBtn[1].title2,
+                        favPackageBtn[0].title1,
                         style: packageBtnTextStyle,
                       ),
                       IconButton(
                         onPressed: () {},
-                        padding: const EdgeInsets.only(top: 2.0), // 패딩 설정
-                        constraints: const BoxConstraints(),
-                        icon: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 15.0,
-                          color: GRAY_3_COLOR,
-                        ),
-                      )
+                        icon: const Icon(Icons.arrow_forward_ios,
+                            size: 15.0, color: GRAY_3_COLOR),
+                        padding: EdgeInsets.zero,
+                        constraints: BoxConstraints(),
+                      ),
                     ],
                   ),
-                ],
+                ),
               )),
           OutlinedBtnComponent(
               borderColor: SHADOW_COLOR,
               borderWidth: 2,
               radius: 10,
-              width: 120,
+              width: MediaQuery.of(context).size.width / 3.5,
               height: 70,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                      padding: const EdgeInsets.only(left: 14.0),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                        child: Text(
+                          favPackageBtn[1].title1,
+                          style: packageBtnTextStyle,
+                        )),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          favPackageBtn[1].title2,
+                          style: packageBtnTextStyle,
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          padding: EdgeInsets.zero , // 패딩 설정
+                          constraints: const BoxConstraints(),
+                          icon: const Icon(
+                            Icons.arrow_forward_ios,
+                            size: 15.0,
+                            color: GRAY_3_COLOR,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              )),
+          OutlinedBtnComponent(
+              borderColor: SHADOW_COLOR,
+              borderWidth: 2,
+              radius: 10,
+              width: MediaQuery.of(context).size.width / 3.5,
+              height: 70,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
                       child: Text(
                         favPackageBtn[2].title1,
                         style: packageBtnTextStyle,
-                      )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Padding(
-                          padding: const EdgeInsets.only(left: 6.0),
-                          child: Text(
-                            favPackageBtn[2].title2,
-                            style: packageBtnTextStyle,
-                          )),
-                      IconButton(
-                        onPressed: () {},
-                        padding: const EdgeInsets.only(
-                          top: 2.0,
-                        ), // 패딩 설정
-                        constraints: const BoxConstraints(),
-                        icon: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 15.0,
-                          color: GRAY_3_COLOR,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          favPackageBtn[2].title2,
+                          style: packageBtnTextStyle,
                         ),
-                      )
-                    ],
-                  ),
-                ],
+                        IconButton(
+                          onPressed: () {},
+                          padding: const EdgeInsets.only(
+                            top: 2.0,
+                          ), // 패딩 설정
+                          constraints: const BoxConstraints(),
+                          icon: const Icon(
+                            Icons.arrow_forward_ios,
+                            size: 15.0,
+                            color: GRAY_3_COLOR,
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ))
         ]));
   }
@@ -361,7 +369,7 @@ class _HomeScreenState extends State<HomeScreen> {
               radius: 24,
               width: 170,
               height: 60,
-              child: buttonContent('문의하기', ServiceCenterScreen()))
+              child: buttonContent('문의하기', const ServiceCenterScreen()))
         ],
       ),
     );
