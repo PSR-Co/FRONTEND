@@ -5,10 +5,10 @@ import 'package:psr/common/layout/detail_bar_layout.dart';
 import 'package:psr/common/layout/division.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
-import 'package:psr/servicecenter/view/detail_inquiry_screen.dart';
-import 'package:psr/servicecenter/view/faq_screen.dart';
-import 'package:psr/servicecenter/view/inquiry_screen.dart';
-import 'package:psr/servicecenter/view/notice_screen.dart';
+import 'package:psr/cs/view/detail_inquiry_screen.dart';
+import 'package:psr/cs/view/faq_screen.dart';
+import 'package:psr/cs/view/inquiry_screen.dart';
+import 'package:psr/cs/view/notice_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/const/constants.dart';
@@ -58,6 +58,7 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
           Padding(
               padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0),
             child: DetailBar(title: "자주 묻는 질문", moveTo: FAQScreen(),)),
+
           Padding(
               padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0),
               child: DetailBar(title: "문의하기", moveTo: InquiryScreen(),)),

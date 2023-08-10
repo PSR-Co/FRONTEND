@@ -9,8 +9,8 @@ import 'package:psr/home/component/outlined_btn.dart';
 import 'package:psr/home/component/card_slider.dart';
 import 'package:psr/home/component/recent_list_item.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
-import 'package:psr/servicecenter/view/faq_screen.dart';
-import '../../servicecenter/view/service_center_screen.dart';
+import 'package:psr/cs/view/faq_screen.dart';
+import '../../cs/view/service_center_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -224,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          OutlinedBtnComponent(borderColor : PURPLE_COLOR , borderWidth : 1, radius : 24, width : 170, height : 60, child: buttonContent('자주 묻는 질문', FAQScreen())),
+          OutlinedBtnComponent(borderColor : PURPLE_COLOR , borderWidth : 1, radius : 24, width : 170, height : 60, child: buttonContent('자주 묻는 질문', const FAQScreen())),
           OutlinedBtnComponent(borderColor : PURPLE_COLOR , borderWidth : 1, radius : 24, width : 170, height : 60, child : buttonContent('문의하기', ServiceCenterScreen()))
         ],
       ),

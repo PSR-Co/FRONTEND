@@ -5,7 +5,7 @@ import 'package:psr/mypage/view/likelist_screen.dart';
 import 'package:psr/mypage/view/mypost_screen.dart';
 import 'package:psr/mypage/view/notificationlist_screen.dart';
 import 'package:psr/mypage/view/order_list_tab.dart';
-import 'package:psr/servicecenter/view/service_center_screen.dart';
+import 'package:psr/cs/view/service_center_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/division.dart';
