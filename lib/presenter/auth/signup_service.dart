@@ -80,12 +80,7 @@ class SignupService {
   Future<bool> signup() async {
     final response = await
       APIManager().request(RequestType.POST, SIGNUP_URL, null, null, _signupRequest.toJson());
-
-    if ((response != null) && (response['code'] == 200)) {
-      // TODO: 요청 성공할 경우 토큰 저장
-
-      return true;
-    } else { return false; }
+    return ((response != null) && (response['code'] == 200));
   }
 
 }
