@@ -39,9 +39,9 @@ class _PurpleOutlinedTextFieldWithButtonState extends State<PurpleOutlinedTextFi
   }
 
   Widget renderRow() {
-    if (widget.text != null) {
-      widget.controller.text = widget.text!;
-    }
+    // if (widget.text != null) {
+    //   widget.controller.text = widget.text!;
+    // }
 
     final defaultStyle = OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -59,13 +59,11 @@ class _PurpleOutlinedTextFieldWithButtonState extends State<PurpleOutlinedTextFi
               height: 45,
               child: TextFormField(
                 controller: widget.controller,
-                // initialValue: widget.text,
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.black,
                 ),
                 onChanged: (value) {
-                  print('text -> $value');
                   setState(() {
                     currentTextLength = value.length;
                   });

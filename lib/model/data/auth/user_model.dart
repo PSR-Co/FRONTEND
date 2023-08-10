@@ -18,7 +18,7 @@ class EditInterestsRequest {
 @JsonSerializable()
 class EditUserProfileRequest {
   final String nickname;
-  final String profileImgKey;
+  final String? profileImgKey;
 
   EditUserProfileRequest({
     required this.nickname,

@@ -118,11 +118,18 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   /// event methods
   Future<void> didTapNextButton() async {
     if (isInputValid) {
-      Future<bool> result = SignupService().signup();
-      if (await result) {
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen()));
+      if (isLoginUser) {
+        Future<bool> result = UserService().editProfile(nicknameController.value.text, profileImgKey);
+        if (await result) { Navigator.of(context).pop(); }
+        else { Fluttertoast.showToast(msg: '프로필 수정에 실패하였습니다.'); }
+
       } else {
-        Fluttertoast.showToast(msg: '회원가입에 실패하였습니다.');
+        Future<bool> result = SignupService().signup();
+        if (await result) {
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen()));
+        } else {
+          Fluttertoast.showToast(msg: '회원가입에 실패하였습니다.');
+        }
       }
 
     } else {

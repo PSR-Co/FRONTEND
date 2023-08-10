@@ -24,7 +24,7 @@ EditUserProfileRequest _$EditUserProfileRequestFromJson(
         Map<String, dynamic> json) =>
     EditUserProfileRequest(
       nickname: json['nickname'] as String,
-      profileImgKey: json['profileImgKey'] as String,
+      profileImgKey: json['profileImgKey'] as String?,
     );
 
 Map<String, dynamic> _$EditUserProfileRequestToJson(
