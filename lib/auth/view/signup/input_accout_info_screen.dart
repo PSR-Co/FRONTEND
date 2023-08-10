@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/auth/component/input_account_info.dart';
 import 'package:psr/auth/view/signup/input_user_info_screen.dart';
+import 'package:psr/presenter/auth/signup_service.dart';
 
 import '../../../common/const/constants.dart';
 import '../../../common/layout/default_appbar_layout.dart';
@@ -56,6 +57,7 @@ class _InputAccountInfoScreenState extends State<InputAccountInfoScreen> {
   /// event methods
   void didTapNextButton() {
     if(isInputValid) {
+      SignupService().setAccountInfo(emailController.value.text, pwController.value.text);
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InputUserInfoScreen()));
     } else {
       Fluttertoast.showToast(msg: '입력 정보를 확인해주세요!');

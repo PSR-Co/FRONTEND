@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/auth/view/signup/select_interest_screen.dart';
+import 'package:psr/model/data/auth/signup_model.dart';
+import 'package:psr/presenter/auth/signup_service.dart';
 
 import '../../../common/const/constants.dart';
 import '../../../common/layout/default_appbar_layout.dart';
@@ -57,6 +59,8 @@ class _InputUserInfoScreenState extends State<InputUserInfoScreen> {
   /// event methods
   void didTapNextButton() {
     if (isInputValid) {
+      // TODO: 인증번호 유효성 검증 요청 추가
+      SignupService().setUserInfo(nameController.value.text, phoneNumController.value.text);
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SelectInterestScreen()));
     } else {
       Fluttertoast.showToast(msg: '입력된 개인정보를 확인해주세요!');

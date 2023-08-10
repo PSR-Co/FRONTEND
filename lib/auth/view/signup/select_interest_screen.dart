@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/auth/view/signup/set_profile_screen.dart';
 import 'package:psr/common/const/colors.dart';
+import 'package:psr/presenter/auth/signup_service.dart';
 
 import '../../../common/const/constants.dart';
 import '../../../common/layout/default_appbar_layout.dart';
@@ -116,6 +117,7 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
   /// event methods
   void didTapNextButton() {
     if(selectedList.isNotEmpty) {
+      SignupService().setInterestList(selectedList);
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SetProfileScreen()));
     } else {
       Fluttertoast.showToast(msg: '한 개 이상의 관심 주제를 선택해주세요!');

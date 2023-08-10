@@ -5,20 +5,24 @@ import 'package:psr/model/data/general_model.dart';
 part 'signup_model.g.dart';
 
 @JsonSerializable()
-class SignupRequest extends GeneralModel {
-  final String email;
-  final String password;
-  final String profileImgKey;
-  final String nickname;
-  final bool marketing;
-  final bool notification;
-  final List<Interest> interestList;
+class SignupRequest {
+  String email;
+  String password;
+  String type;
+  String phone;
+  String name;
+  String? profileImgKey;
+  String nickname;
+  bool marketing;
+  bool notification;
+  List<Interest> interestList;
 
   SignupRequest({
-    required super.code,
-    required super.message,
     required this.email,
     required this.password,
+    required this.type,
+    required this.phone,
+    required this.name,
     required this.profileImgKey,
     required this.nickname,
     required this.marketing,
@@ -31,13 +35,14 @@ class SignupRequest extends GeneralModel {
 
 @JsonSerializable()
 class BusinessSignupRequest extends SignupRequest {
-  final EntreInfo entreInfo;
+  EntreInfo entreInfo;
 
   BusinessSignupRequest({
-    required super.code,
-    required super.message,
     required super.email,
     required super.password,
+    required super.type,
+    required super.phone,
+    required super.name,
     required super.profileImgKey,
     required super.nickname,
     required super.marketing,

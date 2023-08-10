@@ -8,11 +8,12 @@ part of 'signup_model.dart';
 
 SignupRequest _$SignupRequestFromJson(Map<String, dynamic> json) =>
     SignupRequest(
-      code: json['code'] as int,
-      message: json['message'] as String,
       email: json['email'] as String,
       password: json['password'] as String,
-      profileImgKey: json['profileImgKey'] as String,
+      type: json['type'] as String,
+      phone: json['phone'] as String,
+      name: json['name'] as String,
+      profileImgKey: json['profileImgKey'] as String?,
       nickname: json['nickname'] as String,
       marketing: json['marketing'] as bool,
       notification: json['notification'] as bool,
@@ -23,10 +24,11 @@ SignupRequest _$SignupRequestFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$SignupRequestToJson(SignupRequest instance) =>
     <String, dynamic>{
-      'code': instance.code,
-      'message': instance.message,
       'email': instance.email,
       'password': instance.password,
+      'type': instance.type,
+      'phone': instance.phone,
+      'name': instance.name,
       'profileImgKey': instance.profileImgKey,
       'nickname': instance.nickname,
       'marketing': instance.marketing,
@@ -37,11 +39,12 @@ Map<String, dynamic> _$SignupRequestToJson(SignupRequest instance) =>
 BusinessSignupRequest _$BusinessSignupRequestFromJson(
         Map<String, dynamic> json) =>
     BusinessSignupRequest(
-      code: json['code'] as int,
-      message: json['message'] as String,
       email: json['email'] as String,
       password: json['password'] as String,
-      profileImgKey: json['profileImgKey'] as String,
+      type: json['type'] as String,
+      phone: json['phone'] as String,
+      name: json['name'] as String,
+      profileImgKey: json['profileImgKey'] as String?,
       nickname: json['nickname'] as String,
       marketing: json['marketing'] as bool,
       notification: json['notification'] as bool,
@@ -54,10 +57,11 @@ BusinessSignupRequest _$BusinessSignupRequestFromJson(
 Map<String, dynamic> _$BusinessSignupRequestToJson(
         BusinessSignupRequest instance) =>
     <String, dynamic>{
-      'code': instance.code,
-      'message': instance.message,
       'email': instance.email,
       'password': instance.password,
+      'type': instance.type,
+      'phone': instance.phone,
+      'name': instance.name,
       'profileImgKey': instance.profileImgKey,
       'nickname': instance.nickname,
       'marketing': instance.marketing,

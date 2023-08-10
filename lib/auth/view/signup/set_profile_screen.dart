@@ -28,6 +28,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   String? profileImgKey;
 
   bool isInputValid = false;
+  bool isValidNickname = false;
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +95,15 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   }
 
   /// event methods
-  void didTapNextButton() {
+  Future<void> didTapNextButton() async {
     if (isInputValid) {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen()));
+      Future<bool> result = SignupService().signup();
+      if (await result) {
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen()));
+      } else {
+        Fluttertoast.showToast(msg: '회원가입에 실패하였습니다.');
+      }
+
     } else {
       Fluttertoast.showToast(msg: '입력된 정보를 확인해주세요!');
     }
@@ -107,6 +114,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     setState(()  {
       if (result != null) {
         isInputValid = result;
+        if (isInputValid) { SignupService().setNickname(nicknameController.value.text); }
         Fluttertoast.showToast(msg: result ? "사용 가능한 닉네임입니다!" : "이미 존재하는 닉네임입니다.");
       } else {
         isInputValid = false;
@@ -119,7 +127,10 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     var picker = ImagePicker();
     var image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      setState(() { profileImgKey = image.path; });
+      setState(() {
+        profileImgKey = image.path;
+        SignupService().setProfileImage(profileImgKey);
+      });
     }
   }
 
