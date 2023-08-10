@@ -29,7 +29,6 @@ class APIManager {
     if (options != null && options.headers != null) {
       defaultOptions.headers!.addAll(options.headers!);
     }
-    print('url -> ${BASE_URL + path}');
 
     dynamic response;
     switch (requestType) {
