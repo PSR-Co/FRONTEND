@@ -5,6 +5,7 @@ import '../../model/network/api_manager.dart';
 class CSService {
   final NOTICE_MAIN_URL = '/cs/notices';
   final FAQ_MAIN_URL = '/cs/faqs';
+  final HOME_NOTICE_URL = '/cs/notices/home';
 
   /// Singleton Pattern
   static final CSService _csService = CSService._();
@@ -40,6 +41,12 @@ class CSService {
   Future<dynamic> getFAQDetailData(int faqId) async {
     final response = await APIManager().request(
         RequestType.GET, '$FAQ_MAIN_URL/${faqId.toString()}', null, null, null);
+    return response;
+  }
+
+  Future<dynamic> getHomeNoticeData() async {
+    final response = await APIManager().request(
+        RequestType.GET, HOME_NOTICE_URL, null, null, null);
     return response;
   }
 }
