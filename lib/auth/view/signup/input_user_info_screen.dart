@@ -57,11 +57,15 @@ class _InputUserInfoScreenState extends State<InputUserInfoScreen> {
 
 
   /// event methods
-  void didTapNextButton() {
+  Future<void> didTapNextButton() async {
     if (isInputValid) {
-      // TODO: 인증번호 유효성 검증 요청 추가
-      SignupService().setUserInfo(nameController.value.text, phoneNumController.value.text);
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SelectInterestScreen()));
+      Future<bool> isValid = SignupService().validatePhoneWithCode(phoneNumController.value.text, validCodeController.value.text);
+      if (await isValid) {
+        SignupService().setUserInfo(nameController.value.text, phoneNumController.value.text);
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SelectInterestScreen()));
+      } else {
+        Fluttertoast.showToast(msg: "인증번호를 확인해주세요.");
+      }
     } else {
       Fluttertoast.showToast(msg: '입력된 개인정보를 확인해주세요!');
     }
