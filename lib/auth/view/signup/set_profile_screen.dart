@@ -76,6 +76,8 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   }
 
   Widget getCenterBody({required profile}) {
+    if (isLoginUser) { nicknameController.text = profile!.email; }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
