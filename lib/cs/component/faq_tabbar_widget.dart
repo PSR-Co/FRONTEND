@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:psr/cs/view/detail_faq_screen.dart';
 import 'package:toggle_list/toggle_list.dart';
 
 import '../../common/const/colors.dart';
@@ -60,7 +61,7 @@ class _FAQTabBarWidgetState extends State<FAQTabBarWidget> {
               child: Text('질문이 없습니다.'),
             );
           }else {
-            return CircularProgressIndicator();
+            return Container(width: 30, height: 30, alignment: Alignment.center, child: CircularProgressIndicator());
           }
           return mainFAQView(faqList);
       }
@@ -95,13 +96,7 @@ class _FAQTabBarWidgetState extends State<FAQTabBarWidget> {
                   ],
                 ),
               ),
-              content: Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 30.0),
-                  alignment: Alignment.centerLeft,
-                  color: PURPLE_COLOR_10,
-                  child: Text(CONTENT)
-              ),
+              content: DetailFAQScreen(faqId: e.faqId)
             ),
         ).toList()
     );

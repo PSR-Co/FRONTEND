@@ -1,8 +1,8 @@
-class FAQ{
-  DetailFAQ faqType;
-
-  FAQ(this.faqType);
-}
+// class FAQ{
+//   DetailFAQ faqType;
+//
+//   FAQ(this.faqType);
+// }
 
 class DetailFAQ{
   String faqType;

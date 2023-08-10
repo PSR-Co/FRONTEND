@@ -32,7 +32,14 @@ class CSService {
         .request(RequestType.GET, FAQ_MAIN_URL, null, queryParameters, null);
     print('response : $response');
 
-    if(response['data']['faqLists']!=null) {return response;}
+    if (response['data']['faqLists'] != null) {
+      return response;
+    }
+  }
 
+  Future<dynamic> getFAQDetailData(int faqId) async {
+    final response = await APIManager().request(
+        RequestType.GET, '$FAQ_MAIN_URL/${faqId.toString()}', null, null, null);
+    return response;
   }
 }

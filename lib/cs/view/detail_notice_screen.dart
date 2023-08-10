@@ -32,7 +32,7 @@ class _DetailNoticeScreenState extends State<DetailNoticeScreen> {
             );
           }
           if (snapshot.hasData) {
-            data = DetailNoticeModel.fromJson(json: snapshot.data);
+            data = DetailNoticeModel.fromJson(snapshot.data);
 
             if (data?.code != 200) {
               return const Center(

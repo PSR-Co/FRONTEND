@@ -10,7 +10,7 @@ class DetailNoticeModel extends GeneralModel {
   DetailNoticeModel(
       {required super.code, required super.message, required this.data});
 
-  factory DetailNoticeModel.fromJson({required Map<String, dynamic> json}) =>
+  factory DetailNoticeModel.fromJson(Map<String, dynamic> json) =>
       _$DetailNoticeModelFromJson(json);
 }
 
