@@ -46,3 +46,44 @@ class LoginRequest {
 
   Map<String, dynamic> toJson() => _$LoginRequestToJson(this);
 }
+
+@JsonSerializable()
+class SearchEmailRequest {
+  final String name;
+  final String smsKey;
+  final String phone;
+
+  SearchEmailRequest({
+    required this.name,
+    required this.smsKey,
+    required this.phone,
+  });
+
+  Map<String, dynamic> toJson() => _$SearchEmailRequestToJson(this);
+}
+
+@JsonSerializable()
+class SearchEmailResponse extends GeneralModel {
+  final UserEmail data;
+
+  SearchEmailResponse({
+    required super.code,
+    required super.message,
+    required this.data
+  });
+
+  factory SearchEmailResponse.fromJson(Map<String, dynamic> json)
+  => _$SearchEmailResponseFromJson(json);
+}
+
+@JsonSerializable()
+class UserEmail {
+  final String email;
+
+  UserEmail({
+    required this.email
+  });
+
+  factory UserEmail.fromJson(Map<String, dynamic> json)
+  => _$UserEmailFromJson(json);
+}

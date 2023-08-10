@@ -7,7 +7,14 @@ import '../../common/layout/default_appbar_layout.dart';
 import '../../common/layout/purple_filled_button.dart';
 
 class ShowUserIDScreen extends StatefulWidget {
-  const ShowUserIDScreen({Key? key}) : super(key: key);
+  final String name;
+  final String email;
+
+  const ShowUserIDScreen({
+    required this.name,
+    required this.email,
+    Key? key
+  }) : super(key: key);
 
   @override
   State<ShowUserIDScreen> createState() => _ShowUserIDScreenState();
@@ -41,7 +48,7 @@ class _ShowUserIDScreenState extends State<ShowUserIDScreen> {
     return Column(
       children: [
         const SizedBox(height: 60,),
-        const CustomTitleText(title: 'OOO님의 아이디입니다.'),
+        CustomTitleText(title: '${widget.name}님의 아이디입니다.'),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
           padding: const EdgeInsets.symmetric(vertical: 50),
@@ -52,12 +59,11 @@ class _ShowUserIDScreenState extends State<ShowUserIDScreen> {
                 width: 1.0,
               )
           ),
-          child: const Center(
+          child: Center(
               child: Column(
                 children: [
-                  Text('아이디:', style: TextStyle(fontSize: 16),),
-                  Text('psr1234', style: TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.w700),),
+                  const Text('아이디:', style: TextStyle(fontSize: 16),),
+                  Text(widget.email, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),),
                 ],
               )
           ),

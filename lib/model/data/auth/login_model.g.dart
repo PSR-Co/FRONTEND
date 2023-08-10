@@ -43,3 +43,40 @@ Map<String, dynamic> _$LoginRequestToJson(LoginRequest instance) =>
       'email': instance.email,
       'password': instance.password,
     };
+
+SearchEmailRequest _$SearchEmailRequestFromJson(Map<String, dynamic> json) =>
+    SearchEmailRequest(
+      name: json['name'] as String,
+      smsKey: json['smsKey'] as String,
+      phone: json['phone'] as String,
+    );
+
+Map<String, dynamic> _$SearchEmailRequestToJson(SearchEmailRequest instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'smsKey': instance.smsKey,
+      'phone': instance.phone,
+    };
+
+SearchEmailResponse _$SearchEmailResponseFromJson(Map<String, dynamic> json) =>
+    SearchEmailResponse(
+      code: json['code'] as int,
+      message: json['message'] as String,
+      data: UserEmail.fromJson(json['data'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$SearchEmailResponseToJson(
+        SearchEmailResponse instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+      'data': instance.data,
+    };
+
+UserEmail _$UserEmailFromJson(Map<String, dynamic> json) => UserEmail(
+      email: json['email'] as String,
+    );
+
+Map<String, dynamic> _$UserEmailToJson(UserEmail instance) => <String, dynamic>{
+      'email': instance.email,
+    };
