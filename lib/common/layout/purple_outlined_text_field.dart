@@ -7,6 +7,8 @@ class PurpleOutlinedTextField extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
   final IconButton? suffixIconButton;
+  final double? width;
+  final double? margin;
 
   const PurpleOutlinedTextField({
     required this.maxLine,
@@ -14,6 +16,8 @@ class PurpleOutlinedTextField extends StatefulWidget {
     required this.hintText,
     required this.controller,
     this.suffixIconButton,
+    this.width,
+    this.margin,
     Key? key
   }) : super(key: key);
 
@@ -45,8 +49,8 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
     List<Widget> children = [];
     children.add(
         Container(
-            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-            width: MediaQuery.of(context).size.width - 40,
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: widget.margin ?? 20),
+            width: widget.width ?? MediaQuery.of(context).size.width,
             height: (widget.maxLine == 1) ? 45.0 : 140.0,
             child: TextField(
               style: const TextStyle(
