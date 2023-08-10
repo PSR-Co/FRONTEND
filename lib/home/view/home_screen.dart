@@ -10,6 +10,8 @@ import 'package:psr/home/component/card_slider.dart';
 import 'package:psr/home/component/recent_list_item.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
 import 'package:psr/cs/view/faq_screen.dart';
+import 'package:psr/model/data/home/home_model.g.dart';
+import 'package:psr/presenter/home/home_service.dart';
 import '../../cs/view/service_center_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,11 +22,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  HomeModel? data;
+  List<MainTop> mainTopProductList = [];
+  List<RecentProduct> recentProductList = [];
+  List<PopularProduct> popularProductList = [];
+
+  Future<dynamic> fetchData() async {
+    return await HomeService().getHomeData();
+  }
+
   ///package 부분 임시 데이터
-  List<PackageCard> favPackageList = [
-    PackageCard('패키지', '새싹 등급   ', '👨🏻‍🏫', '한 줄 소개글을 작성해주세요', PURPLE_COLOR_20),
-    PackageCard('패키지', '교육 컨설팅  ', '📚', '한 줄 소개글을 작성해주세요', SKY_COLOR_20),
-    PackageCard('패키지', '라이브 커머스', '👨🏻‍🏫', '한 줄 소개글을 작성해주세요', PINK_COLOR_20)];
+  // List<PackageCard> favPackageList = [
+  //   PackageCard('패키지', '새싹 등급   ', '👨🏻‍🏫', '한 줄 소개글을 작성해주세요', PURPLE_COLOR_20),
+  //   PackageCard('패키지', '교육 컨설팅  ', '📚', '한 줄 소개글을 작성해주세요', SKY_COLOR_20),
+  //   PackageCard('패키지', '라이브 커머스', '👨🏻‍🏫', '한 줄 소개글을 작성해주세요', PINK_COLOR_20)];
+  List<Color> mainTopCardColor = [PURPLE_COLOR_20, SKY_COLOR_20, PINK_COLOR_20];
+  List<String> mainTopCardEmogi = ['👨🏻‍🏫', '📚', '👨🏻‍🏫'];
+
   List<PackageBtn> favPackageBtn = [
     PackageBtn('강사매칭', ''),
     PackageBtn('라이브커머스', '교육'),
@@ -53,23 +68,49 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget renderBody() {
-    return SingleChildScrollView(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Padding(padding: const EdgeInsets.only(top: 10.0), child: renderFavPackageHeader()),
-            Padding(padding: const EdgeInsets.only(bottom: 10.0), child: renderFavPackageList()),
-            Padding(padding: const EdgeInsets.symmetric(vertical: 10.0), child: renderFavPackageFooter()),
-            Padding(padding: const EdgeInsets.symmetric(vertical: 10.0), child: RecentListItem()),
-            Padding(padding: const EdgeInsets.symmetric(vertical: 10.0), child: BestListItem()),
-            Padding(padding: const EdgeInsets.symmetric(vertical: 10.0), child: NoticeListContent()),
-            Padding(padding: const EdgeInsets.symmetric(vertical: 10.0), child: renderBtnGroup()),
-          ],
-        ),
-      ),
+    return FutureBuilder(
+      future: fetchData(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const Center(
+            child: Text('에러가 있습니다'),
+          );
+        }
+        if (snapshot.hasData) {
+          data = HomeModel.fromJson(snapshot.data);
+          mainTopProductList = data!.data.mainTopProductList;
+          recentProductList = data!.data.recentProductList;
+          popularProductList = data!.data.popularProductList;
+
+          if (data?.code != 200 || mainTopProductList.isEmpty || recentProductList.isEmpty || popularProductList.isEmpty) {
+            return const Center(
+              child: Text('상품이 없습니다.'),
+            );
+          }
+        } else {
+          return const Center(
+            child: Text('상품을 불러오는데 실패하였습니다.'),
+          );
+        }
+        return SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            color: Colors.white,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(padding: const EdgeInsets.only(top: 10.0), child: renderFavPackageHeader()),
+                Padding(padding: const EdgeInsets.only(bottom: 10.0), child: renderFavPackageList(mainTopProductList)),
+                Padding(padding: const EdgeInsets.symmetric(vertical: 10.0), child: renderFavPackageFooter()),
+                Padding(padding: const EdgeInsets.symmetric(vertical: 10.0), child: RecentListItem(recentProductList: recentProductList,)),
+                Padding(padding: const EdgeInsets.symmetric(vertical: 10.0), child: BestListItem(popularProductList: popularProductList,)),
+                Padding(padding: const EdgeInsets.symmetric(vertical: 10.0), child: NoticeListContent()),
+                Padding(padding: const EdgeInsets.symmetric(vertical: 10.0), child: renderBtnGroup()),
+              ],
+            ),
+          ),
+        );
+      }
     );
   }
 ///위젯 임시 연결
@@ -81,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget renderFavPackageList() {
+  Widget renderFavPackageList(List<MainTop> mainTopProductList) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: WidgetSlider(
@@ -105,32 +146,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(15))
               ),
               child: Container(
-                  padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 15.0),
+                  padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                   decoration: BoxDecoration(
-                      color: favPackageList[index].cardColor, shape: BoxShape.rectangle, borderRadius: const BorderRadius.all(Radius.circular(15))
+                      color: mainTopCardColor[index], shape: BoxShape.rectangle, borderRadius: const BorderRadius.all(Radius.circular(15))
                   ),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Center(
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(favPackageList[index].package, style: packageTextStyle,),
-                                  Text(favPackageList[index].packageName, style: packageNameTextStyle,)
+                                  SizedBox(width: 100, child: Text(mainTopProductList[index].category, style: packageTextStyle,)),
+                                  SizedBox(width: 100, child: Text(mainTopProductList[index].name, style: packageNameTextStyle,))
                                 ],
                               ),
-                              Text(favPackageList[index].emogi, style: const TextStyle(fontSize: 40.0),),
+                              Text(mainTopCardEmogi[index], style: const TextStyle(fontSize: 40.0),),
                             ],
                           ),
                         ),
-                        Text(favPackageList[index].introduction, style: packageIntroductionTextStyle,)
+                        Container(width: MediaQuery.of(context).size.width, alignment: Alignment.centerLeft, child:Text(mainTopProductList[index].description, style: packageIntroductionTextStyle,))
                       ]
                   )
               ),

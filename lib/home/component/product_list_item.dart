@@ -1,18 +1,21 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../common/const/colors.dart';
+import '../../model/data/home/home_model.g.dart';
 
 class ProductListItem extends StatefulWidget {
-  const ProductListItem({super.key});
+  List<dynamic> productList;
+  ProductListItem({required this.productList, Key? key}):super(key: key);
 
   @override
   State<ProductListItem> createState() => _ProductListItemState();
 }
 
 class _ProductListItemState extends State<ProductListItem> {
-  ///임시 데이터
-  List<String> productName = ['상품명', '상품명', '상품명', '상품명', '상품명',];
+  // ///임시 데이터
+  // List<String> productName = ['상품명', '상품명', '상품명', '상품명', '상품명',];
 
+  ///임시 데이터
   List<String> productImg = [
     'product_sample.png',
     'product_sample.png',
@@ -26,12 +29,12 @@ class _ProductListItemState extends State<ProductListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 170.0,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: productName.length,
+        itemCount: widget.productList.length,
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
           return Column(
@@ -41,7 +44,7 @@ class _ProductListItemState extends State<ProductListItem> {
                   padding: const EdgeInsets.only(right: 8.0, top: 5.0, bottom: 8.0),
                   child: Image.asset('asset/images/${productImg[index]}', width: 135.0,
                     height: 135.0,)),
-              Text(productName[index], style: productNameTextStyle,)
+              Text(widget.productList[index].name, style: productNameTextStyle,)
             ],
           );
         },

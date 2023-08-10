@@ -4,8 +4,11 @@ import 'package:psr/common/layout/detail_bar_layout.dart';
 import 'package:psr/cs/view/notice_screen.dart';
 import 'package:psr/shopping/view/shopping_screen.dart';
 
+import '../../model/data/home/home_model.g.dart';
+
 class RecentListItem extends StatefulWidget {
-  RecentListItem({super.key});
+  List<RecentProduct> recentProductList;
+  RecentListItem({required this.recentProductList, Key? key}):super(key: key);
 
   @override
   State<RecentListItem> createState() => RecentListItemState();
@@ -20,8 +23,8 @@ class RecentListItemState extends State<RecentListItem> {
       margin: EdgeInsets.only(left: 20),
       child: Column(
         children: [
-          DetailBar(title:'따끈따끈한 최신글 둘러보기', moveTo: ShoppingScreen(),),
-          ProductListItem()
+          DetailBar(title:'따끈따끈한 최신글 둘러보기', moveTo: const ShoppingScreen(),),
+          ProductListItem(productList: widget.recentProductList,)
         ],
       ),
     );
