@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:psr/presenter/cs/cs_service.dart';
 
 import '../../common/const/colors.dart';
-import '../../model/data/cs/detail_notice_model.dart';
+import '../../model/data/cs/notice_model.dart';
 
 class DetailNoticeScreen extends StatefulWidget {
   int noticeId;
