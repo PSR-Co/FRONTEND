@@ -14,13 +14,6 @@ class NoticeListContent extends StatefulWidget {
 }
 
 class NoticeListContentState extends State<NoticeListContent> {
-  // List<String> noticeContent = [
-  //   '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)',
-  //   '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)',
-  //   '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)',
-  //   '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)',
-  //   '[23년 구정 공휴일] 컨설팅 및 요청 관련 문의사항 답변 기한 연장 안내 (1/20~1/24)',
-  // ];
 
   final TextStyle noticeContentTextStyle = const TextStyle(
       fontSize: 12.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
@@ -32,7 +25,6 @@ class NoticeListContentState extends State<NoticeListContent> {
   HomeNoticeModel? data;
   List<HomeNotice> noticeList = [];
 
-  ///위젯 임시 연결
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
