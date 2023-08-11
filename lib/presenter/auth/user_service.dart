@@ -5,7 +5,7 @@ import '../../model/data/auth/user_model.dart';
 import '../../model/network/api_manager.dart';
 
 class UserService {
-  final EDIT_INTERESTLIST = '/users/watchlists';
+  final EDIT_INTERESTLIST = '/users/watchlist';
   final USERPROFILE = '/users/profile';
 
   /// Singleton Pattern
