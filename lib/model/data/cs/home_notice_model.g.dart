@@ -1,7 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:psr/model/data/general_model.dart';
-
-part 'home_notice_model.dart';
+part of 'home_notice_model.dart';
 
 HomeNoticeModel _$HomeNoticeModelFromJson(Map<String, dynamic> json) =>
     HomeNoticeModel(

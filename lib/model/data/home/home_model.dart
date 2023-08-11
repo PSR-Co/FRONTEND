@@ -1,4 +1,8 @@
-part of 'home_model.g.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+import '../general_model.dart';
+
+part 'home_model.g.dart';
 
 @JsonSerializable()
 class HomeModel extends GeneralModel {
@@ -45,7 +49,7 @@ class MainTop {
 @JsonSerializable()
 class RecentProduct {
   final int id;
-  final String imgUrl;
+  final String? imgUrl;
   final String name;
 
   RecentProduct({required this.id, required this.imgUrl, required this.name});
@@ -57,7 +61,7 @@ class RecentProduct {
 @JsonSerializable()
 class PopularProduct {
   final int id;
-  final String imgUrl;
+  final String? imgUrl;
   final String name;
 
   PopularProduct({required this.id, required this.imgUrl, required this.name});

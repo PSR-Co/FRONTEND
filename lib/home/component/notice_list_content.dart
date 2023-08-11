@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
 import 'package:psr/cs/view/notice_screen.dart';
-import 'package:psr/model/data/cs/home_notice_model.g.dart';
 import 'package:psr/presenter/cs/cs_service.dart';
 
 import '../../common/const/colors.dart';
+import '../../model/data/cs/home_notice_model.dart';
 
 class NoticeListContent extends StatefulWidget {
   NoticeListContent({super.key});
