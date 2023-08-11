@@ -44,11 +44,11 @@ class UserProfileResponse extends GeneralModel {
 
 @JsonSerializable()
 class UserProfile {
-  final String email;
+  final String nickname;
   final String? imgUrl;
 
   UserProfile({
-    required this.email,
+    required this.nickname,
     this.imgUrl,
   });
 

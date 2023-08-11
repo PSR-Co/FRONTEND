@@ -50,12 +50,12 @@ Map<String, dynamic> _$UserProfileResponseToJson(
     };
 
 UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
-      email: json['email'] as String,
+      nickname: json['nickname'] as String,
       imgUrl: json['imgUrl'] as String?,
     );
 
 Map<String, dynamic> _$UserProfileToJson(UserProfile instance) =>
     <String, dynamic>{
-      'email': instance.email,
+      'nickname': instance.nickname,
       'imgUrl': instance.imgUrl,
     };
