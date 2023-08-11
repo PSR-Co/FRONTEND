@@ -106,7 +106,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
           PurpleOutlinedTextFieldWithButton(
               maxLine: 1,
               hintText: '닉네임을 입력해주세요.',
-              text: (profile?.email == null) ? null : profile!.email,
+              text: (profile?.nickname == null) ? null : profile!.nickname,
               controller: nicknameController,
               buttonTitle: '중복확인',
               onPressed: didTapValidationNickname,
