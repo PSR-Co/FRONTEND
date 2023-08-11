@@ -10,6 +10,7 @@ import 'package:psr/myinfo/view/privacy_policy_screen.dart';
 import 'package:psr/myinfo/view/terms_of_use_screen.dart';
 
 import '../../auth/view/signup/select_interest_screen.dart';
+import '../../auth/view/signup/set_profile_screen.dart';
 import '../../common/const/colors.dart';
 
 class MyInfoScreen extends StatefulWidget {
@@ -47,7 +48,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 profile(),
                 Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 17.0, 0.0), child: infoBox(),),
                 Padding(padding: const EdgeInsets.only(top: 20.0), child: Division(),),
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: DetailBar(title: "프로필 수정", moveTo: ChangeProfileScreen(),),),
+                // Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: DetailBar(title: "프로필 수정", moveTo: ChangeProfileScreen(),),),  // 원본 코드
+                Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: DetailBar(title: "프로필 수정", moveTo: SetProfileScreen(),),),  // 수정 코드
                 Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "비밀번호 변경", moveTo: ChangePWScreen(),),),
                 // Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "관심목록 변경", moveTo: ChangeInterestScreen(),),),  // 원본 코드
                 Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "관심목록 변경", moveTo: SelectInterestScreen(),),),   // 수정 코드

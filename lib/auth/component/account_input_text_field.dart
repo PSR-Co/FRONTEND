@@ -73,6 +73,11 @@ class _AccountInputTextFieldState extends State<AccountInputTextField> {
                 });
               },) : null
         ),
+        onChanged: (value) {
+          if (widget.onChange != null) {
+            widget.onChange!();
+          }
+        },
       ),
     );
   }

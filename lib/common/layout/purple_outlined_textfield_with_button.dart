@@ -5,6 +5,7 @@ class PurpleOutlinedTextFieldWithButton extends StatefulWidget {
   final int maxLine;
   final int? maxLength;
   final String hintText;
+  final String? text;
   final TextEditingController controller;
   final IconButton? suffixIconButton;
 
@@ -15,6 +16,7 @@ class PurpleOutlinedTextFieldWithButton extends StatefulWidget {
     required this.maxLine,
     this.maxLength,
     required this.hintText,
+    this.text,
     required this.controller,
     this.suffixIconButton,
 
@@ -37,6 +39,10 @@ class _PurpleOutlinedTextFieldWithButtonState extends State<PurpleOutlinedTextFi
   }
 
   Widget renderRow() {
+    // if (widget.text != null) {
+    //   widget.controller.text = widget.text!;
+    // }
+
     final defaultStyle = OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(
@@ -51,17 +57,17 @@ class _PurpleOutlinedTextFieldWithButtonState extends State<PurpleOutlinedTextFi
               margin: const EdgeInsets.only(top: 5, bottom: 5, right: 8),
               width: MediaQuery.of(context).size.width - 130,
               height: 45,
-              child: TextField(
+              child: TextFormField(
+                controller: widget.controller,
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.black,
                 ),
-                onChanged: (text) {
+                onChanged: (value) {
                   setState(() {
-                    currentTextLength = text.length;
+                    currentTextLength = value.length;
                   });
                 },
-                controller: widget.controller,
                 scrollPhysics: const NeverScrollableScrollPhysics(),
                 showCursor: false,
                 maxLines: widget.maxLine,

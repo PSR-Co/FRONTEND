@@ -16,6 +16,7 @@ class SignupRequest {
   bool marketing;
   bool notification;
   List<Interest> interestList;
+  EntreInfo? entreInfo;
 
   SignupRequest({
     required this.email,
@@ -28,28 +29,10 @@ class SignupRequest {
     required this.marketing,
     required this.notification,
     required this.interestList,
+    this.entreInfo,
   });
 
   Map<String, dynamic> toJson() => _$SignupRequestToJson(this);
-}
-
-@JsonSerializable()
-class BusinessSignupRequest extends SignupRequest {
-  EntreInfo entreInfo;
-
-  BusinessSignupRequest({
-    required super.email,
-    required super.password,
-    required super.type,
-    required super.phone,
-    required super.name,
-    required super.profileImgKey,
-    required super.nickname,
-    required super.marketing,
-    required super.notification,
-    required super.interestList,
-    required this.entreInfo,
-  });
 }
 
 @JsonSerializable()
@@ -95,21 +78,4 @@ class Nickname {
   });
 
   Map<String, dynamic> toJson() => _$NicknameToJson(this);
-}
-
-@JsonSerializable()
-class Eid {
-  final String number;
-  final String companyDate;
-  final String ownerName;
-  final String companyName;
-
-  Eid({
-    required this.number,
-    required this.companyDate,
-    required this.ownerName,
-    required this.companyName,
-  });
-
-  Map<String, dynamic> toJson() => _$EidToJson(this);
 }
