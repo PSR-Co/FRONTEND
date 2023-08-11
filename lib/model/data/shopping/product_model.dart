@@ -16,22 +16,12 @@ class ProductModel extends GeneralModel {
 
   factory ProductModel.fromJson(Map<String, dynamic> json)
   => _$ProductModelFromJson(json);
-
-  // factory ProductModel.fromJson({
-  //   required Map<String, dynamic> json,
-  // }) {
-  //   return ProductModel(
-  //       code: json['code'],
-  //       message: json['message'],
-  //       data: ProductsData.fromJson(json: json['data']),
-  //   );
-  // }
 }
 
 @JsonSerializable()
 class ProductsData {
   final List<PopularProduct> popularList;
-  final List<Product> productList;
+  final ProductList productList;
 
   ProductsData({
     required this.popularList,
@@ -40,34 +30,23 @@ class ProductsData {
 
   factory ProductsData.fromJson(Map<String, dynamic> json)
   => _$ProductsDataFromJson(json);
-
-  // factory ProductsData.fromJson({
-  //   required Map<String, dynamic> json,
-  // }) {
-  //   return ProductsData(
-  //       popularList: List.from(json['popularList']).map((e) => PopularProduct.fromJson(json: e)).toList(),
-  //       productList: List.from(json['productList']).map((e) => Product.fromJson(json: e)).toList(),
-  //   );
-  // }
 }
 
 @JsonSerializable()
 class PopularProduct {
   final int productId;
-  final String imgKey;
+  final String imgUrl;
   final String name;
   final int price;
-  final int numOfLike;
   final bool isLike;
   final double avgOfRating;
   final int numOfReview;
 
   PopularProduct({
     required this.productId,
-    required this.imgKey,
+    required this.imgUrl,
     required this.name,
     required this.price,
-    required this.numOfLike,
     required this.isLike,
     required this.avgOfRating,
     required this.numOfReview,
@@ -75,28 +54,83 @@ class PopularProduct {
 
   factory PopularProduct.fromJson(Map<String, dynamic> json)
   => _$PopularProductFromJson(json);
+}
 
-  // factory PopularProduct.fromJson({
-  //   required Map<String, dynamic> json,
-  // }) {
-  //   return PopularProduct(
-  //       productId: json['productId'],
-  //       imgKey: json['imgKey'],
-  //       name: json['name'],
-  //       price: json['price'],
-  //       numOfLike: json['numOfLike'],
-  //       isLike: json['isLike'],
-  //       avgOfRating: json['avgOfRating'],
-  //       numOfReview: json['numOfReview']
-  //   );
-  // }
+@JsonSerializable()
+class ProductList {
+  final List<Product> content;
+  final Pageable pageable;
+  final bool last;
+  final int totalPages;
+  final int totalElements;
+  final int size;
+  final int number;
+  final Sort sort;
+  final bool first;
+  final int numberOfElements;
+  final bool empty;
+
+  ProductList({
+    required this.content,
+    required this.pageable,
+    required this.last,
+    required this.totalPages,
+    required this.totalElements,
+    required this.size,
+    required this.number,
+    required this.sort,
+    required this.first,
+    required this.numberOfElements,
+    required this.empty,
+  });
+
+  factory ProductList.fromJson(Map<String, dynamic> json)
+  => _$ProductListFromJson(json);
+}
+
+@JsonSerializable()
+class Pageable {
+  final Sort sort;
+  final int offset;
+  final int pageNumber;
+  final int pageSize;
+  final bool paged;
+  final bool unpaged;
+
+  Pageable({
+    required this.sort,
+    required this.offset,
+    required this.pageNumber,
+    required this.pageSize,
+    required this.paged,
+    required this.unpaged,
+  });
+
+  factory Pageable.fromJson(Map<String, dynamic> json)
+  => _$PageableFromJson(json);
+}
+
+@JsonSerializable()
+class Sort {
+  final bool empty;
+  final bool sorted;
+  final bool unsorted;
+
+  Sort({
+    required this.empty,
+    required this.sorted,
+    required this.unsorted,
+  });
+
+  factory Sort.fromJson(Map<String, dynamic> json)
+  => _$SortFromJson(json);
 }
 
 @JsonSerializable()
 class Product {
   final int productId;
-  final String imgKey;
-  final int userIdx;
+  final String imgUrl;
+  final int userId;
   final String nickname;
   final String name;
   final int price;
@@ -104,8 +138,8 @@ class Product {
 
   Product({
     required this.productId,
-    required this.imgKey,
-    required this.userIdx,
+    required this.imgUrl,
+    required this.userId,
     required this.nickname,
     required this.name,
     required this.price,
@@ -114,20 +148,4 @@ class Product {
 
   factory Product.fromJson(Map<String, dynamic> json)
   => _$ProductFromJson(json);
-
-  // factory Product.fromJson(Map<String, dynamic> json)
-  // => _$ProductModelFromJson(json);
-  // factory Product.fromJson({
-  //   required Map<String, dynamic> json,
-  // }) {
-  //   return Product(
-  //       productId: json['productId'],
-  //       imgKey: json['imgKey'],
-  //       userIdx: json['userIdx'],
-  //       nickname: json['nickname'],
-  //       name: json['name'],
-  //       price: json['price'],
-  //       isLike: json['isLike']
-  //   );
-  // }
 }

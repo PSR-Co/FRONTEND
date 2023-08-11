@@ -43,16 +43,11 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
       child: FutureBuilder<dynamic> (
           future: fetchData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            print('${widget.categoryName} :: FutureBuilder called');
             if (snapshot.hasData) {
               data = ProductModel.fromJson(snapshot.data);
               popularList = data!.data.popularList;
-              productList = data!.data.productList;
+              productList = data!.data.productList.content;
 
-              print('${widget.categoryName}');
-              print('data -> ${snapshot.data}');
-              print('popularList -> ${popularList}');
-              print('productList -> ${productList}');
               if (data?.code != 200
                   || popularList.isEmpty && productList.isEmpty) {
                 return const Center(

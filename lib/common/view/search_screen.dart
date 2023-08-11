@@ -46,8 +46,8 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
           return CategoryListItem(category: '관심목록', data: Product(
             /// 임시 데이터
               productId: 0,
-              imgKey: 'imgKey',
-              userIdx: 0,
+              imgUrl: 'imgKey',
+              userId: 0,
               nickname: 'nickname',
               name: 'name',
               price: 0,
