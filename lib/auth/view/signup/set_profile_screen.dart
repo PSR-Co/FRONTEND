@@ -118,14 +118,9 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   }
 
   bool validateInput(String value) {
-    // String patttern = r'(^[a-zA-Z ]*$)';
-    // RegExp regExp = new RegExp(r'^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$');
     RegExp regExp = new RegExp(r"^[a-zA-Z0-9ㄱ-ㅎ가-힣]*$" );
-    if (value.isEmpty) {
-      return false;
-    } else if (!regExp.hasMatch(value)) {
-      return false;
-    }
+    if (value.isEmpty) { return false; }
+    else if (!regExp.hasMatch(value)) { return false; }
     return true;
   }
 
