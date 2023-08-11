@@ -14,10 +14,10 @@ class InputAccountInfoScreen extends StatefulWidget {
   const InputAccountInfoScreen({Key? key}) : super(key: key);
 
   @override
-  State<InputAccountInfoScreen> createState() => _InputAccountInfoScreenState();
+  State<InputAccountInfoScreen> createState() => InputAccountInfoScreenState();
 }
 
-class _InputAccountInfoScreenState extends State<InputAccountInfoScreen> {
+class InputAccountInfoScreenState extends State<InputAccountInfoScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
   final TextEditingController pwConfirmController = TextEditingController();
@@ -59,8 +59,7 @@ class _InputAccountInfoScreenState extends State<InputAccountInfoScreen> {
     if(isInputValid) {
       SignupService().setAccountInfo(emailController.value.text, pwController.value.text);
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InputUserInfoScreen()));
-    } else {
-      Fluttertoast.showToast(msg: '입력 정보를 확인해주세요!');
     }
+    else { Fluttertoast.showToast(msg: '입력 정보를 확인해주세요!'); }
   }
 }
