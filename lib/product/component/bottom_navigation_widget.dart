@@ -5,7 +5,12 @@ import '../../common/const/colors.dart';
 import '../../order/view/add_order_screen.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
-  const BottomNavigationWidget({Key? key}) : super(key: key);
+  final int numOfLike;
+
+  const BottomNavigationWidget({
+    required this.numOfLike,
+    Key? key
+  }) : super(key: key);
 
   @override
   State<BottomNavigationWidget> createState() => _State();
@@ -16,7 +21,7 @@ class _State extends State<BottomNavigationWidget> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 20),
       height: 90,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,7 +36,7 @@ class _State extends State<BottomNavigationWidget> {
 
   /// rendering methods
   Widget renderLikeButton() {
-    final likeCntStyle = TextStyle(
+    const likeCntStyle = TextStyle(
         fontSize: 12,
         color: PINK_COLOR,
         fontWeight: FontWeight.w500
@@ -40,7 +45,7 @@ class _State extends State<BottomNavigationWidget> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
+        SizedBox(
           height: 35,
           width: 40,
           child: IconButton(
@@ -48,7 +53,7 @@ class _State extends State<BottomNavigationWidget> {
               icon: SvgPicture.asset("asset/icons/common/favorite_border.fill.svg")
           ),
         ),
-        Text('23', style: likeCntStyle,),
+        Text('${widget.numOfLike}', style: likeCntStyle,),
       ],
     );
   }

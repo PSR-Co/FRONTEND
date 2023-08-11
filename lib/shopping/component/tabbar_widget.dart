@@ -100,7 +100,7 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
         itemBuilder: (BuildContext context, int index) {
           return PopularListItem(
             category: widget.categoryName,
-            index: index,
+            productId: data[index].productId,
             data: data[index],
           );
         },
@@ -121,7 +121,7 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
         itemBuilder: (BuildContext context, int index) {
           return CategoryListItem(
             category: widget.categoryName,
-            index: index,
+            productId: data[index].productId,
             data: data[index],
           );
         },

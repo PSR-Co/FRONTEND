@@ -1,7 +1,7 @@
 import '../../model/network/api_manager.dart';
 
 class ShoppingService {
-  final SHOPPING_MAIN_URL = '/products';
+  final SHOPPING_URL = '/products';
 
   /// Singleton Pattern
   static final ShoppingService _shoppingService = ShoppingService._();
@@ -13,11 +13,27 @@ class ShoppingService {
   Future<dynamic> getShoppingMainData(String category) async {
     final response = await APIManager().request(
         RequestType.GET,
-        SHOPPING_MAIN_URL,
+        SHOPPING_URL,
         null,
         {"category" : category},
         null
     );
+    return response;
+  }
+
+  Future<dynamic> getProductData(String productId) async {
+    final response = await APIManager().request(
+        RequestType.GET,
+        '$SHOPPING_URL/$productId',
+        null, null, null);
+    return response;
+  }
+
+  Future<dynamic> getReviewData(String productId) async {
+    final response = await APIManager().request(
+        RequestType.GET,
+        '$SHOPPING_URL/$productId/reviews/top',
+        null, null, null);
     return response;
   }
 }

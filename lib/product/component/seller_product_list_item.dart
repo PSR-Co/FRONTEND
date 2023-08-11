@@ -5,12 +5,15 @@ import '../../common/const/colors.dart';
 import '../view/product_detail_screen.dart';
 
 class SellerProductListItem extends StatefulWidget {
+  final int productId;
+
   final String imgKey;
   final String category;
   final String name;
   final int price;
 
   const SellerProductListItem({
+    required this.productId,
     required this.imgKey,
     required this.category,
     required this.name,
@@ -97,6 +100,6 @@ class _SellerProductListItemState extends State<SellerProductListItem> {
 
   /// event methods
   void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category,)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category, productId: widget.productId,)));
   }
 }

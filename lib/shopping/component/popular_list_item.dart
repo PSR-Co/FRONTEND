@@ -7,13 +7,13 @@ import '../../product/view/product_detail_screen.dart';
 
 class PopularListItem extends StatefulWidget {
   final String category;
-  final int index;
+  final int productId;
   final PopularProduct data;
 
   // TODO: api 연결 후 속성값(상품이름,가격,평균리뷰점수, 리뷰개수, 좋아요 여부) 추가 및 수정
   const PopularListItem({
     required this.category,
-    required this.index,
+    required this.productId,
     required this.data,
     Key? key
   }) : super(key: key);
@@ -122,7 +122,7 @@ class _PopularListItemState extends State<PopularListItem> {
     return Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3),
-        child: Text('${widget.index}', style: itemOrderTextStyle,)
+        child: Text('${widget.productId}', style: itemOrderTextStyle,)
     );
   }
 
@@ -179,6 +179,6 @@ class _PopularListItemState extends State<PopularListItem> {
   }
 
   void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category,)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category, productId: widget.productId,)));
   }
 }

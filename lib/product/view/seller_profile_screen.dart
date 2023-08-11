@@ -126,6 +126,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
           itemCount: productCnt,
           itemBuilder: (BuildContext context, int index) {
             return SellerProductListItem(
+              productId: 1, // TODO: GET 후 productId 전달
               imgKey: 'asset/images/product_sample.png',
               category: '방송가능 아웃소싱',
               name: '폴로랄프로렌 목도리 Red Color',
