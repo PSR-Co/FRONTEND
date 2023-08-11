@@ -3,7 +3,7 @@ import 'package:psr/common/layout/detail_bar_layout.dart';
 import 'package:psr/home/component/product_list_item.dart';
 import 'package:psr/shopping/view/shopping_screen.dart';
 
-import '../../model/data/home/home_model.g.dart';
+import '../../model/data/home/home_model.dart';
 
 class BestListItem extends StatefulWidget {
   List<PopularProduct> popularProductList;

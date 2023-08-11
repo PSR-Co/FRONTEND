@@ -10,10 +10,10 @@ import 'package:psr/home/component/fav_package_footer_item.dart';
 import 'package:psr/home/component/notice_list_content.dart';
 import 'package:psr/home/component/outlined_btn.dart';
 import 'package:psr/home/component/recent_list_item.dart';
-import 'package:psr/model/data/home/home_model.g.dart';
 import 'package:psr/presenter/home/home_service.dart';
 
 import '../../cs/view/service_center_screen.dart';
+import '../../model/data/home/home_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

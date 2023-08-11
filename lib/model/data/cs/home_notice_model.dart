@@ -1,4 +1,8 @@
-part of 'home_notice_model.g.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+import '../general_model.dart';
+
+part 'home_notice_model.g.dart';
 
 @JsonSerializable()
 class HomeNoticeModel extends GeneralModel {

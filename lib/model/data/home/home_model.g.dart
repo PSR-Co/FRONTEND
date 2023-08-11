@@ -1,7 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:psr/model/data/general_model.dart';
-
-part 'home_model.dart';
+part of 'home_model.dart';
 
 HomeModel _$HomeModelFromJson(Map<String, dynamic> json) => HomeModel(
     code: json['code'] as int,
@@ -28,11 +25,11 @@ MainTop _$MainTopFromJson(Map<String, dynamic> json) => MainTop(
 RecentProduct _$RecentProductFromJson(Map<String, dynamic> json) =>
     RecentProduct(
         id: json['id'] as int,
-        imgUrl: json['imgUrl'] as String,
+        imgUrl: json['imgUrl'] as String?,
         name: json['name'] as String);
 
 PopularProduct _$PopularProductFromJson(Map<String, dynamic> json) =>
     PopularProduct(
         id: json['id'] as int,
-        imgUrl: json['imgUrl'] as String,
+        imgUrl: json['imgUrl'] as String?,
         name: json['name'] as String);
