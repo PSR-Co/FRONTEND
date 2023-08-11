@@ -117,25 +117,6 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     );
   }
 
-  bool validateInput(String value) {
-    RegExp regExp = new RegExp(r"^[a-zA-Z0-9ㄱ-ㅎ가-힣]*$" );
-    if (value.isEmpty) { return false; }
-    else if (!regExp.hasMatch(value)) { return false; }
-    return true;
-  }
-
-  void onChanged() {
-    if (nicknameController.value.text.length < 11) {
-      if (!validateInput(nicknameController.value.text)) {
-        Fluttertoast.showToast(msg: '닉네임에는 한글,영문,숫자만 포함될 수 있습니다!');
-      }
-    } else {
-      Fluttertoast.showToast(msg: '10자 이하의 닉네임을 입력해주세요!');
-    }
-    print('nicknameController value -> ${nicknameController.value.text}');
-  }
-
-
   /// event methods
   Future<void> didTapNextButton() async {
     if (isInputValid) {
@@ -146,16 +127,11 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
 
       } else {
         Future<bool> result = SignupService().signup();
-        if (await result) {
-          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen()));
-        } else {
-          Fluttertoast.showToast(msg: '회원가입에 실패하였습니다.');
-        }
+        if (await result) { Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen())); }
+        else { Fluttertoast.showToast(msg: '회원가입에 실패하였습니다.'); }
       }
-
-    } else {
-      Fluttertoast.showToast(msg: '입력된 정보를 확인해주세요!');
     }
+    else { Fluttertoast.showToast(msg: '입력된 정보를 확인해주세요!'); }
   }
 
   void didTapValidationNickname() async {
@@ -164,21 +140,15 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
       setState(() {
         if (result != null) {
           isInputValid = result;
-          if (isInputValid) {
-            SignupService().setNickname(nicknameController.value.text);
-          }
-          Fluttertoast.showToast(
-              msg: result ? "사용 가능한 닉네임입니다!" : "이미 존재하는 닉네임입니다.");
+          if (isInputValid) { SignupService().setNickname(nicknameController.value.text); }
+          Fluttertoast.showToast(msg: result ? "사용 가능한 닉네임입니다!" : "이미 존재하는 닉네임입니다.");
         } else {
           isInputValid = false;
           Fluttertoast.showToast(msg: "1자 이상의 닉네임을 입력해주세요.");
         }
       });
     }
-
-    else {
-      Fluttertoast.showToast(msg: '1자 이상, 10자 이하의 한글/영문/숫자로 구성된 닉네임이어야 합니다!', );
-    }
+    else { Fluttertoast.showToast(msg: '1자 이상, 10자 이하의 한글/영문/숫자로 구성된 닉네임이어야 합니다!', ); }
   }
 
   void didTapProfileImgButton() async {
@@ -202,6 +172,22 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
 
   Future<bool?> validateNickname() async {
     return await SignupService().validateNickname(nicknameController.value.text);
+  }
+
+  bool validateInput(String value) {
+    RegExp regExp = RegExp(r"^[a-zA-Z0-9ㄱ-ㅎ가-힣]*$" );
+    if (value.isEmpty) { return false; }
+    else if (!regExp.hasMatch(value)) { return false; }
+    return true;
+  }
+
+  void onChanged() {
+    if (nicknameController.value.text.length < 11) {
+      if (!validateInput(nicknameController.value.text)) {
+        Fluttertoast.showToast(msg: '닉네임에는 한글,영문,숫자만 포함될 수 있습니다!');
+      }
+    }
+    else { Fluttertoast.showToast(msg: '10자 이하의 닉네임을 입력해주세요!'); }
   }
 
 }
