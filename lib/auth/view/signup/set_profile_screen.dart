@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:psr/model/data/auth/user_model.dart';
 import 'package:psr/presenter/auth/signup_service.dart';
 import 'package:psr/presenter/auth/user_service.dart';
-import 'dart:io';
 
 import '../../../common/const/constants.dart';
 import '../../../common/layout/default_appbar_layout.dart';
@@ -31,6 +30,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   String? profileImgKey;
 
   bool isLoginUser = false;
+  bool isFirstFetch = true;
 
   bool isInputValid = false;
   bool isValidNickname = false;
@@ -76,7 +76,10 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   }
 
   Widget getCenterBody({required profile}) {
-    if (isLoginUser) { nicknameController.text = profile!.nickname; }
+    if (isLoginUser && isFirstFetch) {
+      nicknameController.text = profile!.nickname;
+      isFirstFetch = false;
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
