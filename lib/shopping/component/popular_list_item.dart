@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:psr/common/const/colors.dart';
 
-import '../../model/data/shopping/product_model.dart';
+import '../../model/data/shopping/shopping_main_model.dart';
 import '../../product/view/product_detail_screen.dart';
 
 class PopularListItem extends StatefulWidget {

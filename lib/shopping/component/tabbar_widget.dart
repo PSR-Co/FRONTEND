@@ -3,7 +3,7 @@ import 'package:psr/presenter/shopping/shopping_service.dart';
 import 'package:psr/shopping/component/popular_list_item.dart';
 
 
-import '../../model/data/shopping/product_model.dart';
+import '../../model/data/shopping/shopping_main_model.dart';
 import 'category_list_item.dart';
 
 class ShoppingTabBarWidget extends StatefulWidget {
@@ -20,7 +20,7 @@ class ShoppingTabBarWidget extends StatefulWidget {
 
 class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
 
-  ProductModel? data;
+  ShoppingMainResponse? data;
   List<PopularProduct> popularList = [];
   List<Product> productList = [];
 
@@ -44,7 +44,7 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
           future: fetchData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
-              data = ProductModel.fromJson(snapshot.data);
+              data = ShoppingMainResponse.fromJson(snapshot.data);
               popularList = data!.data.popularList;
               productList = data!.data.productList.content;
 

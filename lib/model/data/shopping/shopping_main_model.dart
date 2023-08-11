@@ -1,21 +1,21 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:psr/model/data/general_model.dart';
 
-part 'product_model.g.dart';
+part 'shopping_main_model.g.dart';
 
 @JsonSerializable()
-class ProductModel extends GeneralModel {
+class ShoppingMainResponse extends GeneralModel {
 
   final ProductsData data;
 
-  ProductModel({
+  ShoppingMainResponse({
     required super.code,
     required super.message,
     required this.data
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json)
-  => _$ProductModelFromJson(json);
+  factory ShoppingMainResponse.fromJson(Map<String, dynamic> json)
+  => _$ShoppingMainResponseFromJson(json);
 }
 
 @JsonSerializable()

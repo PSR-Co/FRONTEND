@@ -1,18 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_model.dart';
+part of 'shopping_main_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
+ShoppingMainResponse _$ShoppingMainResponseFromJson(
+        Map<String, dynamic> json) =>
+    ShoppingMainResponse(
       code: json['code'] as int,
       message: json['message'] as String,
       data: ProductsData.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
+Map<String, dynamic> _$ShoppingMainResponseToJson(
+        ShoppingMainResponse instance) =>
     <String, dynamic>{
       'code': instance.code,
       'message': instance.message,
