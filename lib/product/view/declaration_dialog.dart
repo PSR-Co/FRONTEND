@@ -18,7 +18,7 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
   String? selectedReason;
 
   List<String> reasonList = [
-    "스팸홍보/도배", "욕설/혐오/차별", "음란물/유해한 정보", "사기/불법정보", "게시글 성격에 부적합함"
+    "스팸홍보/도배", "욕설/혐오/차별", "음란물/유해한 정보", "사기/불법정보", "게시글에 부적합함"
   ];
 
   @override
@@ -122,7 +122,6 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.only(left: 10),
                         iconColor: GRAY_1_COLOR,
-
                       ),
                     )
                   ]
@@ -146,7 +145,7 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 15),
         child: ElevatedButton(
-          onPressed: didTapDeclarationButton,
+          onPressed: (selectedReason == null) ? null : didTapDeclarationButton,
           child: Text("신고하기", style: declarationBtnStyle,),
           style: ElevatedButton.styleFrom(
             backgroundColor: PURPLE_COLOR,
@@ -169,11 +168,9 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
 
   Future<void> didTapDeclarationButton() async {
     if (selectedReason != null) {
+      if (selectedReason! == reasonList[4]) { selectedReason = '게시글 성격에 부적합함'; }
       final result = await ShoppingService().declareProduct('${widget.productId}', selectedReason!);
       if (result) { Navigator.pop(context); }
-
-    } else {
-      print("신고하기 버튼 탭 -> 선택된 신고 사유 없음");
     }
   }
 }
