@@ -8,12 +8,14 @@ import '../../common/const/colors.dart';
 class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String category;
   final bool isMyProduct;
+  final int productId;
 
   static const double APPBAR_HEIGHT = 50;
 
   const ProductDetailAppBar({
     required this.category,
     required this.isMyProduct,
+    required this.productId,
     Key? key
   }) : super(key: key);
 
@@ -26,7 +28,7 @@ class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget 
 
 class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
 
-  final titleStyle = TextStyle(
+  final titleStyle = const TextStyle(
       color: Colors.black,
       fontSize: 17
   );
@@ -132,13 +134,11 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   }
 
   void didTapDeclarationButton() {
-    // TODO: 신고하기 팝업 띄우기
-    print("didTapDeclarationButton");
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (_) {
-          return DeclarationDialog();
+          return DeclarationDialog(productId: widget.productId,);
         }
     );
   }

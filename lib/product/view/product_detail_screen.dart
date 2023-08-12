@@ -41,7 +41,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         bool isEmptyData = (snapshot.hasError || data == null || reviewData == null);
         return Scaffold(
           appBar: ProductDetailAppBar(
-            category: widget.category, isMyProduct: isMyProduct,
+            category: widget.category,
+            isMyProduct: isMyProduct,
+            productId: widget.productId,
           ),
           body: renderBody(isEmptyData),
           bottomNavigationBar: BottomNavigationWidget(numOfLike: isEmptyData ? 0 : data!.data.numOfLikes,),

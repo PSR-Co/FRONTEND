@@ -36,4 +36,13 @@ class ShoppingService {
         null, null, null);
     return response;
   }
+  
+  Future<bool> declareProduct(String productId, String reason) async {
+    final body = {'category': reason};
+    final response = await APIManager().request(
+        RequestType.POST,
+        '$SHOPPING_URL/$productId/report'
+        , null, null, body);
+    return ((response != null) && (response['code'] == 200));
+  }
 }
