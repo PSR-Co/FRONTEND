@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
-              child: Text('에러가 있습니다'),
+              child: Text('홈 : 에러가 있습니다'),
             );
           }
           if (snapshot.hasData) {
@@ -279,9 +279,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     SizedBox(
                         child: Text(
-                          favPackageBtn[1].title1,
-                          style: packageBtnTextStyle,
-                        )),
+                      favPackageBtn[1].title1,
+                      style: packageBtnTextStyle,
+                    )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -291,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         IconButton(
                           onPressed: () {},
-                          padding: EdgeInsets.zero , // 패딩 설정
+                          padding: EdgeInsets.zero, // 패딩 설정
                           constraints: const BoxConstraints(),
                           icon: const Icon(
                             Icons.arrow_forward_ios,

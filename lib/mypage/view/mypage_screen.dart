@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:psr/cs/view/service_center_screen.dart';
 import 'package:psr/myinfo/view/myinfo_screen.dart';
 import 'package:psr/mypage/view/likelist_screen.dart';
 import 'package:psr/mypage/view/mypost_screen.dart';
 import 'package:psr/mypage/view/notificationlist_screen.dart';
 import 'package:psr/mypage/view/order_list_tab.dart';
-import 'package:psr/cs/view/service_center_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/division.dart';
 import '../component/mypage.dart';
-import '../component/order_list_item.dart';
 
 class MypageScreen extends StatefulWidget {
   const MypageScreen({Key? key}) : super(key: key);
@@ -32,37 +31,9 @@ class _MypageScreenState extends State<MypageScreen> {
       fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
 
   MyPage userDate =
-      MyPage('사업자', 'asset/images/profile_img_sample.jpg', '웨이드에옹', [
-    SellProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
-        "asset/images/product_sample.png", "요청일"),
-    SellProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
-        "asset/images/product_sample.png", "요청일"),
-    SellProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
-        "asset/images/product_sample.png", "요청일"),
-  ], [
-    OrderProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
-        "asset/images/product_sample.png", "요청일"),
-    OrderProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
-        "asset/images/product_sample.png", "요청일"),
-    OrderProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
-        "asset/images/product_sample.png", "요청일"),
-  ]);
+      MyPage('사업자', 'asset/images/profile_img_sample.jpg', '웨이드에옹');
   MyPage adminDate =
-      MyPage('관리자', 'asset/images/profile_img_sample.jpg', '관리자에옹', [
-    SellProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
-        "asset/images/product_sample.png", "요청일"),
-    SellProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
-        "asset/images/product_sample.png", "요청일"),
-    SellProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
-        "asset/images/product_sample.png", "요청일"),
-  ], [
-    OrderProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
-        "asset/images/product_sample.png", "요청일"),
-    OrderProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
-        "asset/images/product_sample.png", "요청일"),
-    OrderProduct("누구게", "asset/images/profile_img_sample.jpg", "", "요청 상품명",
-        "asset/images/product_sample.png", "요청일"),
-  ]);
+      MyPage('관리자', 'asset/images/profile_img_sample.jpg', '관리자에옹');
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +54,7 @@ class _MypageScreenState extends State<MypageScreen> {
                 Expanded(
                     child: Padding(
                         padding: const EdgeInsets.only(bottom: 30.0),
-                        child: OrderListTab(myPageData: userDate))),
+                        child: OrderListTab())),
               ],
             )),
       ),
@@ -115,8 +86,10 @@ class _MypageScreenState extends State<MypageScreen> {
             ),
             IconButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const LikeListScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LikeListScreen()));
               },
               icon: SvgPicture.asset("asset/icons/common/filled_heart.svg"),
               padding: const EdgeInsets.only(right: 0.0),
@@ -207,16 +180,20 @@ class _MypageScreenState extends State<MypageScreen> {
             child: IconButton.outlined(
               onPressed: () {
                 if (categoryName == "내 정보") {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const MyInfoScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyInfoScreen()));
                 } else if (categoryName == "고객센터") {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const ServiceCenterScreen()));
                 } else {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const MyPostScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyPostScreen()));
                 }
               },
               icon: SvgPicture.asset(imgName),

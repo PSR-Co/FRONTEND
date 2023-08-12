@@ -1,25 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'order_model.dart';
+part of 'order_detail_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
+OrderDetailModel _$OrderDetailModelFromJson(Map<String, dynamic> json) =>
+    OrderDetailModel(
       code: json['code'] as int,
       message: json['message'] as String,
-      order: Order.fromJson(json['order'] as Map<String, dynamic>),
+      data: OrderDetail.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
+Map<String, dynamic> _$OrderDetailModelToJson(OrderDetailModel instance) =>
     <String, dynamic>{
       'code': instance.code,
       'message': instance.message,
-      'order': instance.order,
+      'data': instance.data,
     };
 
-Order _$OrderFromJson(Map<String, dynamic> json) => Order(
+OrderDetail _$OrderDetailFromJson(Map<String, dynamic> json) => OrderDetail(
       isSeller: json['isSeller'] as bool,
       status: json['status'] as String,
       orderUserId: json['orderUserId'] as int,
@@ -32,7 +33,8 @@ Order _$OrderFromJson(Map<String, dynamic> json) => Order(
       description: json['description'] as String,
     );
 
-Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
+Map<String, dynamic> _$OrderDetailToJson(OrderDetail instance) =>
+    <String, dynamic>{
       'isSeller': instance.isSeller,
       'status': instance.status,
       'orderUserId': instance.orderUserId,
