@@ -31,8 +31,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool isMyProduct = false;
 
   ProductResponseModel? data;
-  // ReviewResponseModel? reviewData;
-  ReviewInfo? reviewData;
+  ReviewResponseModel? reviewData;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +54,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget renderBody(bool isEmptyData) {
     if (!isEmptyData) {
       Product product = data!.data;
-      // ReviewInfo reviewInfo = reviewData!.data;
+      ReviewInfo reviewInfo = reviewData!.data;
       return Container(
         color: Colors.white,
         child: ListView(
@@ -66,14 +65,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ProductInfoWidget(
               productName: product.name,
               price: product.price,
-              // avgOfRating: reviewInfo.avgOfRating ?? 0.0,
-              // reviewCnt: reviewInfo.numOfReviews,
-              avgOfRating: reviewData!.avgOfRating,
-              reviewCnt: reviewData!.numOfReviews,
+              avgOfRating: reviewInfo.avgOfRating ?? 0.0,
+              reviewCnt: reviewInfo.numOfReviews,
             ),
             ProductDetailWidget(description: product.description,),
-            // ReviewListWidget(reviewList: reviewInfo.reviewList,),
-            ReviewListWidget(reviewList: reviewData!.reviewList,),
+            ReviewListWidget(reviewList: reviewInfo.reviewList,),
           ],
         ),
       );
@@ -98,14 +94,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Future<bool> getReviewData() async {
-    final reviewResult = await ShoppingService().getReviewData('${widget.productId}');
-    if(reviewResult != null) {
-      if (reviewResult['data']['avgOfRating'] == "NaN") {
-        reviewData = ReviewInfo(numOfReviews: 0, avgOfRating: 0.0, reviewList: []);
-      } else {
-        reviewData = ReviewResponseModel.fromJson(reviewResult).data;
-      }
-    }
+    final result = await ShoppingService().getReviewData('${widget.productId}');
+    reviewData = ReviewResponseModel.fromJson(result);
     return (reviewData != null);
   }
 }
