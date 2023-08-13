@@ -57,6 +57,14 @@ class ShoppingService {
     return response;
   }
 
+  Future<bool> likeProduct(int productId) async {
+    final response = await APIManager().request(
+        RequestType.POST,
+        '$SHOPPING_URL/$productId/likes',
+        null, null, null);
+    return ((response != null) && (response['code'] == 200));
+  }
+
   Future<bool> requestOrder(int productId, String name, String? webUrl, String inquiry, String description) async {
     final body = OrderRequest(
         productId: productId, 
