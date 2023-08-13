@@ -37,7 +37,7 @@ class _DetailOrderTextFieldFormState extends State<DetailOrderTextFieldForm> {
       children: [
         titleTextField(widget.title, widget.option),
         purpleOutlinedField(widget.maxLine, widget.hintText, widget.controller),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
       ],
@@ -45,19 +45,19 @@ class _DetailOrderTextFieldFormState extends State<DetailOrderTextFieldForm> {
   }
 
   Widget titleTextField(String title, String? option) {
-    final titleStyle = TextStyle(
+    const titleStyle = TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: 15,
       color: GRAY_4_COLOR,
     );
-    final optionStyle = TextStyle(
+    const optionStyle = TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: 15,
       color: GRAY_2_COLOR,
     );
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
       child: RichText(
         text: TextSpan(text: title, style: titleStyle, children: [
           TextSpan(
@@ -73,7 +73,7 @@ class _DetailOrderTextFieldFormState extends State<DetailOrderTextFieldForm> {
       int maxLine, String hintText, TextEditingController controller) {
     return Container(
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.symmetric(horizontal: 17.0),
+        margin: const EdgeInsets.symmetric(horizontal: 17.0),
         child: TextField(
           style: const TextStyle(
             fontSize: 14,
@@ -92,12 +92,12 @@ class _DetailOrderTextFieldFormState extends State<DetailOrderTextFieldForm> {
             hintStyle: const TextStyle(fontSize: 14, color: GRAY_1_COLOR),
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-            enabledBorder: OutlineInputBorder(
+            enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: PURPLE_COLOR_50, width: 1.0),
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
                 )),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: PURPLE_COLOR_50, width: 1.0),
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),

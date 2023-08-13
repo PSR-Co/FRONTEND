@@ -31,7 +31,6 @@ class CSService {
   Future<dynamic> getFAQData(Map<String, String>? queryParameters) async {
     final response = await APIManager()
         .request(RequestType.GET, FAQ_MAIN_URL, null, queryParameters, null);
-    print('response : $response');
 
     if (response['data']['faqLists'] != null) {
       return response;
