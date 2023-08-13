@@ -32,18 +32,18 @@ class _MoveToDetailOrderScreenState extends State<MoveToDetailOrderScreen> {
           type: type,
           btnOption1: '요청승인',
           btnOption2: '요청거절',
-          child: renderChatBtn());
+          child: renderBtn('1:1 채팅'));
     } else {
       return DetailOrderScreen(
           orderId: orderId,
           type: type,
           btnOption1: '요청수정',
           btnOption2: '요청취소',
-          child: null);
+          child: renderBtn('수정하기'));
     }
   }
 
-  ActionBtn renderChatBtn() {
+  ActionBtn renderBtn(String btnText) {
     return ActionBtn(
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -52,7 +52,7 @@ class _MoveToDetailOrderScreenState extends State<MoveToDetailOrderScreen> {
               Navigator.pop(context, false);
             },
             child: Text(
-              '1:1 채팅',
+              btnText,
               style: btnTypeTextStyle,
             )),
       ),

@@ -19,4 +19,8 @@ class OrderService {
     print('response: $response');
     return response;
   }
+
+  Future<dynamic> editOrderData(int orderId, Map<String, dynamic>? queryParameters, Map<String, dynamic> body) async {
+    final response = await APIManager().request(RequestType.PATCH, '$ORDER_DETAIL/$orderId', null, queryParameters, body);
+  }
 }

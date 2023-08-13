@@ -20,7 +20,7 @@ class OrderDetail {
   final int productId;
   final String productName;
   final String ordererName;
-  final String websiteUrl;
+  final String? websiteUrl;
   final String inquiry;
   final String description;
 

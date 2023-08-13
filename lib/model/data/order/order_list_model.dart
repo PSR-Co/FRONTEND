@@ -29,7 +29,7 @@ class OrderList {
   final int productId;
   final String productName;
   final String? productImgUrl;
-  final bool? reviewId;
+  final int? reviewId;
 
 
   OrderList({required this.orderId, required this.orderDate, required this.userName, required this.productId, required this.productName, required this.productImgUrl, required this.reviewId});

@@ -39,7 +39,7 @@ OrderList _$OrderListFromJson(Map<String, dynamic> json) => OrderList(
       productId: json['productId'] as int,
       productName: json['productName'] as String,
       productImgUrl: json['productImgUrl'] as String?,
-      reviewId: json['reviewId'] as bool?,
+      reviewId: json['reviewId'] as int?,
     );
 
 Map<String, dynamic> _$OrderListToJson(OrderList instance) => <String, dynamic>{

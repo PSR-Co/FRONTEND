@@ -28,7 +28,7 @@ OrderDetail _$OrderDetailFromJson(Map<String, dynamic> json) => OrderDetail(
       productId: json['productId'] as int,
       productName: json['productName'] as String,
       ordererName: json['ordererName'] as String,
-      websiteUrl: json['websiteUrl'] as String,
+      websiteUrl: json['websiteUrl'] as String?,
       inquiry: json['inquiry'] as String,
       description: json['description'] as String,
     );
@@ -42,7 +42,7 @@ Map<String, dynamic> _$OrderDetailToJson(OrderDetail instance) =>
       'productId': instance.productId,
       'productName': instance.productName,
       'ordererName': instance.ordererName,
-      'websiteUrl': instance.websiteUrl,
+      'websiteUrl': instance?.websiteUrl,
       'inquiry': instance.inquiry,
       'description': instance.description,
     };

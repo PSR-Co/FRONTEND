@@ -232,7 +232,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
       children: [
         TextButton(
             onPressed: () {
-              changeEditable();
+              btnOption1 == '요청수정' ? changeEditable() : {};
             },
             child: Text(
               btnOption1,
