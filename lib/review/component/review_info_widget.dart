@@ -116,7 +116,6 @@ class _ReviewInfoState extends State<ReviewInfo> {
 
   /// event methods
   void didTapDeclarationButton() {
-    print('ReviewInfo - didTapDeclarationButton');
     showDialog(
         context: context,
         barrierDismissible: true,

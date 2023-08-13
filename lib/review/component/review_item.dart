@@ -9,12 +9,10 @@ import '../../model/data/review/review_model.dart';
 
 class ReviewItem extends StatefulWidget {
 
-  // final String reviewContent;
   final int productId;
   final Review review;
 
   const ReviewItem({
-    // required this.reviewContent,
     required this.productId,
     required this.review,
     Key? key
@@ -75,7 +73,7 @@ class _ReviewItemState extends State<ReviewItem> {
       height: 1.5,
       width: MediaQuery.of(context).size.width-30,
       color: GRAY_1_COLOR.withOpacity(0.5),
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
     );
   }
 }

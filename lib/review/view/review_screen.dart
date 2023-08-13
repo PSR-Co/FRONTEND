@@ -19,22 +19,14 @@ class ReviewScreen extends StatefulWidget {
 
 class _ReviewScreenState extends State<ReviewScreen> {
 
-  final String reviewContent = '리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다 리뷰 내용입니다';
   bool isReviewFolded = true;
-  int isTappedIndex = -1;
-
   ReviewListResponseModel? data;
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   appBar: const DefaultAppBarLayout(titleText: '리뷰',),
-    //   body: renderBody(),
-    // );
     return FutureBuilder<dynamic>(
         future: fetchData(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          print('snapshot.error -> ${snapshot.error}');
           return Scaffold(
             appBar: const DefaultAppBarLayout(titleText: '리뷰',),
             body: renderBody(snapshot.hasError),
@@ -65,7 +57,6 @@ class _ReviewScreenState extends State<ReviewScreen> {
 
   Future<bool> fetchData() async {
     final result = await ReviewService().getReviewListData('${widget.productId}');
-    print('result -> $result');
     data = ReviewListResponseModel.fromJson(result);
     return (data != null);
   }

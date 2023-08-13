@@ -15,13 +15,10 @@ class ReviewService {
   }
 
   Future<dynamic> getReviewListData(String productId) async {
-    print('$REVIEW_LIST_URL/$productId/reviews');
-
     final response = await APIManager().request(
         RequestType.GET,
         '$REVIEW_LIST_URL/$productId/reviews'
         , null, null, null);
-    print('getReviewListData response -> $response');
     return response;
   }
 

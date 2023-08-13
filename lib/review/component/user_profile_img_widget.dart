@@ -20,7 +20,7 @@ class _RoundedUserProfileImgState extends State<RoundedUserProfileImg> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 20, top: 15),
+      padding: const EdgeInsets.only(left: 20, top: 15),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(widget.width/2),
         child: (widget.imgKey == null)
