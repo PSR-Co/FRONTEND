@@ -35,7 +35,7 @@ class ProductsData {
 @JsonSerializable()
 class PopularProduct {
   final int productId;
-  final String imgUrl;
+  final String? imgUrl;
   final String name;
   final int price;
   final bool isLike;
@@ -129,7 +129,7 @@ class Sort {
 @JsonSerializable()
 class Product {
   final int productId;
-  final String imgUrl;
+  final String? imgUrl;
   final int userId;
   final String nickname;
   final String name;

@@ -4,6 +4,7 @@ import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/purple_filled_button.dart';
 import 'package:psr/order/component/order_info_input_widget.dart';
+import 'package:psr/order/view/complete_order_screen.dart';
 import 'package:psr/presenter/shopping/shopping_service.dart';
 
 class AddOrderScreen extends StatefulWidget {
@@ -122,11 +123,13 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
     final result = await ShoppingService().requestOrder(
         widget.productId,
         nameController.value.text,
-        urlController.value.text,
+        (urlController.value.text.isEmpty) ? null : urlController.value.text,
         inquiryController.value.text,
         descriptionController.value.text
     );
-    if (result) { Navigator.of(context).pop(); }
+    if (result) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteOrderScreen()));
+    }
     else { Fluttertoast.showToast(msg: '요청에 실패하였습니다.'); }
   }
 }

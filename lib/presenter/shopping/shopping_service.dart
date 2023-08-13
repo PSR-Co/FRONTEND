@@ -102,17 +102,16 @@ class ShoppingService {
 
     final body = OrderRequest(
         productId: productId,
-        orderName: name,
+        ordererName: name,
         websiteUrl: webUrl,
         inquiry: inquiry, 
         description: description
     ).toJson();
-    
+
     final response = await APIManager().request(
         RequestType.POST,
         REQUEST_ORDER_URL,
         null, null, body);
-    print('response -> $response');
     return ((response != null) && (response['code'] == 200));
   }
 }
