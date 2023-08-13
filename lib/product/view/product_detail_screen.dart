@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psr/model/data/shopping/product_model.dart';
-import 'package:psr/model/data/shopping/review_model.dart';
+import 'package:psr/model/data/shopping/review_preview_model.dart';
 import 'package:psr/product/component/product_img_page_view_widget.dart';
 
 import '../../presenter/shopping/shopping_service.dart';
@@ -31,7 +31,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool isMyProduct = false;
 
   ProductResponseModel? data;
-  ReviewResponseModel? reviewData;
+  ReviewPreviewResponseModel? reviewData;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget renderBody(bool isEmptyData) {
     if (!isEmptyData) {
       Product product = data!.data;
-      ReviewInfo reviewInfo = reviewData!.data;
+      ReviewPreviewInfo reviewInfo = reviewData!.data;
       return Container(
         color: Colors.white,
         child: ListView(
@@ -73,13 +73,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             const SizedBox(height: 25,),
             SellerInfoWidget(sellerName: product.nickname, sellerId: product.userId,),
             ProductInfoWidget(
+              productId: widget.productId,
               productName: product.name,
               price: product.price,
               avgOfRating: reviewInfo.avgOfRating ?? 0.0,
               reviewCnt: reviewInfo.numOfReviews,
             ),
             ProductDetailWidget(description: product.description,),
-            ReviewListWidget(reviewList: reviewInfo.reviewList,),
+            ReviewListWidget(
+              productId: widget.productId,
+              reviewList: reviewInfo.reviewList,
+            ),
           ],
         ),
       );
@@ -105,7 +109,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Future<bool> getReviewData() async {
     final result = await ShoppingService().getReviewData('${widget.productId}');
-    reviewData = ReviewResponseModel.fromJson(result);
+    reviewData = ReviewPreviewResponseModel.fromJson(result);
     return (reviewData != null);
   }
 }
