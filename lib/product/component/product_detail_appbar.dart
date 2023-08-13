@@ -140,7 +140,7 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
         context: context,
         barrierDismissible: true,
         builder: (_) {
-          return DeclarationDialog(productId: widget.productId,);
+          return DeclarationDialog(idx: widget.productId, type: DeclarationType.PRODUCT,);
         }
     );
   }

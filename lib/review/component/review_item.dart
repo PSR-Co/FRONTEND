@@ -9,11 +9,9 @@ import '../../model/data/review/review_model.dart';
 
 class ReviewItem extends StatefulWidget {
 
-  final int productId;
   final Review review;
 
   const ReviewItem({
-    required this.productId,
     required this.review,
     Key? key
   }) : super(key: key);
@@ -52,7 +50,7 @@ class _ReviewItemState extends State<ReviewItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ReviewInfo(
-                  productId: widget.productId,
+                  reviewId: widget.review.reviewId,
                   avgOfRating: widget.review.rating,
                   nickName: widget.review.nickName,
                   reviewedDate: widget.review.reviewedDate,

@@ -5,14 +5,14 @@ import '../../product/view/declaration_dialog.dart';
 
 class ReviewInfo extends StatefulWidget {
 
-  final int productId;
+  final int reviewId;
   final int avgOfRating;
   final String nickName;
   final String reviewedDate;
   final String? profileImgKey;
 
   const ReviewInfo({
-    required this.productId,
+    required this.reviewId,
     required this.avgOfRating,
     required this.nickName,
     required this.reviewedDate,
@@ -120,7 +120,7 @@ class _ReviewInfoState extends State<ReviewInfo> {
         context: context,
         barrierDismissible: true,
         builder: (_) {
-          return DeclarationDialog(productId: widget.productId,);
+          return DeclarationDialog(idx: widget.reviewId, type: DeclarationType.REVIEW,);
         }
     );
   }

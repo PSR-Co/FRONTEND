@@ -46,10 +46,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
           : ListView.builder(
               itemCount: data!.data.content.length,  // for test
               itemBuilder: (BuildContext context, int index) {
-                return ReviewItem(
-                  productId: widget.productId,
-                  review: data!.data.content[index],
-                );
+                return ReviewItem(review: data!.data.content[index],);
               }
             ),
     );
