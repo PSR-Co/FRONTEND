@@ -99,7 +99,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Future<bool> getProductData() async {
     final result = await ShoppingService().getProductData('${widget.productId}');
     data = ProductResponseModel.fromJson(result);
-    print('data -> ${data!.data.imgList}');
     isMyProduct = data?.data.isOwner ?? false;
     return (data != null);
   }
