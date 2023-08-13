@@ -6,7 +6,8 @@ import '../../common/const/colors.dart';
 class CompleteBtn extends StatefulWidget {
   String btnTitle;
   bool isVisible;
-  CompleteBtn({required this.btnTitle, required this.isVisible, Key? key}):super(key: key);
+  Function()? onPressed;
+  CompleteBtn({required this.btnTitle, required this.isVisible, required this.onPressed, Key? key}):super(key: key);
 
   @override
   State<CompleteBtn> createState() => _CompleteBtnState();
@@ -23,7 +24,7 @@ class _CompleteBtnState extends State<CompleteBtn> {
           width: MediaQuery.of(context).size.width,
           height: 50.0,
           child: OutlinedButton(
-              onPressed: () {  },
+              onPressed: widget.onPressed,
               child: Text(widget.btnTitle, style: completeBtnTextStyle,),
               style: OutlinedButton.styleFrom(
                   backgroundColor: PURPLE_COLOR,

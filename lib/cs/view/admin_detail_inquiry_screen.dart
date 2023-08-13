@@ -97,7 +97,7 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
             Expanded(child: Container()),
             Padding(
               padding: const EdgeInsets.only(left: 17.0, right: 17.0, bottom: 40.0),
-              child: CompleteBtn(btnTitle: '답변하기', isVisible: isActivated,),
+              child: CompleteBtn(btnTitle: '답변하기', isVisible: isActivated, onPressed: null,),
             )
           ],
         )
