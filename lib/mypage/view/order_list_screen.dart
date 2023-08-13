@@ -37,9 +37,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
 
   List<String> dropDownBtnTitle = ['요청대기', '진행중', '진행완료', '요청취소'];
   String isReviewed = "리뷰 쓰기";
-  String selectedValue = "요청대기";
-  String selectedValue1 = "요청대기";
-  String selectedValue2 = "요청대기";
+  String selectedValue = "";
+  String selectedValue1 = "";
+  String selectedValue2 = "";
 
   OrderListModel? data;
   List<OrderList> content = [];
@@ -63,11 +63,15 @@ class _OrderListScreenState extends State<OrderListScreen> {
       default:
         break;
     }
+    print('fetchData : ${await OrderService().getOrderData(queryParameters)}');
     return await OrderService().getOrderData(queryParameters);
   }
-
+int cnt=0;
   @override
   Widget build(BuildContext context) {
+    print('$cnt : $selectedValue1');
+    print('$cnt : $selectedValue2');
+    cnt++;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -84,6 +88,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
   }
 
   Widget orderProductView(String type, String selectedValue) {
+    print("실행");
     return FutureBuilder(
         future: fetchData(type, selectedValue),
         builder: (context, snapshot) {
@@ -157,9 +162,10 @@ class _OrderListScreenState extends State<OrderListScreen> {
   }
 
   Widget orderView(String type, Widget child) {
-    type == 'sell'
-        ? selectedValue = selectedValue1
-        : selectedValue = selectedValue2;
+    if((type == 'sell' ? selectedValue = selectedValue1 : selectedValue = selectedValue2) =='') {
+      selectedValue = '요청대기';
+    }
+    print('selectedValue : $selectedValue');
     return Column(children: [
       Container(
         width: MediaQuery.of(context).size.width,
@@ -182,10 +188,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
                 .toList(),
             onChanged: (value) {
               setState(() {
-                setSelectedValue(type, value!);
+                type == 'sell' ? selectedValue1 = value! : selectedValue2 = value!;
+                fetchData(type, type == 'sell' ? selectedValue1 : selectedValue2);
               });
-              // print(selectedValue);
-              fetchData(type, selectedValue);
             },
             dropdownStyleData: DropdownStyleData(
               width: 80.0,
