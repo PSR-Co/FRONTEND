@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:psr/mypage/component/detail_order_textfield_form.dart';
 
 import '../../common/const/colors.dart';
 import '../view/detail_order_screen.dart';
-import 'action_btn.dart';
 
 class MoveToDetailOrderScreen extends StatefulWidget {
   String type;
@@ -29,32 +27,10 @@ class _MoveToDetailOrderScreenState extends State<MoveToDetailOrderScreen> {
   Widget moveToDetailScreenLogic(String type, int orderId) {
     if (type == 'sell') {
       return DetailOrderScreen(
-          orderId: orderId,
-          type: type,
-          btnOption1: '요청승인',
-          btnOption2: '요청거절');
+          orderId: orderId, type: type, btnOption1: '요청승인', btnOption2: '요청거절');
     } else {
       return DetailOrderScreen(
-        orderId: orderId,
-        type: type,
-        btnOption1: '요청수정',
-        btnOption2: '요청취소',
-      );
+          orderId: orderId, type: type, btnOption1: '요청수정', btnOption2: '요청취소');
     }
   }
-  // }
-  // renderBtn(){
-  // ActionBtn renderBtn(String btnText, Function()? onPressed) {
-  //   return ActionBtn(
-  //     child: Container(
-  //       width: MediaQuery.of(context).size.width,
-  //       child: TextButton(
-  //           onPressed:onPressed,
-  //           child: Text(
-  //             btnText,
-  //             style: btnTypeTextStyle,
-  //           )),
-  //     ),
-  //   );
-  // }
 }

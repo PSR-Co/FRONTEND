@@ -1,8 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/division.dart';
-import 'package:psr/model/data/general_model.dart';
-import 'package:psr/model/data/order/edit_order_model.dart';
 import 'package:psr/model/data/order/order_detail_model.dart';
 import 'package:psr/mypage/component/action_btn.dart';
 import 'package:psr/mypage/component/detail_order_textfield_form.dart';
@@ -17,6 +16,7 @@ class DetailOrderScreen extends StatefulWidget {
   String type;
   String btnOption1;
   String btnOption2;
+
   // Widget? child;
 
   DetailOrderScreen(
@@ -58,7 +58,6 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
   OrderDetailModel? data;
 
   Future<dynamic> fetchData(int orderId) async {
-    print('detailorder ${await OrderService().getOrderDetailData(orderId)}');
     return await OrderService().getOrderDetailData(orderId);
   }
 
@@ -78,8 +77,6 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
         future: fetchData(widget.orderId),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            print('error ${snapshot.error.toString()}');
-
             return const Center(
               child: Text('에러가 발생했습니다.'),
             );
@@ -113,12 +110,26 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
               if (widget.type == 'sell' && data!.data.status == '요청대기')
                 Padding(
                   padding: const EdgeInsets.only(top: 18.0),
-                  child: ActionBtn(child: actionBtnChild(() => (){Navigator.pop(context, false);}, '1:1 채팅')),
+                  child: ActionBtn(
+                      child: actionBtnChild(
+                          () => () {
+                                Navigator.pop(context, false);
+                              },
+                          '1:1 채팅')),
                 )
-              else if(widget.type == 'order' && !readOnly)  Padding(
-                padding: const EdgeInsets.only(top: 18.0),
-                child: ActionBtn(child: actionBtnChild(() => editedBtn(data!.data.status, data!.data.ordererName, data!.data.websiteUrl, data!.data.inquiry, data!.data.description), '수정하기')),
-              )
+              else if (widget.type == 'order' && !readOnly)
+                Padding(
+                  padding: const EdgeInsets.only(top: 18.0),
+                  child: ActionBtn(
+                      child: actionBtnChild(
+                          () => editedBtn(
+                              data!.data.status,
+                              data!.data.ordererName,
+                              data!.data.websiteUrl,
+                              data!.data.inquiry,
+                              data!.data.description),
+                          '수정하기')),
+                )
             ],
           );
         });
@@ -261,11 +272,11 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     ));
   }
 
-  Widget actionBtnChild(Function()? onPressed, String btnText){
-    return Container(
+  Widget actionBtnChild(Function()? onPressed, String btnText) {
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: TextButton(
-          onPressed:onPressed,
+          onPressed: onPressed,
           child: Text(
             btnText,
             style: btnTypeTextStyle,
@@ -273,7 +284,8 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     );
   }
 
-  Future<dynamic> editedBtn(String status, String ordererName, String? websiteUrl, String inquiry, String description) async {
+  Future<dynamic> editedBtn(String status, String ordererName,
+      String? websiteUrl, String inquiry, String description) async {
     String name = '';
     String? url = '';
     String ask = '';
@@ -283,19 +295,28 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     nameController.text == '' ? name = ordererName : name = nameController.text;
     urlController.text == '' ? url = websiteUrl : url = urlController.text;
     askController.text == '' ? ask = inquiry : ask = askController.text;
-    detailController.text == '' ? detail = description : detail = detailController.text;
+    detailController.text == ''
+        ? detail = description
+        : detail = detailController.text;
 
-     result = await OrderService().editOrderData(widget.orderId, {'status': status}, name, url, ask, detail);
+    result = await OrderService().editOrderData(
+        widget.orderId, {'status': status}, name, url, ask, detail);
 
     if (result != null) {
       if (result.code == 200) {
-        print('요청에 성공했습니다.');
+        if (kDebugMode) {
+          print('요청에 성공했습니다.');
+        }
         changeEditable();
-      }else {
-        print('요청에 실패했습니다.');
+      } else {
+        if (kDebugMode) {
+          print('요청에 실패했습니다.');
+        }
       }
     } else {
-      print('네트워크 오류가 발생하였습니다.');
+      if (kDebugMode) {
+        print('네트워크 오류가 발생하였습니다.');
+      }
     }
   }
 
