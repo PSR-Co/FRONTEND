@@ -63,7 +63,7 @@ class APIManager {
         );
     }
     print('api + ${response}');
-    print('api + ${response.data}');
+    // print('api + ${response.data}');
 
     return response.data;
   }

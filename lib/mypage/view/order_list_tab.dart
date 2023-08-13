@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:psr/common/const/constants.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
+import 'package:psr/mypage/component/MoveToDetailOrderScreen.dart';
 import 'package:psr/mypage/view/order_list_screen.dart';
 import 'package:psr/mypage/view/seller_detail_order_screen.dart';
 import 'package:psr/presenter/order/order_service.dart';
@@ -9,6 +10,7 @@ import 'package:psr/presenter/order/order_service.dart';
 import '../../common/const/colors.dart';
 import '../../home/component/card_slider.dart';
 import '../../model/data/order/order_list_model.dart';
+import 'detail_order_screen.dart';
 
 class OrderListTab extends StatefulWidget {
   const OrderListTab({Key? key}) : super(key: key);
@@ -38,6 +40,7 @@ class _OrderListTabState extends State<OrderListTab>
     } else {
       queryParameters = {'type': 'order'};
     }
+    print('ordertab ${await OrderService().getOrderData(queryParameters)}');
     return await OrderService().getOrderData(queryParameters);
   }
 
@@ -61,6 +64,7 @@ class _OrderListTabState extends State<OrderListTab>
             return const Center(
               child: Text('에러가 발생했습니다.'),
             );
+
           }
           if (snapshot.hasData) {
             data = OrderListModel.fromJson(snapshot.data);
@@ -87,10 +91,12 @@ class _OrderListTabState extends State<OrderListTab>
                 return cardContent(
                     content[index].userName,
                     "asset/images/profile_img_sample.jpg",
-
                     ///추후 변경
                     content[index].productName,
-                    content[index].orderDate);
+                    content[index].orderDate,
+                  content[index].orderId,
+                  type
+                );
               },
             ),
           );
@@ -98,19 +104,14 @@ class _OrderListTabState extends State<OrderListTab>
   }
 
   Widget cardContent(String userName, String productImg, String productName,
-      String orderDate) {
+      String orderDate, int orderId, String type) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => (SellerDetailOrderSccreen(
-                      selectedValue: '',
-                      orderDate: orderDate,
-                      productName: productName,
-                      btnOption1: '요청승인',
-                      btnOption2: '요청거절',
-                    ))));
+                builder: (context) => (MoveToDetailOrderScreen(type: type, orderId: orderId)
+                )));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 0.0),

@@ -5,11 +5,14 @@ import 'package:psr/common/const/constants.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
+import 'package:psr/mypage/component/action_btn.dart';
+import 'package:psr/mypage/view/detail_order_screen.dart';
 import 'package:psr/mypage/view/seller_detail_order_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../model/data/order/order_list_model.dart';
 import '../../presenter/order/order_service.dart';
+import '../component/MoveToDetailOrderScreen.dart';
 
 class OrderListScreen extends StatefulWidget {
   const OrderListScreen({Key? key}) : super(key: key);
@@ -35,11 +38,12 @@ class _OrderListScreenState extends State<OrderListScreen> {
       color: PURPLE_COLOR,
       decoration: TextDecoration.underline);
 
+
   List<String> dropDownBtnTitle = ['요청대기', '진행중', '진행완료', '요청취소'];
   String isReviewed = "리뷰 쓰기";
-  String? selectedValue;
-  String? selectedValue1;
-  String? selectedValue2;
+  String selectedValue = "요청대기";
+  String selectedValue1 = "요청대기";
+  String selectedValue2 = "요청대기";
 
   OrderListModel? data;
   List<OrderList> content = [];
@@ -83,7 +87,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
     );
   }
 
-  Widget orderProductView(String type, String? selectedValue) {
+  Widget orderProductView(String type, String selectedValue) {
     return FutureBuilder(
         future: fetchData(type, selectedValue),
         builder: (context, snapshot) {
@@ -143,16 +147,10 @@ class _OrderListScreenState extends State<OrderListScreen> {
                                 padding: const EdgeInsets.only(
                                     top: 5.0, bottom: 30.0),
                                 child: LargeDetailBar(
-
-                                    ///판매자 상세 화면 + 요청대기
                                     title: content[index].productName,
-                                    moveTo: SellerDetailOrderSccreen(
-                                      selectedValue: selectedValue,
-                                      orderDate: content[index].orderDate,
-                                      productName: content[index].productName,
-                                      btnOption1: '요청승인',
-                                      btnOption2: '요청거절',
-                                    )),
+                                    moveTo: MoveToDetailOrderScreen(type: type, orderId: content[index].orderId,)
+
+                                ),
 
                                 ///구매자 상세 화면
                                 // LargeDetailBar(
@@ -229,4 +227,28 @@ class _OrderListScreenState extends State<OrderListScreen> {
       // selectedValue = value;
     });
   }
+
+  // Widget moveToDetailScreenLogic(String selectedValue, String type, int orderId){
+  //   if(type == 'sell') {
+  //     if(selectedValue == '요청대기') return DetailOrderScreen(selectedValue: selectedValue, orderId: orderId, btnOption1: '요청승인', btnOption2: '요청거절', child: renderChatBtn());
+  //     else return DetailOrderScreen(selectedValue: selectedValue, orderId: orderId, btnOption1: '진행완료', btnOption2: '진행취소', child: null,);
+  //   }
+  //   else {return DetailOrderScreen(selectedValue: selectedValue, orderId: orderId, btnOption1: '요청수정', btnOption2: '요청취소', child: null,);}
+  // }
+  //
+  // ActionBtn renderChatBtn(){
+  //   return ActionBtn(
+  //     child: Container(
+  //       width: MediaQuery.of(context).size.width,
+  //       child: TextButton(
+  //           onPressed: () {
+  //             Navigator.pop(context, false);
+  //           },
+  //           child: Text(
+  //             '1:1 채팅',
+  //             style: btnTypeTextStyle,
+  //           )),
+  //     ),
+  //   );
+  // }
 }

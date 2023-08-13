@@ -11,6 +11,11 @@ class OrderService {
 
   Future<dynamic> getOrderData(Map<String, dynamic> queryParameters) async {
     final response = await APIManager().request(RequestType.GET, ORDER_DETAIL, null, queryParameters, null);
+    return response;
+  }
+
+  Future<dynamic> getOrderDetailData(int orderId) async {
+    final response = await APIManager().request(RequestType.GET, '$ORDER_DETAIL/$orderId', null, null, null);
     print('response: $response');
     return response;
   }
