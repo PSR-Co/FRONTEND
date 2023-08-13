@@ -1,4 +1,5 @@
 import 'package:psr/model/data/shopping/order_request_model.dart';
+import 'package:psr/model/data/shopping/product_model.dart';
 
 import '../../model/network/api_manager.dart';
 
@@ -65,7 +66,40 @@ class ShoppingService {
     return ((response != null) && (response['code'] == 200));
   }
 
-  Future<bool> requestOrder(int productId, String name, String? webUrl, String inquiry, String description) async {
+
+  Future<bool> addProduct(
+      String category,
+      String name,
+      String price,
+      String description,
+      List<String>? imgList
+      ) async {
+
+    final body = ProductRequestModel(
+        category: category,
+        name: name,
+        price: int.parse(price),
+        description: description,
+        imgList: imgList
+    ).toJson();
+
+    final response = await APIManager().request(
+        RequestType.POST,
+        SHOPPING_URL,
+        null, null, body);
+
+    return ((response != null) && (response['code'] == 200));
+  }
+
+
+  Future<bool> requestOrder(
+      int productId,
+      String name,
+      String? webUrl,
+      String inquiry,
+      String description
+      ) async {
+
     final body = OrderRequest(
         productId: productId,
         orderName: name,

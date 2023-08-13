@@ -48,3 +48,23 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'description': instance.description,
       'isLike': instance.isLike,
     };
+
+ProductRequestModel _$ProductRequestModelFromJson(Map<String, dynamic> json) =>
+    ProductRequestModel(
+      category: json['category'] as String,
+      name: json['name'] as String,
+      price: json['price'] as int,
+      description: json['description'] as String,
+      imgList:
+          (json['imgList'] as List<dynamic>?)?.map((e) => e as String).toList(),
+    );
+
+Map<String, dynamic> _$ProductRequestModelToJson(
+        ProductRequestModel instance) =>
+    <String, dynamic>{
+      'category': instance.category,
+      'name': instance.name,
+      'price': instance.price,
+      'description': instance.description,
+      'imgList': instance.imgList,
+    };
