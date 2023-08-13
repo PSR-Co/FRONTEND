@@ -10,7 +10,7 @@ EditOrderModel _$EditOrderModelFromJson(Map<String, dynamic> json) =>
     EditOrderModel(
       code: json['code'] as int,
       message: json['message'] as String,
-      data: EditOrderData.fromJson(json['data'] as Map<String, dynamic>),
+      data: json['data'] as Map<String, dynamic>?,
     );
 
 Map<String, dynamic> _$EditOrderModelToJson(EditOrderModel instance) =>
@@ -20,12 +20,18 @@ Map<String, dynamic> _$EditOrderModelToJson(EditOrderModel instance) =>
       'data': instance.data,
     };
 
-EditOrderData _$EditOrderDataFromJson(Map<String, dynamic> json) =>
-    EditOrderData(
-      data: json['data'] as String?,
+EditOrderRequest _$EditOrderRequestFromJson(Map<String, dynamic> json) =>
+    EditOrderRequest(
+      ordererName: json['ordererName'] as String,
+      websiteUrl: json['websiteUrl'] as String?,
+      inquiry: json['inquiry'] as String,
+      description: json['description'] as String,
     );
 
-Map<String, dynamic> _$EditOrderDataToJson(EditOrderData instance) =>
+Map<String, dynamic> _$EditOrderRequestToJson(EditOrderRequest instance) =>
     <String, dynamic>{
-      'data': instance.data,
+      'ordererName': instance.ordererName,
+      'websiteUrl': instance.websiteUrl,
+      'inquiry': instance.inquiry,
+      'description': instance.description,
     };

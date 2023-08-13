@@ -83,7 +83,6 @@ class _DetailOrderTextFieldFormState extends State<DetailOrderTextFieldForm> {
             setState(() {
               currentTextLength = text.length;
             });
-            updateText(widget.title, widget.controller.text);
           },
           controller: widget.controller,
           maxLines: widget.maxLine,
@@ -106,16 +105,5 @@ class _DetailOrderTextFieldFormState extends State<DetailOrderTextFieldForm> {
           ),
           readOnly: widget.readOnly,
         ));
-  }
-
-  Map<String, dynamic> updateText(String title, String? newText){
-    Map<String, dynamic> updateOrder = {};
-    switch(title){
-      case '이름': updateOrder.addAll({'ordererName': newText}); break;
-      case '이름': updateOrder.addAll({'websiteUrl': newText}); break;
-      case '이름': updateOrder.addAll({'inquiry': newText}); break;
-      case '이름': updateOrder.addAll({'description': newText}); break;
-    }
-    return updateOrder;
   }
 }

@@ -4,17 +4,30 @@ import 'package:psr/model/data/general_model.dart';
 part 'edit_order_model.g.dart';
 
 @JsonSerializable()
-class EditOrderModel extends GeneralModel {
-  final EditOrderData data;
+class EditOrderModel extends GeneralModel{
+  final Map<String,dynamic>? data;
   EditOrderModel({required super.code, required super.message, required this.data});
-  factory EditOrderModel.fromJson(Map<String, dynamic> json) => _$EditOrderModelFromJson(json);
+
+  factory EditOrderModel.fromJson(Map<String, dynamic> json)
+  => _$EditOrderModelFromJson(json);
   Map<String, dynamic> toJson() => _$EditOrderModelToJson(this);
 }
 
 @JsonSerializable()
-class EditOrderData {
- final String? data;
- EditOrderData({required this.data});
- factory EditOrderData.fromJson(Map<String, dynamic> json) => _$EditOrderDataFromJson(json);
- Map<String, dynamic> toJson() => _$EditOrderDataToJson(this);
+class EditOrderRequest {
+  final String ordererName;
+  final String? websiteUrl;
+  final String inquiry;
+  final String description;
+
+  EditOrderRequest({
+    required this.ordererName,
+    required this.websiteUrl,
+    required this.inquiry,
+    required this.description
+  });
+
+  factory EditOrderRequest.fromJson(Map<String, dynamic> json)
+  => _$EditOrderRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$EditOrderRequestToJson(this);
 }

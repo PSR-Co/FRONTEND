@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/division.dart';
+import 'package:psr/model/data/general_model.dart';
+import 'package:psr/model/data/order/edit_order_model.dart';
 import 'package:psr/model/data/order/order_detail_model.dart';
 import 'package:psr/mypage/component/action_btn.dart';
 import 'package:psr/mypage/component/detail_order_textfield_form.dart';
@@ -15,14 +17,14 @@ class DetailOrderScreen extends StatefulWidget {
   String type;
   String btnOption1;
   String btnOption2;
-  Widget? child;
+  // Widget? child;
 
   DetailOrderScreen(
       {required this.orderId,
       required this.type,
       required this.btnOption1,
       required this.btnOption2,
-      required this.child,
+      // required this.child,
       Key? key})
       : super(key: key);
 
@@ -108,11 +110,15 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                 buttonView('진행완료', '진행취소')
               else
                 buttonView(widget.btnOption1, widget.btnOption2),
-              if (widget.child != null)
+              if (widget.type == 'sell' && data!.data.status == '요청대기')
                 Padding(
                   padding: const EdgeInsets.only(top: 18.0),
-                  child: widget.child,
+                  child: ActionBtn(child: actionBtnChild(() => (){Navigator.pop(context, false);}, '1:1 채팅')),
                 )
+              else if(widget.type == 'order' && !readOnly)  Padding(
+                padding: const EdgeInsets.only(top: 18.0),
+                child: ActionBtn(child: actionBtnChild(() => editedBtn(data!.data.status, data!.data.ordererName, data!.data.websiteUrl, data!.data.inquiry, data!.data.description), '수정하기')),
+              )
             ],
           );
         });
@@ -253,6 +259,44 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
             )),
       ],
     ));
+  }
+
+  Widget actionBtnChild(Function()? onPressed, String btnText){
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: TextButton(
+          onPressed:onPressed,
+          child: Text(
+            btnText,
+            style: btnTypeTextStyle,
+          )),
+    );
+  }
+
+  Future<dynamic> editedBtn(String status, String ordererName, String? websiteUrl, String inquiry, String description) async {
+    String name = '';
+    String? url = '';
+    String ask = '';
+    String detail = '';
+    dynamic result;
+
+    nameController.text == '' ? name = ordererName : name = nameController.text;
+    urlController.text == '' ? url = websiteUrl : url = urlController.text;
+    askController.text == '' ? ask = inquiry : ask = askController.text;
+    detailController.text == '' ? detail = description : detail = detailController.text;
+
+     result = await OrderService().editOrderData(widget.orderId, {'status': status}, name, url, ask, detail);
+
+    if (result != null) {
+      if (result.code == 200) {
+        print('요청에 성공했습니다.');
+        changeEditable();
+      }else {
+        print('요청에 실패했습니다.');
+      }
+    } else {
+      print('네트워크 오류가 발생하였습니다.');
+    }
   }
 
   void changeEditable() {

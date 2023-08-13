@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:psr/model/data/general_model.dart';
+import 'package:psr/model/data/order/edit_order_model.dart';
 import 'package:psr/model/network/api_manager.dart';
 
 class OrderService {
@@ -16,11 +19,15 @@ class OrderService {
 
   Future<dynamic> getOrderDetailData(int orderId) async {
     final response = await APIManager().request(RequestType.GET, '$ORDER_DETAIL/$orderId', null, null, null);
-    print('response: $response');
     return response;
   }
 
-  Future<dynamic> editOrderData(int orderId, Map<String, dynamic>? queryParameters, Map<String, dynamic> body) async {
-    final response = await APIManager().request(RequestType.PATCH, '$ORDER_DETAIL/$orderId', null, queryParameters, body);
+  Future<dynamic> editOrderData(int orderId, Map<String, dynamic>? queryParameters, String ordererName, String? websiteUrl, String inquiry, String description) async {
+    final body = EditOrderRequest(ordererName: ordererName, websiteUrl: websiteUrl, inquiry: inquiry, description: description).toJson();
+    final response = await APIManager().request(RequestType.PATCH, '$ORDER_DETAIL/$orderId', null, queryParameters, body).catchError((error) { debugPrint('error : $error'); });
+    print('body: $body');
+
+    print('response: $response');
+    return (response == null) ? null : GeneralModel.fromJson(response);
   }
 }
