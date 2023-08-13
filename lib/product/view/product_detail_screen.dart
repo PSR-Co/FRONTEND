@@ -46,7 +46,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             productId: widget.productId,
           ),
           body: renderBody(isEmptyData),
-          bottomNavigationBar: BottomNavigationWidget(numOfLike: isEmptyData ? 0 : data!.data.numOfLikes,),
+          bottomNavigationBar:
+          BottomNavigationWidget(
+            numOfLike: isEmptyData ? 0 : data!.data.numOfLikes,
+            productId: widget.productId,
+            productImgUrl: data?.data.imgList[0],
+            productName: data?.data.name ?? '이름없음',
+          ),
         );
       }
     );

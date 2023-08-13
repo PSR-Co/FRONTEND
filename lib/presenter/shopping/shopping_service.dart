@@ -1,7 +1,10 @@
+import 'package:psr/model/data/shopping/order_request_model.dart';
+
 import '../../model/network/api_manager.dart';
 
 class ShoppingService {
   final SHOPPING_URL = '/products';
+  final REQUEST_ORDER_URL = '/orders';
 
   /// Singleton Pattern
   static final ShoppingService _shoppingService = ShoppingService._();
@@ -52,5 +55,21 @@ class ShoppingService {
         '$SHOPPING_URL/users/$userId',
         null, null, null);
     return response;
+  }
+
+  Future<bool> requestOrder(int productId, String name, String? webUrl, String inquiry, String description) async {
+    final body = OrderRequest(
+        productId: productId, 
+        ordererName: name, 
+        websiteUrl: webUrl ?? null,
+        inquiry: inquiry, 
+        description: description
+    ).toJson();
+    
+    final response = await APIManager().request(
+        RequestType.POST,
+        REQUEST_ORDER_URL,
+        null, null, body);
+    return ((response != null) && (response['code'] == 200));
   }
 }

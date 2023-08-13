@@ -6,9 +6,15 @@ import '../../order/view/add_order_screen.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
   final int numOfLike;
+  final int productId;
+  final String? productImgUrl;
+  final String productName;
 
   const BottomNavigationWidget({
     required this.numOfLike,
+    required this.productId,
+    required this.productImgUrl,
+    required this.productName,
     Key? key
   }) : super(key: key);
 
@@ -87,8 +93,11 @@ class _State extends State<BottomNavigationWidget> {
   void didTapOrderButton() {
     Navigator.of(context).push(MaterialPageRoute(builder:
         (_) => AddOrderScreen(
-          productImgKey: 'asset/images/product_sample.png',
-          productName: '폴로랄프로렌 목도리',
+          // productImgUrl: 'asset/images/product_sample.png',
+          // productName: '폴로랄프로렌 목도리',
+          productId: widget.productId,
+          productImgUrl: widget.productImgUrl,
+          productName: widget.productName,
         )
     ));
   }
