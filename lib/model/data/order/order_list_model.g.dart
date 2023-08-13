@@ -38,7 +38,7 @@ OrderList _$OrderListFromJson(Map<String, dynamic> json) => OrderList(
       userName: json['userName'] as String,
       productId: json['productId'] as int,
       productName: json['productName'] as String,
-      productImgUrl: json['productImgUrl'] as String?,
+      productImgUrl: json['productImgUrl'] as String,
       reviewId: json['reviewId'] as int?,
     );
 

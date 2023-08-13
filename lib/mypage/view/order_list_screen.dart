@@ -5,10 +5,12 @@ import 'package:psr/common/const/constants.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
+import 'package:psr/review/view/add_review_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../model/data/order/order_list_model.dart';
 import '../../presenter/order/order_service.dart';
+import '../../review/view/review_screen.dart';
 import '../component/MoveToDetailOrderScreen.dart';
 
 class OrderListScreen extends StatefulWidget {
@@ -34,6 +36,8 @@ class _OrderListScreenState extends State<OrderListScreen> {
       fontWeight: FontWeight.w700,
       color: PURPLE_COLOR,
       decoration: TextDecoration.underline);
+  final TextStyle headerTextStyle = const TextStyle(
+      fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
 
   List<String> dropDownBtnTitle = ['요청대기', '진행중', '진행완료', '요청취소'];
   String isReviewed = "리뷰 쓰기";
@@ -66,7 +70,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
     print('fetchData : ${await OrderService().getOrderData(queryParameters)}');
     return await OrderService().getOrderData(queryParameters);
   }
-int cnt=0;
+
+  int cnt = 0;
+
   @override
   Widget build(BuildContext context) {
     print('$cnt : $selectedValue1');
@@ -120,16 +126,19 @@ int cnt=0;
                     return ListTile(
                         onTap: () {},
                         title: Container(
-                          width: MediaQuery.of(context).size.width,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
                           alignment: Alignment.centerLeft,
                           child: Column(
                             children: [
                               Container(
                                 margin:
-                                    const EdgeInsets.symmetric(vertical: 5.0),
+                                const EdgeInsets.symmetric(vertical: 5.0),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       type == 'sell'
@@ -147,12 +156,12 @@ int cnt=0;
                               Padding(
                                 padding: const EdgeInsets.only(
                                     top: 5.0, bottom: 30.0),
-                                child: LargeDetailBar(
+                                child: type == 'sell' ? LargeDetailBar(
                                     title: content[index].productName,
                                     moveTo: MoveToDetailOrderScreen(
                                       type: type,
                                       orderId: content[index].orderId,
-                                    )),
+                                    )) : moveToReview(content[index].productName, content[index].reviewId, content[index].userName, content[index].productName, content[index].productImgUrl),
                               )
                             ],
                           ),
@@ -162,13 +171,17 @@ int cnt=0;
   }
 
   Widget orderView(String type, Widget child) {
-    if((type == 'sell' ? selectedValue = selectedValue1 : selectedValue = selectedValue2) =='') {
+    if ((type == 'sell' ? selectedValue = selectedValue1 : selectedValue =
+        selectedValue2) == '') {
       selectedValue = '요청대기';
     }
     print('selectedValue : $selectedValue');
     return Column(children: [
       Container(
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20.0, bottom: 10.0, top: 5.0),
         child: DropdownButtonHideUnderline(
@@ -179,7 +192,8 @@ int cnt=0;
             ),
             value: selectedValue,
             items: dropDownBtnTitle
-                .map((String item) => DropdownMenuItem(
+                .map((String item) =>
+                DropdownMenuItem(
                     value: item,
                     child: Text(
                       item,
@@ -188,8 +202,10 @@ int cnt=0;
                 .toList(),
             onChanged: (value) {
               setState(() {
-                type == 'sell' ? selectedValue1 = value! : selectedValue2 = value!;
-                fetchData(type, type == 'sell' ? selectedValue1 : selectedValue2);
+                type == 'sell' ? selectedValue1 = value! : selectedValue2 =
+                value!;
+                fetchData(
+                    type, type == 'sell' ? selectedValue1 : selectedValue2);
               });
             },
             dropdownStyleData: DropdownStyleData(
@@ -205,12 +221,29 @@ int cnt=0;
             iconStyleData: IconStyleData(
                 icon: SvgPicture.asset('asset/icons/common/toggle_down.svg'),
                 openMenuIcon:
-                    SvgPicture.asset('asset/icons/common/toggle_up.svg')),
+                SvgPicture.asset('asset/icons/common/toggle_up.svg')),
           ),
         ),
       ),
       child
     ]);
+  }
+
+  Widget moveToReview(String title, int? isReviewed, String sellerName, String productName, String productImgKey) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(title, style: headerTextStyle,),
+          TextButton(onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => isReviewed != null ? ReviewScreen() : AddReviewScreen(sellerName: sellerName, productName: productName, productImgKey: productImgKey)));
+          }, child: Text(isReviewed != null ? '리뷰 보기' : '리뷰 쓰기', style: reviewBtnTextStyle))
+        ],
+      ),
+    );
   }
 
   setSelectedValue(String type, String value) {

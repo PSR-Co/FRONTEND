@@ -126,7 +126,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                               data!.data.ordererName,
                               data!.data.websiteUrl,
                               data!.data.inquiry,
-                              data!.data.description),
+                              data!.data.description).then((value) => setState((){})),
                           '수정하기')),
                 )
             ],
