@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/purple_filled_button.dart';
 import 'package:psr/order/component/order_info_input_widget.dart';
+import 'package:psr/order/view/complete_order_screen.dart';
+import 'package:psr/presenter/shopping/shopping_service.dart';
 
 class AddOrderScreen extends StatefulWidget {
-  final String productImgKey;
+  final int productId;
+  final String? productImgUrl;
   final String productName;
 
   const AddOrderScreen({
-    required this.productImgKey,
+    required this.productId,
+    required this.productImgUrl,
     required this.productName,
     Key? key
   }) : super(key: key);
@@ -20,12 +25,14 @@ class AddOrderScreen extends StatefulWidget {
 
 class _AddOrderScreenState extends State<AddOrderScreen> {
 
+  bool isAllInput = false;
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController urlController = TextEditingController();
-  final TextEditingController askController = TextEditingController();
-  final TextEditingController detailController = TextEditingController();
+  final TextEditingController inquiryController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
-  final defaultStyle = TextStyle(
+  final defaultStyle = const TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 15,
     color: GRAY_4_COLOR,
@@ -37,7 +44,9 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
       backgroundColor: Colors.white,
       appBar: DefaultAppBarLayout(titleText: '요청하기',),
       body: renderBody(),
-      bottomNavigationBar: PurpleFilledButton(title: '판매자에게 요청하기', onPressed: didTapOrderButton,),
+      bottomNavigationBar: PurpleFilledButton(
+        title: '판매자에게 요청하기',
+        onPressed: (isAllInput) ? didTapOrderButton : null,),
     );
   }
 
@@ -53,6 +62,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
           hintText: '이름을 입력해주세요.',
           maxLine: 1,
           controller: nameController,
+          onChanged: onChanged,
         ),
 
         OrderInfoInputView(
@@ -67,17 +77,19 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
           title: '문의사항',
           hintText: '문의사항을 입력해주세요.',
           maxLine: 5,
-          controller: askController,
+          controller: inquiryController,
+          onChanged: onChanged,
         ),
 
         OrderInfoInputView(
           title: '요청 상세 설명',
           hintText: '요청 상세 설명을 입력해주세요.',
           maxLine: 5,
-          controller: detailController,
+          controller: descriptionController,
+          onChanged: onChanged,
         ),
 
-        SizedBox(height: 30,),
+        const SizedBox(height: 30,),
       ],
     );
   }
@@ -85,22 +97,39 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   Widget renderProductInfo() {
     return Column(
       children: [
-        Image.asset(widget.productImgKey, width: 148, height: 148, fit: BoxFit.cover,),
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text(widget.productName, style: defaultStyle),
-        )
+        (widget.productImgUrl == null)
+        ? Image.asset('/asset/images/product_sample.png')
+        : Image.asset(widget.productImgUrl!, width: 148, height: 148, fit: BoxFit.cover,),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Text(widget.productName, style: defaultStyle),
+            )
       ],
     );
   }
 
+  void onChanged() {
+    setState(() {
+      isAllInput = (
+          nameController.value.text.isNotEmpty
+          && inquiryController.value.text.isNotEmpty
+          && descriptionController.value.text.isNotEmpty
+      );
+    });
+  }
+
   /// event methods
-  void didTapOrderButton() {
-    // TODO: 작성된 요청 검토 및 POST
-    print("didTapOrderButton");
-    print("입력된 이름 -> ${nameController.value.text}");
-    print("입력된 URL -> ${urlController.value.text}");
-    print("입력된 문의사항 -> ${askController.value.text}");
-    print("입력된 요청 상세 설명 -> ${detailController.value.text}");
+  void didTapOrderButton() async {
+    final result = await ShoppingService().requestOrder(
+        widget.productId,
+        nameController.value.text,
+        (urlController.value.text.isEmpty) ? null : urlController.value.text,
+        inquiryController.value.text,
+        descriptionController.value.text
+    );
+    if (result) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteOrderScreen()));
+    }
+    else { Fluttertoast.showToast(msg: '요청에 실패하였습니다.'); }
   }
 }

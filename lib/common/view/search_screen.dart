@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../model/data/shopping/product_model.dart';
+import '../../model/data/shopping/shopping_main_model.dart';
 import '../../shopping/component/category_list_item.dart';
 import '../const/colors.dart';
 
@@ -43,15 +43,19 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
         itemBuilder: (BuildContext context, int index) {
           // TODO: 데이터 패치 후 카테고리 값 변경
           // return CategoryListItem(category: '관심목록', name: _results.elementAt(index),);
-          return CategoryListItem(category: '관심목록', data: Product(
-            /// 임시 데이터
-              productId: 0,
-              imgKey: 'imgKey',
-              userIdx: 0,
-              nickname: 'nickname',
-              name: 'name',
-              price: 0,
-              isLike: false),
+          return CategoryListItem(
+            productId: 1, // TODO: GET 후 productId 전달
+            category: '관심목록',
+            data: Product(
+              /// 임시 데이터
+                productId: 0,
+                imgUrl: 'imgKey',
+                userId: 0,
+                nickname: 'nickname',
+                name: 'name',
+                price: 0,
+                isLike: false
+            ),
           );
         },
       );

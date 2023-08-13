@@ -6,74 +6,65 @@ part of 'product_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
+ProductResponseModel _$ProductResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    ProductResponseModel(
       code: json['code'] as int,
       message: json['message'] as String,
-      data: ProductsData.fromJson(json['data'] as Map<String, dynamic>),
+      data: Product.fromJson(json['data'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>
+Map<String, dynamic> _$ProductResponseModelToJson(
+        ProductResponseModel instance) =>
     <String, dynamic>{
       'code': instance.code,
       'message': instance.message,
       'data': instance.data,
     };
 
-ProductsData _$ProductsDataFromJson(Map<String, dynamic> json) => ProductsData(
-      popularList: (json['popularList'] as List<dynamic>)
-          .map((e) => PopularProduct.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      productList: (json['productList'] as List<dynamic>)
-          .map((e) => Product.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$ProductsDataToJson(ProductsData instance) =>
-    <String, dynamic>{
-      'popularList': instance.popularList,
-      'productList': instance.productList,
-    };
-
-PopularProduct _$PopularProductFromJson(Map<String, dynamic> json) =>
-    PopularProduct(
-      productId: json['productId'] as int,
-      imgKey: json['imgKey'] as String,
-      name: json['name'] as String,
-      price: json['price'] as int,
-      numOfLike: json['numOfLike'] as int,
-      isLike: json['isLike'] as bool,
-      avgOfRating: (json['avgOfRating'] as num).toDouble(),
-      numOfReview: json['numOfReview'] as int,
-    );
-
-Map<String, dynamic> _$PopularProductToJson(PopularProduct instance) =>
-    <String, dynamic>{
-      'productId': instance.productId,
-      'imgKey': instance.imgKey,
-      'name': instance.name,
-      'price': instance.price,
-      'numOfLike': instance.numOfLike,
-      'isLike': instance.isLike,
-      'avgOfRating': instance.avgOfRating,
-      'numOfReview': instance.numOfReview,
-    };
-
 Product _$ProductFromJson(Map<String, dynamic> json) => Product(
-      productId: json['productId'] as int,
-      imgKey: json['imgKey'] as String,
-      userIdx: json['userIdx'] as int,
+      isOwner: json['isOwner'] as bool,
+      category: json['category'] as String,
+      imgList:
+          (json['imgList'] as List<dynamic>).map((e) => e as String).toList(),
+      userId: json['userId'] as int,
       nickname: json['nickname'] as String,
+      numOfLikes: json['numOfLikes'] as int,
       name: json['name'] as String,
       price: json['price'] as int,
+      description: json['description'] as String,
       isLike: json['isLike'] as bool,
     );
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
-      'productId': instance.productId,
-      'imgKey': instance.imgKey,
-      'userIdx': instance.userIdx,
+      'isOwner': instance.isOwner,
+      'category': instance.category,
+      'imgList': instance.imgList,
+      'userId': instance.userId,
       'nickname': instance.nickname,
+      'numOfLikes': instance.numOfLikes,
       'name': instance.name,
       'price': instance.price,
+      'description': instance.description,
       'isLike': instance.isLike,
+    };
+
+ProductRequestModel _$ProductRequestModelFromJson(Map<String, dynamic> json) =>
+    ProductRequestModel(
+      category: json['category'] as String,
+      name: json['name'] as String,
+      price: json['price'] as int,
+      description: json['description'] as String,
+      imgList:
+          (json['imgList'] as List<dynamic>?)?.map((e) => e as String).toList(),
+    );
+
+Map<String, dynamic> _$ProductRequestModelToJson(
+        ProductRequestModel instance) =>
+    <String, dynamic>{
+      'category': instance.category,
+      'name': instance.name,
+      'price': instance.price,
+      'description': instance.description,
+      'imgList': instance.imgList,
     };

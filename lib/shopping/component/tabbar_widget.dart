@@ -3,7 +3,7 @@ import 'package:psr/presenter/shopping/shopping_service.dart';
 import 'package:psr/shopping/component/popular_list_item.dart';
 
 
-import '../../model/data/shopping/product_model.dart';
+import '../../model/data/shopping/shopping_main_model.dart';
 import 'category_list_item.dart';
 
 class ShoppingTabBarWidget extends StatefulWidget {
@@ -20,7 +20,7 @@ class ShoppingTabBarWidget extends StatefulWidget {
 
 class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
 
-  ProductModel? data;
+  ShoppingMainResponse? data;
   List<PopularProduct> popularList = [];
   List<Product> productList = [];
 
@@ -43,16 +43,11 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
       child: FutureBuilder<dynamic> (
           future: fetchData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            print('${widget.categoryName} :: FutureBuilder called');
             if (snapshot.hasData) {
-              data = ProductModel.fromJson(snapshot.data);
+              data = ShoppingMainResponse.fromJson(snapshot.data);
               popularList = data!.data.popularList;
-              productList = data!.data.productList;
+              productList = data!.data.productList.content;
 
-              print('${widget.categoryName}');
-              print('data -> ${snapshot.data}');
-              print('popularList -> ${popularList}');
-              print('productList -> ${productList}');
               if (data?.code != 200
                   || popularList.isEmpty && productList.isEmpty) {
                 return const Center(
@@ -105,7 +100,7 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
         itemBuilder: (BuildContext context, int index) {
           return PopularListItem(
             category: widget.categoryName,
-            index: index,
+            productId: data[index].productId,
             data: data[index],
           );
         },
@@ -126,7 +121,7 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
         itemBuilder: (BuildContext context, int index) {
           return CategoryListItem(
             category: widget.categoryName,
-            index: index,
+            productId: data[index].productId,
             data: data[index],
           );
         },

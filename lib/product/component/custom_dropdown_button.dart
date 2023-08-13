@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/const/constants.dart';
 
+import '../view/add_product_screen.dart';
+
 class CustomDropdownButton extends StatefulWidget {
   final double width;
 
@@ -73,7 +75,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
                   ),
                   borderRadius: isFolded
                       ? BorderRadius.circular(14)
-                      : BorderRadius.only(
+                      : const BorderRadius.only(
                           topLeft: Radius.circular(14),
                           topRight: Radius.circular(14),
                           bottomRight: Radius.zero,
@@ -110,6 +112,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
 
   // 드롭다운.
   OverlayEntry _customDropdown() {
+    AddProductScreenState? parent = context.findAncestorStateOfType<AddProductScreenState>();
     return OverlayEntry(
       maintainState: true,
       builder: (context) => Positioned(
@@ -123,7 +126,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
               height: 45.0 * (CATEGORY.length-1),
               decoration: BoxDecoration(
                 border: Border.all(color: PURPLE_COLOR.withOpacity(0.5)),
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomRight: Radius.circular(12),
                   bottomLeft: Radius.circular(12),
                 ),
@@ -141,6 +144,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
                       setState(() {
                         _dropdownValue = CATEGORY.elementAt(index);
                         selectedCategory = CATEGORY.elementAt(index);
+                        parent!.selectedCategory = selectedCategory;
                         isFolded = true;
                       });
                       _removeOverlay();
@@ -149,7 +153,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         CATEGORY.elementAt(index),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           height: 22 / 16,
                           color: GRAY_4_COLOR,

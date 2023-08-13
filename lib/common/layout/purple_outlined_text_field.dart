@@ -9,6 +9,7 @@ class PurpleOutlinedTextField extends StatefulWidget {
   final IconButton? suffixIconButton;
   final double? width;
   final double? margin;
+  final VoidCallback? onChanged;
 
   const PurpleOutlinedTextField({
     required this.maxLine,
@@ -18,6 +19,7 @@ class PurpleOutlinedTextField extends StatefulWidget {
     this.suffixIconButton,
     this.width,
     this.margin,
+    this.onChanged,
     Key? key
   }) : super(key: key);
 
@@ -59,6 +61,7 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
               ),
               onChanged: (text) {
                 setState(() {
+                  if (widget.onChanged != null) { widget.onChanged!(); }
                   currentTextLength = text.length;
                 });
               },
@@ -97,7 +100,6 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
           )
       );
     }
-
     return children;
   }
 

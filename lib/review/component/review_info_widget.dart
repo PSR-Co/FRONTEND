@@ -100,12 +100,13 @@ class _ReviewInfoState extends State<ReviewInfo> {
 
   /// event methods
   void didTapDeclarationButton() {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (_) {
-          return DeclarationDialog();
-        }
-    );
+    print('ReviewInfo - didTapDeclarationButton');
+    // showDialog(
+    //     context: context,
+    //     barrierDismissible: true,
+    //     builder: (_) {
+    //       return DeclarationDialog();
+    //     }
+    // );
   }
 }
