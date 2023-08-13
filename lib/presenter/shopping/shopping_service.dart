@@ -103,7 +103,7 @@ class ShoppingService {
     final body = OrderRequest(
         productId: productId,
         orderName: name,
-        websiteUrl: webUrl ?? null,
+        websiteUrl: webUrl,
         inquiry: inquiry, 
         description: description
     ).toJson();
@@ -112,6 +112,7 @@ class ShoppingService {
         RequestType.POST,
         REQUEST_ORDER_URL,
         null, null, body);
+    print('response -> $response');
     return ((response != null) && (response['code'] == 200));
   }
 }

@@ -39,7 +39,7 @@ Map<String, dynamic> _$ProductsDataToJson(ProductsData instance) =>
 PopularProduct _$PopularProductFromJson(Map<String, dynamic> json) =>
     PopularProduct(
       productId: json['productId'] as int,
-      imgUrl: json['imgUrl'] as String,
+      imgUrl: json['imgUrl'] as String?,
       name: json['name'] as String,
       price: json['price'] as int,
       isLike: json['isLike'] as bool,
@@ -121,7 +121,7 @@ Map<String, dynamic> _$SortToJson(Sort instance) => <String, dynamic>{
 
 Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       productId: json['productId'] as int,
-      imgUrl: json['imgUrl'] as String,
+      imgUrl: json['imgUrl'] as String?,
       userId: json['userId'] as int,
       nickname: json['nickname'] as String,
       name: json['name'] as String,
