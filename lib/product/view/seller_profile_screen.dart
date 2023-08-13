@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/presenter/shopping/shopping_service.dart';
 
+import '../../model/data/shopping/user_product_model.dart';
 import '../component/seller_product_list_item.dart';
 
 class SellerProfileScreen extends StatefulWidget {
-  const SellerProfileScreen({Key? key}) : super(key: key);
+  final int userId;
+
+  const SellerProfileScreen({
+    required this.userId,
+    Key? key
+  }) : super(key: key);
 
   @override
   State<SellerProfileScreen> createState() => _SellerProfileScreenState();
@@ -16,29 +23,47 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
 
   final int productCnt = 15;  // TODO: 패치 후 데이터 개수로 변경하기
 
+  UserProductResponse? data;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: DefaultAppBarLayout(titleText: '프로필',),
-      body: renderBody(),
+    return FutureBuilder<dynamic>(
+      future: fetchData(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (!snapshot.hasError && data != null) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: const DefaultAppBarLayout(titleText: '프로필',),
+            body: renderBody(data!.data),
+          );
+        } else {
+          return const Scaffold(
+            backgroundColor: Colors.white,
+            appBar: DefaultAppBarLayout(titleText: '프로필',),
+            body: Center(
+              child: Text('판매자 상품 정보를 불러오지 못하였습니다.', style: TextStyle(fontSize: 14),),
+            )
+          );
+        }
+      }
     );
   }
 
   /// rendering methods
-  Widget renderBody() {
+  Widget renderBody(UserProductInfo userInfo) {
     return Container(
       color: Colors.white,
       child: ListView(
         children: [
-          renderSellerInfoView(),
+          renderSellerInfoView(userInfo),
           Container(height: 5, color: GRAY_0_COLOR.withOpacity(0.5),),
-          renderProductList(),
+          renderProductList(userInfo.productList),
         ],
       ),
     );
   }
 
-  Widget renderSellerInfoView() {
+  Widget renderSellerInfoView(UserProductInfo userInfo) {
     return Container(
       height: 110,
       width: MediaQuery.of(context).size.width,
@@ -46,21 +71,30 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
       child: Row(
         children: [
           Container(
-            margin: EdgeInsets.only(left: 20, right: 10),
+            margin: const EdgeInsets.only(left: 20, right: 10),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(PROFILE_IMG_SIZE/2),
-              child: Image.asset(
-                'asset/images/profile_img_sample.jpg',
-                fit: BoxFit.cover,
-                width: PROFILE_IMG_SIZE, height: PROFILE_IMG_SIZE,
-              ),
+              child:
+              (userInfo.imgUrl == null)
+              ? Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(PROFILE_IMG_SIZE/2),
+                  color: Colors.grey.withOpacity(0.2)
+                ),
+                child: Icon(Icons.person, size: PROFILE_IMG_SIZE, color: Colors.grey.withOpacity(0.6),),
+              )
+              : Image.network(
+                  userInfo.imgUrl!,
+                  fit: BoxFit.cover,
+                  width: PROFILE_IMG_SIZE, height: PROFILE_IMG_SIZE,
+                )
             ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              renderSellerRole(),
-              renderSellerName(),
+              renderSellerRole(userInfo.type),
+              renderSellerName(userInfo.nickname),
             ],
           ),
         ],
@@ -68,37 +102,37 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
     );
   }
 
-  Widget renderSellerRole() {
+  Widget renderSellerRole(String role) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
-      margin: EdgeInsets.only(top: 30, bottom: 8, left: 10),
-      child: Text('사업자', style: TextStyle(
-        color: PINK_COLOR,
-        fontSize: 12,
-        fontWeight: FontWeight.w700
-      ),),
+      padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
+      margin: const EdgeInsets.only(top: 30, bottom: 8, left: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: PINK_COLOR.withOpacity(0.2),
       ),
+      child: Text(role, style: const TextStyle(
+        color: PINK_COLOR,
+        fontSize: 12,
+        fontWeight: FontWeight.w700
+      ),),
     );
   }
 
-  Widget renderSellerName() {
-    final nameStyle = TextStyle(
+  Widget renderSellerName(String sellerName) {
+    const nameStyle = TextStyle(
       fontSize: 14,
       color: Colors.black,
       fontWeight: FontWeight.w500
     );
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
-      child: Text('루시 앤플 셀러', style: nameStyle,)
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      child: Text(sellerName, style: nameStyle,)
     );
   }
 
-  Widget renderProductList() {
-    final titleStyle = TextStyle(
+  Widget renderProductList(UserProductList productList) {
+    const titleStyle = TextStyle(
       fontSize: 22,
       fontWeight: FontWeight.w500,
       color: Colors.black,
@@ -110,30 +144,40 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
         Container(
           width: MediaQuery.of(context).size.width,
           color: Colors.white,
-          padding: EdgeInsets.only(left: 15, top: 20, bottom: 15),
-          child: Text('글 목록', style: titleStyle,),
+          padding: const EdgeInsets.only(left: 15, top: 20, bottom: 15),
+          child: const Text('글 목록', style: titleStyle,),
         ),
-        renderProductListView(),
+        renderProductListView(productList.content),
       ],
     );
   }
 
-  Widget renderProductListView() {
+  Widget renderProductListView(List<UserProduct> productList) {
     return Container(
       height: 110.0 * (productCnt - 1),
       child: ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: productCnt,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: productList.length,
           itemBuilder: (BuildContext context, int index) {
             return SellerProductListItem(
-              productId: 1, // TODO: GET 후 productId 전달
-              imgKey: 'asset/images/product_sample.png',
-              category: '방송가능 아웃소싱',
-              name: '폴로랄프로렌 목도리 Red Color',
-              price: 79000,
+              productId: productList[index].productId,
+              imgUrl: productList[index].imgUrl,
+              category: productList[index].category,
+              name: productList[index].name,
+              price: productList[index].price,
             );
           }
       ),
     );
+  }
+
+  Future<bool> fetchData() async {
+    return await getUserProductsData();
+  }
+
+  Future<bool> getUserProductsData() async {
+    final result = await ShoppingService().getUserProductsData('${widget.userId}');
+    data = UserProductResponse.fromJson(result);
+    return (data != null);
   }
 }

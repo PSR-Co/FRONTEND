@@ -45,4 +45,12 @@ class ShoppingService {
         , null, null, body);
     return ((response != null) && (response['code'] == 200));
   }
+
+  Future<dynamic> getUserProductsData(String userId) async {
+    final response = await APIManager().request(
+        RequestType.GET,
+        '$SHOPPING_URL/users/$userId',
+        null, null, null);
+    return response;
+  }
 }

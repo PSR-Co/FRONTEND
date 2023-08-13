@@ -63,7 +63,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           children: [
             ProductImgPageViewWidget(imgKeyList: product.imgList, context: context),
             const SizedBox(height: 25,),
-            SellerInfoWidget(sellerName: product.nickname,),
+            SellerInfoWidget(sellerName: product.nickname, sellerId: product.userId,),
             ProductInfoWidget(
               productName: product.name,
               price: product.price,
