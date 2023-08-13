@@ -5,12 +5,18 @@ import 'package:psr/review/component/review_info_widget.dart';
 import 'package:psr/review/component/user_profile_img_widget.dart';
 
 import '../../common/const/colors.dart';
+import '../../model/data/review/review_model.dart';
 
 class ReviewItem extends StatefulWidget {
 
-  final String reviewContent;
+  // final String reviewContent;
+  final int productId;
+  final Review review;
+
   const ReviewItem({
-    required this.reviewContent,
+    // required this.reviewContent,
+    required this.productId,
+    required this.review,
     Key? key
   }) : super(key: key);
 
@@ -35,21 +41,26 @@ class _ReviewItemState extends State<ReviewItem> {
       child: Container(
         color: Colors.white,
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.symmetric(vertical: 7),
+        padding: const EdgeInsets.symmetric(vertical: 7),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RoundedUserProfileImg(
               width: 32.0,
               height: 32.0,
-              imgKey: 'asset/images/profile_img_sample.jpg',
+              imgKey: widget.review.profileImgKey,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ReviewInfo(),
-                ReviewContent(reviewContent: widget.reviewContent,),
-                ReviewImgListView()
+                ReviewInfo(
+                  productId: widget.productId,
+                  avgOfRating: widget.review.rating,
+                  nickName: widget.review.nickName,
+                  reviewedDate: widget.review.reviewedDate,
+                ),
+                ReviewContent(reviewContent: widget.review.content,),
+                ReviewImgListView(imgUrlList: widget.review.imgList ?? [],)
               ],
             ),
           ],

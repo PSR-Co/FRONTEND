@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:psr/model/data/review/review_model.dart';
+import 'package:psr/presenter/review/review_service.dart';
 
 import '../../common/layout/default_appbar_layout.dart';
 import '../component/review_item.dart';
@@ -21,6 +23,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
   bool isReviewFolded = true;
   int isTappedIndex = -1;
 
+  ReviewListResponseModel? data;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +34,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
     return FutureBuilder<dynamic>(
         future: fetchData(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          print('snapshot.error -> ${snapshot.error}');
           return Scaffold(
             appBar: const DefaultAppBarLayout(titleText: '리뷰',),
             body: renderBody(snapshot.hasError),
@@ -43,20 +47,26 @@ class _ReviewScreenState extends State<ReviewScreen> {
   Widget renderBody(bool hasError) {
     return Container(
       color: Colors.white,
-      child: (hasError)
+      child: (data == null)
           ? const Center(
               child: Text('리뷰 정보를 불러오지 못하였습니다.'),
             )
           : ListView.builder(
-              itemCount: 10,  // for test
+              itemCount: data!.data.content.length,  // for test
               itemBuilder: (BuildContext context, int index) {
-                return ReviewItem(reviewContent: reviewContent,);
+                return ReviewItem(
+                  productId: widget.productId,
+                  review: data!.data.content[index],
+                );
               }
             ),
     );
   }
 
-  Future<void> fetchData() async {
-
+  Future<bool> fetchData() async {
+    final result = await ReviewService().getReviewListData('${widget.productId}');
+    print('result -> $result');
+    data = ReviewListResponseModel.fromJson(result);
+    return (data != null);
   }
 }
