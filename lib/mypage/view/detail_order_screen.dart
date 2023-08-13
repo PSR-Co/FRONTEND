@@ -105,7 +105,8 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                   data!.data.inquiry, data!.data.description),
               if (widget.type == 'sell' && data!.data.status != '요청대기')
                 buttonView('진행완료', '진행취소')
-              else buttonView(widget.btnOption1, widget.btnOption2),
+              else
+                buttonView(widget.btnOption1, widget.btnOption2),
               if (widget.type == 'sell' && data!.data.status == '요청대기')
                 Padding(
                   padding: const EdgeInsets.only(top: 18.0),
@@ -122,11 +123,12 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                   child: ActionBtn(
                       child: actionBtnChild(
                           () => editedBtn(
-                              data!.data.status,
-                              data!.data.ordererName,
-                              data!.data.websiteUrl,
-                              data!.data.inquiry,
-                              data!.data.description).then((value) => setState((){})),
+                                  data!.data.status,
+                                  data!.data.ordererName,
+                                  data!.data.websiteUrl,
+                                  data!.data.inquiry,
+                                  data!.data.description)
+                              .then((value) => setState(() {})),
                           '수정하기')),
                 )
             ],
@@ -248,13 +250,24 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
       children: [
         TextButton(
             onPressed: () {
-              switch(btnOption1){
-                case '요청수정': changeEditable(); break;
-                case '요청승인': changeStatus('진행중'); setState(() {
-                  editedBtn(status, data!.data.ordererName, data!.data.websiteUrl, data!.data.inquiry, data!.data.description).then((value) => setState((){}));
-                }); break;
-                case '진행완료': break;
-
+              switch (btnOption1) {
+                case '요청수정':
+                  changeEditable();
+                  break;
+                case '요청승인':
+                  changeStatus('진행중');
+                  setState(() {
+                    editedBtn(
+                            status,
+                            data!.data.ordererName,
+                            data!.data.websiteUrl,
+                            data!.data.inquiry,
+                            data!.data.description)
+                        .then((value) => setState(() {}));
+                  });
+                  break;
+                case '진행완료':
+                  break;
               }
             },
             child: Text(
@@ -333,7 +346,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     });
   }
 
-  void changeStatus(String newStatus){
+  void changeStatus(String newStatus) {
     setState(() {
       status = newStatus;
     });

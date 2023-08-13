@@ -126,19 +126,16 @@ class _OrderListScreenState extends State<OrderListScreen> {
                     return ListTile(
                         onTap: () {},
                         title: Container(
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
+                          width: MediaQuery.of(context).size.width,
                           alignment: Alignment.centerLeft,
                           child: Column(
                             children: [
                               Container(
                                 margin:
-                                const EdgeInsets.symmetric(vertical: 5.0),
+                                    const EdgeInsets.symmetric(vertical: 5.0),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       type == 'sell'
@@ -156,12 +153,19 @@ class _OrderListScreenState extends State<OrderListScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     top: 5.0, bottom: 30.0),
-                                child: type == 'sell' ? LargeDetailBar(
-                                    title: content[index].productName,
-                                    moveTo: MoveToDetailOrderScreen(
-                                      type: type,
-                                      orderId: content[index].orderId,
-                                    )) : moveToReview(content[index].productName, content[index].reviewId, content[index].userName, content[index].productName, content[index].productImgUrl),
+                                child: type == 'sell'
+                                    ? LargeDetailBar(
+                                        title: content[index].productName,
+                                        moveTo: MoveToDetailOrderScreen(
+                                          type: type,
+                                          orderId: content[index].orderId,
+                                        ))
+                                    : moveToReview(
+                                        content[index].productName,
+                                        content[index].reviewId,
+                                        content[index].userName,
+                                        content[index].productName,
+                                        content[index].productImgUrl),
                               )
                             ],
                           ),
@@ -171,17 +175,16 @@ class _OrderListScreenState extends State<OrderListScreen> {
   }
 
   Widget orderView(String type, Widget child) {
-    if ((type == 'sell' ? selectedValue = selectedValue1 : selectedValue =
-        selectedValue2) == '') {
+    if ((type == 'sell'
+            ? selectedValue = selectedValue1
+            : selectedValue = selectedValue2) ==
+        '') {
       selectedValue = '요청대기';
     }
     print('selectedValue : $selectedValue');
     return Column(children: [
       Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        width: MediaQuery.of(context).size.width,
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20.0, bottom: 10.0, top: 5.0),
         child: DropdownButtonHideUnderline(
@@ -192,8 +195,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
             ),
             value: selectedValue,
             items: dropDownBtnTitle
-                .map((String item) =>
-                DropdownMenuItem(
+                .map((String item) => DropdownMenuItem(
                     value: item,
                     child: Text(
                       item,
@@ -202,8 +204,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
                 .toList(),
             onChanged: (value) {
               setState(() {
-                type == 'sell' ? selectedValue1 = value! : selectedValue2 =
-                value!;
+                type == 'sell'
+                    ? selectedValue1 = value!
+                    : selectedValue2 = value!;
                 fetchData(
                     type, type == 'sell' ? selectedValue1 : selectedValue2);
               });
@@ -221,7 +224,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
             iconStyleData: IconStyleData(
                 icon: SvgPicture.asset('asset/icons/common/toggle_down.svg'),
                 openMenuIcon:
-                SvgPicture.asset('asset/icons/common/toggle_up.svg')),
+                    SvgPicture.asset('asset/icons/common/toggle_up.svg')),
           ),
         ),
       ),
@@ -229,18 +232,32 @@ class _OrderListScreenState extends State<OrderListScreen> {
     ]);
   }
 
-  Widget moveToReview(String title, int? isReviewed, String sellerName, String productName, String productImgKey) {
+  Widget moveToReview(String title, int? isReviewed, String sellerName,
+      String productName, String productImgKey) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(title, style: headerTextStyle,),
-          TextButton(onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => isReviewed != null ? ReviewScreen() : AddReviewScreen(sellerName: sellerName, productName: productName, productImgKey: productImgKey)));
-          }, child: Text(isReviewed != null ? '리뷰 보기' : '리뷰 쓰기', style: reviewBtnTextStyle))
+          Text(
+            title,
+            style: headerTextStyle,
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => isReviewed != null
+                            ? ReviewScreen()
+                            : AddReviewScreen(
+                                sellerName: sellerName,
+                                productName: productName,
+                                productImgKey: productImgKey)));
+              },
+              child: Text(isReviewed != null ? '리뷰 보기' : '리뷰 쓰기',
+                  style: reviewBtnTextStyle))
         ],
       ),
     );
