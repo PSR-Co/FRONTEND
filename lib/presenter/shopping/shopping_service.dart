@@ -91,7 +91,16 @@ class ShoppingService {
     return ((response != null) && (response['code'] == 200));
   }
 
+  Future<bool> deleteProduct(int productId) async {
+    final response = await APIManager().request(
+        RequestType.DELETE,
+        '$SHOPPING_URL/$productId',
+        null, null, null);
+    return ((response != null) && (response['code'] == 200));
+  }
 
+
+  /// 요청하기 method
   Future<bool> requestOrder(
       int productId,
       String name,
