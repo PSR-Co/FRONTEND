@@ -67,8 +67,8 @@ class ShoppingService {
 
   Future<bool> requestOrder(int productId, String name, String? webUrl, String inquiry, String description) async {
     final body = OrderRequest(
-        productId: productId, 
-        ordererName: name, 
+        productId: productId,
+        orderName: name,
         websiteUrl: webUrl ?? null,
         inquiry: inquiry, 
         description: description

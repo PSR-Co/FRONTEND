@@ -8,8 +8,8 @@ part of 'order_request_model.dart';
 
 OrderRequest _$OrderRequestFromJson(Map<String, dynamic> json) => OrderRequest(
       productId: json['productId'] as int,
-      ordererName: json['ordererName'] as String,
-      websiteUrl: json['websiteUrl'] as String,
+      orderName: json['orderName'] as String,
+      websiteUrl: json['websiteUrl'] as String?,
       inquiry: json['inquiry'] as String,
       description: json['description'] as String,
     );
@@ -17,7 +17,7 @@ OrderRequest _$OrderRequestFromJson(Map<String, dynamic> json) => OrderRequest(
 Map<String, dynamic> _$OrderRequestToJson(OrderRequest instance) =>
     <String, dynamic>{
       'productId': instance.productId,
-      'ordererName': instance.ordererName,
+      'orderName': instance.orderName,
       'websiteUrl': instance.websiteUrl,
       'inquiry': instance.inquiry,
       'description': instance.description,

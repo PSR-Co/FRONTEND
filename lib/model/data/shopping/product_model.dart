@@ -47,3 +47,22 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json)
   => _$ProductFromJson(json);
 }
+
+@JsonSerializable()
+class ProductRequestModel {
+  final String category;
+  final String name;
+  final int price;
+  final String description;
+  final List<String>? imgList;
+
+  ProductRequestModel({
+    required this.category,
+    required this.name,
+    required this.price,
+    required this.description,
+    required this.imgList,
+  });
+
+  // Map<String, dynamic> toJson() => _$ProductRequestModelToJson(this);
+}
