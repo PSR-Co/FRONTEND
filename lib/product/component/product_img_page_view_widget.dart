@@ -23,9 +23,17 @@ class _ProductImgPageViewWidgetState extends State<ProductImgPageViewWidget> {
   );
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return (widget.imgKeyList.isEmpty)
+      ? SizedBox(
+        width: MediaQuery.of(widget.context).size.width,
+        height: MediaQuery.of(widget.context).size.width,
+        child: const Center(
+          child: Text('이미지 없음'),
+        ),
+      )
+      : Column(
       children: [
-        Container(
+        SizedBox(
           width: MediaQuery.of(widget.context).size.width,
           height: MediaQuery.of(widget.context).size.width,
           child: PageView.builder(

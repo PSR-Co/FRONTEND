@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/presenter/shopping/shopping_service.dart';
 import 'package:psr/product/view/declaration_dialog.dart';
 
 import '../../common/const/colors.dart';
@@ -8,12 +10,14 @@ import '../../common/const/colors.dart';
 class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String category;
   final bool isMyProduct;
+  final int productId;
 
   static const double APPBAR_HEIGHT = 50;
 
   const ProductDetailAppBar({
     required this.category,
     required this.isMyProduct,
+    required this.productId,
     Key? key
   }) : super(key: key);
 
@@ -26,7 +30,7 @@ class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget 
 
 class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
 
-  final titleStyle = TextStyle(
+  final titleStyle = const TextStyle(
       color: Colors.black,
       fontSize: 17
   );
@@ -95,7 +99,7 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
                         borderRadius: BorderRadius.circular(0),
                       ),
                     ),
-                    child: Text("수정", style: TextStyle(
+                    child: const Text("수정", style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.black
@@ -103,7 +107,7 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
                     ),
                   )
               ),
-              Divider(color: GRAY_0_COLOR, height: 0.1,),
+              const Divider(color: GRAY_0_COLOR, height: 0.1,),
               Positioned(
                   left: 0,
                   right: 0,
@@ -117,7 +121,7 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
                         borderRadius: BorderRadius.circular(0),
                       ),
                     ),
-                    child: Text("삭제", style: TextStyle(
+                    child: const Text("삭제", style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.red
@@ -132,13 +136,11 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   }
 
   void didTapDeclarationButton() {
-    // TODO: 신고하기 팝업 띄우기
-    print("didTapDeclarationButton");
     showDialog(
         context: context,
         barrierDismissible: true,
         builder: (_) {
-          return DeclarationDialog();
+          return DeclarationDialog(productId: widget.productId,);
         }
     );
   }
@@ -151,7 +153,12 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
     print("didTapEditButton");
   }
 
-  void didDeleteEditButton() {
-    print("didDeleteEditButton");
+  Future<void> didDeleteEditButton() async {
+    final result = await ShoppingService().deleteProduct(widget.productId);
+    if (result) {
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    } else {
+      // TODO: response 중 code를 통한 상품 삭제 예외처리 추가
+    }
   }
 }

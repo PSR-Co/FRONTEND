@@ -5,13 +5,16 @@ import '../../common/const/colors.dart';
 import '../view/product_detail_screen.dart';
 
 class SellerProductListItem extends StatefulWidget {
-  final String imgKey;
+  final int productId;
+
+  final String imgUrl;
   final String category;
   final String name;
   final int price;
 
   const SellerProductListItem({
-    required this.imgKey,
+    required this.productId,
+    required this.imgUrl,
     required this.category,
     required this.name,
     required this.price,
@@ -23,19 +26,19 @@ class SellerProductListItem extends StatefulWidget {
 }
 
 class _SellerProductListItemState extends State<SellerProductListItem> {
-  final cateogoryTextStyle = TextStyle(
+  final cateogoryTextStyle = const TextStyle(
     fontSize: 14.0,
     fontWeight: FontWeight.w500,
     color: GRAY_4_COLOR,
   );
 
-  final nameTextStyle = TextStyle(
+  final nameTextStyle = const TextStyle(
     fontSize: 12.0,
     fontWeight: FontWeight.w400,
     color: GRAY_4_COLOR,
   );
 
-  final priceTextStyle = TextStyle(
+  final priceTextStyle = const TextStyle(
     fontSize: 14.0,
     fontWeight: FontWeight.w500,
     color: Colors.black,
@@ -48,11 +51,11 @@ class _SellerProductListItemState extends State<SellerProductListItem> {
       child: IntrinsicHeight(
         child: Container(
           color: Colors.white,
-          padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+          padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
           child: Row(
             children: [
               renderProductImage(),
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
               renderProductInfo(),
             ],
           ),
@@ -64,7 +67,7 @@ class _SellerProductListItemState extends State<SellerProductListItem> {
   /// rendering methods
   Widget renderProductImage() {
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 5.0),
+        margin: const EdgeInsets.symmetric(horizontal: 5.0),
         decoration: BoxDecoration(
           border: Border.all(
               width: 1.0,
@@ -72,7 +75,8 @@ class _SellerProductListItemState extends State<SellerProductListItem> {
           ),
           borderRadius: BorderRadius.circular(12.0),
         ),
-        child: Image.asset(widget.imgKey, width: 90, height: 90, fit: BoxFit.cover,)
+        // TODO: 파이어베이스 연결 후 이미지 크기 및 비율 조정
+        child: Image.asset(widget.imgUrl, width: 90, height: 90, fit: BoxFit.cover,)
     );
   }
 
@@ -82,7 +86,7 @@ class _SellerProductListItemState extends State<SellerProductListItem> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(widget.category, style: cateogoryTextStyle,),
-          SizedBox(height: 5,),
+          const SizedBox(height: 5,),
           Text(widget.name, style: nameTextStyle,),
           Text('${getTrimmedPrice()}원', style: priceTextStyle,),
         ],
@@ -97,6 +101,6 @@ class _SellerProductListItemState extends State<SellerProductListItem> {
 
   /// event methods
   void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category,)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category, productId: widget.productId,)));
   }
 }

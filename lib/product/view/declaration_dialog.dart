@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
+import 'package:psr/presenter/shopping/shopping_service.dart';
 
 class DeclarationDialog extends StatefulWidget {
-  const DeclarationDialog({Key? key}) : super(key: key);
+  final int productId;
+  const DeclarationDialog({
+    required this.productId,
+    Key? key
+  }) : super(key: key);
 
   @override
   State<DeclarationDialog> createState() => _DeclarationDialogState();
@@ -110,14 +115,13 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
                       icon: (selectedReason == e)
                           ? SvgPicture.asset('asset/icons/custom_dialog/circle_check.fill.svg', width: 20,)
                           : SvgPicture.asset('asset/icons/custom_dialog/circle_check.svg', width: 20,),
-                      label: Text(e, style: TextStyle(
+                      label: Text(e, style: const TextStyle(
                           fontSize: 12,
                           color: GRAY_4_COLOR
                       ),),
                       style: TextButton.styleFrom(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         iconColor: GRAY_1_COLOR,
-
                       ),
                     )
                   ]
@@ -141,7 +145,7 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 15),
         child: ElevatedButton(
-          onPressed: didTapDeclarationButton,
+          onPressed: (selectedReason == null) ? null : didTapDeclarationButton,
           child: Text("신고하기", style: declarationBtnStyle,),
           style: ElevatedButton.styleFrom(
             backgroundColor: PURPLE_COLOR,
@@ -162,12 +166,11 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
     });
   }
 
-  void didTapDeclarationButton() {
-    Navigator.pop(context);
+  Future<void> didTapDeclarationButton() async {
     if (selectedReason != null) {
-      print("신고하기 버튼 탭 -> 선택된 신고 사유 : ${selectedReason}");
-    } else {
-      print("신고하기 버튼 탭 -> 선택된 신고 사유 없음");
+      if (selectedReason! == reasonList[4]) { selectedReason = '게시글 성격에 부적합함'; }
+      final result = await ShoppingService().declareProduct('${widget.productId}', selectedReason!);
+      if (result) { Navigator.pop(context); }
     }
   }
 }

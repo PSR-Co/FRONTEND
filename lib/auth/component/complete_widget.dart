@@ -26,9 +26,8 @@ class _CompleteWidgetState extends State<CompleteWidget> {
           ),
           const SizedBox(height: 20,),
           Text(
-            // '비밀번호 재설정이\n완료되었습니다.',
             widget.mainText,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: GRAY_4_COLOR),
             textAlign: TextAlign.center,
           )
         ],

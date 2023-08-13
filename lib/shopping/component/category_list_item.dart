@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../common/const/colors.dart';
-import '../../model/data/shopping/product_model.dart';
+import '../../model/data/shopping/shopping_main_model.dart';
 import '../../product/view/product_detail_screen.dart';
 
 class CategoryListItem extends StatefulWidget {
   final String category;
-  final int? index;
+  final int productId;
   final Product data;
 
   const CategoryListItem({
     required this.category,
-    this.index,
+    required this.productId,
     required this.data,
     Key? key
   }) : super(key: key);
@@ -25,19 +25,19 @@ class _CategoryListItemState extends State<CategoryListItem> {
   bool isLiked = false;
 
   // 제품 정보 텍스트 스타일 정의
-  final brandNameTextStyle = TextStyle(
+  final brandNameTextStyle = const TextStyle(
     fontSize: 12.0,
     fontWeight: FontWeight.w500,
     color: GRAY_4_COLOR,
   );
 
-  final productNameTextStyle = TextStyle(
+  final productNameTextStyle = const TextStyle(
     fontSize: 12.0,
     fontWeight: FontWeight.w400,
     color: GRAY_4_COLOR,
   );
 
-  final priceTextStyle = TextStyle(
+  final priceTextStyle = const TextStyle(
     fontSize: 14.0,
     fontWeight: FontWeight.w500,
     color: Colors.black,
@@ -49,7 +49,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
       onTap: didTapItem,
       child: IntrinsicHeight(
         child: Container(
-        margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
         child: Row(
             children: [
               renderProductImage(),
@@ -116,6 +116,6 @@ class _CategoryListItemState extends State<CategoryListItem> {
   }
 
   void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category,)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category, productId: widget.productId,)));
   }
 }

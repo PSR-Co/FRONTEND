@@ -1,22 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:psr/presenter/shopping/shopping_service.dart';
 
 import '../../common/const/colors.dart';
 import '../../order/view/add_order_screen.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
-  const BottomNavigationWidget({Key? key}) : super(key: key);
+  final int numOfLike;
+  final int productId;
+  final String? productImgUrl;
+  final String productName;
+  final bool isLiked;
+
+  const BottomNavigationWidget({
+    required this.numOfLike,
+    required this.productId,
+    required this.productImgUrl,
+    required this.productName,
+    required this.isLiked,
+    Key? key
+  }) : super(key: key);
 
   @override
   State<BottomNavigationWidget> createState() => _State();
 }
 
 class _State extends State<BottomNavigationWidget> {
+
+  bool isLiked = false;
+  int numOfLike = 0;
+
+  @override
+  void initState() {
+    isLiked = widget.isLiked;
+    numOfLike = widget.numOfLike;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.only(bottom: 20),
+      padding: const EdgeInsets.only(bottom: 20),
       height: 90,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,38 +57,36 @@ class _State extends State<BottomNavigationWidget> {
 
   /// rendering methods
   Widget renderLikeButton() {
-    final likeCntStyle = TextStyle(
+    TextStyle likeCntStyle = TextStyle(
         fontSize: 12,
-        color: PINK_COLOR,
+        color: (isLiked) ? PINK_COLOR : GRAY_3_COLOR,
         fontWeight: FontWeight.w500
     );
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
+        SizedBox(
           height: 35,
           width: 40,
           child: IconButton(
               onPressed: didTapLikeButton,
-              icon: SvgPicture.asset("asset/icons/common/favorite_border.fill.svg")
+              icon: (isLiked)
+                  ? SvgPicture.asset("asset/icons/common/favorite_border.fill.svg")
+                  : SvgPicture.asset("asset/icons/common/favorite_border.svg")
           ),
         ),
-        Text('23', style: likeCntStyle,),
+        Text('$numOfLike', style: likeCntStyle,),
       ],
     );
   }
 
   Widget renderOrderButton() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 14, horizontal: 8),
+      margin: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
       width: MediaQuery.of(context).size.width-90,
       child: ElevatedButton(
         onPressed: didTapOrderButton,
-        child: Text("1:1 요청하기", style: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 14
-        ),),
         style: ElevatedButton.styleFrom(
             backgroundColor: PURPLE_COLOR,
             shape: RoundedRectangleBorder(
@@ -70,20 +94,35 @@ class _State extends State<BottomNavigationWidget> {
             ),
             elevation: 0
         ),
+        child: const Text("1:1 요청하기", style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 14
+        ),),
       ),
     );
   }
 
   /// event methods
-  void didTapLikeButton() {
-    print("didTapLikeButton");
+  void didTapLikeButton() async {
+    final result = await ShoppingService().likeProduct(widget.productId);
+    if (result) {
+      setState(() {
+        isLiked = !isLiked;
+        numOfLike += isLiked ? 1 : -1;
+        Fluttertoast.showToast(msg: (isLiked) ? '상품을 찜하였습니다!' : '상품 찜을 해제하였습니다!');
+      });
+    }
+    else { Fluttertoast.showToast(msg: '네트워크 오류가 발생하였습니다.'); }
+
+
   }
 
   void didTapOrderButton() {
     Navigator.of(context).push(MaterialPageRoute(builder:
         (_) => AddOrderScreen(
-          productImgKey: 'asset/images/product_sample.png',
-          productName: '폴로랄프로렌 목도리',
+          productId: widget.productId,
+          productImgUrl: widget.productImgUrl,
+          productName: widget.productName,
         )
     ));
   }
