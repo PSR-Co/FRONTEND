@@ -64,5 +64,5 @@ class ProductRequestModel {
     required this.imgList,
   });
 
-  // Map<String, dynamic> toJson() => _$ProductRequestModelToJson(this);
+  Map<String, dynamic> toJson() => _$ProductRequestModelToJson(this);
 }
