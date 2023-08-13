@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:psr/model/data/shopping/review_preview_model.dart';
+import 'package:psr/model/data/review/review_preview_model.dart';
 import 'package:psr/product/component/review_list_item.dart';
 
 import '../../review/view/review_screen.dart';

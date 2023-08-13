@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psr/model/data/shopping/product_model.dart';
-import 'package:psr/model/data/shopping/review_preview_model.dart';
+import 'package:psr/model/data/review/review_preview_model.dart';
 import 'package:psr/product/component/product_img_page_view_widget.dart';
 
 import '../../presenter/shopping/shopping_service.dart';
