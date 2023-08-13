@@ -51,7 +51,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           : BottomNavigationWidget(
             numOfLike: data!.data.numOfLikes,
             productId: widget.productId,
-            productImgUrl: data!.data.imgList[0],
+            productImgUrl: (data!.data.imgList.isNotEmpty) ? data!.data.imgList[0] : null,
             productName: data!.data.name,
             isLiked: data!.data.isLike,
           ),
@@ -99,6 +99,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Future<bool> getProductData() async {
     final result = await ShoppingService().getProductData('${widget.productId}');
     data = ProductResponseModel.fromJson(result);
+    print('data -> ${data!.data.imgList}');
     isMyProduct = data?.data.isOwner ?? false;
     return (data != null);
   }
