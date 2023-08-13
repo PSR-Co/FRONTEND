@@ -18,8 +18,7 @@ class DetailOrderScreen extends StatefulWidget {
   Widget? child;
 
   DetailOrderScreen(
-      {
-      required this.orderId,
+      {required this.orderId,
       required this.type,
       required this.btnOption1,
       required this.btnOption2,
@@ -68,13 +67,12 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
         appBar: const DefaultAppBarLayout(titleText: '요청 상세'),
         body: SafeArea(
           child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: optionBody()),
+              width: MediaQuery.of(context).size.width, child: optionBody()),
         ));
   }
 
   Widget optionBody() {
-      return FutureBuilder(
+    return FutureBuilder(
         future: fetchData(widget.orderId),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -104,26 +102,23 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
             children: [
               orderDetailHeader(data!.data.status, data!.data.orderDate),
               const Division(),
-              orderDetailView(data!.data.ordererName, data!.data.websiteUrl, data!.data.inquiry, data!.data.description),
-              if(widget.type == 'sell' && data!.data.status != '요청대기')buttonView('진행완료', '진행취소') else buttonView(widget.btnOption1, widget.btnOption2),
-              if(widget.child != null)
+              orderDetailView(data!.data.ordererName, data!.data.websiteUrl,
+                  data!.data.inquiry, data!.data.description),
+              if (widget.type == 'sell' && data!.data.status != '요청대기')
+                buttonView('진행완료', '진행취소')
+              else
+                buttonView(widget.btnOption1, widget.btnOption2),
+              if (widget.child != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 18.0),
                   child: widget.child,
                 )
             ],
           );
-        }
-      );
-    }
+        });
+  }
 
   Widget orderDetailHeader(String status, String orderDate) {
-    // String selectedValue;
-    // if (widget.selectedValue == null) {
-    //   selectedValue = '요청대기';
-    // } else {
-    //   selectedValue = widget.selectedValue!;
-    // }
     return Container(
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 17.0),
@@ -185,7 +180,8 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     );
   }
 
-  Widget orderDetailView(String userName, String? websiteUrl, String inquiry, String description) {
+  Widget orderDetailView(
+      String userName, String? websiteUrl, String inquiry, String description) {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.only(top: 10),

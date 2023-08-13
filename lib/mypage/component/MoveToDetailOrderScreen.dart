@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/const/colors.dart';
@@ -9,10 +8,12 @@ class MoveToDetailOrderScreen extends StatefulWidget {
   String type;
   int orderId;
 
-  MoveToDetailOrderScreen({required this.type, required this.orderId, Key? key}):super(key: key);
+  MoveToDetailOrderScreen({required this.type, required this.orderId, Key? key})
+      : super(key: key);
 
   @override
-  State<MoveToDetailOrderScreen> createState() => _MoveToDetailOrderScreenState();
+  State<MoveToDetailOrderScreen> createState() =>
+      _MoveToDetailOrderScreenState();
 }
 
 class _MoveToDetailOrderScreenState extends State<MoveToDetailOrderScreen> {
@@ -24,14 +25,25 @@ class _MoveToDetailOrderScreenState extends State<MoveToDetailOrderScreen> {
     return moveToDetailScreenLogic(widget.type, widget.orderId);
   }
 
-  Widget moveToDetailScreenLogic(String type, int orderId){
-    if(type == 'sell') {
-      return DetailOrderScreen(orderId: orderId, type: type, btnOption1: '요청승인', btnOption2: '요청거절', child: renderChatBtn());
+  Widget moveToDetailScreenLogic(String type, int orderId) {
+    if (type == 'sell') {
+      return DetailOrderScreen(
+          orderId: orderId,
+          type: type,
+          btnOption1: '요청승인',
+          btnOption2: '요청거절',
+          child: renderChatBtn());
+    } else {
+      return DetailOrderScreen(
+          orderId: orderId,
+          type: type,
+          btnOption1: '요청수정',
+          btnOption2: '요청취소',
+          child: null);
     }
-    else {return DetailOrderScreen(orderId: orderId, type: type, btnOption1: '요청수정', btnOption2: '요청취소', child: null);}
   }
 
-  ActionBtn renderChatBtn(){
+  ActionBtn renderChatBtn() {
     return ActionBtn(
       child: Container(
         width: MediaQuery.of(context).size.width,
