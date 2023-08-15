@@ -34,7 +34,7 @@ class ReviewService {
     final body = AddReview(
         rating: rating,
         content: content,
-        imgList: (imgKeyList == null) ? null : imgKeyList
+        imgList: (imgKeyList.isEmpty) ? null : imgKeyList
     ).toJson();
 
     final response = await APIManager().request(
