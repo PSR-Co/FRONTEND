@@ -13,9 +13,14 @@ class SearchDetailScreen extends StatefulWidget {
   State<SearchDetailScreen> createState() => _SearchDetailScreenState();
 }
 
+enum SORT_TYPE { newest, popularity }
+
 class _SearchDetailScreenState extends State<SearchDetailScreen> {
   final _controller = TextEditingController();
   var _results = [];
+
+  bool showSortItem = false;
+  SORT_TYPE sortType = SORT_TYPE.newest;
 
   final nameList = [
     // dummy data
@@ -31,39 +36,146 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
     );
   }
 
-  Widget? renderResultListView() {
+  /// rendering methods
+  Widget renderResultListView() {
+    _results = [];
     for (var element in nameList) {
       if (element.contains(_controller.text)) {
         _results.add(element);
       }
     }
-    if (_controller.text.length > 0) {
-      return ListView.builder(
-        itemCount: _results.length,
-        itemBuilder: (BuildContext context, int index) {
-          // TODO: 데이터 패치 후 카테고리 값 변경
-          // return CategoryListItem(category: '관심목록', name: _results.elementAt(index),);
-          return CategoryListItem(
-            productId: 1, // TODO: GET 후 productId 전달
-            category: '관심목록',
-            data: Product(
-              /// 임시 데이터
-                productId: 0,
-                imgUrl: 'imgKey',
-                userId: 0,
-                nickname: 'nickname',
-                name: 'name',
-                price: 0,
-                isLike: false
-            ),
-          );
-        },
+    if (_controller.text.isNotEmpty) {
+      return Column(
+        children: [
+          renderSortButton(),
+          Stack(
+            children: [
+              renderProductList(),
+              renderSortItem(),
+            ],
+          )
+        ],
       );
     } else { return Container(); }
+  }
+
+  Widget renderSortButton() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      child: Row(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width - 100,
+          ),
+          TextButton(
+            onPressed: () { setState(() { showSortItem = !showSortItem; }); },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  getCurrentSortStr(),
+                  style: const TextStyle(fontSize: 14, color: GRAY_3_COLOR, fontWeight: FontWeight.w500),
+                ),
+                Icon(
+                  (showSortItem)
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
+                  color: GRAY_3_COLOR,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 15,)
+        ],
+      ),
+    );
+  }
+
+  Widget renderSortItem() {
+    return (showSortItem)
+    ? Positioned(
+      right: 20,
+      child: Container(
+        width: 100,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.all( Radius.circular(5.0) ),
+          border: Border.all(
+            width: 1,
+            color: PURPLE_COLOR,
+          ),
+        ),
+        child: Column(
+          children: [
+            getSortButtonItem(SORT_TYPE.newest),
+            getSortButtonItem(SORT_TYPE.popularity),
+          ],
+        ),
+      ),
+    )
+    : const SizedBox(height: 0, width: 0,);
+  }
+
+  Widget getSortButtonItem(SORT_TYPE type) {
+    const TextStyle selectStyle = TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
+      color: PURPLE_COLOR
+    );
+
+    const TextStyle unselectStyle = TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: GRAY_3_COLOR,
+    );
+
+    String title = "";
+    switch (type) {
+      case SORT_TYPE.newest:
+        title = '최신순';
+      case SORT_TYPE.popularity:
+        title = '인기순';
+    }
+
+    return TextButton(
+      style: TextButton.styleFrom(
+        minimumSize: Size.zero,
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+      onPressed: (){ didTapSortButton(type); },
+      child: Text(title, style: (type == sortType) ? selectStyle : unselectStyle),
+    );
 
   }
 
-  /// rendering methods
+  Widget renderProductList() {
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: _results.length,
+      itemBuilder: (BuildContext context, int index) {
+        // TODO: 데이터 패치 후 카테고리 값 변경
+        // return CategoryListItem(category: '관심목록', name: _results.elementAt(index),);
+        return CategoryListItem(
+          productId: 1, // TODO: GET 후 productId 전달
+          category: '관심목록',
+          data: Product(
+            /// 임시 데이터
+              productId: 0,
+              imgUrl: 'imgKey',
+              userId: 0,
+              nickname: 'nickname',
+              name: 'name',
+              price: 0,
+              isLike: false
+          ),
+        );
+      },
+    );
+  }
+
   AppBar renderAppBar() {
     return AppBar(
       backgroundColor: Colors.white,
@@ -85,7 +197,7 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
 
     return Container(
       height: 44,
-      padding: EdgeInsets.only(top: 4, bottom: 4),
+      padding: const EdgeInsets.only(top: 4, bottom: 4),
       child: TextField(
         controller: _controller,
         onChanged: (text) {
@@ -99,7 +211,7 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
               fontSize: 12.0,
               color: GRAY_1_COLOR
           ),
-          contentPadding: EdgeInsets.only(left: 18),
+          contentPadding: const EdgeInsets.only(left: 18),
           border: outlineStyle,
           enabledBorder: outlineStyle,
           focusedBorder: outlineStyle,
@@ -118,7 +230,7 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
 
   Widget renderBackItem() {
     return Container(
-      margin: EdgeInsets.only(left: 20),
+      margin: const EdgeInsets.only(left: 20),
       child: IconButton(
         padding: EdgeInsets.zero,
         icon: SvgPicture.asset("asset/icons/common/chevron.backward.svg", width: 10,),
@@ -129,4 +241,21 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
 
   /// event methods
   void didTapBackItem() { Navigator.of(context).pop(); }
+
+  void didTapSortButton(SORT_TYPE type) {
+    setState(() {
+      sortType = type;
+      showSortItem = !showSortItem;
+    });
+  }
+
+  /// helper methods
+  String getCurrentSortStr() {
+    switch (sortType) {
+      case SORT_TYPE.newest:
+        return '최신순';
+      case SORT_TYPE.popularity:
+        return '인기순';
+    }
+  }
 }
