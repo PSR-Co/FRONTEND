@@ -7,20 +7,20 @@ import 'package:psr/review/component/user_profile_img_widget.dart';
 import '../../common/const/colors.dart';
 import '../../model/data/review/review_model.dart';
 
-class ReviewItem extends StatefulWidget {
+class ReviewItemWidget extends StatefulWidget {
 
-  final Review review;
+  final ReviewItem review;
 
-  const ReviewItem({
+  const ReviewItemWidget({
     required this.review,
     Key? key
   }) : super(key: key);
 
   @override
-  State<ReviewItem> createState() => _ReviewItemState();
+  State<ReviewItemWidget> createState() => _ReviewItemWidgetState();
 }
 
-class _ReviewItemState extends State<ReviewItem> {
+class _ReviewItemWidgetState extends State<ReviewItemWidget> {
 
   @override
   Widget build(BuildContext context) {

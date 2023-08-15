@@ -23,7 +23,7 @@ class ReviewListResponseModel extends GeneralModel {
 
 @JsonSerializable()
 class ReviewListInfo {
-  final List<Review> content;
+  final List<ReviewItem> content;
   final Pageable pageable;
   final bool last;
   final int totalPages;
@@ -54,7 +54,7 @@ class ReviewListInfo {
 }
 
 @JsonSerializable()
-class Review {
+class ReviewItem {
   final int reviewId;
   final int rating;
   final String content;
@@ -63,7 +63,7 @@ class Review {
   final String nickName;
   final String? profileImgKey;
 
-  Review({
+  ReviewItem({
     required this.reviewId,
     required this.rating,
     required this.content,
@@ -73,8 +73,8 @@ class Review {
     required this.profileImgKey,
   });
 
-  factory Review.fromJson(Map<String, dynamic> json)
-  => _$ReviewFromJson(json);
+  factory ReviewItem.fromJson(Map<String, dynamic> json)
+  => _$ReviewItemFromJson(json);
 }
 
 /// 리뷰 개별 조회
@@ -90,4 +90,44 @@ class ReviewResponseModel extends GeneralModel {
 
   factory ReviewResponseModel.fromJson(Map<String, dynamic> json)
   => _$ReviewResponseModelFromJson(json);
+}
+
+@JsonSerializable()
+class Review {
+
+  final int reviewId;
+  final int rating;
+  final String content;
+  final List<String>? imgList;
+  final String nickName;
+  final String? productName;
+  final String? productImgUrl;
+
+  Review({
+    required this.reviewId,
+    required this.rating,
+    required this.content,
+    required this.imgList,
+    required this.nickName,
+    required this.productName,
+    required this.productImgUrl,
+  });
+
+  factory Review.fromJson(Map<String, dynamic> json)
+  => _$ReviewFromJson(json);
+}
+
+@JsonSerializable()
+class AddReview {
+  final int rating;
+  final String content;
+  final List<String>? imgList;
+
+  AddReview({
+    required this.rating,
+    required this.content,
+    required this.imgList,
+  });
+
+  Map<String, dynamic> toJson() => _$AddReviewToJson(this);
 }

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/layout/pick_img_widget.dart';
 import 'package:psr/common/layout/purple_outlined_text_field.dart';
+import 'package:psr/model/data/review/review_model.dart';
+import 'package:psr/presenter/review/review_service.dart';
+import 'package:psr/review/component/review_detail_appbar.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/const/constants.dart';
 import '../../common/layout/custom_title_text.dart';
 import '../../common/layout/purple_filled_button.dart';
+
+enum REVIEW_SCREEN_TYPE { ADD, EDIT }
 
 class AddReviewScreen extends StatefulWidget {
 
@@ -14,10 +19,15 @@ class AddReviewScreen extends StatefulWidget {
   final String productName;
   final String productImgKey;
 
+  final int? orderId;
+  final int? reviewId;
+
   const AddReviewScreen({
     required this.sellerName,
     required this.productName,
     required this.productImgKey,
+    required this.reviewId,
+    required this.orderId,
     Key? key
   }) : super(key: key);
 
@@ -34,18 +44,48 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   int selectedRating = 0;
   String selectedRatingInfoText = '별점을 선택해주세요.';
 
+  Review? data;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const DefaultAppBarLayout(titleText: '리뷰 작성',),
+      appBar: ReviewDetailAppbar(reviewId: widget.reviewId),
       body: renderBody(),
-      bottomNavigationBar: PurpleFilledButton(title: '등록하기', onPressed: didTapAddReviewButton,),
+      bottomNavigationBar: (widget.reviewId == null)
+          ? PurpleFilledButton(title: '등록하기', onPressed: didTapAddReviewButton,)
+          : Container(height: 0,),
     );
   }
 
   /// rendering methods
   Widget renderBody() {
+    return FutureBuilder<dynamic>(
+        future: fetchData(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (!snapshot.hasError) {
+            return Container(
+              color: Colors.white,
+              child: ListView(
+                children: [
+                  renderProductInfoView(),
+                  Container(height: 5, color: GRAY_0_COLOR.withOpacity(0.5),),
+                  renderInputReviewView(),
+                ],
+              ),
+            );
+
+          } else {
+            print('error -> ${snapshot.error}');
+            return const Center(
+              child: Text('리뷰 정보를 불러오지 못하였습니다.', style: TextStyle(fontSize: 14, color: Colors.black),),
+            );
+          }
+        }
+    );
+  }
+
+  Widget renderCenterView() {
     return Container(
       color: Colors.white,
       child: ListView(
@@ -128,11 +168,12 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
 
         Container(
           margin: const EdgeInsets.only(top: 5, bottom: 5, left: 20),
-          child: (selectedRating > 0) ? getSelectedRatingText() :
-          Text('별점을 선택해주세요.', style: TextStyle(
-            fontSize: 14,
-            color: (selectedRating == 0) ? GRAY_1_COLOR : ORANGE_COLOR,
-          ),),
+          child: (selectedRating > 0)
+              ? getSelectedRatingText()
+              : Text('별점을 선택해주세요.', style: TextStyle(
+                  fontSize: 14,
+                  color: (selectedRating == 0) ? GRAY_1_COLOR : ORANGE_COLOR,
+                ),),
         )
       ],
     );
@@ -159,6 +200,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       children: [
         const CustomTitleText(title: '사진을 올려주세요.', option: ' (선택)',),
         PickImgView(imgKeyList: imgKeyList,),
+        // PickImgView(imgKeyList: (data != null && data!.imgList != null) ? data!.imgList : [],),
       ],
     );
   }
@@ -209,9 +251,28 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   }
 
   /// event methods
-  void didTapAddReviewButton() {
-    print('didTapAddReviewButton');
-    print('입력된 리뷰 정보 -> ${selectedRating}점 / 후기 상세 : ${reviewController.text}');
-    print('선택된 사진 정보 -> ${imgKeyList}');
+  Future<void> didTapAddReviewButton() async {
+    final result = await ReviewService().addReview(
+      widget.orderId!,
+      selectedRating,
+      reviewController.value.text,
+      imgKeyList,
+    );
+    if (result) { Navigator.of(context).pop(); }
+    else { Fluttertoast.showToast(msg: '리뷰 등록에 실패하였습니다.'); }
+  }
+
+  Future<void> fetchData() async {
+    if (widget.reviewId != null) {
+      final response = await ReviewService().getReviewData('${widget.reviewId}');
+      print('response -> $response');
+      final result = ReviewResponseModel.fromJson(response);
+      if (result.code == 200) {
+        data = result.data;
+        selectedRating = data!.rating;
+        reviewController.text = data!.content;
+        imgKeyList = data!.imgList ?? [];
+      }
+    }
   }
 }

@@ -9,7 +9,7 @@ import '../const/colors.dart';
 // TODO: mutable 클래스로 변경함으로써 메모리 이슈가 있을 수 있음 -> imgKeyList를 final로 선언할 수 있는 로직 구상하기
 class PickImgView extends StatefulWidget {
 
-  List<String> imgKeyList = [];
+  List<String?>? imgKeyList = [];
 
   PickImgView({
     required this.imgKeyList,
@@ -84,7 +84,7 @@ class _PickImgViewState extends State<PickImgView> {
       if (image != null) {
         setState(() {
           imgKeyList.add(image.path);
-          widget.imgKeyList.add(image.path);
+          widget.imgKeyList!.add(image.path);
         });
       }
     } else {

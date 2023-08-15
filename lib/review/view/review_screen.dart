@@ -3,7 +3,7 @@ import 'package:psr/model/data/review/review_model.dart';
 import 'package:psr/presenter/review/review_service.dart';
 
 import '../../common/layout/default_appbar_layout.dart';
-import '../component/review_item.dart';
+import '../component/review_item_widget.dart';
 
 class ReviewScreen extends StatefulWidget {
   final int productId;
@@ -46,7 +46,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
           : ListView.builder(
               itemCount: data!.data.content.length,  // for test
               itemBuilder: (BuildContext context, int index) {
-                return ReviewItem(review: data!.data.content[index],);
+                return ReviewItemWidget(review: data!.data.content[index],);
               }
             ),
     );
