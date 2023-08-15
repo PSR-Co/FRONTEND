@@ -32,19 +32,20 @@ class AddReviewScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<AddReviewScreen> createState() => _AddReviewScreenState();
+  State<AddReviewScreen> createState() => AddReviewScreenState();
 }
 
-class _AddReviewScreenState extends State<AddReviewScreen> {
+class AddReviewScreenState extends State<AddReviewScreen> {
   static const double PROFILE_IMG_SIZE = 64.0;
   final TextEditingController reviewController = TextEditingController();
 
+  Review? data;
   List<String> imgKeyList = [];
-
   int selectedRating = 0;
   String selectedRatingInfoText = '별점을 선택해주세요.';
+  bool isEditing = false;
 
-  Review? data;
+  bool isFirstFetch = true;
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +53,11 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       backgroundColor: Colors.white,
       appBar: ReviewDetailAppbar(reviewId: widget.reviewId),
       body: renderBody(),
-      bottomNavigationBar: (widget.reviewId == null)
-          ? PurpleFilledButton(title: '등록하기', onPressed: didTapAddReviewButton,)
+      bottomNavigationBar: (widget.reviewId != null)
+          ? PurpleFilledButton(
+              title: '등록하기',
+              onPressed: (isEditing) ? didTapPostReviewButton : null,
+            )
           : Container(height: 0,),
     );
   }
@@ -76,7 +80,6 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             );
 
           } else {
-            print('error -> ${snapshot.error}');
             return const Center(
               child: Text('리뷰 정보를 불러오지 못하였습니다.', style: TextStyle(fontSize: 14, color: Colors.black),),
             );
@@ -185,10 +188,11 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       children: [
         const CustomTitleText(title: '상세한 후기를 써주세요.', option: null,),
         PurpleOutlinedTextField(
-            maxLine: 15,
-            maxLength: 5000,
-            hintText: '구매하신 상품의 후기를 20자 이상 남겨주시면 다른 구매자들에게도 도움이 됩니다.',
-            controller: reviewController
+          maxLine: 15,
+          maxLength: 5000,
+          hintText: '구매하신 상품의 후기를 20자 이상 남겨주시면 다른 구매자들에게도 도움이 됩니다.',
+          controller: reviewController,
+          isEditing: isEditing,
         ),
       ],
     );
@@ -199,8 +203,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const CustomTitleText(title: '사진을 올려주세요.', option: ' (선택)',),
-        PickImgView(imgKeyList: imgKeyList,),
-        // PickImgView(imgKeyList: (data != null && data!.imgList != null) ? data!.imgList : [],),
+        PickImgView(isEditing: isEditing, imgKeyList: imgKeyList,),
       ],
     );
   }
@@ -217,9 +220,9 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
         itemBuilder: (BuildContext context, int index) {
           return IconButton(
             padding: EdgeInsets.zero,
-            onPressed: (){
-              setState(() { selectedRating = index+1; });
-            },
+            onPressed: (isEditing)
+                ? (){ setState(() { selectedRating = index+1; }); }
+                : null,
             icon: Icon(
               Icons.star,
               color: (index < selectedRating) ? ORANGE_COLOR : GRAY_0_COLOR,
@@ -251,9 +254,10 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   }
 
   /// event methods
-  Future<void> didTapAddReviewButton() async {
-    final result = await ReviewService().addReview(
-      widget.orderId!,
+  Future<void> didTapPostReviewButton() async {
+    final result = await ReviewService().requestReview(
+      widget.reviewId,
+      widget.orderId,
       selectedRating,
       reviewController.value.text,
       imgKeyList,
@@ -265,14 +269,18 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
   Future<void> fetchData() async {
     if (widget.reviewId != null) {
       final response = await ReviewService().getReviewData('${widget.reviewId}');
-      print('response -> $response');
       final result = ReviewResponseModel.fromJson(response);
-      if (result.code == 200) {
+      if (isFirstFetch && result.code == 200) {
         data = result.data;
+
         selectedRating = data!.rating;
         reviewController.text = data!.content;
         imgKeyList = data!.imgList ?? [];
+
+        isFirstFetch = false;
       }
     }
   }
+
+  void setEditMode() { setState(() { isEditing = true; }); }
 }

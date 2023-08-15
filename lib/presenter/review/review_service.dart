@@ -2,6 +2,8 @@
 import '../../model/data/review/review_model.dart';
 import '../../model/network/api_manager.dart';
 
+enum REQUEST_TYPE { ADD, EDIT }
+
 class ReviewService {
   final REVIEW_LIST_URL = '/products';
   final REVIEW_URL = '/reviews';
@@ -30,18 +32,28 @@ class ReviewService {
     return response;
   }
 
-  Future<bool> addReview(int orderId, int rating, String content, List<String> imgKeyList) async {
+  Future<bool> requestReview(int? reviewId, int? orderId, int rating, String content, List<String> imgKeyList) async {
+
     final body = AddReview(
         rating: rating,
         content: content,
         imgList: (imgKeyList.isEmpty) ? null : imgKeyList
     ).toJson();
 
-    final response = await APIManager().request(
-        RequestType.POST,
-        '$REVIEW_POST_URL/$orderId/review',
-        null, null, body);
-    return ((response != null) && (response['code'] == 200));
+    if (reviewId == null) {
+      final response = await APIManager().request(
+          RequestType.POST,
+          '$REVIEW_POST_URL/$orderId/review',
+          null, null, body);
+      return ((response != null) && (response['code'] == 200));
+
+    } else {
+      final response = await APIManager().request(
+          RequestType.PATCH,
+          '$REVIEW_URL/$reviewId',
+          null, null, body);
+      return ((response != null) && (response['code'] == 200));
+    }
   }
 
   Future<bool> declareReview(String reviewId, String reason) async {

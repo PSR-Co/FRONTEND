@@ -9,9 +9,11 @@ import '../const/colors.dart';
 // TODO: mutable 클래스로 변경함으로써 메모리 이슈가 있을 수 있음 -> imgKeyList를 final로 선언할 수 있는 로직 구상하기
 class PickImgView extends StatefulWidget {
 
+  final bool isEditing;
   List<String?>? imgKeyList = [];
 
   PickImgView({
+    required this.isEditing,
     required this.imgKeyList,
     Key? key
   }) : super(key: key);
@@ -51,7 +53,9 @@ class _PickImgViewState extends State<PickImgView> {
                   height: 90,
                   child: IconButton(
                       padding: EdgeInsets.zero,
-                      onPressed: () { didTapPickImgButton(imgKeyList.length); },
+                      onPressed: (widget.isEditing)
+                        ? () { didTapPickImgButton(imgKeyList.length); }
+                        : null,
                       icon: SvgPicture.asset('asset/icons/shopping/pick_img_icon_${imgKeyList.length}.svg',)
                   ),
                 );

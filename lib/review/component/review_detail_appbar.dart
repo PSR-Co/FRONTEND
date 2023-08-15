@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../common/const/colors.dart';
 import '../../common/layout/default_appbar_layout.dart';
 import '../../presenter/review/review_service.dart';
+import '../view/add_review_screen.dart';
 
 class ReviewDetailAppbar extends StatefulWidget implements PreferredSizeWidget {
   final int? reviewId;
@@ -103,7 +104,9 @@ class _ReviewDetailAppbarState extends State<ReviewDetailAppbar> {
   }
 
   void didTapEditButton() {
-    print("didTapEditButton");
+    AddReviewScreenState? parent = context.findAncestorStateOfType<AddReviewScreenState>();
+    parent?.setEditMode();
+    Navigator.of(context).pop();
   }
 
   Future<void> didDeleteEditButton() async {

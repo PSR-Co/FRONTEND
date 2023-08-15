@@ -10,6 +10,7 @@ class PurpleOutlinedTextField extends StatefulWidget {
   final double? width;
   final double? margin;
   final VoidCallback? onChanged;
+  final bool? isEditing;
 
   const PurpleOutlinedTextField({
     required this.maxLine,
@@ -20,6 +21,7 @@ class PurpleOutlinedTextField extends StatefulWidget {
     this.width,
     this.margin,
     this.onChanged,
+    this.isEditing,
     Key? key
   }) : super(key: key);
 
@@ -65,6 +67,7 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
                   currentTextLength = text.length;
                 });
               },
+              enabled: widget.isEditing,
               controller: widget.controller,
               scrollPhysics: const NeverScrollableScrollPhysics(),
               showCursor: false,
