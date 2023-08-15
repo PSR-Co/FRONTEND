@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/default_appbar_layout.dart';
+import '../../presenter/review/review_service.dart';
 
 class ReviewDetailAppbar extends StatefulWidget implements PreferredSizeWidget {
   final int? reviewId;
@@ -106,6 +107,11 @@ class _ReviewDetailAppbarState extends State<ReviewDetailAppbar> {
   }
 
   Future<void> didDeleteEditButton() async {
-    print('didDeleteEditButton');
+    final result = await ReviewService().deleteReview(widget.reviewId!);
+    if (result) {
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    } else {
+      // TODO: response 중 code를 통한 상품 삭제 예외처리 추가
+    }
   }
 }

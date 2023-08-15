@@ -61,4 +61,12 @@ class ReviewService {
         , null, null, body);
     return ((response != null) && (response['code'] == 200));
   }
+
+  Future<bool> deleteReview(int reviewId) async {
+    final response = await APIManager().request(
+        RequestType.DELETE,
+        '$REVIEW_URL/$reviewId',
+        null, null, null);
+    return ((response != null) && (response['code'] == 200));
+  }
 }
