@@ -74,3 +74,18 @@ Map<String, dynamic> _$ReviewToJson(Review instance) => <String, dynamic>{
       'nickName': instance.nickName,
       'profileImgKey': instance.profileImgKey,
     };
+
+ReviewResponseModel _$ReviewResponseModelFromJson(Map<String, dynamic> json) =>
+    ReviewResponseModel(
+      code: json['code'] as int,
+      message: json['message'] as String,
+      data: Review.fromJson(json['data'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$ReviewResponseModelToJson(
+        ReviewResponseModel instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+      'data': instance.data,
+    };

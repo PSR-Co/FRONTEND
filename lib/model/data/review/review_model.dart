@@ -6,6 +6,7 @@ import '../shopping/shopping_main_model.dart';
 
 part 'review_model.g.dart';
 
+/// 리뷰 목록 조회
 @JsonSerializable()
 class ReviewListResponseModel extends GeneralModel {
   final ReviewListInfo data;
@@ -74,4 +75,19 @@ class Review {
 
   factory Review.fromJson(Map<String, dynamic> json)
   => _$ReviewFromJson(json);
+}
+
+/// 리뷰 개별 조회
+@JsonSerializable()
+class ReviewResponseModel extends GeneralModel {
+  final Review data;
+
+  ReviewResponseModel({
+    required super.code,
+    required super.message,
+    required this.data,
+  });
+
+  factory ReviewResponseModel.fromJson(Map<String, dynamic> json)
+  => _$ReviewResponseModelFromJson(json);
 }
