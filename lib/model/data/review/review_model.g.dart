@@ -97,7 +97,7 @@ Review _$ReviewFromJson(Map<String, dynamic> json) => Review(
       content: json['content'] as String,
       imgList:
           (json['imgList'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      nickName: json['nickName'] as String,
+      nickname: json['nickname'] as String,
       productName: json['productName'] as String?,
       productImgUrl: json['productImgUrl'] as String?,
     );
@@ -107,7 +107,7 @@ Map<String, dynamic> _$ReviewToJson(Review instance) => <String, dynamic>{
       'rating': instance.rating,
       'content': instance.content,
       'imgList': instance.imgList,
-      'nickName': instance.nickName,
+      'nickname': instance.nickname,
       'productName': instance.productName,
       'productImgUrl': instance.productImgUrl,
     };

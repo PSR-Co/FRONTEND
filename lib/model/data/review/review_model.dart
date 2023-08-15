@@ -94,12 +94,11 @@ class ReviewResponseModel extends GeneralModel {
 
 @JsonSerializable()
 class Review {
-
   final int reviewId;
   final int rating;
   final String content;
   final List<String>? imgList;
-  final String nickName;
+  final String nickname;
   final String? productName;
   final String? productImgUrl;
 
@@ -108,7 +107,7 @@ class Review {
     required this.rating,
     required this.content,
     required this.imgList,
-    required this.nickName,
+    required this.nickname,
     required this.productName,
     required this.productImgUrl,
   });
