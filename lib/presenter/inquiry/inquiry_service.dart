@@ -25,8 +25,13 @@ class InquiryService{
 
   Future<dynamic> getDetailInquiry(int inquiryId) async {
     final response = await APIManager().request(RequestType.GET, '$INQUIRY_PATH/$inquiryId', null, null, null);
-    print('response : $response');
     return response;
   }
 
+  Future<dynamic> addInquiryAnswer(int inquiryId, String answer) async {
+    final body = {'answer': answer};
+    final response = await APIManager().request(RequestType.PATCH, '$INQUIRY_PATH/$inquiryId', null, null, body);
+    print('response : $response');
+    return response;
+  }
 }

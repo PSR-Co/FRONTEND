@@ -10,7 +10,9 @@ InquiryDetailModel _$InquiryDetailModelFromJson(Map<String, dynamic> json) =>
     InquiryDetailModel(
       code: json['code'] as int,
       message: json['message'] as String,
-      data: InquiryDetail.fromJson(json['data'] as Map<String, dynamic>),
+      data: json['data'] == null
+          ? null
+          : InquiryDetail.fromJson(json['data'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$InquiryDetailModelToJson(InquiryDetailModel instance) =>
