@@ -19,7 +19,7 @@ class AddReviewScreen extends StatefulWidget {
   final String productName;
   final String productImgKey;
 
-  final int? orderId;
+  final int orderId;
   final int? reviewId;
 
   const AddReviewScreen({

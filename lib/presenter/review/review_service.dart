@@ -32,7 +32,7 @@ class ReviewService {
     return response;
   }
 
-  Future<bool> requestReview(int? reviewId, int? orderId, int rating, String content, List<String> imgKeyList) async {
+  Future<bool> requestReview(int? reviewId, int orderId, int rating, String content, List<String> imgKeyList) async {
 
     final body = AddReview(
         rating: rating,
@@ -41,6 +41,7 @@ class ReviewService {
     ).toJson();
 
     if (reviewId == null) {
+      /// 리뷰 작성 요청
       final response = await APIManager().request(
           RequestType.POST,
           '$REVIEW_POST_URL/$orderId/review',
@@ -48,6 +49,7 @@ class ReviewService {
       return ((response != null) && (response['code'] == 200));
 
     } else {
+      /// 리뷰 수정 요청
       final response = await APIManager().request(
           RequestType.PATCH,
           '$REVIEW_URL/$reviewId',
