@@ -9,6 +9,8 @@ import 'package:psr/cs/view/detail_inquiry_screen.dart';
 import 'package:psr/cs/view/faq_screen.dart';
 import 'package:psr/cs/view/inquiry_screen.dart';
 import 'package:psr/cs/view/notice_screen.dart';
+import 'package:psr/model/data/inquiry/inquiry_list_model.dart';
+import 'package:psr/presenter/inquiry/inquiry_service.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/const/constants.dart';
@@ -24,17 +26,24 @@ class ServiceCenterScreen extends StatefulWidget {
 class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
   final TextStyle inquiryTextStyle = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
   final TextStyle inquiryContentTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
+  //
+  // List<String> inquiryTitleList = [
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  // ];
 
-  List<String> inquiryTitleList = [
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-  ];
+  InquiryListModel? data;
+  List<InquiryList> inquiries = [];
+
+  Future<dynamic> fetchData(String status) async {
+    return await InquiryService().getInquiryList({'status' : status});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,16 +73,16 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
               child: DetailBar(title: "문의하기", moveTo: InquiryScreen(),)),
           Division(),
           Expanded(
-            child:
-              BodyTab(
-                    titleList: MY_INQUIRY_LIST_TAB,
-                    tabTitle: Container(
-                        width: MediaQuery.of(context).size.width,
-                        alignment: Alignment.centerLeft,
-                        child: Text("내 문의내역", style: inquiryTextStyle,)),
-                    tabBarViewChild: [inquiryList(), inquiryList()]),
+                child:
+                  BodyTab(
+                        titleList: MY_INQUIRY_LIST_TAB,
+                        tabTitle: Container(
+                            width: MediaQuery.of(context).size.width,
+                            alignment: Alignment.centerLeft,
+                            child: Text("내 문의내역", style: inquiryTextStyle,)),
+                        tabBarViewChild: [inquiryList('진행중'), inquiryList('완료')]),
 
-          ),
+              )
         ],
       ),
     );
@@ -87,27 +96,55 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
   }
 
 
-  Widget inquiryList(){
-    return Container(
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: inquiryTitleList.length,
-        shrinkWrap: true,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            onTap: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailInquiryScreen()));
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminDetailInquiryScreen()));
-            },
-            title: Container(
-              alignment: Alignment.centerLeft, height: 40.0,
-              child: Text(inquiryTitleList[index], style: inquiryContentTextStyle,),
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-                vertical: 5.0, horizontal: 17.0),
+  Widget inquiryList(String status){
+    return FutureBuilder(
+      future: fetchData(status),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return const Center(
+            child: Text('문의 : 에러가 있습니다'),
           );
-        },
-      ),
+        } else if (snapshot.hasData) {
+          data = InquiryListModel.fromJson(snapshot.data);
+          if (data?.data.inquiries == null) {
+            return const Center(
+              child: Text('문의 내역이 없습니다.'),
+            );
+          } else {
+            inquiries = data!.data.inquiries!;
+          }
+        } else if (!snapshot.hasData) {
+          return const Center(
+            child: Text('문의 내역을 불러올 수 없습니다.'),
+          );
+        } else {
+          return Container(
+              width: 30,
+              height: 30,
+              alignment: Alignment.center,
+              child: const CircularProgressIndicator());
+        }
+        return ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: inquiries.length,
+          shrinkWrap: true,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              onTap: () {
+                // Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailInquiryScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminDetailInquiryScreen(inquiryId: inquiries[index].inquiryId,)));
+              },
+              title: Container(
+                alignment: Alignment.centerLeft, height: 40.0,
+                child: Text(inquiries[index].title, style: inquiryContentTextStyle,),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                  vertical: 0.0, horizontal: 17.0),
+              minVerticalPadding: 5.0,
+            );
+          },
+        );
+      }
     );
   }
 }

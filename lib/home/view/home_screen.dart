@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextStyle packageIntroductionTextStyle = const TextStyle(
       fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
   final TextStyle packageBtnTextStyle = const TextStyle(
-      fontSize: 14.0, fontWeight: FontWeight.w500, color: GRAY_3_COLOR);
+      fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_3_COLOR);
   final TextStyle btnGroupTextStyle = const TextStyle(
       fontSize: 15.0, fontWeight: FontWeight.w500, color: PURPLE_COLOR);
 
@@ -73,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
         future: fetchData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
+            print('홈: ${snapshot.error.toString()}');
             return const Center(
               child: Text('홈 : 에러가 있습니다'),
             );
@@ -92,8 +93,14 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }
           } else {
-            return const Center(
-              child: Text('상품을 불러오는데 실패하였습니다.'),
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              alignment: Alignment.center,
+              child: Container(
+                  width: 30,
+                  height: 30,
+                  child: const CircularProgressIndicator(backgroundColor: PURPLE_COLOR, color: GRAY_0_COLOR,)),
             );
           }
           return SingleChildScrollView(

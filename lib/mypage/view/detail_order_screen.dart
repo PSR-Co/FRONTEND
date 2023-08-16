@@ -54,7 +54,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
   final TextEditingController detailController = TextEditingController();
 
   bool readOnly = true;
-
+  String status = '';
   OrderDetailModel? data;
 
   Future<dynamic> fetchData(int orderId) async {
@@ -123,11 +123,12 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                   child: ActionBtn(
                       child: actionBtnChild(
                           () => editedBtn(
-                              data!.data.status,
-                              data!.data.ordererName,
-                              data!.data.websiteUrl,
-                              data!.data.inquiry,
-                              data!.data.description),
+                                  data!.data.status,
+                                  data!.data.ordererName,
+                                  data!.data.websiteUrl,
+                                  data!.data.inquiry,
+                                  data!.data.description)
+                              .then((value) => setState(() {})),
                           '수정하기')),
                 )
             ],
@@ -249,7 +250,25 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
       children: [
         TextButton(
             onPressed: () {
-              btnOption1 == '요청수정' ? changeEditable() : {};
+              switch (btnOption1) {
+                case '요청수정':
+                  changeEditable();
+                  break;
+                case '요청승인':
+                  changeStatus('진행중');
+                  setState(() {
+                    editedBtn(
+                            status,
+                            data!.data.ordererName,
+                            data!.data.websiteUrl,
+                            data!.data.inquiry,
+                            data!.data.description)
+                        .then((value) => setState(() {}));
+                  });
+                  break;
+                case '진행완료':
+                  break;
+              }
             },
             child: Text(
               btnOption1,
@@ -299,6 +318,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
         ? detail = description
         : detail = detailController.text;
 
+    print('updateState $status');
     result = await OrderService().editOrderData(
         widget.orderId, {'status': status}, name, url, ask, detail);
 
@@ -323,6 +343,12 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
   void changeEditable() {
     setState(() {
       readOnly = !readOnly;
+    });
+  }
+
+  void changeStatus(String newStatus) {
+    setState(() {
+      status = newStatus;
     });
   }
 }

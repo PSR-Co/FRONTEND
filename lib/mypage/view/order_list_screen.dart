@@ -5,10 +5,12 @@ import 'package:psr/common/const/constants.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
+import 'package:psr/review/view/add_review_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../model/data/order/order_list_model.dart';
 import '../../presenter/order/order_service.dart';
+import '../../review/view/review_screen.dart';
 import '../component/MoveToDetailOrderScreen.dart';
 
 class OrderListScreen extends StatefulWidget {
@@ -34,12 +36,14 @@ class _OrderListScreenState extends State<OrderListScreen> {
       fontWeight: FontWeight.w700,
       color: PURPLE_COLOR,
       decoration: TextDecoration.underline);
+  final TextStyle headerTextStyle = const TextStyle(
+      fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
 
   List<String> dropDownBtnTitle = ['요청대기', '진행중', '진행완료', '요청취소'];
   String isReviewed = "리뷰 쓰기";
-  String selectedValue = "요청대기";
-  String selectedValue1 = "요청대기";
-  String selectedValue2 = "요청대기";
+  String selectedValue = "";
+  String selectedValue1 = "";
+  String selectedValue2 = "";
 
   OrderListModel? data;
   List<OrderList> content = [];
@@ -63,11 +67,17 @@ class _OrderListScreenState extends State<OrderListScreen> {
       default:
         break;
     }
+    print('fetchData : ${await OrderService().getOrderData(queryParameters)}');
     return await OrderService().getOrderData(queryParameters);
   }
 
+  int cnt = 0;
+
   @override
   Widget build(BuildContext context) {
+    print('$cnt : $selectedValue1');
+    print('$cnt : $selectedValue2');
+    cnt++;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -84,6 +94,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
   }
 
   Widget orderProductView(String type, String selectedValue) {
+    print("실행");
     return FutureBuilder(
         future: fetchData(type, selectedValue),
         builder: (context, snapshot) {
@@ -142,12 +153,19 @@ class _OrderListScreenState extends State<OrderListScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     top: 5.0, bottom: 30.0),
-                                child: LargeDetailBar(
-                                    title: content[index].productName,
-                                    moveTo: MoveToDetailOrderScreen(
-                                      type: type,
-                                      orderId: content[index].orderId,
-                                    )),
+                                child: type == 'sell'
+                                    ? LargeDetailBar(
+                                        title: content[index].productName,
+                                        moveTo: MoveToDetailOrderScreen(
+                                          type: type,
+                                          orderId: content[index].orderId,
+                                        ))
+                                    : moveToReview(
+                                        content[index].productName,
+                                        content[index].reviewId,
+                                        content[index].userName,
+                                        content[index].productName,
+                                        content[index].productImgUrl),
                               )
                             ],
                           ),
@@ -157,9 +175,13 @@ class _OrderListScreenState extends State<OrderListScreen> {
   }
 
   Widget orderView(String type, Widget child) {
-    type == 'sell'
-        ? selectedValue = selectedValue1
-        : selectedValue = selectedValue2;
+    if ((type == 'sell'
+            ? selectedValue = selectedValue1
+            : selectedValue = selectedValue2) ==
+        '') {
+      selectedValue = '요청대기';
+    }
+    print('selectedValue : $selectedValue');
     return Column(children: [
       Container(
         width: MediaQuery.of(context).size.width,
@@ -182,10 +204,12 @@ class _OrderListScreenState extends State<OrderListScreen> {
                 .toList(),
             onChanged: (value) {
               setState(() {
-                setSelectedValue(type, value!);
+                type == 'sell'
+                    ? selectedValue1 = value!
+                    : selectedValue2 = value!;
+                fetchData(
+                    type, type == 'sell' ? selectedValue1 : selectedValue2);
               });
-              // print(selectedValue);
-              fetchData(type, selectedValue);
             },
             dropdownStyleData: DropdownStyleData(
               width: 80.0,
@@ -206,6 +230,37 @@ class _OrderListScreenState extends State<OrderListScreen> {
       ),
       child
     ]);
+  }
+
+  Widget moveToReview(String title, int? isReviewed, String sellerName,
+      String productName, String productImgKey) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: headerTextStyle,
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => isReviewed != null
+                            ? ReviewScreen()
+                            : AddReviewScreen(
+                                sellerName: sellerName,
+                                productName: productName,
+                                productImgKey: productImgKey)));
+              },
+              child: Text(isReviewed != null ? '리뷰 보기' : '리뷰 쓰기',
+                  style: reviewBtnTextStyle))
+        ],
+      ),
+    );
   }
 
   setSelectedValue(String type, String value) {
