@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
 import 'package:psr/common/layout/division.dart';
+import 'package:psr/model/data/myinfo/myinfo_model.dart';
 import 'package:psr/myinfo/view/change_interest_screen.dart';
 import 'package:psr/myinfo/view/change_profile_screen.dart';
 import 'package:psr/myinfo/view/change_pw_screen.dart';
 import 'package:psr/myinfo/view/privacy_policy_screen.dart';
 import 'package:psr/myinfo/view/terms_of_use_screen.dart';
+import 'package:psr/presenter/myinfo/myinfo_service.dart';
 
 import '../../auth/view/signup/select_interest_screen.dart';
 import '../../auth/view/signup/set_profile_screen.dart';
@@ -33,6 +35,11 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   final TextStyle answerWithdrawalTextStyle = const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500, color: GRAY_3_COLOR);
   final TextStyle answerTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w700, color: Colors.white);
 
+  MyInfoModel? data;
+
+  Future<dynamic> fetchData() async {
+    return await MyInfoService().getMyInfo();
+  }
   ///위젯 임시 연결
   @override
   Widget build(BuildContext context) {
@@ -42,50 +49,77 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
         bottom: false,
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: Column(
-              children: [
-                DefaultAppBarLayout(titleText: "내 정보"),
-                profile(),
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 17.0, 0.0), child: infoBox(),),
-                Padding(padding: const EdgeInsets.only(top: 20.0), child: Division(),),
-                // Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: DetailBar(title: "프로필 수정", moveTo: ChangeProfileScreen(),),),  // 원본 코드
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: DetailBar(title: "프로필 수정", moveTo: SetProfileScreen(),),),  // 수정 코드
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "비밀번호 변경", moveTo: ChangePWScreen(),),),
-                // Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "관심목록 변경", moveTo: ChangeInterestScreen(),),),  // 원본 코드
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "관심목록 변경", moveTo: SelectInterestScreen(),),),   // 수정 코드
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "약관 안내", moveTo: TermsOfUseScreen(),),),
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 10.0), child: DetailBar(title: "개인정보 처리방침", moveTo: PrivacyPolicyScreen(),),),
-                Division(),
-                Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: logout()),
-                Padding(padding: const EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 5.0), child: withdrawal(),)
-              ],
-            ),
+          child: FutureBuilder(
+            future: fetchData(),
+            builder: (context,snapshot) {
+              if (snapshot.hasError) {
+                print('my info error: ${snapshot.error.toString()}');
+                return const Center(
+                  child: Text('내 정보 : 에러가 있습니다'),
+                );
+              } else if (snapshot.hasData) {
+                data = MyInfoModel.fromJson(snapshot.data);
+              } else if (!snapshot.hasData) {
+                return const Center(
+                  child: Text('내 정보를 불러올 수 없습니다.'),
+                );
+              } else {
+                return Container(
+                    width: 30,
+                    height: 30,
+                    alignment: Alignment.center,
+                    child: const CircularProgressIndicator());
+              }
+              return Column(
+                  children: [
+                    const DefaultAppBarLayout(titleText: "내 정보"),
+                    profile(),
+                    Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 17.0, 0.0), child: infoBox(data!.data.email, data!.data.phone),),
+                    const Padding(padding: EdgeInsets.only(top: 20.0), child: Division(),),
+                    // Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: DetailBar(title: "프로필 수정", moveTo: ChangeProfileScreen(),),),  // 원본 코드
+                    Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: DetailBar(title: "프로필 수정", moveTo: SetProfileScreen(),),),  // 수정 코드
+                    Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "비밀번호 변경", moveTo: ChangePWScreen(),),),
+                    // Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "관심목록 변경", moveTo: ChangeInterestScreen(),),),  // 원본 코드
+                    Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "관심목록 변경", moveTo: SelectInterestScreen(),),),   // 수정 코드
+                    Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0), child: DetailBar(title: "약관 안내", moveTo: TermsOfUseScreen(),),),
+                    Padding(padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 10.0), child: DetailBar(title: "개인정보 처리방침", moveTo: PrivacyPolicyScreen(),),),
+                    Division(),
+                    Padding(padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0), child: logout()),
+                    Padding(padding: const EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 5.0), child: withdrawal(),)
+                  ],
+                );
+            }
+          ),
           ),
         ),
       );
   }
 
+  ///이미지 추후 연결. 닉네임도
   Widget profile() {
     return SizedBox(
       child: Container(
-        margin: EdgeInsets.fromLTRB(15.0, 10.0, 0.0, 20.0),
+        margin: const EdgeInsets.fromLTRB(17.0, 10.0, 10.0, 20.0),
         child: Row(
           children: [
             ClipOval(
-              child: Image.asset("asset/images/default_profile.png", width: 90.0, height: 90.0, ),
+              child: Image.asset("asset/images/default_profile.png", width: 70.0, height: 70.0,),
             ),
             Container(
-              margin: EdgeInsets.only(left: 10.0),
-              height: 90,
+              margin: const EdgeInsets.only(left: 10.0),
+              height: 70,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("루시 앤 셀러", style: welcomeTextStyle,),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Text("루시 앤 셀러", style: welcomeTextStyle,),
+                  ),
                   Container(
                     width: 55.0, height: 25.0,
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(color: PINK_COLOR_20, borderRadius: BorderRadius.all(Radius.circular(12.0)) ),
+                    decoration: const BoxDecoration(color: PINK_COLOR_20, borderRadius: BorderRadius.all(Radius.circular(12.0)) ),
                     child: Text("사업자", style: userTypeTextStyle,),)
                 ],
               ),
@@ -96,9 +130,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     );
   }
 
-  Widget infoBox(){
+  Widget infoBox(String email, String phone){
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
         boxShadow: [BoxShadow(blurRadius: 4.0, color: LIGHT_SHADOW_COLOR)]
@@ -108,9 +142,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            infoBoxRow("아이디", "abc@naver.com"),
+            infoBoxRow("아이디", email),
             Container(color: GRAY_0_COLOR, height: 1),
-            infoBoxRow("휴대폰", "010-0000-0000"),
+            infoBoxRow("휴대폰", phone),
           ],
         ),
       ),
@@ -154,8 +188,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   });
             },
             icon: const Icon(Icons.arrow_forward_ios, size: 16.0,),
-            padding: EdgeInsets.only(right: 17.0, bottom: 5.0),
-            constraints: BoxConstraints(),
+            padding: const EdgeInsets.only(right: 17.0, bottom: 5.0),
+            constraints: const BoxConstraints(),
           )
         ],
       ),
@@ -165,10 +199,10 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   AlertDialog cupertinoAlertDialog({required Widget askTitle, required String alert}) {
     return AlertDialog(
       backgroundColor: Colors.white,
-      insetPadding: EdgeInsets.only(top: 600.0),
+      insetPadding: const EdgeInsets.only(top: 600.0),
       titlePadding: EdgeInsets.zero,
-      contentPadding: EdgeInsets.only(top:20.0),
-      buttonPadding: EdgeInsets.symmetric(horizontal: 17.0),
+      contentPadding: const EdgeInsets.only(top:20.0),
+      buttonPadding: const EdgeInsets.symmetric(horizontal: 17.0),
       content: askTitle,
       actions: <Widget>[
         Row(

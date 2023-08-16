@@ -123,7 +123,7 @@ class _MypageScreenState extends State<MypageScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+                    padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
                     child: Text(
                       "${userDate.nickname}님 안녕하세요!",
                       style: welcomeTextStyle,

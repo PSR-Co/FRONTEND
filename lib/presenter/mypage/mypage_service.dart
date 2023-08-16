@@ -19,7 +19,6 @@ class MyPageService {
 
   Future<dynamic> getLikes() async {
     final response = await APIManager().request(RequestType.GET, LIKE, null, null, null);
-    print('response: $response');
     return response;
   }
 }
