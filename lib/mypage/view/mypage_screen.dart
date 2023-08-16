@@ -51,9 +51,9 @@ class _MypageScreenState extends State<MypageScreen> {
                   padding: EdgeInsets.only(top: 15.0),
                   child: Division(),
                 ),
-                Expanded(
+                const Expanded(
                     child: Padding(
-                        padding: const EdgeInsets.only(bottom: 30.0),
+                        padding: EdgeInsets.only(bottom: 10.0),
                         child: OrderListTab())),
               ],
             )),
@@ -105,26 +105,29 @@ class _MypageScreenState extends State<MypageScreen> {
     return SizedBox(
       height: 120.0,
       child: Container(
-        margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 20.0),
-        height: 90.0,
+        margin: const EdgeInsets.fromLTRB(17.0, 10.0, 0.0, 10.0),
+        height: 70.0,
         child: Row(
           children: [
             ClipOval(
               child: Image.asset(
                 "asset/images/default_profile.png",
-                width: 90.0,
-                height: 90.0,
+                width: 70.0,
+                height: 70.0,
               ),
             ),
             Container(
               margin: const EdgeInsets.only(left: 10.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "${userDate.nickname}님 안녕하세요!",
-                    style: welcomeTextStyle,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+                    child: Text(
+                      "${userDate.nickname}님 안녕하세요!",
+                      style: welcomeTextStyle,
+                    ),
                   ),
                   Container(
                     width: 55.0,

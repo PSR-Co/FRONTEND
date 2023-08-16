@@ -82,7 +82,7 @@ class _OrderListTabState extends State<OrderListTab>
               controller: controller,
               itemCount: content.length,
               infiniteScroll: false,
-              proximity: 0.53,
+              proximity: 0.49,
               sizeDistinction: 0.4,
               itemBuilder: (context, index, activeIndex) {
                 return cardContent(
@@ -139,9 +139,9 @@ class _OrderListTabState extends State<OrderListTab>
                           style: orderTextStyle,
                         )),
                     Container(
-                        width: 170.0,
-                        height: 170.0,
-                        margin: const EdgeInsets.only(top: 15.0, bottom: 10.0),
+                        width: 140.0,
+                        height: 140.0,
+                        margin: const EdgeInsets.symmetric(vertical: 10.0),
                         decoration: BoxDecoration(
                             border: Border.all(
                                 color: GRAY_0_COLOR,
@@ -150,8 +150,8 @@ class _OrderListTabState extends State<OrderListTab>
                         child: ClipRect(
                           child: Image.asset(
                             productImg,
-                            width: 165.0,
-                            height: 165.0,
+                            width: 140.0,
+                            height: 140.0,
                           ),
                         )),
                     Text(

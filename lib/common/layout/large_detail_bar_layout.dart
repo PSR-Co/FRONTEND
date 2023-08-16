@@ -21,7 +21,7 @@ class LargeDetailBarState extends State<LargeDetailBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+      // margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
