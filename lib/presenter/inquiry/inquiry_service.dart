@@ -1,4 +1,4 @@
-import 'package:psr/model/data/inquiry/add_inquiry_model.dart';
+import 'package:psr/model/data/inquiry/inquiry_model.dart';
 import 'package:psr/model/network/api_manager.dart';
 
 import '../../model/data/general_model.dart';

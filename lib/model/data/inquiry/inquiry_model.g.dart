@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'add_inquiry_model.dart';
+part of 'inquiry_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

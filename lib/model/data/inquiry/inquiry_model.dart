@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../general_model.dart';
 
-part 'add_inquiry_model.g.dart';
+part 'inquiry_model.g.dart';
 
 @JsonSerializable()
 class AddInquiryModel extends GeneralModel {
