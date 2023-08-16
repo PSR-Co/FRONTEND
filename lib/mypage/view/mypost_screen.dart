@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
-import 'package:psr/model/data/mypage/mypage_model.dart';
+import 'package:psr/model/data/mypage/myproduct_model.dart';
 import 'package:psr/presenter/mypage/mypage_service.dart';
 
 import '../../common/const/colors.dart';
@@ -32,8 +32,8 @@ class _MyPostScreenState extends State<MyPostScreen> {
     color: Colors.black,
   );
 
-  MyPageModel? data;
-  List<MyPage> content = [];
+  MyProductModel? data;
+  List<MyProduct> content = [];
 
   Future<dynamic> fetchData() async {
     return await MyPageService().getMyProduct();
@@ -68,7 +68,7 @@ class _MyPostScreenState extends State<MyPostScreen> {
               child: Text('내 게시글 : 에러가 있습니다'),
             );
           } else if (snapshot.hasData) {
-            data = MyPageModel.fromJson(snapshot.data);
+            data = MyProductModel.fromJson(snapshot.data);
             if (data?.data.productList.content == null) {
               return const Center(
                 child: Text('내 게시글이 존재하지 않습니다.'),

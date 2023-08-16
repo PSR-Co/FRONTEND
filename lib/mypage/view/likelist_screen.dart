@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/model/data/mypage/like_model.dart';
 import 'package:psr/mypage/component/like_list_item.dart';
+import 'package:psr/presenter/mypage/mypage_service.dart';
 
 import '../../common/const/colors.dart';
 
@@ -13,11 +15,6 @@ class LikeListScreen extends StatefulWidget {
 }
 
 class _LikeListScreenState extends State<LikeListScreen> {
-  @override
-  void initState() {
-    super.initState();
-    bool isLiked = false;
-  }
 
   // 제품 정보 텍스트 스타일 정의
   final brandNameTextStyle = const TextStyle(
@@ -38,30 +35,13 @@ class _LikeListScreenState extends State<LikeListScreen> {
     color: Colors.black,
   );
 
-  List<Like> likeList = [
-    Like("asset/images/product_sample.png", "루시 앤플 셀러", "폴로랄프로렌 목도리 Red Color",
-        79000, true),
-    Like("asset/images/product_sample.png", "루시 앤플 셀러", "폴로랄프로렌 목도리 Red Color",
-        79000, true),
-    Like("asset/images/product_sample.png", "루시 앤플 셀러", "폴로랄프로렌 목도리 Red Color",
-        79000, true),
-    Like("asset/images/product_sample.png", "루시 앤플 셀러", "폴로랄프로렌 목도리 Red Color",
-        79000, true),
-    Like("asset/images/product_sample.png", "루시 앤플 셀러", "폴로랄프로렌 목도리 Red Color",
-        79000, true),
-    Like("asset/images/product_sample.png", "루시 앤플 셀러", "폴로랄프로렌 목도리 Red Color",
-        79000, true),
-    Like("asset/images/product_sample.png", "루시 앤플 셀러", "폴로랄프로렌 목도리 Red Color",
-        79000, true),
-    Like("asset/images/product_sample.png", "루시 앤플 셀러", "폴로랄프로렌 목도리 Red Color",
-        79000, true),
-    Like("asset/images/product_sample.png", "루시 앤플 셀러", "폴로랄프로렌 목도리 Red Color",
-        79000, true),
-    Like("asset/images/product_sample.png", "루시 앤플 셀러", "폴로랄프로렌 목도리 Red Color",
-        79000, true),
-    Like("asset/images/product_sample.png", "취소", "폴로랄프로렌 목도리 Red Color", 79000,
-        false),
-  ];
+  LikeModel? data;
+  List<Like> content = [];
+  bool isLike = true;
+
+  Future<dynamic> fetchData() async {
+    return await MyPageService().getLikes();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,38 +63,68 @@ class _LikeListScreenState extends State<LikeListScreen> {
   }
 
   Widget likeListView() {
-    return Container(
-      margin: const EdgeInsets.only(top: 15.0),
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: likeList.length,
-        shrinkWrap: true,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            onTap: () {},
-            title: GestureDetector(
-                child: likeListItem(
-                    likeList[index].productImgKey,
-                    likeList[index].nickname,
-                    likeList[index].name,
-                    likeList[index].price,
-                    likeList[index].isLike)),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 17.0),
+    return FutureBuilder(
+      future: fetchData(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          print('likes error: ${snapshot.error.toString()}');
+          return const Center(
+            child: Text('찜 : 에러가 있습니다'),
           );
-        },
-      ),
+        } else if (snapshot.hasData) {
+          data = LikeModel.fromJson(snapshot.data);
+          if (data?.data.productList.content == null) {
+            return const Center(
+              child: Text('찜한 게시글이 존재하지 않습니다.'),
+            );
+          }
+          content = data!.data.productList.content;
+        } else if (!snapshot.hasData) {
+          return const Center(
+            child: Text('찜한 게시글을 불러올 수 없습니다.'),
+          );
+        } else {
+          return Container(
+              width: 30,
+              height: 30,
+              alignment: Alignment.center,
+              child: const CircularProgressIndicator());
+        }
+        return Container(
+          margin: const EdgeInsets.only(top: 15.0),
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: content.length,
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                onTap: () {},
+                title: GestureDetector(
+                    child: likeListItem(
+                        content[index].imgUrl,
+                        content[index].nickname,
+                        content[index].name,
+                        content[index].price,
+                        isLike)),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 17.0),
+              );
+            },
+          ),
+        );
+      }
     );
   }
 
+  ///추후 이미지 연결
   Widget likeListItem(
-      String imgKey, String nickname, String name, int price, bool isLike) {
+      String? imgKey, String nickname, String name, int price, bool isLike) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          renderProductImage(imgKey),
+          renderProductImage("asset/images/product_sample.png"),
           renderProductInfo(nickname, name, price),
           Expanded(
               child: Container(
@@ -175,20 +185,21 @@ class _LikeListScreenState extends State<LikeListScreen> {
     );
 
     return IconButton(
-        onPressed: didTapLikeButton(isLike),
+        // onPressed: didTapLikeButton(isLike),
+        onPressed: (){},
         padding: const EdgeInsets.only(right: 0.0),
         constraints: const BoxConstraints(),
         icon: likeIcon);
   }
 
-  didTapLikeButton(bool isLike) {
-    // print('didTapLikeButton');
-    // setState(() {
-    //   isLike = !isLike;
-    // });
-  }
-
-// checkIsLike({required Widget widget, required bool isLike}) {
-//   if(isLike) {return widget;}
-// }
+  // didTapLikeButton(bool isLike) {
+  //   print('didTapLikeButton');
+  //   setState(() {
+  //     isLike = !isLike;
+  //   });
+  // }
+  //
+  // checkIsLike({required Widget widget, required bool isLike}) {
+  //   if(isLike) {return widget;}
+  // }
 }
