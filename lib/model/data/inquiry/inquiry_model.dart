@@ -12,7 +12,7 @@ class InquiryModel extends GeneralModel {
       {required super.code, required super.message, required this.data});
 
   factory InquiryModel.fromJson(Map<String, dynamic> json) =>
-      _$AddInquiryModelFromJson(json);
+      _$InquiryModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$InquiryModelToJson(this);
 }

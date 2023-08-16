@@ -165,7 +165,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
                                         content[index].reviewId,
                                         content[index].userName,
                                         content[index].productName,
-                                        content[index].productImgUrl),
+                                        content[index].productImgUrl,
+                                        content[index].orderId,
+                                        content[index].productId),
                               )
                             ],
                           ),
@@ -232,10 +234,10 @@ class _OrderListScreenState extends State<OrderListScreen> {
     ]);
   }
 
-  Widget moveToReview(String title, int? isReviewed, String sellerName,
-      String productName, String productImgKey) {
+  Widget moveToReview(String title, int? reviewId, String sellerName,
+      String productName, String productImgKey, int orderId, int productId) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -249,14 +251,19 @@ class _OrderListScreenState extends State<OrderListScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => isReviewed != null
-                            ? ReviewScreen()
+                        builder: (context) => reviewId != null
+                            ? ReviewScreen(
+                                productId: productId,
+                              )
                             : AddReviewScreen(
                                 sellerName: sellerName,
                                 productName: productName,
-                                productImgKey: productImgKey)));
+                                productImgKey: productImgKey,
+                                reviewId: reviewId,
+                                orderId: orderId,
+                              )));
               },
-              child: Text(isReviewed != null ? '리뷰 보기' : '리뷰 쓰기',
+              child: Text(reviewId != null ? '리뷰 보기' : '리뷰 쓰기',
                   style: reviewBtnTextStyle))
         ],
       ),
