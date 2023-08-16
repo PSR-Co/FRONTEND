@@ -82,7 +82,10 @@ class AddProductScreenState extends State<AddProductScreen> {
         const SizedBox(height: 15,),
 
         const CustomTitleText(title: '사진을 올려주세요', option: ' (선택)',),
-        PickImgView(imgKeyList: imgList,),
+        PickImgView(
+          isEditing: true,
+          imgKeyList: imgList,
+        ),
 
         const SizedBox(height: 30,),
 

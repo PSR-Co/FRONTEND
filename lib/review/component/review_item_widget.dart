@@ -5,20 +5,22 @@ import 'package:psr/review/component/review_info_widget.dart';
 import 'package:psr/review/component/user_profile_img_widget.dart';
 
 import '../../common/const/colors.dart';
+import '../../model/data/review/review_model.dart';
 
-class ReviewItem extends StatefulWidget {
+class ReviewItemWidget extends StatefulWidget {
 
-  final String reviewContent;
-  const ReviewItem({
-    required this.reviewContent,
+  final ReviewItem review;
+
+  const ReviewItemWidget({
+    required this.review,
     Key? key
   }) : super(key: key);
 
   @override
-  State<ReviewItem> createState() => _ReviewItemState();
+  State<ReviewItemWidget> createState() => _ReviewItemWidgetState();
 }
 
-class _ReviewItemState extends State<ReviewItem> {
+class _ReviewItemWidgetState extends State<ReviewItemWidget> {
 
   @override
   Widget build(BuildContext context) {
@@ -35,21 +37,26 @@ class _ReviewItemState extends State<ReviewItem> {
       child: Container(
         color: Colors.white,
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.symmetric(vertical: 7),
+        padding: const EdgeInsets.symmetric(vertical: 7),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             RoundedUserProfileImg(
               width: 32.0,
               height: 32.0,
-              imgKey: 'asset/images/profile_img_sample.jpg',
+              imgKey: widget.review.profileImgKey,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ReviewInfo(),
-                ReviewContent(reviewContent: widget.reviewContent,),
-                ReviewImgListView()
+                ReviewInfo(
+                  reviewId: widget.review.reviewId,
+                  avgOfRating: widget.review.rating,
+                  nickName: widget.review.nickName,
+                  reviewedDate: widget.review.reviewedDate,
+                ),
+                ReviewContent(reviewContent: widget.review.content,),
+                ReviewImgListView(imgUrlList: widget.review.imgList ?? [],)
               ],
             ),
           ],
@@ -64,7 +71,7 @@ class _ReviewItemState extends State<ReviewItem> {
       height: 1.5,
       width: MediaQuery.of(context).size.width-30,
       color: GRAY_1_COLOR.withOpacity(0.5),
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
     );
   }
 }
