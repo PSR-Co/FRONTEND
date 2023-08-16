@@ -93,8 +93,14 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }
           } else {
-            return const Center(
-              child: Text('상품을 불러오는데 실패하였습니다.'),
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              alignment: Alignment.center,
+              child: Container(
+                  width: 30,
+                  height: 30,
+                  child: const CircularProgressIndicator(backgroundColor: PURPLE_COLOR, color: GRAY_0_COLOR,)),
             );
           }
           return SingleChildScrollView(

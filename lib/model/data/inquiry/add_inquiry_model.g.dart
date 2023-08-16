@@ -1,18 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'inquiry_model.dart';
+part of 'add_inquiry_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-InquiryModel _$InquiryModelFromJson(Map<String, dynamic> json) => InquiryModel(
+AddInquiryModel _$AddInquiryModelFromJson(Map<String, dynamic> json) =>
+    AddInquiryModel(
       code: json['code'] as int,
       message: json['message'] as String,
       data: json['data'] as Map<String, dynamic>?,
     );
 
-Map<String, dynamic> _$InquiryModelToJson(InquiryModel instance) =>
+Map<String, dynamic> _$AddInquiryModelToJson(AddInquiryModel instance) =>
     <String, dynamic>{
       'code': instance.code,
       'message': instance.message,

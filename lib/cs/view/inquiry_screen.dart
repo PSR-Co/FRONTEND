@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/cs/view/service_center_screen.dart';
-import 'package:psr/model/data/inquiry/inquiry_model.dart';
+import 'package:psr/model/data/inquiry/add_inquiry_model.dart';
 import 'package:psr/myinfo/component/complete_btn.dart';
 import 'package:psr/presenter/inquiry/inquiry_service.dart';
 

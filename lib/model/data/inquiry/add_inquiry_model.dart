@@ -2,19 +2,19 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../general_model.dart';
 
-part 'inquiry_model.g.dart';
+part 'add_inquiry_model.g.dart';
 
 @JsonSerializable()
-class InquiryModel extends GeneralModel {
+class AddInquiryModel extends GeneralModel {
   final Map<String, dynamic>? data;
 
-  InquiryModel(
+  AddInquiryModel(
       {required super.code, required super.message, required this.data});
 
-  factory InquiryModel.fromJson(Map<String, dynamic> json) =>
-      _$InquiryModelFromJson(json);
+  factory AddInquiryModel.fromJson(Map<String, dynamic> json) =>
+      _$AddInquiryModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$InquiryModelToJson(this);
+  Map<String, dynamic> toJson() => _$AddInquiryModelToJson(this);
 }
 
 @JsonSerializable()
