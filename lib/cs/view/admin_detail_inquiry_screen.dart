@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/model/data/inquiry/inquiry_detail_model.dart';
 import 'package:psr/myinfo/component/complete_btn.dart';
+import 'package:psr/presenter/inquiry/inquiry_service.dart';
 
 import '../component/inquiry_list.dart';
 
 class AdminDetailInquiryScreen extends StatefulWidget {
-  AdminDetailInquiryScreen({Key? key}):super(key: key);
+  final int inquiryId;
+  AdminDetailInquiryScreen({required this.inquiryId, Key? key}):super(key: key);
 
   @override
   State<AdminDetailInquiryScreen> createState() => _AdminDetailInquiryScreenState();
@@ -19,19 +22,25 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
   final TextStyle answerTextStyle = const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
   final TextStyle removeTextStyle = const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500, color: ERROR_COLOR);
 
-  List<Inquiry> inquiryList = [
-    Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-    Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-    Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-    Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-    Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-    Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-    Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-    Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-  ];
+  // List<Inquiry> inquiryList = [
+  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
+  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
+  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
+  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
+  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
+  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
+  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
+  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
+  // ];
 
   bool readOnly = true;
   bool isActivated = false;
+
+  InquiryDetailModel? data;
+
+  Future<dynamic> fetchData(int inquiryId) async {
+    return await InquiryService().getDetailInquiry(inquiryId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,30 +49,58 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         bottom: false,
-        child: Column(
-          children: [
-            DefaultAppBarLayout(titleText: '문의하기', rightItems: [menuBar()],),
-            Padding(padding: const EdgeInsets.symmetric(horizontal: 17.0), child: inquiryContainer(),),
-            Expanded(child: answerContainer())
-          ]
+        child: FutureBuilder(
+          future: fetchData(widget.inquiryId),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              print('inquiry detail error: ${snapshot.error.toString()}');
+              return const Center(
+                child: Text('문의 : 에러가 있습니다'),
+              );
+            } else if (snapshot.hasData) {
+              data = InquiryDetailModel.fromJson(snapshot.data);
+              if (data?.data == null) {
+                return const Center(
+                  child: Text('해당 문의를 찾을 수 없습니다.'),
+                );
+              }
+            } else if (!snapshot.hasData) {
+              return const Center(
+                child: Text('해당 문의 내역을 불러올 수 없습니다.'),
+              );
+            } else {
+              return Container(
+                  width: 30,
+                  height: 30,
+                  alignment: Alignment.center,
+                  child: const CircularProgressIndicator());
+            }
+            return Column(
+              children: [
+                DefaultAppBarLayout(titleText: '문의하기', rightItems: [menuBar()],),
+                Padding(padding: const EdgeInsets.symmetric(horizontal: 17.0), child: inquiryContainer(data!.data!.title, data!.data!.content),),
+                Expanded(child: answerContainer(data?.data?.answer))
+              ]
+            );
+          }
         ),
       ),
     );
   }
 
-  Widget inquiryContainer(){
+  Widget inquiryContainer(String title, String content){
     return Container(
       width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            Container(padding: EdgeInsets.only(top: 30.0, bottom: 20.0) , alignment: Alignment.centerLeft,child: Text('질문은 질문이에요?', style: titleTextStyle,)),
-            Container(padding: EdgeInsets.only(top: 20.0, bottom: 20.0) ,alignment: Alignment.centerLeft,child: Text('문희는 문의가 하고 싶을 뿐인뎅,,\n\n무니는 놀고 싶을 뿐인뎅,,', style: contentTextStyle))
+            Container(padding: EdgeInsets.only(top: 30.0, bottom: 20.0) , alignment: Alignment.centerLeft,child: Text(title, style: titleTextStyle,)),
+            Container(padding: EdgeInsets.only(top: 20.0, bottom: 20.0) ,alignment: Alignment.centerLeft,child: Text(content, style: contentTextStyle))
           ],
         )
     );
   }
 
-  Widget answerContainer(){
+  Widget answerContainer(String? answer){
     return Container(
         width: MediaQuery.of(context).size.width,
         color: PURPLE_COLOR_20,
@@ -84,7 +121,7 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: '아직 답변이 완료되지 않은 문의입니다.',
+                      hintText: answer ?? '아직 답변이 완료되지 않은 문의입니다.',
                       hintStyle: contentTextStyle,
                       border: InputBorder.none
                     ),

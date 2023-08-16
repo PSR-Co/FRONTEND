@@ -26,17 +26,17 @@ class ServiceCenterScreen extends StatefulWidget {
 class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
   final TextStyle inquiryTextStyle = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
   final TextStyle inquiryContentTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
-
-  List<String> inquiryTitleList = [
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-    '질문은 질문이에요?',
-  ];
+  //
+  // List<String> inquiryTitleList = [
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  //   '질문은 질문이에요?',
+  // ];
 
   InquiryListModel? data;
   List<InquiryList> inquiries = [];
@@ -126,13 +126,13 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
         }
         return ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: inquiryTitleList.length,
+          itemCount: inquiries.length,
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
               onTap: () {
                 // Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailInquiryScreen()));
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminDetailInquiryScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminDetailInquiryScreen(inquiryId: inquiries[index].inquiryId,)));
               },
               title: Container(
                 alignment: Alignment.centerLeft, height: 40.0,
