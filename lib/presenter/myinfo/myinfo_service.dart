@@ -4,13 +4,16 @@ class MyInfoService {
   final MY_INFO = '/users/mypage';
 
   static final MyInfoService _myInfoService = MyInfoService._();
+
   MyInfoService._();
-  factory MyInfoService(){
+
+  factory MyInfoService() {
     return _myInfoService;
   }
 
   Future<dynamic> getMyInfo() async {
-    final response = APIManager().request(RequestType.GET, MY_INFO, null, null, null);
+    final response =
+        APIManager().request(RequestType.GET, MY_INFO, null, null, null);
     print('response: $response');
     return response;
   }
