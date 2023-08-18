@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/model/data/mypage/myproduct_model.dart';
+import 'package:psr/presenter/mypage/mypage_service.dart';
 
 import '../../common/const/colors.dart';
-import '../component/post_list_item.dart';
 
 class MyPostScreen extends StatefulWidget {
   const MyPostScreen({super.key});
@@ -31,28 +32,12 @@ class _MyPostScreenState extends State<MyPostScreen> {
     color: Colors.black,
   );
 
-  List<MyPost> postList = [
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
-        "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
-        "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
-        "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
-        "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
-        "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
-        "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
-        "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
-        "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
-        "폴로랄프로렌 목도리 Red Color", 79000),
-    MyPost("asset/images/product_sample.png", "방송가능 아웃소싱",
-        "폴로랄프로렌 목도리 Red Color", 79000)
-  ];
+  MyProductModel? data;
+  List<MyProduct> content = [];
+
+  Future<dynamic> fetchData() async {
+    return await MyPageService().getMyProduct();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,41 +59,70 @@ class _MyPostScreenState extends State<MyPostScreen> {
   }
 
   Widget postListView() {
-    return Container(
-      margin: const EdgeInsets.only(top: 15.0),
-      child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: postList.length,
-        shrinkWrap: true,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            onTap: () {},
-            title: GestureDetector(
-              child: postListItem(
-                  postList[index].productImgKey,
-                  postList[index].category,
-                  postList[index].name,
-                  postList[index].price),
+    return FutureBuilder(
+        future: fetchData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            print('my product error: ${snapshot.error.toString()}');
+            return const Center(
+              child: Text('내 게시글 : 에러가 있습니다'),
+            );
+          } else if (snapshot.hasData) {
+            data = MyProductModel.fromJson(snapshot.data);
+            if (data?.data.productList.content == null) {
+              return const Center(
+                child: Text('내 게시글이 존재하지 않습니다.'),
+              );
+            }
+            content = data!.data.productList.content;
+          } else if (!snapshot.hasData) {
+            return const Center(
+              child: Text('내 게시글을 불러올 수 없습니다.'),
+            );
+          } else {
+            return Container(
+                width: 30,
+                height: 30,
+                alignment: Alignment.center,
+                child: const CircularProgressIndicator());
+          }
+          return Container(
+            margin: const EdgeInsets.only(top: 15.0),
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: content.length,
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  onTap: () {},
+                  title: GestureDetector(
+                    child: postListItem(
+                        content[index].imgUrl,
+                        content[index].category,
+                        content[index].name,
+                        content[index].price),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 17.0),
+                );
+              },
             ),
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5.0, horizontal: 17.0),
           );
-        },
-      ),
-    );
+        });
   }
 
-  Widget postListItem(String imgKey, String category, String name, int price) {
+  ///추후 이미지 연결
+  Widget postListItem(String? imgKey, String category, String name, int price) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        renderProductImage(imgKey),
+        renderProductImage(),
         renderProductInfo(category, name, price)
       ],
     );
   }
 
-  Widget renderProductImage(String imgKey) {
+  Widget renderProductImage() {
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 5.0),
         decoration: BoxDecoration(
@@ -116,7 +130,7 @@ class _MyPostScreenState extends State<MyPostScreen> {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Image.asset(
-          imgKey,
+          "asset/images/product_sample.png",
           width: 90,
           height: 90,
         ));

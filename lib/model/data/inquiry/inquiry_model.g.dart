@@ -6,8 +6,7 @@ part of 'inquiry_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-InquiryModel _$AddInquiryModelFromJson(Map<String, dynamic> json) =>
-    InquiryModel(
+InquiryModel _$InquiryModelFromJson(Map<String, dynamic> json) => InquiryModel(
       code: json['code'] as int,
       message: json['message'] as String,
       data: json['data'] as Map<String, dynamic>?,
