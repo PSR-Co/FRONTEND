@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/purple_filled_button.dart';
+import 'package:psr/presenter/common/ImageService.dart';
 import 'package:psr/presenter/shopping/shopping_service.dart';
 
 import '../../common/layout/custom_title_text.dart';
@@ -108,12 +109,15 @@ class AddProductScreenState extends State<AddProductScreen> {
 
   /// event methods
   Future<void> didTapAddButton() async {
+    List<String> uploadedList = await ImageService().uploadImageList(ImageType.product, imgList);
+
     final result = await ShoppingService().addProduct(
         selectedCategory!,
         nameController.value.text,
         priceController.value.text,
         detailController.value.text,
-        (imgList.isEmpty) ? null : imgList
+        // (imgList.isEmpty) ? null : imgList
+        (uploadedList.isEmpty) ? null : uploadedList
     );
 
     if (result) { Navigator.of(context).pop(); }
