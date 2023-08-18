@@ -39,7 +39,7 @@ class _ProductImgPageViewWidgetState extends State<ProductImgPageViewWidget> {
           child: PageView.builder(
             controller: controller,
             itemBuilder: (BuildContext context, int index) {
-              return Image.asset(
+              return Image.network(
                 widget.imgKeyList.elementAt(index),
                 fit: BoxFit.contain,
               );

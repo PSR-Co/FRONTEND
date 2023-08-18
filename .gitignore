@@ -10,6 +10,11 @@
 .svn/
 migrate_working_dir/
 
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+ios/Runner/Info.plist
+lib/model/network/constants.dart
+
 # IntelliJ related
 *.iml
 *.ipr
