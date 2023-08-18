@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:psr/model/network/cutsom_interceptor.dart';
 
 import 'constants.dart';
 
@@ -25,6 +26,8 @@ class APIManager {
       Map<String, dynamic>? queryParameters,
       Map<String, dynamic>? data,
       ) async {
+
+    dio.interceptors.add(CustomInterceptor());
 
     if (options != null && options.headers != null) {
       defaultOptions.headers!.addAll(options.headers!);
