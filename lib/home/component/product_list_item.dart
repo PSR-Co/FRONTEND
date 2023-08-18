@@ -37,9 +37,15 @@ class _ProductListItemState extends State<ProductListItem> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                  padding:
-                      const EdgeInsets.only(right: 8.0, top: 5.0, bottom: 8.0),
+              Container(
+                  margin: const EdgeInsets.only(right: 8.0, top: 5.0, bottom: 8.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1.0,
+                      color: GRAY_0_COLOR
+                    ),
+                    borderRadius: BorderRadius.circular(12.0)),
+
                   child: Image.asset(
                     'asset/images/${productImg[index]}',
                     width: 135.0,
