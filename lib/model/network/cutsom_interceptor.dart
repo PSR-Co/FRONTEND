@@ -11,9 +11,21 @@ class CustomInterceptor extends Interceptor {
   }
 
   /// Variables
-  final reissueTokenUrl = '/users/reissue';
+  final reissuePath = '/users/reissue';
 
   /// Override Methods
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    // TODO: implement onRequest
+    super.onRequest(options, handler);
+  }
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    // TODO: implement onResponse
+    super.onResponse(response, handler);
+  }
+
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) async {
 
@@ -23,14 +35,14 @@ class CustomInterceptor extends Interceptor {
     if (refreshToken == null) { return handler.reject(err); }
 
     /// 403 토큰 오류이며, 토큰 재발급 중 발생한 오류가 아닌 경우
-    if (err.response?.statusCode == 403 &&
-        !(err.requestOptions.path == reissueTokenUrl)) {
+    if (err.response?.data['code'] == 403 &&
+        !(err.requestOptions.path == reissuePath)) {
 
       final dio = Dio();
       try {
         // 토큰 재발급 요청 전송
         final response = await dio.post(
-          reissueTokenUrl,
+          BASE_URL + reissuePath,
           options: Options(
             headers: {
               'authorization': accessToken,
@@ -43,8 +55,8 @@ class CustomInterceptor extends Interceptor {
         );
 
         // 재발급 요청 응답값을 통해 토큰 갱신
-        final newAccessToken = response.data['accessToken'];
-        final newRefreshToken = response.data['refreshToken'];
+        final newAccessToken = response.data['data']['accessToken'];
+        final newRefreshToken = response.data['data']['refreshToken'];
 
         await storage.write(key: ACCESS_TOKEN_KEY, value: newAccessToken);
         await storage.write(key: REFRESH_TOKEN_KEY, value: newRefreshToken);

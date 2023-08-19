@@ -27,11 +27,11 @@ class APIManager {
       Map<String, dynamic>? data,
       ) async {
 
-    dio.interceptors.add(CustomInterceptor());
-
     if (options != null && options.headers != null) {
       defaultOptions.headers!.addAll(options.headers!);
     }
+
+    dio.interceptors.add(CustomInterceptor());
 
     dynamic response;
     switch (requestType) {
