@@ -65,7 +65,9 @@ class _CategoryListItemState extends State<CategoryListItem> {
   /// 제품 이미지 위젯 구현 메소드
   Widget renderProductImage() {
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 5.0),
+      width: 90,
+      height: 90,
+        margin: const EdgeInsets.symmetric(horizontal: 5.0),
         decoration: BoxDecoration(
           border: Border.all(
               width: 1.0,
@@ -73,8 +75,9 @@ class _CategoryListItemState extends State<CategoryListItem> {
           ),
           borderRadius: BorderRadius.circular(12.0),
         ),
-        // TODO: data의 imgKey로 변경
-        child: Image.asset('asset/images/product_sample.png', width: 90, height: 90,)
+        child: (widget.data.imgUrl == null)
+            ? const Icon(Icons.question_mark, color: PURPLE_COLOR,)
+            : Image.network(widget.data.imgUrl!,)
     );
   }
 
