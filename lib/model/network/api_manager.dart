@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:psr/model/network/cutsom_interceptor.dart';
 
 import 'constants.dart';
 
@@ -29,6 +30,8 @@ class APIManager {
     if (options != null && options.headers != null) {
       defaultOptions.headers!.addAll(options.headers!);
     }
+
+    dio.interceptors.add(CustomInterceptor());
 
     dynamic response;
     switch (requestType) {
