@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psr/common/const/colors.dart';
 import 'package:psr/presenter/shopping/shopping_service.dart';
 import 'package:psr/shopping/component/popular_list_item.dart';
 
@@ -56,9 +57,16 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
               }
 
             } else {
+              if (snapshot.hasError) {
                 return const Center(
                   child: Text('상품 정보를 불러오는데 실패하였습니다.'),
                 );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(color: PURPLE_COLOR,),
+                );
+              }
+
             }
 
             return ListView(
