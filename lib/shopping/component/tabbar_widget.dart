@@ -21,6 +21,8 @@ class ShoppingTabBarWidget extends StatefulWidget {
 
 class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
 
+  bool isLoading = true;
+
   ShoppingMainResponse? data;
   List<PopularProduct> popularList = [];
   List<Product> productList = [];
@@ -57,16 +59,9 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
               }
 
             } else {
-              if (snapshot.hasError) {
-                return const Center(
-                  child: Text('상품 정보를 불러오는데 실패하였습니다.'),
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(color: PURPLE_COLOR,),
-                );
-              }
-
+              return const Center(
+                child: CircularProgressIndicator(color: PURPLE_COLOR,),
+              );
             }
 
             return ListView(
