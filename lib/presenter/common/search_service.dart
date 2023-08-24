@@ -22,7 +22,6 @@ class SearchService {
         },
         null
     );
-    print('검결-> $response');
     return  response;
   }
 
