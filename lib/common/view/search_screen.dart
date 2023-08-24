@@ -20,6 +20,7 @@ enum SORT_TYPE { newest, popularity }
 class _SearchDetailScreenState extends State<SearchDetailScreen> {
   final _controller = TextEditingController();
 
+  bool showSortButton = false;
   bool showSortItem = false;
   SORT_TYPE sortType = SORT_TYPE.newest;
 
@@ -63,6 +64,7 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
   }
 
   Widget renderSortButton() {
+    if (!showSortButton) { return const SizedBox(height: 0, width: 0,); }
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 50,
@@ -154,10 +156,17 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
   }
 
   Widget renderProductList() {
+    if (results.isEmpty) {
+      return const SizedBox(
+        height: 100,
+        child: Center(
+          child: Text('검색 결과가 없습니다.', style: TextStyle(fontSize: 14, color: PURPLE_COLOR),),
+        ),
+      );
+    }
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      // itemCount: _results.length,
       itemCount: results.length,
       itemBuilder: (BuildContext context, int index) {
         return CategoryListItem(
@@ -248,8 +257,14 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
         _controller.value.text,
         getCurrentSortStr()
     );
-    if (result['code'] != 200) { results.clear(); }
-    else { results = SearchResultResponse.fromJson(result).data.productList.content; }
+    if (result['code'] != 200) {
+      results.clear();
+      showSortButton = false;
+    }
+    else {
+      results = SearchResultResponse.fromJson(result).data.productList.content;
+      showSortButton = true;
+    }
   }
 
   /// helper methods
