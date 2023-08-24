@@ -2,6 +2,8 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:psr/model/data/general_model.dart';
 import 'package:psr/model/data/shopping/shopping_main_model.dart';
 
+part 'search_result_model.g.dart';
+
 @JsonSerializable()
 class SearchResultResponse extends GeneralModel {
   final SearchResult data;
@@ -12,6 +14,8 @@ class SearchResultResponse extends GeneralModel {
     required this.data,
   });
 
+  factory SearchResultResponse.fromJson(Map<String, dynamic> json)
+  => _$SearchResultResponseFromJson(json);
 }
 
 @JsonSerializable()
@@ -21,11 +25,14 @@ class SearchResult {
   SearchResult({
     required this.productList
   });
+
+  factory SearchResult.fromJson(Map<String, dynamic> json)
+  => _$SearchResultFromJson(json);
 }
 
 @JsonSerializable()
 class ResultList {
-  final List<ResultProduct> content;
+  final List<Product> content;
   final Pageable pageable;
   final bool last;
   final int totalPages;
@@ -50,25 +57,7 @@ class ResultList {
     required this.numberOfElements,
     required this.empty,
   });
-}
 
-@JsonSerializable()
-class ResultProduct {
-  final int productId;
-  final String imgUrl;
-  final int userId;
-  final String nickname;
-  final String name;
-  final int price;
-  final bool isLike;
-
-  ResultProduct({
-    required this.productId,
-    required this.imgUrl,
-    required this.userId,
-    required this.nickname,
-    required this.name,
-    required this.price,
-    required this.isLike,
-  });
+  factory ResultList.fromJson(Map<String, dynamic> json)
+  => _$ResultListFromJson(json);
 }
