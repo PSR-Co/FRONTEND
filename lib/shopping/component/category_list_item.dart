@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../common/const/colors.dart';
 import '../../model/data/shopping/shopping_main_model.dart';
+import '../../product/view/product_detail_screen.dart';
 
 class CategoryListItem extends StatefulWidget {
   final String? category;
@@ -111,14 +112,12 @@ class _CategoryListItemState extends State<CategoryListItem> {
 
   /// 이벤트 메소드 정의
   void didTapLikeButton() {
-    print('didTapLikeButton');
     setState(() {
       isLiked = !isLiked;
     });
   }
 
   void didTapItem() {
-    print('검색 결과 중 아이템 하나 탭함');
-    // Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category, productId: widget.productId,)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: widget.data.productId,)));
   }
 }

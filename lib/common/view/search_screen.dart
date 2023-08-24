@@ -37,12 +37,6 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
 
   /// rendering methods
   Widget renderResultListView() {
-    results.clear();
-    for (var element in results) {
-      if (element.name.contains(_controller.text)) {
-        results.add(element);
-      }
-    }
     if (_controller.text.isNotEmpty) {
       return FutureBuilder(
         future: getSearchResults(),
