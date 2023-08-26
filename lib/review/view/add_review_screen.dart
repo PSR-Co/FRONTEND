@@ -17,7 +17,7 @@ class AddReviewScreen extends StatefulWidget {
 
   final String sellerName;
   final String productName;
-  final String productImgKey;
+  final String? productImgKey;
 
   final int orderId;
   final int? reviewId;
@@ -112,6 +112,7 @@ class AddReviewScreenState extends State<AddReviewScreen> {
       color: GRAY_4_COLOR,
     );
 
+    ///이미지 변경하기
     return Container(
       height: 110,
       width: MediaQuery.of(context).size.width,
@@ -123,7 +124,7 @@ class AddReviewScreenState extends State<AddReviewScreen> {
           children: [
             Container(
               margin: const EdgeInsets.only(left: 20, right: 10),
-              child: Image.asset(widget.productImgKey, fit: BoxFit.cover, width: PROFILE_IMG_SIZE,),
+              child: Image.asset(widget.productImgKey ?? "asset/images/product_sample.png", fit: BoxFit.cover, width: PROFILE_IMG_SIZE,),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

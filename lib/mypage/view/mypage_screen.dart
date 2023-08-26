@@ -9,6 +9,8 @@ import 'package:psr/mypage/view/order_list_tab.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/division.dart';
+import '../../model/data/myinfo/myinfo_model.dart';
+import '../../presenter/myinfo/myinfo_service.dart';
 import '../component/mypage.dart';
 
 class MypageScreen extends StatefulWidget {
@@ -30,10 +32,11 @@ class _MypageScreenState extends State<MypageScreen> {
   final TextStyle listHeaderTextStyle = const TextStyle(
       fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
 
-  MyPage userDate =
-      MyPage('사업자', 'asset/images/profile_img_sample.jpg', '웨이드에옹');
-  MyPage adminDate =
-      MyPage('관리자', 'asset/images/profile_img_sample.jpg', '관리자에옹');
+  MyInfoModel? data;
+
+  Future<dynamic> fetchData() async {
+    return await MyInfoService().getMyInfo();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,20 +45,42 @@ class _MypageScreenState extends State<MypageScreen> {
       body: SafeArea(
         child: SizedBox(
             width: MediaQuery.of(context).size.width,
-            child: Column(
-              children: [
-                myPageHeader(),
-                profile(),
-                category(),
-                const Padding(
-                  padding: EdgeInsets.only(top: 15.0),
-                  child: Division(),
-                ),
-                const Expanded(
-                    child: Padding(
-                        padding: EdgeInsets.only(bottom: 10.0),
-                        child: OrderListTab())),
-              ],
+            child: FutureBuilder(
+              future: fetchData(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text('내 프로필 : 에러가 있습니다'),
+                  );
+                } else if (snapshot.hasData) {
+                  data = MyInfoModel.fromJson(snapshot.data);
+                } else if (!snapshot.hasData) {
+                  return const Center(
+                    child: Text('내 프로필을 불러올 수 없습니다.'),
+                  );
+                } else {
+                  return Container(
+                      width: 30,
+                      height: 30,
+                      alignment: Alignment.center,
+                      child: const CircularProgressIndicator());
+                }
+                return Column(
+                  children: [
+                    myPageHeader(),
+                    profile(data!.data.nickname, data!.data.type, data?.data.imgUrl),
+                    category(),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 15.0),
+                      child: Division(),
+                    ),
+                    const Expanded(
+                        child: Padding(
+                            padding: EdgeInsets.only(bottom: 10.0),
+                            child: OrderListTab())),
+                  ],
+                );
+              }
             )),
       ),
     );
@@ -101,7 +126,7 @@ class _MypageScreenState extends State<MypageScreen> {
     );
   }
 
-  Widget profile() {
+  Widget profile(String nickname, String type, String? imgUrl) {
     return SizedBox(
       height: 120.0,
       child: Container(
@@ -111,7 +136,7 @@ class _MypageScreenState extends State<MypageScreen> {
           children: [
             ClipOval(
               child: Image.asset(
-                "asset/images/default_profile.png",
+                imgUrl ?? "asset/images/default_profile.png",
                 width: 70.0,
                 height: 70.0,
               ),
@@ -123,9 +148,9 @@ class _MypageScreenState extends State<MypageScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+                    padding: const EdgeInsets.only(top: 15.0, bottom: 10.0),
                     child: Text(
-                      "${userDate.nickname}님 안녕하세요!",
+                      "$nickname님 안녕하세요!",
                       style: welcomeTextStyle,
                     ),
                   ),
@@ -137,7 +162,7 @@ class _MypageScreenState extends State<MypageScreen> {
                         color: PINK_COLOR_20,
                         borderRadius: BorderRadius.all(Radius.circular(12.0))),
                     child: Text(
-                      userDate.userType,
+                      type,
                       style: userTypeTextStyle,
                     ),
                   )

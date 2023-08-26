@@ -42,7 +42,7 @@ Like _$LikeFromJson(Map<String, dynamic> json) => Like(
       productId: json['productId'] as int,
       imgUrl: json['imgUrl'] as String?,
       category: json['category'] as String,
-      nickname: json['nickName'] as String,
+      nickname: json['nickname'] as String,
       name: json['name'] as String,
       price: json['price'] as int,
     );
@@ -51,7 +51,7 @@ Map<String, dynamic> _$LikeToJson(Like instance) => <String, dynamic>{
       'productId': instance.productId,
       'imgUrl': instance.imgUrl,
       'category': instance.category,
-      'nickName': instance.nickname,
+      'nickname': instance.nickname,
       'name': instance.name,
       'price': instance.price,
     };
