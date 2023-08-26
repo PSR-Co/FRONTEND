@@ -28,7 +28,7 @@ class OrderList {
   final String userName;
   final int productId;
   final String productName;
-  final String productImgUrl;
+  final String? productImgUrl;
   final int? reviewId;
 
 

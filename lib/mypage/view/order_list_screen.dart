@@ -235,7 +235,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
   }
 
   Widget moveToReview(String title, int? reviewId, String sellerName,
-      String productName, String productImgKey, int orderId, int productId) {
+      String productName, String? productImgKey, int orderId, int productId) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
       child: Row(

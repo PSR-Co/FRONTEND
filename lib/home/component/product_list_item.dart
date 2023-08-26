@@ -51,9 +51,13 @@ class _ProductListItemState extends State<ProductListItem> {
                     width: 135.0,
                     height: 135.0,
                   )),
-              Text(
-                widget.productList[index].name,
-                style: productNameTextStyle,
+              SizedBox(
+                width: 135.0,
+                child: Text(
+                  widget.productList[index].name,
+                  style: productNameTextStyle,
+                  overflow: TextOverflow.ellipsis,
+                ),
               )
             ],
           );
