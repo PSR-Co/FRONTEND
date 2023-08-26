@@ -51,10 +51,16 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     if (widget.selected != null) {
       selectedCategory = widget.selected!;
+      _dropdownValue = selectedCategory!;
     }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => _removeOverlay(),
       child: Scaffold(

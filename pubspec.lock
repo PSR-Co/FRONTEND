@@ -281,6 +281,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3"
+  firebase_app_check:
+    dependency: "direct main"
+    description:
+      name: firebase_app_check
+      sha256: "87d42da93654be3dfe2c1d426a2f45300b2234c180534380b2636267eaba7ca2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.5+2"
+  firebase_app_check_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_app_check_platform_interface
+      sha256: "5a88fa4c6cee7263e66c52227505ffe7bea66a6c518c1a20bf4def3ff77b55f9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9+2"
+  firebase_app_check_web:
+    dependency: transitive
+    description:
+      name: firebase_app_check_web
+      sha256: "09bbf8abe8baee17c67850fbae79c7d074ec50ff6194849b896ceba203f3ff8c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.11+2"
   firebase_core:
     dependency: "direct main"
     description:
@@ -500,10 +524,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_for_web
-      sha256: "8b6c160cdbe572199103a091c783685b236110e4a0fd7a4947f32ff5b7da8765"
+      sha256: "869fe8a64771b7afbc99fc433a5f7be2fea4d1cb3d7c11a48b6b579eb9c797f0"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "2.2.0"
   image_picker_ios:
     dependency: transitive
     description:

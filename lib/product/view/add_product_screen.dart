@@ -51,7 +51,12 @@ class AddProductScreenState extends State<AddProductScreen> {
       backgroundColor: Colors.white,
       appBar: const DefaultAppBarLayout(titleText: '상품 추가',),
       body: renderBody(),
-      bottomNavigationBar: PurpleFilledButton(title: '등록하기', onPressed: (isAllInput) ? didTapAddButton : null,),
+      bottomNavigationBar: PurpleFilledButton(
+        title: '등록하기',
+        onPressed: ((widget.data != null) || isAllInput)
+            ? didTapAddButton
+            : null,
+      ),
     );
   }
 
@@ -129,9 +134,7 @@ class AddProductScreenState extends State<AddProductScreen> {
   /// event methods
   Future<void> didTapAddButton() async {
     List<String> uploadedList = [];
-    if(widget.data?.imgList != imgList) {
-      uploadedList = await ImageService().uploadImageList(ImageType.product, imgList);
-    }
+    uploadedList = await ImageService().uploadImageList(ImageType.product, imgList);
 
     if (widget.data == null) {
       // 상품 등록

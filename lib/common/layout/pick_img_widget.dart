@@ -26,12 +26,19 @@ class _PickImgViewState extends State<PickImgView> {
   List<String> imgKeyList = [];
 
   @override
+  void initState() {
+    if(widget.imgKeyList != null) {
+      imgKeyList = widget.imgKeyList!;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return renderPickImgListView();
   }
 
   Widget renderPickImgListView() {
-    if(widget.imgKeyList != null) { imgKeyList = widget.imgKeyList!; }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -47,7 +54,10 @@ class _PickImgViewState extends State<PickImgView> {
                   width: 90,
                   height: 90,
                   padding: const EdgeInsets.all(5),
-                  child: Image.network(imgKeyList.elementAt(index))
+                  child: (widget.imgKeyList!.elementAt(index).contains('https'))
+                      ? Image.network(widget.imgKeyList!.elementAt(index))
+                      : Image.file(File(widget.imgKeyList!.elementAt(index)),),
+                  // child:
                 );
               } else {
                 return SizedBox(
