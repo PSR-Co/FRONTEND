@@ -128,13 +128,14 @@ class _NotificationListScreenState extends State<NotificationListScreen> {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(
             onPressed: () {},
-            icon: SvgPicture.asset("asset/icons/common/clock.svg"),
+            icon: SvgPicture.asset("asset/icons/common/message.svg"),
             padding: const EdgeInsets.only(left: 0.0, top: 0.0, right: 10.0),
             constraints: const BoxConstraints(),
+            iconSize: 36.0,
           ),
           renderNotificationInfo(productName, content)
         ],
