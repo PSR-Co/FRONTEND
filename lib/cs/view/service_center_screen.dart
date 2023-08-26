@@ -14,6 +14,7 @@ import 'package:psr/presenter/inquiry/inquiry_service.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/const/constants.dart';
+import '../../model/network/constants.dart';
 import 'admin_detail_inquiry_screen.dart';
 
 class ServiceCenterScreen extends StatefulWidget {
@@ -44,6 +45,10 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
   Future<dynamic> fetchData(String status) async {
     return await InquiryService().getInquiryList({'status' : status});
   }
+
+  Future<dynamic> savedType() async {
+    return await storage.read(key: USER_TYPE);
+}
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +137,7 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
             return ListTile(
               onTap: () {
                 // Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailInquiryScreen()));
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> AdminDetailInquiryScreen(inquiryId: inquiries[index].inquiryId,)));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> savedType() == '관리자' ? AdminDetailInquiryScreen(inquiryId: inquiries[index].inquiryId,) : DetailInquiryScreen(inquiryId: inquiries[index].inquiryId)));
               },
               title: Container(
                 alignment: Alignment.centerLeft, height: 40.0,
