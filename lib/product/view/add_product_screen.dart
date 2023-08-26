@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/purple_filled_button.dart';
+import 'package:psr/model/data/shopping/product_model.dart';
 import 'package:psr/presenter/common/ImageService.dart';
 import 'package:psr/presenter/shopping/shopping_service.dart';
 
@@ -12,7 +13,16 @@ import '../../order/view/complete_order_screen.dart';
 import '../component/custom_dropdown_button.dart';
 
 class AddProductScreen extends StatefulWidget {
-  const AddProductScreen({Key? key}) : super(key: key);
+  final String? category;
+  final Product? data;
+  final int? productId;
+
+  const AddProductScreen({
+    this.category,
+    this.data,
+    this.productId,
+    Key? key
+  }) : super(key: key);
 
   @override
   State<AddProductScreen> createState() => AddProductScreenState();
@@ -28,6 +38,12 @@ class AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController detailController = TextEditingController();
+
+  @override
+  void initState() {
+    configure();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +63,10 @@ class AddProductScreenState extends State<AddProductScreen> {
         const CustomTitleText(title: '상품 카테고리', option: null,),
         SizedBox(
           height: 50,
-          child: CustomDropdownButton(width: MediaQuery.of(context).size.width - 40,)
+          child: CustomDropdownButton(
+            width: MediaQuery.of(context).size.width - 40,
+            selected: selectedCategory,
+          )
         ),
         const SizedBox(height: 15,),
 
@@ -109,19 +128,50 @@ class AddProductScreenState extends State<AddProductScreen> {
 
   /// event methods
   Future<void> didTapAddButton() async {
-    List<String> uploadedList = await ImageService().uploadImageList(ImageType.product, imgList);
+    List<String> uploadedList = [];
+    if(widget.data?.imgList != imgList) {
+      uploadedList = await ImageService().uploadImageList(ImageType.product, imgList);
+    }
 
-    final result = await ShoppingService().addProduct(
+    if (widget.data == null) {
+      // 상품 등록
+      final result = await ShoppingService().requestProduct(
+        null,
         selectedCategory!,
         nameController.value.text,
         priceController.value.text,
         detailController.value.text,
-        // (imgList.isEmpty) ? null : imgList
         (uploadedList.isEmpty) ? null : uploadedList
-    );
+      );
+      if (result) { Navigator.of(context).pop(); }
+      else { Fluttertoast.showToast(msg: '상품 등록에 실패하였습니다.'); }
 
-    if (result) { Navigator.of(context).pop(); }
-    else { Fluttertoast.showToast(msg: '상품 등록에 실패하였습니다.'); }
+    } else {
+      // 상품 수정
+      final result = await ShoppingService().requestProduct(
+          widget.productId,
+          selectedCategory!,
+          nameController.value.text,
+          priceController.value.text,
+          detailController.value.text,
+          (uploadedList.isEmpty) ? null : uploadedList
+      );
+      if (result) { Navigator.of(context).pop(); }
+      else { Fluttertoast.showToast(msg: '상품 수정에 실패하였습니다.'); }
+    }
+
   }
 
+  /// helper methods
+  void configure(){
+    if (widget.category != null) {
+      selectedCategory = widget.category;
+    }
+    if (widget.data != null) {
+      nameController.text = widget.data!.name;
+      priceController.text = widget.data!.price.toString();
+      detailController.text = widget.data!.description;
+      imgList = widget.data!.imgList;
+    }
+  }
 }

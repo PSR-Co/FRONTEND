@@ -7,9 +7,11 @@ import '../view/add_product_screen.dart';
 
 class CustomDropdownButton extends StatefulWidget {
   final double width;
+  final String? selected;
 
   const CustomDropdownButton({
     required this.width,
+    this.selected,
     Key? key
   }) : super(key: key);
 
@@ -50,6 +52,9 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.selected != null) {
+      selectedCategory = widget.selected!;
+    }
     return GestureDetector(
       onTap: () => _removeOverlay(),
       child: Scaffold(

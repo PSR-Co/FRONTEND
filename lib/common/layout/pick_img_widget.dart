@@ -10,7 +10,7 @@ import '../const/colors.dart';
 class PickImgView extends StatefulWidget {
 
   final bool isEditing;
-  List<String?>? imgKeyList = [];
+  List<String>? imgKeyList = [];
 
   PickImgView({
     required this.isEditing,
@@ -31,7 +31,7 @@ class _PickImgViewState extends State<PickImgView> {
   }
 
   Widget renderPickImgListView() {
-
+    if(widget.imgKeyList != null) { imgKeyList = widget.imgKeyList!; }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,8 +44,10 @@ class _PickImgViewState extends State<PickImgView> {
             itemBuilder: (BuildContext context, int index) {
               if (imgKeyList.isNotEmpty && index < imgKeyList.length) {
                 return Container(
-                    padding: EdgeInsets.all(5),
-                    child: Image.file(File(imgKeyList.elementAt(index)), width: 90, height: 90,)
+                  width: 90,
+                  height: 90,
+                  padding: const EdgeInsets.all(5),
+                  child: Image.network(imgKeyList.elementAt(index))
                 );
               } else {
                 return SizedBox(

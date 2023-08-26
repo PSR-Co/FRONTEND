@@ -44,6 +44,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             category: data?.data.category ?? "상품 상세",
             isMyProduct: isMyProduct,
             productId: widget.productId,
+            pruductData: data?.data
           ),
           body: renderBody(isEmptyData),
           bottomNavigationBar: (isEmptyData)
