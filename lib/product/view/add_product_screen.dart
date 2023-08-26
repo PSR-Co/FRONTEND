@@ -40,57 +40,60 @@ class AddProductScreenState extends State<AddProductScreen> {
   }
 
   Widget renderBody() {
-    return ListView(
-      children: [
-        const SizedBox(height: 20,),
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: ListView(
+        children: [
+          const SizedBox(height: 20,),
 
-        const CustomTitleText(title: '상품 카테고리', option: null,),
-        SizedBox(
-          height: 50,
-          child: CustomDropdownButton(width: MediaQuery.of(context).size.width - 40,)
-        ),
-        const SizedBox(height: 15,),
-
-
-        const CustomTitleText(title: '상품명', option: null,),
-        PurpleOutlinedTextField(
-          maxLine: 1,
-          hintText: '상품명을 입력해주세요.',
-          controller: nameController,
-          onChanged: onChanged,
-        ),
-        const SizedBox(height: 15,),
+          const CustomTitleText(title: '상품 카테고리', option: null,),
+          SizedBox(
+            height: 50,
+            child: CustomDropdownButton(width: MediaQuery.of(context).size.width - 40,)
+          ),
+          const SizedBox(height: 15,),
 
 
-        const CustomTitleText(title: '상품 가격', option: null,),
-        PurpleOutlinedTextField(
-          maxLine: 1,
-          hintText: '상품 가격을 입력해주세요.',
-          controller: priceController,
-          onChanged: onChanged,
-        ),
-        const SizedBox(height: 15,),
+          const CustomTitleText(title: '상품명', option: null,),
+          PurpleOutlinedTextField(
+            maxLine: 1,
+            hintText: '상품명을 입력해주세요.',
+            controller: nameController,
+            onChanged: onChanged,
+          ),
+          const SizedBox(height: 15,),
 
 
-        const CustomTitleText(title: '상품 설명', option: null,),
-        PurpleOutlinedTextField(
-          maxLine: 15,
-          maxLength: 5000,
-          hintText: '상품 설명을 입력해주세요.',
-          controller: detailController,
-          onChanged: onChanged,
-        ),
-        const SizedBox(height: 15,),
+          const CustomTitleText(title: '상품 가격', option: null,),
+          PurpleOutlinedTextField(
+            maxLine: 1,
+            hintText: '상품 가격을 입력해주세요.',
+            controller: priceController,
+            onChanged: onChanged,
+          ),
+          const SizedBox(height: 15,),
 
-        const CustomTitleText(title: '사진을 올려주세요', option: ' (선택)',),
-        PickImgView(
-          isEditing: true,
-          imgKeyList: imgList,
-        ),
 
-        const SizedBox(height: 30,),
+          const CustomTitleText(title: '상품 설명', option: null,),
+          PurpleOutlinedTextField(
+            maxLine: 15,
+            maxLength: 5000,
+            hintText: '상품 설명을 입력해주세요.',
+            controller: detailController,
+            onChanged: onChanged,
+          ),
+          const SizedBox(height: 15,),
 
-      ],
+          const CustomTitleText(title: '사진을 올려주세요', option: ' (선택)',),
+          PickImgView(
+            isEditing: true,
+            imgKeyList: imgList,
+          ),
+
+          const SizedBox(height: 30,),
+
+        ],
+      ),
     );
   }
 

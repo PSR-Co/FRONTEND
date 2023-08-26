@@ -19,7 +19,7 @@ class ShoppingService {
         RequestType.GET,
         SHOPPING_URL,
         null,
-        {"category" : category},
+       {"category" :  (category == '관심목록') ? null : category},
         null
     );
     return response;
