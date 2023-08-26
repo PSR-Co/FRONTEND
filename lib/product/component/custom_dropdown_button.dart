@@ -7,9 +7,11 @@ import '../view/add_product_screen.dart';
 
 class CustomDropdownButton extends StatefulWidget {
   final double width;
+  final String? selected;
 
   const CustomDropdownButton({
     required this.width,
+    this.selected,
     Key? key
   }) : super(key: key);
 
@@ -46,6 +48,15 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
   void dispose() {
     _overlayEntry?.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    if (widget.selected != null) {
+      selectedCategory = widget.selected!;
+      _dropdownValue = selectedCategory!;
+    }
+    super.initState();
   }
 
   @override

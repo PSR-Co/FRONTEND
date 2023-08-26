@@ -6,13 +6,13 @@ import '../../model/data/shopping/shopping_main_model.dart';
 import '../../product/view/product_detail_screen.dart';
 
 class CategoryListItem extends StatefulWidget {
-  final String category;
-  final int productId;
+  final String? category;
+  final int? productId;
   final Product data;
 
   const CategoryListItem({
-    required this.category,
-    required this.productId,
+    this.category,
+    this.productId,
     required this.data,
     Key? key
   }) : super(key: key);
@@ -67,17 +67,17 @@ class _CategoryListItemState extends State<CategoryListItem> {
     return Container(
       width: 90,
       height: 90,
-        margin: const EdgeInsets.symmetric(horizontal: 5.0),
-        decoration: BoxDecoration(
-          border: Border.all(
-              width: 1.0,
-              color: GRAY_0_COLOR
-          ),
-          borderRadius: BorderRadius.circular(12.0),
+      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+      decoration: BoxDecoration(
+        border: Border.all(
+            width: 1.0,
+            color: GRAY_0_COLOR
         ),
-        child: (widget.data.imgUrl == null)
-            ? const Icon(Icons.question_mark, color: PURPLE_COLOR,)
-            : Image.network(widget.data.imgUrl!,)
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: (widget.data.imgUrl == null)
+          ? const Icon(Icons.question_mark, size: 30,)
+          : Image.network(widget.data.imgUrl!)
     );
   }
 
@@ -112,13 +112,12 @@ class _CategoryListItemState extends State<CategoryListItem> {
 
   /// 이벤트 메소드 정의
   void didTapLikeButton() {
-    print('didTapLikeButton');
     setState(() {
       isLiked = !isLiked;
     });
   }
 
   void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category, productId: widget.productId,)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: widget.data.productId,)));
   }
 }

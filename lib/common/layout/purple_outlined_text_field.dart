@@ -42,6 +42,8 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
   }
 
   List<Widget> renderTextFieldStack() {
+    currentTextLength = widget.controller.value.text.length;
+
     final defaultStyle = OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
         borderSide: BorderSide(

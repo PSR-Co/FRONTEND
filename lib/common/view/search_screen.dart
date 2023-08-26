@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:psr/presenter/common/search_service.dart';
 
+import '../../model/data/shopping/search_result_model.dart';
 import '../../model/data/shopping/shopping_main_model.dart';
 import '../../shopping/component/category_list_item.dart';
 import '../const/colors.dart';
@@ -17,15 +19,12 @@ enum SORT_TYPE { newest, popularity }
 
 class _SearchDetailScreenState extends State<SearchDetailScreen> {
   final _controller = TextEditingController();
-  var _results = [];
 
+  bool showSortButton = false;
   bool showSortItem = false;
   SORT_TYPE sortType = SORT_TYPE.newest;
 
-  final nameList = [
-    // dummy data
-    "목도리1", "모자1", "제품3", "목도리2", "장갑1", "제품6", "모자2", "제품8", "장갑3", "제품10",
-  ];
+  List<Product> results = [];
 
   @override
   Widget build(BuildContext context) {
@@ -41,28 +40,29 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
 
   /// rendering methods
   Widget renderResultListView() {
-    _results = [];
-    for (var element in nameList) {
-      if (element.contains(_controller.text)) {
-        _results.add(element);
-      }
-    }
     if (_controller.text.isNotEmpty) {
-      return Column(
-        children: [
-          renderSortButton(),
-          Stack(
+      return FutureBuilder(
+        future: getSearchResults(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          // return renderProductList();
+          return ListView(
             children: [
-              renderProductList(),
-              renderSortItem(),
+              renderSortButton(),
+              Stack(
+                children: [
+                  renderProductList(),
+                  renderSortItem(),
+                ],
+              )
             ],
-          )
-        ],
+          );
+        }
       );
     } else { return Container(); }
   }
 
   Widget renderSortButton() {
+    if (!showSortButton) { return const SizedBox(height: 0, width: 0,); }
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 50,
@@ -154,26 +154,22 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
   }
 
   Widget renderProductList() {
+    if (results.isEmpty) {
+      return const SizedBox(
+        height: 100,
+        child: Center(
+          child: Text('검색 결과가 없습니다.', style: TextStyle(fontSize: 14, color: PURPLE_COLOR),),
+        ),
+      );
+    }
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount: _results.length,
+      itemCount: results.length,
       itemBuilder: (BuildContext context, int index) {
-        // TODO: 데이터 패치 후 카테고리 값 변경
-        // return CategoryListItem(category: '관심목록', name: _results.elementAt(index),);
         return CategoryListItem(
-          productId: 1, // TODO: GET 후 productId 전달
-          category: '관심목록',
-          data: Product(
-            /// 임시 데이터
-              productId: 0,
-              imgUrl: 'imgKey',
-              userId: 0,
-              nickname: 'nickname',
-              name: 'name',
-              price: 0,
-              isLike: false
-          ),
+          data: results[index],
         );
       },
     );
@@ -204,7 +200,10 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
       child: TextField(
         controller: _controller,
         onChanged: (text) {
-          setState(() { _results.clear(); });
+          setState(() {
+            results.clear();
+            getSearchResults();
+          });
         },
         showCursor: false,
         decoration: InputDecoration(
@@ -252,6 +251,21 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
     });
   }
 
+  Future<void> getSearchResults() async {
+    dynamic result = await SearchService().getSearchResultData(
+        _controller.value.text,
+        getCurrentSortStr()
+    );
+    if (result['code'] != 200) {
+      results.clear();
+      showSortButton = false;
+    }
+    else {
+      results = SearchResultResponse.fromJson(result).data.productList.content;
+      showSortButton = true;
+    }
+  }
+
   /// helper methods
   String getCurrentSortStr() {
     switch (sortType) {
@@ -261,4 +275,5 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
         return '인기순';
     }
   }
+
 }

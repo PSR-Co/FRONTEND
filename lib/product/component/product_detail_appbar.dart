@@ -3,14 +3,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/presenter/shopping/shopping_service.dart';
+import 'package:psr/product/view/add_product_screen.dart';
 import 'package:psr/product/view/declaration_dialog.dart';
 
 import '../../common/const/colors.dart';
+import '../../model/data/shopping/product_model.dart';
 
 class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String category;
   final bool isMyProduct;
   final int productId;
+  final Product? pruductData;
 
   static const double APPBAR_HEIGHT = 50;
 
@@ -18,6 +21,7 @@ class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget 
     required this.category,
     required this.isMyProduct,
     required this.productId,
+    required this.pruductData,
     Key? key
   }) : super(key: key);
 
@@ -151,6 +155,15 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
 
   void didTapEditButton() {
     print("didTapEditButton");
+    Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (_) => AddProductScreen(
+              category: widget.category,
+              data: widget.pruductData,
+              productId: widget.productId,
+            )
+        )
+    );
   }
 
   Future<void> didDeleteEditButton() async {

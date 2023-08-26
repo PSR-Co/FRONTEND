@@ -182,6 +182,6 @@ class _PopularListItemState extends State<PopularListItem> {
   }
 
   void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category, productId: widget.productId,)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: widget.productId,)));
   }
 }

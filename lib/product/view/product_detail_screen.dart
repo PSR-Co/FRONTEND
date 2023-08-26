@@ -13,11 +13,11 @@ import '../component/review_list_widget.dart';
 import '../component/seller_info_widget.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  final String category;
+  final String? category;
   final int productId;
 
   const ProductDetailScreen({
-    required this.category,
+    this.category,
     required this.productId,
     Key? key
   }) : super(key: key);
@@ -49,10 +49,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           bool isEmptyData = (snapshot.hasError || data == null || reviewData == null);
           return Scaffold(
             appBar: ProductDetailAppBar(
-              category: widget.category,
-              isMyProduct: isMyProduct,
-              productId: widget.productId,
-            ),
+            category: data?.data.category ?? "상품 상세",
+            isMyProduct: isMyProduct,
+            productId: widget.productId,
+            pruductData: data?.data
+          ),
             body: (isLoading)
                 ? const Center(child: CircularProgressIndicator(color: PURPLE_COLOR,),)
                 : renderBody(),

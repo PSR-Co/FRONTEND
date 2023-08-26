@@ -10,7 +10,7 @@ import '../const/colors.dart';
 class PickImgView extends StatefulWidget {
 
   final bool isEditing;
-  List<String?>? imgKeyList = [];
+  List<String>? imgKeyList = [];
 
   PickImgView({
     required this.isEditing,
@@ -26,12 +26,19 @@ class _PickImgViewState extends State<PickImgView> {
   List<String> imgKeyList = [];
 
   @override
+  void initState() {
+    if(widget.imgKeyList != null) {
+      imgKeyList = widget.imgKeyList!;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return renderPickImgListView();
   }
 
   Widget renderPickImgListView() {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,8 +51,13 @@ class _PickImgViewState extends State<PickImgView> {
             itemBuilder: (BuildContext context, int index) {
               if (imgKeyList.isNotEmpty && index < imgKeyList.length) {
                 return Container(
-                    padding: EdgeInsets.all(5),
-                    child: Image.file(File(imgKeyList.elementAt(index)), width: 90, height: 90,)
+                  width: 90,
+                  height: 90,
+                  padding: const EdgeInsets.all(5),
+                  child: (widget.imgKeyList!.elementAt(index).contains('https'))
+                      ? Image.network(widget.imgKeyList!.elementAt(index))
+                      : Image.file(File(widget.imgKeyList!.elementAt(index)),),
+                  // child:
                 );
               } else {
                 return SizedBox(

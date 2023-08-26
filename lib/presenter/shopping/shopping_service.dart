@@ -67,7 +67,8 @@ class ShoppingService {
   }
 
 
-  Future<bool> addProduct(
+  Future<bool> requestProduct(
+      int? productId,
       String category,
       String name,
       String price,
@@ -83,12 +84,25 @@ class ShoppingService {
         imgList: imgList
     ).toJson();
 
-    final response = await APIManager().request(
-        RequestType.POST,
-        SHOPPING_URL,
-        null, null, body);
+    if (productId == null) {
+      // 상품 등록 요청
+      final response = await APIManager().request(
+          RequestType.POST,
+          SHOPPING_URL,
+          null, null, body);
 
-    return ((response != null) && (response['code'] == 200));
+      return ((response != null) && (response['code'] == 200));
+
+    } else {
+      // 상품 수정 요청
+      final response = await APIManager().request(
+          RequestType.PATCH,
+          '$SHOPPING_URL/$productId',
+          null, null, body);
+
+      return ((response != null) && (response['code'] == 200));
+    }
+
   }
 
   Future<bool> deleteProduct(int productId) async {
