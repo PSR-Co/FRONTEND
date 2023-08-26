@@ -20,12 +20,14 @@ class MyInfo {
   final String? imgUrl;
   final String type;
   final String phone;
+  final String nickname;
 
   MyInfo(
       {required this.email,
       required this.imgUrl,
       required this.type,
-      required this.phone});
+      required this.phone,
+      required this.nickname});
 
   factory MyInfo.fromJson(Map<String, dynamic> json) => _$MyInfoFromJson(json);
 }

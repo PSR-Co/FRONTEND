@@ -24,7 +24,8 @@ MyInfo _$MyInfoFromJson(Map<String, dynamic> json) => MyInfo(
       imgUrl: json['imgUrl'] as String?,
       type: json['type'] as String,
       phone: json['phone'] as String,
-    );
+  nickname: json['nickname'] as String,
+);
 
 Map<String, dynamic> _$MyInfoToJson(MyInfo instance) => <String, dynamic>{
       'email': instance.email,

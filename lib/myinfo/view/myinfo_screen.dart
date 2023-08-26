@@ -84,7 +84,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 return Column(
                   children: [
                     const DefaultAppBarLayout(titleText: "내 정보"),
-                    profile(),
+                    profile(data!.data.nickname, data!.data.type, data?.data.imgUrl),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(17.0, 0.0, 17.0, 0.0),
                       child: infoBox(data!.data.email, data!.data.phone),
@@ -149,7 +149,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   }
 
   ///이미지 추후 연결. 닉네임도
-  Widget profile() {
+  Widget profile(String nickname, String type, String? imgUrl) {
     return SizedBox(
       child: Container(
         margin: const EdgeInsets.fromLTRB(17.0, 10.0, 10.0, 20.0),
@@ -157,7 +157,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           children: [
             ClipOval(
               child: Image.asset(
-                "asset/images/default_profile.png",
+                imgUrl ?? "asset/images/default_profile.png",
                 width: 70.0,
                 height: 70.0,
               ),
@@ -172,7 +172,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: Text(
-                      "루시 앤 셀러",
+                      nickname,
                       style: welcomeTextStyle,
                     ),
                   ),
@@ -184,7 +184,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         color: PINK_COLOR_20,
                         borderRadius: BorderRadius.all(Radius.circular(12.0))),
                     child: Text(
-                      "사업자",
+                      type,
                       style: userTypeTextStyle,
                     ),
                   )
