@@ -87,6 +87,12 @@ class APIManager {
     };
   }
 
+  void writeUserType(String type) async {
+    await storage.write(key: USER_TYPE, value: type);
+    // final saved_type = await storage.read(key: USER_TYPE);
+    // print('유저 타입 -> ${saved_type}');
+  }
+
   Future<bool> checkToken() async {
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);

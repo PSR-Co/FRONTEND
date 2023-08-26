@@ -26,6 +26,7 @@ class LoginService {
     if (response != null) {
       final data = LoginModel.fromJson(response);
       APIManager().writeToken(data.data.accessToken, data.data.refreshToken);
+      APIManager().writeUserType(data.data.type);
       return true;
     }
     else { return false; }
