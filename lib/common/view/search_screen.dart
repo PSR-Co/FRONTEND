@@ -28,10 +28,13 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: renderAppBar(),
-      body: renderResultListView(),
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: renderAppBar(),
+        body: renderResultListView(),
+      ),
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psr/common/const/colors.dart';
 import 'package:psr/model/data/shopping/product_model.dart';
 import 'package:psr/model/data/review/review_preview_model.dart';
 import 'package:psr/product/component/product_img_page_view_widget.dart';
@@ -27,6 +28,8 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
+  bool isLoading = true;
+
   bool isFolded = true;
   bool isMyProduct = false;
 
@@ -38,32 +41,41 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return FutureBuilder<dynamic>(
       future: fetchData(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        bool isEmptyData = (snapshot.hasError || data == null || reviewData == null);
-        return Scaffold(
-          appBar: ProductDetailAppBar(
+        if (snapshot.hasError) {
+          return const Center(
+            child: Text('상품 정보를 불러오지 못하였습니다.'),
+          );
+        } else {
+          bool isEmptyData = (snapshot.hasError || data == null || reviewData == null);
+          return Scaffold(
+            appBar: ProductDetailAppBar(
             category: data?.data.category ?? "상품 상세",
             isMyProduct: isMyProduct,
             productId: widget.productId,
             pruductData: data?.data
           ),
-          body: renderBody(isEmptyData),
-          bottomNavigationBar: (isEmptyData)
-          ? null
-          : BottomNavigationWidget(
-            numOfLike: data!.data.numOfLikes,
-            productId: widget.productId,
-            productImgUrl: (data!.data.imgList.isNotEmpty) ? data!.data.imgList[0] : null,
-            productName: data!.data.name,
-            isLiked: data!.data.isLike,
-          ),
-        );
+            body: (isLoading)
+                ? const Center(child: CircularProgressIndicator(color: PURPLE_COLOR,),)
+                : renderBody(),
+            bottomNavigationBar: (isEmptyData)
+                ? null
+                : BottomNavigationWidget(
+              numOfLike: data!.data.numOfLikes,
+              productId: widget.productId,
+              productImgUrl: (data!.data.imgList.isNotEmpty) ? data!.data.imgList[0] : null,
+              productName: data!.data.name,
+              isLiked: data!.data.isLike,
+            ),
+          );
+        }
+
       }
     );
   }
 
   /// rendering methods
-  Widget renderBody(bool isEmptyData) {
-    if (!isEmptyData) {
+  Widget renderBody() {
+    // if (!isEmptyData) {
       Product product = data!.data;
       ReviewPreviewInfo reviewInfo = reviewData!.data;
       return Container(
@@ -88,16 +100,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ],
         ),
       );
-    } else {
+    // } else {
       return const Center(
-        child: Text('상품 정보를 불러오지 못하였습니다.'),
+        // child: Text('상품 정보를 불러오지 못하였습니다.'),
+        child: CircularProgressIndicator(color: PURPLE_COLOR,),
       );
-    }
+    // }
   }
 
   Future<bool> fetchData() async {
     await getProductData();
     await getReviewData();
+    isLoading = false;
     return (data != null && reviewData != null);
   }
 

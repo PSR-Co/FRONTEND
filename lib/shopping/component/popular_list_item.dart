@@ -78,24 +78,27 @@ class _PopularListItemState extends State<PopularListItem> {
   Widget renderProductImageItem() {
     return Stack(
       children: [
-        // TODO: imgKey값으로 변경
-        renderProductImage('asset/images/product_sample.png'),
+        renderProductImage(widget.data.imgUrl),
         renderLikeButton(),
       ],
     );
   }
 
-  Widget renderProductImage(String imgUrl) {
+  Widget renderProductImage(String? imgUrl) {
     return Container(
-        margin: EdgeInsets.symmetric(vertical: 2.0),
-        decoration: BoxDecoration(
-          border: Border.all(
-              width: 1.0,
-              color: GRAY_0_COLOR
-          ),
-          borderRadius: BorderRadius.circular(12.0),
+      width: 160,
+      height: 160,
+      margin: const EdgeInsets.symmetric(vertical: 2.0),
+      decoration: BoxDecoration(
+        border: Border.all(
+            width: 1.0,
+            color: GRAY_0_COLOR
         ),
-        child: Image.asset(imgUrl, width: 160, height: 160,)
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: (imgUrl == null)
+          ? const Icon(Icons.question_mark, color: PURPLE_COLOR, size: 50,)
+          : Image.network(imgUrl),
     );
   }
 

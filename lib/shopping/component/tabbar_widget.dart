@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psr/common/const/colors.dart';
 import 'package:psr/presenter/shopping/shopping_service.dart';
 import 'package:psr/shopping/component/popular_list_item.dart';
 
@@ -20,12 +21,16 @@ class ShoppingTabBarWidget extends StatefulWidget {
 
 class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
 
+  bool isLoading = true;
+
   ShoppingMainResponse? data;
   List<PopularProduct> popularList = [];
   List<Product> productList = [];
 
   Future<dynamic> fetchData() async {
-    return await ShoppingService().getShoppingMainData(widget.categoryName);
+    dynamic data = await ShoppingService().getShoppingMainData(widget.categoryName);
+    isLoading = false;
+    return data;
   }
 
   final titleStyle = const TextStyle(
@@ -43,24 +48,26 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
       child: FutureBuilder<dynamic> (
           future: fetchData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.hasData) {
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text('상품 정보를 불러오지 못 하였습니다.'),
+              );
+            }
+            else {
+              if (isLoading) {
+                return const Center(child: CircularProgressIndicator(color: PURPLE_COLOR,),);
+              }
               data = ShoppingMainResponse.fromJson(snapshot.data);
               popularList = data!.data.popularList;
               productList = data!.data.productList.content;
 
-              if (data?.code != 200
-                  || popularList.isEmpty && productList.isEmpty) {
+              if (data?.code != 200 || popularList.isEmpty && productList.isEmpty) {
                 return const Center(
                   child: Text('불러올 상품 정보가 없습니다.'),
                 );
               }
 
-            } else {
-                return const Center(
-                  child: Text('상품 정보를 불러오는데 실패하였습니다.'),
-                );
             }
-
             return ListView(
               scrollDirection: Axis.vertical,
               children: [
@@ -93,7 +100,7 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
     return Container(
       padding: const EdgeInsets.only(left: 10.0),
       color: Colors.white,
-      height: 265,
+      height: MediaQuery.of(context).size.width / 2 + 70,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: data.length,

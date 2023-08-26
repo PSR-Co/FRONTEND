@@ -47,6 +47,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
   }
   
   Widget renderFloatingActionButton() {
+    FocusScope.of(context).unfocus();
     return Container(
       width: 48.0,
       height: 48.0,

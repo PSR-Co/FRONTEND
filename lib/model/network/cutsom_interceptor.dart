@@ -43,11 +43,6 @@ class CustomInterceptor extends Interceptor {
         // 토큰 재발급 요청 전송
         final response = await dio.post(
           BASE_URL + reissuePath,
-          options: Options(
-            headers: {
-              'authorization': accessToken,
-            }
-          ),
           data: {
             'accessToken': accessToken,
             'refreshToken': refreshToken
