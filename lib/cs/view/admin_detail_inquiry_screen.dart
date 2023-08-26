@@ -9,7 +9,7 @@ import 'package:psr/presenter/inquiry/inquiry_service.dart';
 class AdminDetailInquiryScreen extends StatefulWidget {
   final int inquiryId;
 
-  AdminDetailInquiryScreen({required this.inquiryId, Key? key})
+  const AdminDetailInquiryScreen({required this.inquiryId, Key? key})
       : super(key: key);
 
   @override
@@ -30,17 +30,6 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
   final TextStyle removeTextStyle = const TextStyle(
       fontSize: 15.0, fontWeight: FontWeight.w500, color: ERROR_COLOR);
 
-  // List<Inquiry> inquiryList = [
-  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-  //   Inquiry('질문은 질문이에요?', '문희는 문의가 하고 싶을 뿐인뎅,,'),
-  // ];
-
   bool readOnly = true;
   bool isActivated = false;
 
@@ -60,7 +49,7 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
             future: fetchData(widget.inquiryId),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                print('inquiry detail error: ${snapshot.error.toString()}');
+                // print('inquiry detail error: ${snapshot.error.toString()}');
                 return const Center(
                   child: Text('문의 : 에러가 있습니다'),
                 );
@@ -100,19 +89,19 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
   }
 
   Widget inquiryContainer(String title, String content) {
-    return Container(
+    return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
             Container(
-                padding: EdgeInsets.only(top: 30.0, bottom: 20.0),
+                padding: const EdgeInsets.only(top: 30.0, bottom: 20.0),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   title,
                   style: titleTextStyle,
                 )),
             Container(
-                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                 alignment: Alignment.centerLeft,
                 child: Text(content, style: contentTextStyle))
           ],
@@ -126,7 +115,7 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
         child: Column(
           children: [
             Container(
-                padding: EdgeInsets.only(top: 20.0, left: 17.0),
+                padding: const EdgeInsets.only(top: 20.0, left: 17.0),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   '관리자 답변',
@@ -134,13 +123,12 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                 )),
             Row(
               children: [
-                Container(
-                    child: IconButton(
+                IconButton(
                   onPressed: () {},
                   icon: SvgPicture.asset("asset/icons/common/answer.svg"),
-                  padding: EdgeInsets.only(left: 30.0, right: 6.0),
-                  constraints: BoxConstraints(),
-                )),
+                  padding: const EdgeInsets.only(left: 30.0, right: 6.0),
+                  constraints: const BoxConstraints(),
+                ),
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(
@@ -184,12 +172,12 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
     return AlertDialog(
       backgroundColor: Colors.white,
       actionsAlignment: MainAxisAlignment.spaceEvenly,
-      insetPadding: EdgeInsets.only(top: 600.0),
+      insetPadding: const EdgeInsets.only(top: 600.0),
       titlePadding: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       elevation: 0.0,
       actions: <Widget>[
-        Container(
+        SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 150.0,
           child: Column(

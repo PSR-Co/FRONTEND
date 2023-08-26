@@ -5,12 +5,11 @@ import 'package:psr/common/layout/default_appbar_layout.dart';
 
 import '../../model/data/inquiry/inquiry_detail_model.dart';
 import '../../presenter/inquiry/inquiry_service.dart';
-import '../component/inquiry_list.dart';
 
 class DetailInquiryScreen extends StatefulWidget {
   final int inquiryId;
 
-  DetailInquiryScreen({required this.inquiryId,Key? key}):super(key: key);
+  const DetailInquiryScreen({required this.inquiryId, Key? key}) : super(key: key);
 
   @override
   State<DetailInquiryScreen> createState() => _DetailInquiryScreenState();
@@ -45,7 +44,7 @@ class _DetailInquiryScreenState extends State<DetailInquiryScreen> {
             future: fetchData(widget.inquiryId),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                print('inquiry detail error: ${snapshot.error.toString()}');
+                // print('inquiry detail error: ${snapshot.error.toString()}');
                 return const Center(
                   child: Text('문의 : 에러가 있습니다'),
                 );
@@ -74,7 +73,7 @@ class _DetailInquiryScreenState extends State<DetailInquiryScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 17.0),
                   child:
-                  inquiryContainer(data!.data!.title, data!.data!.content),
+                      inquiryContainer(data!.data!.title, data!.data!.content),
                 ),
                 Expanded(child: answerContainer(data?.data?.answer))
               ]);
@@ -84,19 +83,19 @@ class _DetailInquiryScreenState extends State<DetailInquiryScreen> {
   }
 
   Widget inquiryContainer(String title, String content) {
-    return Container(
+    return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
             Container(
-                padding: EdgeInsets.only(top: 30.0, bottom: 20.0),
+                padding: const EdgeInsets.only(top: 30.0, bottom: 20.0),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   title,
                   style: titleTextStyle,
                 )),
             Container(
-                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                 alignment: Alignment.centerLeft,
                 child: Text(content, style: contentTextStyle))
           ],
@@ -110,7 +109,7 @@ class _DetailInquiryScreenState extends State<DetailInquiryScreen> {
         child: Column(
           children: [
             Container(
-                padding: EdgeInsets.only(top: 20.0, left: 17.0),
+                padding: const EdgeInsets.only(top: 20.0, left: 17.0),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   '관리자 답변',
@@ -118,13 +117,12 @@ class _DetailInquiryScreenState extends State<DetailInquiryScreen> {
                 )),
             Row(
               children: [
-                Container(
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: SvgPicture.asset("asset/icons/common/answer.svg"),
-                      padding: EdgeInsets.only(left: 30.0, right: 6.0),
-                      constraints: BoxConstraints(),
-                    )),
+                IconButton(
+                  onPressed: () {},
+                  icon: SvgPicture.asset("asset/icons/common/answer.svg"),
+                  padding: const EdgeInsets.only(left: 30.0, right: 6.0),
+                  constraints: const BoxConstraints(),
+                ),
                 Expanded(
                   child: TextField(
                     decoration: InputDecoration(

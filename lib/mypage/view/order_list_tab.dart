@@ -38,14 +38,14 @@ class _OrderListTabState extends State<OrderListTab>
     } else {
       queryParameters = {'type': 'order'};
     }
-    print('ordertab ${await OrderService().getOrderData(queryParameters)}');
+    // print('ordertab ${await OrderService().getOrderData(queryParameters)}');
     return await OrderService().getOrderData(queryParameters);
   }
 
   @override
   Widget build(BuildContext context) {
     return BodyTab(
-      tabTitle: LargeDetailBar(title: "요청목록", moveTo: OrderListScreen()),
+      tabTitle: LargeDetailBar(title: "요청목록", moveTo: const OrderListScreen()),
       tabBarViewChild: [
         orderProductCardSlider(type: 'sell'),
         orderProductCardSlider(type: 'order'),
