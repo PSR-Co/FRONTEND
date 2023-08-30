@@ -50,6 +50,8 @@ dependencies:
   firebase_storage: ^11.2.6
   firebase_core: ^2.15.1
   permission_handler: ^10.4.3
+  firebase_messaging: ^14.6.7
+  flutter_local_notifications: ^15.1.1
 
 dev_dependencies:
   flutter_test:
