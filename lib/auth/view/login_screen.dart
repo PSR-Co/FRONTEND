@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:psr/auth/component/account_input_text_field.dart';
 import 'package:psr/auth/view/sign_up_screen.dart';
 import 'package:psr/common/const/colors.dart';
@@ -189,47 +190,72 @@ class _LoginScreenState extends State<LoginScreen> {
   void didTapLoginButton() async {
    final result = await LoginService().login(idController.value.text, pwController.value.text);
     if (result) {
+      checkPermission();
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
 
     } else {
-      showDialog(context: context, builder: (BuildContext context) {
-        return AlertDialog(
-          title: Center(
-            child: Text('로그인 실패', style: TextStyle(fontSize: 16),),
-          ),
-          content: Text('아이디 혹은 비밀번호를 확인해주세요.', style: TextStyle(fontSize: 14), textAlign: TextAlign.center),
-          actions: <Widget>[
-            Center(
-              child: TextButton(
-                child: const Text("확인"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ],
-        );
-      });
+      showCustomDialog(
+          '로그인 실패',
+          '아이디 혹은 비밀번호를 확인해주세요.',
+          '확인',
+          () { Navigator.pop(context); }
+      );
     }
   }
 
   void didTapSignUpButton() {
-    print('didTapJoinButton');
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SignUpScreen()));
   }
 
   void didTapFindIDButton() {
-    print('didTapFindIDButton');
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FindIDScreen()));
   }
 
   void didTapFindPWButton() {
-    print('didTapFindPWButton');
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FindPWScreen()));
   }
 
   void setToken(String accessToken, String refreshToken) {
     storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
     storage.write(key: REFRESH_TOKEN_KEY, value: refreshToken);
+  }
+
+  /// Helper Methods
+  void checkPermission() async {
+    await Permission.notification.request();
+    if (await Permission.notification.isPermanentlyDenied) {
+      showDialogOfAppSetting();
+    }
+    print('알림 허용 여부 -> ${await Permission.notification.isGranted}');
+  }
+
+  void showDialogOfAppSetting() {
+    showCustomDialog(
+      '권한 허용 요청',
+      '알림 허용을 변경하기 위해 설정창으로 이동할까요?',
+      '설정 열기',
+      openAppSettings,
+    );
+  }
+
+  void showCustomDialog(
+      String title, String content, String buttonTitle, VoidCallback onPressed,
+      ) {
+    showDialog(context: context, builder: (BuildContext context) {
+      return AlertDialog(
+        title: Center(
+          child: Text(title, style: const TextStyle(fontSize: 16),),
+        ),
+        content: Text(content, style: const TextStyle(fontSize: 14), textAlign: TextAlign.center),
+        actions: <Widget>[
+          Center(
+            child: TextButton(
+              onPressed: onPressed,
+              child: Text(buttonTitle),
+            ),
+          ),
+        ],
+      );
+    });
   }
 }
