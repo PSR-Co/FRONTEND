@@ -21,8 +21,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-  // final dio = Dio();
-
   final TextEditingController idController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
 
@@ -34,20 +32,22 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget renderBody() {
-    return SafeArea(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            getMainLogoView(),
-            getWelcomeText(),
+    return SingleChildScrollView(
+      child: SafeArea(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              getMainLogoView(),
+              getWelcomeText(),
 
-            getAccountInputView(),
-            getLoginButton(),
+              getAccountInputView(),
+              getLoginButton(),
 
-            getAccountOptionView(),
-          ],
+              getAccountOptionView(),
+            ],
+          ),
         ),
       ),
     );
@@ -95,7 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
           AccountInputTextField(
               controller: idController,
               hintText: '아이디 또는 이메일 주소',
-              isNeededForHidden: false
+              isNeededForHidden: false,
+              inputType: InputType.email,
           ),
 
           const SizedBox(height: 8,),

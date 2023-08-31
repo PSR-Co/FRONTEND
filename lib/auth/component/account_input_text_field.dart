@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../common/const/colors.dart';
 
+enum InputType { email, phone, text }
+
 class AccountInputTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
@@ -10,6 +12,7 @@ class AccountInputTextField extends StatefulWidget {
   final Color? backgroundColor;
   final Color? borderColor;
   final VoidCallback? onChange;
+  final InputType? inputType;
 
   const AccountInputTextField({
     required this.controller,
@@ -18,6 +21,7 @@ class AccountInputTextField extends StatefulWidget {
     this.backgroundColor,
     this.borderColor,
     this.onChange,
+    this.inputType,
     Key? key
   }) : super(key: key);
 
@@ -51,9 +55,11 @@ class _AccountInputTextFieldState extends State<AccountInputTextField> {
         ),
         controller: widget.controller,
         scrollPhysics: const NeverScrollableScrollPhysics(),
+        textInputAction: TextInputAction.next,
         showCursor: false,
         maxLines: 1,
         obscureText: widget.isNeededForHidden && isVisible,
+        keyboardType: getKeyboardType(widget.inputType),
         decoration: InputDecoration(
             hintText: widget.hintText,
             hintStyle: const TextStyle(
@@ -80,5 +86,16 @@ class _AccountInputTextFieldState extends State<AccountInputTextField> {
         },
       ),
     );
+  }
+
+  TextInputType getKeyboardType(InputType? inputType) {
+    switch (inputType) {
+      case InputType.email:
+        return TextInputType.emailAddress;
+      case InputType.phone:
+        return TextInputType.phone;
+      default:
+        return TextInputType.text;
+    }
   }
 }

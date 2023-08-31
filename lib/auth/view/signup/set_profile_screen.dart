@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:psr/common/layout/custom_title_text.dart';
 import 'package:psr/common/layout/purple_outlined_textfield_with_button.dart';
 import 'package:image_picker/image_picker.dart';
@@ -129,12 +130,22 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
         else { Fluttertoast.showToast(msg: '프로필 수정에 실패하였습니다.'); }
 
       } else {
+        checkPermission();
         Future<bool> result = SignupService().signup();
         if (await result) { Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen())); }
         else { Fluttertoast.showToast(msg: '회원가입에 실패하였습니다.'); }
       }
     }
     else { Fluttertoast.showToast(msg: '입력된 정보를 확인해주세요!'); }
+  }
+
+  void checkPermission() async {
+    await Permission.notification.request();
+    if(await Permission.notification.isGranted) {
+      // TODO: markerting - true / deviceToken - 추출값으로 설정
+    } else {
+      // TODO: markerting - false / deviceToken - null로 설정
+    }
   }
 
   void didTapValidationNickname() async {
