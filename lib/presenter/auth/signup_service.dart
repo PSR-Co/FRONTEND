@@ -13,7 +13,7 @@ class SignupService {
 
   bool isBusiness = false;
   EntreInfo? _eid = EntreInfo(number: '', companyDate: '', ownerName: '', companyName: '');
-  SignupRequest _signupRequest = SignupRequest(email: '', password: '', type: '', phone: '', name: '', profileImgKey: null, nickname: '', marketing: true, notification: true, interestList: []);
+  SignupRequest _signupRequest = SignupRequest(email: '', password: '', type: '', phone: '', name: '', profileImgKey: null, nickname: '', marketing: true, notification: true, interestList: [], deviceToken: '');
 
   /// Singleton Pattern
   static final SignupService _signupService = SignupService._();

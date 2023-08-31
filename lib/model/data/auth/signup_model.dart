@@ -14,6 +14,7 @@ class SignupRequest {
   String? profileImgKey;
   String nickname;
   bool marketing;
+  String? deviceToken;
   bool notification;
   List<Interest> interestList;
   EntreInfo? entreInfo;
@@ -27,6 +28,7 @@ class SignupRequest {
     required this.profileImgKey,
     required this.nickname,
     required this.marketing,
+    required this.deviceToken,
     required this.notification,
     required this.interestList,
     this.entreInfo,
