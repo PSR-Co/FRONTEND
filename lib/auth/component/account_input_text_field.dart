@@ -51,6 +51,7 @@ class _AccountInputTextFieldState extends State<AccountInputTextField> {
         ),
         controller: widget.controller,
         scrollPhysics: const NeverScrollableScrollPhysics(),
+        textInputAction: TextInputAction.next,
         showCursor: false,
         maxLines: 1,
         obscureText: widget.isNeededForHidden && isVisible,

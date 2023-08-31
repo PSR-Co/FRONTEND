@@ -72,6 +72,7 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
               enabled: widget.isEditing,
               controller: widget.controller,
               scrollPhysics: const NeverScrollableScrollPhysics(),
+              textInputAction: TextInputAction.next,
               showCursor: false,
               maxLines: widget.maxLine,
               decoration: InputDecoration(
