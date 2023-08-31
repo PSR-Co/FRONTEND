@@ -94,7 +94,8 @@ class _LoginScreenState extends State<LoginScreen> {
           AccountInputTextField(
               controller: idController,
               hintText: '아이디 또는 이메일 주소',
-              isNeededForHidden: false
+              isNeededForHidden: false,
+              inputType: InputType.email,
           ),
 
           const SizedBox(height: 8,),
