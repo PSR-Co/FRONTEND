@@ -23,19 +23,12 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
 
   final TextEditingController businessNameController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
-
-  final TextEditingController yearController = TextEditingController();
-  final TextEditingController monthController = TextEditingController();
-  final TextEditingController dayController = TextEditingController();
-  // final TextEditingController addressController = TextEditingController();
+  final TextEditingController registeredCodeController = TextEditingController();
 
   String yearText = '년(4자)';
   String monthText = '월';
   String dayText = '일';
   DateTime? companyDate;
-
-
-  final TextEditingController registeredCodeController = TextEditingController();
 
   bool isValidInput = false;
 
