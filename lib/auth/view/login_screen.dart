@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:psr/auth/component/account_input_text_field.dart';
@@ -188,9 +189,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
   /// event methods
   void didTapLoginButton() async {
-   final result = await LoginService().login(idController.value.text, pwController.value.text);
+    checkPermission();
+
+    String? deviceToken;
+    if(await Permission.notification.isGranted) {
+      deviceToken = await FirebaseMessaging.instance.getToken();
+      print('알림 수신 허용 -> $deviceToken');
+    } else { deviceToken = null; }
+
+    final result = await LoginService().login(
+      idController.value.text,
+      pwController.value.text,
+      deviceToken,
+    );
+
     if (result) {
-      checkPermission();
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
 
     } else {
@@ -223,10 +236,10 @@ class _LoginScreenState extends State<LoginScreen> {
   /// Helper Methods
   void checkPermission() async {
     await Permission.notification.request();
-    if (await Permission.notification.isPermanentlyDenied) {
-      showDialogOfAppSetting();
-    }
-    print('알림 허용 여부 -> ${await Permission.notification.isGranted}');
+    // 알림 허용이 영구적으로 거부되었을 경우, 필요에 따라 앱설정창으로 이동 (논의 후 코드 제거 여부 결정)
+    // if (await Permission.notification.isPermanentlyDenied) {
+    //   showDialogOfAppSetting();
+    // }
   }
 
   void showDialogOfAppSetting() {

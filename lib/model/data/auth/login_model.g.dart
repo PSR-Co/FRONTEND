@@ -36,12 +36,14 @@ Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
 LoginRequest _$LoginRequestFromJson(Map<String, dynamic> json) => LoginRequest(
       email: json['email'] as String,
       password: json['password'] as String,
+      deviceToken: json['deviceToken'] as String?,
     );
 
 Map<String, dynamic> _$LoginRequestToJson(LoginRequest instance) =>
     <String, dynamic>{
       'email': instance.email,
       'password': instance.password,
+      'deviceToken': instance.deviceToken,
     };
 
 SearchEmailRequest _$SearchEmailRequestFromJson(Map<String, dynamic> json) =>
