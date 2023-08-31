@@ -72,8 +72,8 @@ class SignupService {
   }
 
   /// Request Methods
-  Future<bool> validateEid(String number, String year, String month, String day, String ownerName, String companyName) async {
-    final eid = EntreInfo(number: number, companyDate: getTotalDateStr(year,month,day), ownerName: ownerName, companyName: companyName);
+  Future<bool> validateEid(String number, String companyDate, String ownerName, String companyName) async {
+    final eid = EntreInfo(number: number, companyDate: companyDate, ownerName: ownerName, companyName: companyName);
     final response = await APIManager().request(RequestType.POST, VALIDATE_EID, null, null, eid.toJson())
         .catchError((error) { debugPrint('error : $error'); });
     if ((response != null) && (response['code'] == 200)) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:psr/auth/view/signup/input_accout_info_screen.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/custom_title_text.dart';
@@ -27,6 +28,12 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
   final TextEditingController monthController = TextEditingController();
   final TextEditingController dayController = TextEditingController();
   // final TextEditingController addressController = TextEditingController();
+
+  String yearText = '년(4자)';
+  String monthText = '월';
+  String dayText = '일';
+  DateTime? companyDate;
+
 
   final TextEditingController registeredCodeController = TextEditingController();
 
@@ -58,14 +65,14 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
   }
 
   Widget getCenterBody() {
-    final warningStyle = TextStyle(fontSize: 12, color: Colors.red);
+    const warningStyle = TextStyle(fontSize: 12, color: Colors.red);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-          child: Text('사업자 진위 여부 파악을 위해\n사업자 등록증에 표기된 대로 입력해주세요', style: warningStyle,),
+          child: const Text('사업자 진위 여부 파악을 위해\n사업자 등록증에 표기된 대로 입력해주세요', style: warningStyle,),
         ),
 
         const CustomTitleText(title: '상호명'),
@@ -76,20 +83,13 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
         PurpleOutlinedTextField(maxLine: 1, hintText: '대표자명을 입력해주세요.', controller: nameController),
         const SizedBox(height: 20,),
 
-        // TODO: DatePicker로 변경
         const CustomTitleText(title: '개업일자'),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            PurpleOutlinedTextField(maxLine: 1, hintText: '년(4자)', controller: yearController,
-              width: (MediaQuery.of(context).size.width - 50.0)/3, margin: 5,
-            ),
-            PurpleOutlinedTextField(maxLine: 1, hintText: '월', controller: monthController,
-              width: (MediaQuery.of(context).size.width - 50.0)/3, margin: 5,
-            ),
-            PurpleOutlinedTextField(maxLine: 1, hintText: '일', controller: dayController,
-              width: (MediaQuery.of(context).size.width - 50.0)/3, margin: 5,
-            ),
+            getCompanyDateButton(yearText),
+            getCompanyDateButton(monthText),
+            getCompanyDateButton(dayText),
           ],
         ),
         const SizedBox(height: 20,),
@@ -129,7 +129,48 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
     );
   }
 
+  Widget getCompanyDateButton(String placehold) {
+    return Container(
+      width: MediaQuery.of(context).size.width / 3 - 20,
+      height: 42,
+      margin: const EdgeInsets.only(left: 5, right: 5, top: 7),
+      child: ElevatedButton(
+          onPressed: didTapCompanyDateButton,
+          style: ElevatedButton.styleFrom(
+            alignment: Alignment.centerLeft,
+            backgroundColor: Colors.white,
+            side: BorderSide(width:1, color: PURPLE_COLOR.withOpacity(0.5)),
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12)
+            ),
+          ),
+          child: Text(placehold,
+            style: TextStyle(color: (companyDate == null) ? Colors.grey : GRAY_4_COLOR),
+            textAlign: TextAlign.left,
+          )
+      ),
+    );
+  }
+
   /// event methods
+  void didTapCompanyDateButton() async {
+    final selectedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime.now(),
+    );
+    if (selectedDate != null) {
+      setState(() {
+        companyDate = selectedDate;
+        yearText = '${companyDate!.year.toString()}년';
+        monthText = '${companyDate!.month.toString()}월';
+        dayText = '${companyDate!.day.toString()}일';
+      });
+    }
+  }
+
   void didTapNextButton() {
     setState(() {
       if (isValidInput) {
@@ -154,11 +195,10 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
   }
 
   Future<bool?> validateEid() async {
+    String date = DateFormat('yyyyMMdd').format(companyDate!);
     return await SignupService().validateEid(
         registeredCodeController.value.text,
-        yearController.value.text,
-        monthController.value.text,
-        dayController.value.text,
+        date,
         nameController.value.text,
         businessNameController.value.text
     );
