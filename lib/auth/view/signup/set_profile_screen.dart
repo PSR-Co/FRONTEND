@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -142,9 +143,10 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   void checkPermission() async {
     await Permission.notification.request();
     if(await Permission.notification.isGranted) {
-      // TODO: markerting - true / deviceToken - 추출값으로 설정
+      final deviceToken = await FirebaseMessaging.instance.getToken();
+      SignupService().setNotificationSetting(true, deviceToken);
     } else {
-      // TODO: markerting - false / deviceToken - null로 설정
+      SignupService().setNotificationSetting(false, null);
     }
   }
 

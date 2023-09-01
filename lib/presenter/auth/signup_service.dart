@@ -58,6 +58,10 @@ class SignupService {
 
   void setProfileImage(String? profileImgKey) { _signupRequest.profileImgKey = (profileImgKey == null) ? null : profileImgKey!; }
 
+  void setNotificationSetting(bool marketing, String? deviceToken) {
+    _signupRequest.marketing = marketing;
+    _signupRequest.deviceToken = deviceToken;
+  }
 
   /// helper methods
   String getTotalDateStr(String year, String month, String day) {
