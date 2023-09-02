@@ -152,7 +152,8 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
                                   inquiryId: inquiries[index].inquiryId,
                                 )
                               : DetailInquiryScreen(
-                                  inquiryId: inquiries[index].inquiryId)));
+                                  inquiryId: inquiries[index].inquiryId))
+                  ).then((value) {setState(() {});});
                 },
                 title: Container(
                   alignment: Alignment.centerLeft,
