@@ -145,15 +145,17 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
                 onTap: () {
                   // Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailInquiryScreen()));
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => type == '관리자'
-                              ? AdminDetailInquiryScreen(
-                                  inquiryId: inquiries[index].inquiryId,
-                                )
-                              : DetailInquiryScreen(
-                                  inquiryId: inquiries[index].inquiryId))
-                  ).then((value) {setState(() {});});
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => type == '관리자'
+                                  ? AdminDetailInquiryScreen(
+                                      inquiryId: inquiries[index].inquiryId,
+                                    )
+                                  : DetailInquiryScreen(
+                                      inquiryId: inquiries[index].inquiryId)))
+                      .then((value) {
+                    setState(() {});
+                  });
                 },
                 title: Container(
                   alignment: Alignment.centerLeft,
