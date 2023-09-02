@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/model/data/inquiry/add_inquiry_answer_model.dart';
 import 'package:psr/model/data/inquiry/inquiry_detail_model.dart';
 import 'package:psr/myinfo/component/complete_btn.dart';
 import 'package:psr/presenter/inquiry/inquiry_service.dart';
@@ -34,9 +35,15 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
   bool isActivated = false;
 
   InquiryDetailModel? data;
+  AddInquiryAnswerModel? addInquiryAnswerData;
+  TextEditingController controller = TextEditingController();
 
   Future<dynamic> fetchData(int inquiryId) async {
     return await InquiryService().getDetailInquiry(inquiryId);
+  }
+
+  Future<dynamic> addInquiryAnswer(int inquiryId, String answer) async {
+    return await InquiryService().addInquiryAnswer(inquiryId, answer);
   }
 
   @override
@@ -110,49 +117,81 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
 
   Widget answerContainer(String? answer) {
     return Container(
-        width: MediaQuery.of(context).size.width,
-        color: PURPLE_COLOR_20,
-        child: Column(
-          children: [
-            Container(
-                padding: const EdgeInsets.only(top: 20.0, left: 17.0),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '관리자 답변',
-                  style: titleTextStyle,
-                )),
-            Row(
+            width: MediaQuery.of(context).size.width,
+            color: PURPLE_COLOR_20,
+            child: Column(
               children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: SvgPicture.asset("asset/icons/common/answer.svg"),
-                  padding: const EdgeInsets.only(left: 30.0, right: 6.0),
-                  constraints: const BoxConstraints(),
+                Container(
+                    padding: const EdgeInsets.only(top: 20.0, left: 17.0),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      '관리자 답변',
+                      style: titleTextStyle,
+                    )),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset("asset/icons/common/answer.svg"),
+                      padding: const EdgeInsets.only(left: 30.0, right: 6.0),
+                      constraints: const BoxConstraints(),
+                    ),
+                    Expanded(
+                      child: TextField(
+                        maxLines: 30,
+                        controller: controller,
+                        decoration: InputDecoration(
+                            hintText: answer ?? '아직 답변이 완료되지 않은 문의입니다.',
+                            hintStyle: contentTextStyle,
+                            border: InputBorder.none),
+                        style: contentTextStyle,
+                        readOnly: readOnly,
+                      ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: answer ?? '아직 답변이 완료되지 않은 문의입니다.',
-                        hintStyle: contentTextStyle,
-                        border: InputBorder.none),
-                    style: contentTextStyle,
-                    readOnly: readOnly,
-                  ),
-                ),
+                Expanded(child: Container()),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 17.0, right: 17.0, bottom: 40.0),
+                  child: CompleteBtn(
+                    btnTitle: '답변하기',
+                    isVisible: isActivated,
+                    onPressed:() {
+                      showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (_){
+                            return FutureBuilder(
+                              future: addInquiryAnswer(widget.inquiryId, controller.text),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return resultDialog("답변 등록에 실패하셨습니다!");
+                                } else if (snapshot.hasData) {
+                                  addInquiryAnswerData = AddInquiryAnswerModel.fromJson(snapshot.data);
+                                  if (data?.data == null) {
+                                    return resultDialog("답변 등록에 실패하셨습니다!");
+                                  }
+                                } else {
+                                  return Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height,
+                                    alignment: Alignment.center,
+                                    child: const SizedBox(
+                                        width: 30,
+                                        height: 30,
+                                        child: CircularProgressIndicator(backgroundColor: PURPLE_COLOR, color: GRAY_0_COLOR,)),
+                                  );
+                                }
+                                return resultDialog("답변 등록에 성공하셨습니다!");
+                              }
+                            );
+                          });
+                    })
+                )
               ],
-            ),
-            Expanded(child: Container()),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 17.0, right: 17.0, bottom: 40.0),
-              child: CompleteBtn(
-                btnTitle: '답변하기',
-                isVisible: isActivated,
-                onPressed: null,
-              ),
-            )
-          ],
-        ));
+            ));
   }
 
   Widget menuBar() {
@@ -207,6 +246,40 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                     style: removeTextStyle,
                   ))
             ],
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget resultDialog(String result){
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      titlePadding: EdgeInsets.zero,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      elevation: 0.0,
+      content: Container(
+        height: MediaQuery.of(context).size.height / 10,
+        alignment: Alignment.center,
+        child: Text(
+            result,
+            style: answerTextStyle),
+      ),
+      actions: <Widget>[
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          // height: MediaQuery.of(context).size.height / 5,
+          child: TextButton(
+                  onPressed: () {
+                    changeEditable();
+                    activateBtn();
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "확인",
+                    style: titleTextStyle,
+                  )
           ),
         )
       ],
