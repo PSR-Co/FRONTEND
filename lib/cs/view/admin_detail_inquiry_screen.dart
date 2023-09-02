@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/model/data/inquiry/add_inquiry_answer_model.dart';
+import 'package:psr/model/data/inquiry/delete_inquiry_answer_model.dart';
 import 'package:psr/model/data/inquiry/inquiry_detail_model.dart';
 import 'package:psr/myinfo/component/complete_btn.dart';
 import 'package:psr/presenter/inquiry/inquiry_service.dart';
@@ -36,6 +37,8 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
 
   InquiryDetailModel? data;
   AddInquiryAnswerModel? addInquiryAnswerData;
+  DeleteInquiryAnswerModel? deleteInquiryAnswerData;
+
   TextEditingController controller = TextEditingController();
 
   Future<dynamic> fetchData(int inquiryId) async {
@@ -44,6 +47,10 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
 
   Future<dynamic> addInquiryAnswer(int inquiryId, String answer) async {
     return await InquiryService().addInquiryAnswer(inquiryId, answer);
+  }
+
+  Future<dynamic> deleteInquiryAnswer(int inquiryId) async {
+    return await InquiryService().deleteInquiryAnswer(inquiryId);
   }
 
   @override
@@ -167,11 +174,11 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                               future: addInquiryAnswer(widget.inquiryId, controller.text),
                               builder: (context, snapshot) {
                                 if (snapshot.hasError) {
-                                  return resultDialog("답변 등록에 실패하셨습니다!");
+                                  return resultDialog("답변 등록에 실패하셨습니다!","등록");
                                 } else if (snapshot.hasData) {
                                   addInquiryAnswerData = AddInquiryAnswerModel.fromJson(snapshot.data);
                                   if (data?.data == null) {
-                                    return resultDialog("답변 등록에 실패하셨습니다!");
+                                    return resultDialog("답변 등록에 실패하셨습니다!","등록");
                                   }
                                 } else {
                                   return Container(
@@ -184,7 +191,7 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                                         child: CircularProgressIndicator(backgroundColor: PURPLE_COLOR, color: GRAY_0_COLOR,)),
                                   );
                                 }
-                                return resultDialog("답변 등록에 성공하셨습니다!");
+                                return resultDialog("답변 등록에 성공하셨습니다!","등록");
                               }
                             );
                           });
@@ -239,7 +246,35 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (_){
+                          return FutureBuilder(
+                              future: deleteInquiryAnswer(widget.inquiryId),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return resultDialog("답변 삭제에 실패하셨습니다!","삭제");
+                                } else if (snapshot.hasData) {
+                                  deleteInquiryAnswerData = DeleteInquiryAnswerModel.fromJson(snapshot.data);
+                                  if (data?.data == null) {
+                                    return resultDialog("답변 삭제에 실패하셨습니다!","삭제");
+                                  }
+                                } else {
+                                  return Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height,
+                                    alignment: Alignment.center,
+                                    child: const SizedBox(
+                                        width: 30,
+                                        height: 30,
+                                        child: CircularProgressIndicator(backgroundColor: PURPLE_COLOR, color: GRAY_0_COLOR,)),
+                                  );
+                                }
+                                return resultDialog("답변 삭제에 성공하셨습니다!", "삭제");
+                              }
+                          );
+                        });
                   },
                   child: Text(
                     "삭제",
@@ -252,7 +287,7 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
     );
   }
 
-  Widget resultDialog(String result){
+  Widget resultDialog(String result, String type){
     return AlertDialog(
       backgroundColor: Colors.white,
       actionsAlignment: MainAxisAlignment.spaceEvenly,
@@ -274,7 +309,9 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                   onPressed: () {
                     changeEditable();
                     activateBtn();
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
+                    Navigator.of(context).pop();
+                    if(type == '삭제') {Navigator.of(context).pop();Navigator.of(context).pop();}
                   },
                   child: Text(
                     "확인",
@@ -285,6 +322,7 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
       ],
     );
   }
+
 
   void changeEditable() {
     setState(() {

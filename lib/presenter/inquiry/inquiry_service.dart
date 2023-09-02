@@ -35,7 +35,7 @@ class InquiryService{
     return response;
   }
 
-  Future<dynamic> deleteInquiry(String inquiryId) async {
+  Future<dynamic> deleteInquiryAnswer(int inquiryId) async {
     final response = await APIManager().request(RequestType.DELETE, '$INQUIRY_PATH/$inquiryId', null, null, null);
     print('response : $response');
     return response;
