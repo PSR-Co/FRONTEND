@@ -4,7 +4,7 @@ import '../const/colors.dart';
 
 class PurpleFilledButton extends StatefulWidget {
   final String title;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final bool? isBottomButton;
   final double? width;
   final double? height;

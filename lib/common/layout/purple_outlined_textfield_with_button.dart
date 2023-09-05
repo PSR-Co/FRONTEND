@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 
+import '../../auth/component/account_input_text_field.dart';
+
 class PurpleOutlinedTextFieldWithButton extends StatefulWidget {
   final int maxLine;
   final int? maxLength;
   final String hintText;
+  final String? text;
   final TextEditingController controller;
   final IconButton? suffixIconButton;
 
   final String buttonTitle;
   final VoidCallback onPressed;
 
+  final TextInputType? inputType;
+
   const PurpleOutlinedTextFieldWithButton({
     required this.maxLine,
     this.maxLength,
     required this.hintText,
+    this.text,
     required this.controller,
     this.suffixIconButton,
 
     required this.buttonTitle,
     required this.onPressed,
+    this.inputType,
 
     Key? key
   }) : super(key: key);
@@ -51,18 +58,19 @@ class _PurpleOutlinedTextFieldWithButtonState extends State<PurpleOutlinedTextFi
               margin: const EdgeInsets.only(top: 5, bottom: 5, right: 8),
               width: MediaQuery.of(context).size.width - 130,
               height: 45,
-              child: TextField(
+              child: TextFormField(
+                controller: widget.controller,
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.black,
                 ),
-                onChanged: (text) {
+                onChanged: (value) {
                   setState(() {
-                    currentTextLength = text.length;
+                    currentTextLength = value.length;
                   });
                 },
-                controller: widget.controller,
                 scrollPhysics: const NeverScrollableScrollPhysics(),
+                keyboardType: widget.inputType,
                 showCursor: false,
                 maxLines: widget.maxLine,
                 decoration: InputDecoration(

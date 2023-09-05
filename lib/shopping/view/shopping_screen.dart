@@ -16,12 +16,12 @@ class ShoppingScreen extends StatefulWidget {
 class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStateMixin {
   late final TabController controller;
 
-  final TextStyle selectedTextStyle = TextStyle(
+  final TextStyle selectedTextStyle = const TextStyle(
     fontSize: 13.0,
     fontWeight: FontWeight.w700,
   );
 
-  final TextStyle unSelectedTextStyle = TextStyle(
+  final TextStyle unSelectedTextStyle = const TextStyle(
     fontSize: 13.0,
     fontWeight: FontWeight.w500,
   );
@@ -30,7 +30,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
   void initState() {
     super.initState();
     controller = TabController(
-        length: CATEGORY_FOR_TAB.length,
+        length: CATEGORY.length,
         vsync: this
     );
     controller.addListener(() {
@@ -47,6 +47,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
   }
   
   Widget renderFloatingActionButton() {
+    FocusScope.of(context).unfocus();
     return Container(
       width: 48.0,
       height: 48.0,
@@ -66,7 +67,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
         elevation: 0,
         highlightElevation: 0,
         focusElevation: 0,
-        child: Icon(Icons.add,color: PURPLE_COLOR, size: 32.0,),
+        child: const Icon(Icons.add,color: PURPLE_COLOR, size: 32.0,),
       ),
     );
   }
@@ -74,17 +75,17 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
   Widget renderBody() {
     return Container(
       child: Column(
-        children: [
-          renderTabBar(),
-          Expanded(
-            child: TabBarView(
-              controller: controller,
-              children:
-              CATEGORY_FOR_TAB.map((e) => ShoppingTabBarWidget(categoryName: e)).toList(),
-            ),
-          )
-        ],
-      ),
+          children: [
+            renderTabBar(),
+            Expanded(
+              child: TabBarView(
+                controller: controller,
+                children:
+                CATEGORY.map((e) => ShoppingTabBarWidget(categoryName: e)).toList(),
+              ),
+            )
+          ],
+        )
     );
   }
 
@@ -97,7 +98,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
         isScrollable: true,
         indicatorColor: PURPLE_COLOR,
         indicatorWeight: 3.0,
-        indicatorPadding: EdgeInsets.only(left: 10, right: 10),
+        indicatorPadding: const EdgeInsets.only(left: 10, right: 10),
         labelColor: PURPLE_COLOR,
         labelStyle: selectedTextStyle,
         unselectedLabelColor: GRAY_1_COLOR,
@@ -108,7 +109,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
   }
 
   BoxDecoration renderTabBarContainerDeco() {
-    return BoxDecoration(
+    return const BoxDecoration(
       color: Colors.white,
       border: Border(
           bottom: BorderSide(

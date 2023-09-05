@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:psr/common/const/colors.dart';
+import 'package:psr/auth/component/complete_widget.dart';
+import '../../common/const/colors.dart';
 
 class CompleteOrderScreen extends StatelessWidget {
   const CompleteOrderScreen({Key? key}) : super(key: key);
+
+  final BUTTON_HEIGHT = 40.0;
 
   @override
   Widget build(BuildContext context) {

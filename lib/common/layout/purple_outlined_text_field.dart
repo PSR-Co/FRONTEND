@@ -7,6 +7,10 @@ class PurpleOutlinedTextField extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
   final IconButton? suffixIconButton;
+  final double? width;
+  final double? margin;
+  final VoidCallback? onChanged;
+  final bool? isEditing;
 
   const PurpleOutlinedTextField({
     required this.maxLine,
@@ -14,6 +18,10 @@ class PurpleOutlinedTextField extends StatefulWidget {
     required this.hintText,
     required this.controller,
     this.suffixIconButton,
+    this.width,
+    this.margin,
+    this.onChanged,
+    this.isEditing,
     Key? key
   }) : super(key: key);
 
@@ -34,6 +42,8 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
   }
 
   List<Widget> renderTextFieldStack() {
+    currentTextLength = widget.controller.value.text.length;
+
     final defaultStyle = OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
         borderSide: BorderSide(
@@ -45,8 +55,8 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
     List<Widget> children = [];
     children.add(
         Container(
-            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-            width: MediaQuery.of(context).size.width - 40,
+            margin: EdgeInsets.symmetric(vertical: 5, horizontal: widget.margin ?? 20),
+            width: widget.width ?? MediaQuery.of(context).size.width,
             height: (widget.maxLine == 1) ? 45.0 : 140.0,
             child: TextField(
               style: const TextStyle(
@@ -55,11 +65,14 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
               ),
               onChanged: (text) {
                 setState(() {
+                  if (widget.onChanged != null) { widget.onChanged!(); }
                   currentTextLength = text.length;
                 });
               },
+              enabled: widget.isEditing,
               controller: widget.controller,
               scrollPhysics: const NeverScrollableScrollPhysics(),
+              textInputAction: TextInputAction.next,
               showCursor: false,
               maxLines: widget.maxLine,
               decoration: InputDecoration(
@@ -93,7 +106,6 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
           )
       );
     }
-
     return children;
   }
 

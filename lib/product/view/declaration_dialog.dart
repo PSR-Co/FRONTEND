@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
+import 'package:psr/presenter/review/review_service.dart';
+import 'package:psr/presenter/shopping/shopping_service.dart';
+
+enum DeclarationType { PRODUCT, REVIEW }
 
 class DeclarationDialog extends StatefulWidget {
-  const DeclarationDialog({Key? key}) : super(key: key);
+  final int idx;
+  final DeclarationType type;
+
+  const DeclarationDialog({
+    required this.idx,
+    required this.type,
+    Key? key
+  }) : super(key: key);
 
   @override
   State<DeclarationDialog> createState() => _DeclarationDialogState();
@@ -47,7 +58,7 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
       top: 5, right: 10,
       child: IconButton(
           onPressed: (){ Navigator.pop(context); },
-          icon: Icon(Icons.close, color: Colors.black,)
+          icon: const Icon(Icons.close, color: Colors.black,)
       ),
     );
   }
@@ -68,24 +79,23 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
   }
 
   Widget renderTitle() {
-    final TextStyle titleStyle = TextStyle(
+    const TextStyle titleStyle = TextStyle(
       fontWeight: FontWeight.w700,
       fontSize: 18,
       color: GRAY_4_COLOR,
     );
-
-    return Text("신고하기", style: titleStyle,);
+    return const Text("신고하기", style: titleStyle,);
   }
 
   Widget renderGuide() {
-    final TextStyle guideStyle = TextStyle(
+    const TextStyle guideStyle = TextStyle(
       fontWeight: FontWeight.w300,
       fontSize: 12,
       color: GRAY_2_COLOR,
     );
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 15),
       child: Text(
         "타당한 신고 사유를 선택해주세요.\n신고 사유에 맞지 않는 신고를 하시 경우,\n해당 신고는 처리되지 않습니다.",
         style: guideStyle,
@@ -99,7 +109,7 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 12),
         child: GridView.count(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
           childAspectRatio: 130/40, // 가로/세로 비율
           children: reasonList.map((e) =>
@@ -110,14 +120,13 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
                       icon: (selectedReason == e)
                           ? SvgPicture.asset('asset/icons/custom_dialog/circle_check.fill.svg', width: 20,)
                           : SvgPicture.asset('asset/icons/custom_dialog/circle_check.svg', width: 20,),
-                      label: Text(e, style: TextStyle(
+                      label: Text(e, style: const TextStyle(
                           fontSize: 12,
                           color: GRAY_4_COLOR
                       ),),
                       style: TextButton.styleFrom(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         iconColor: GRAY_1_COLOR,
-
                       ),
                     )
                   ]
@@ -129,7 +138,7 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
   }
 
   Widget renderDeclarationButton() {
-    final TextStyle declarationBtnStyle = TextStyle(
+    const TextStyle declarationBtnStyle = TextStyle(
       fontWeight: FontWeight.w700,
       fontSize: 14,
       color: Colors.white,
@@ -139,10 +148,9 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
       bottom: 20, right: 5, left: 5,
       height: 40,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 15),
         child: ElevatedButton(
-          onPressed: didTapDeclarationButton,
-          child: Text("신고하기", style: declarationBtnStyle,),
+          onPressed: (selectedReason == null) ? null : didTapDeclarationButton,
           style: ElevatedButton.styleFrom(
             backgroundColor: PURPLE_COLOR,
             elevation: 0,
@@ -150,6 +158,7 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
                 borderRadius: BorderRadius.circular(20)
             ),
           ),
+          child: const Text("신고하기", style: declarationBtnStyle,),
         ),
       ),
     );
@@ -157,17 +166,21 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
 
   /// event methods
   void selectReason(String selected) {
-    setState(() {
-      selectedReason = selected;
-    });
+    setState(() { selectedReason = selected; });
   }
 
-  void didTapDeclarationButton() {
-    Navigator.pop(context);
+  Future<void> didTapDeclarationButton() async {
     if (selectedReason != null) {
-      print("신고하기 버튼 탭 -> 선택된 신고 사유 : ${selectedReason}");
-    } else {
-      print("신고하기 버튼 탭 -> 선택된 신고 사유 없음");
+      switch (widget.type) {
+        case DeclarationType.PRODUCT:
+          if (selectedReason! == reasonList[4]) { selectedReason = '게시글 성격에 부적합함'; }
+          final result = await ShoppingService().declareProduct('${widget.idx}', selectedReason!);
+          if (result) { Navigator.pop(context); }
+
+        case DeclarationType.REVIEW:
+          final result = await ReviewService().declareReview('${widget.idx}', selectedReason!);
+          if (result) { Navigator.pop(context); }
+      }
     }
   }
 }

@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../common/const/colors.dart';
+import '../../model/data/shopping/shopping_main_model.dart';
 import '../../product/view/product_detail_screen.dart';
 
 class CategoryListItem extends StatefulWidget {
-  final String category;
-  final String? name;
+  final String? category;
+  final int? productId;
+  final Product data;
 
   const CategoryListItem({
-    required this.category,
-    this.name,
+    this.category,
+    this.productId,
+    required this.data,
     Key? key
   }) : super(key: key);
 
@@ -22,19 +25,19 @@ class _CategoryListItemState extends State<CategoryListItem> {
   bool isLiked = false;
 
   // 제품 정보 텍스트 스타일 정의
-  final brandNameTextStyle = TextStyle(
+  final brandNameTextStyle = const TextStyle(
     fontSize: 12.0,
     fontWeight: FontWeight.w500,
     color: GRAY_4_COLOR,
   );
 
-  final productNameTextStyle = TextStyle(
+  final productNameTextStyle = const TextStyle(
     fontSize: 12.0,
     fontWeight: FontWeight.w400,
     color: GRAY_4_COLOR,
   );
 
-  final priceTextStyle = TextStyle(
+  final priceTextStyle = const TextStyle(
     fontSize: 14.0,
     fontWeight: FontWeight.w500,
     color: Colors.black,
@@ -46,7 +49,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
       onTap: didTapItem,
       child: IntrinsicHeight(
         child: Container(
-        margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
         child: Row(
             children: [
               renderProductImage(),
@@ -62,15 +65,19 @@ class _CategoryListItemState extends State<CategoryListItem> {
   /// 제품 이미지 위젯 구현 메소드
   Widget renderProductImage() {
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 5.0),
-        decoration: BoxDecoration(
-          border: Border.all(
-              width: 1.0,
-              color: GRAY_0_COLOR
-          ),
-          borderRadius: BorderRadius.circular(12.0),
+      width: 90,
+      height: 90,
+      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+      decoration: BoxDecoration(
+        border: Border.all(
+            width: 1.0,
+            color: GRAY_0_COLOR
         ),
-        child: Image.asset('asset/images/product_sample.png', width: 90, height: 90,)
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: (widget.data.imgUrl == null)
+          ? const Icon(Icons.question_mark, size: 30,)
+          : Image.network(widget.data.imgUrl!)
     );
   }
 
@@ -80,9 +87,9 @@ class _CategoryListItemState extends State<CategoryListItem> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text((widget.name == null) ? '루시 앤플 셀러' : widget.name!, style: brandNameTextStyle,),
-          Text('폴로랄프로렌 목도리 Red Color', style: productNameTextStyle,),
-          Text('79,000원', style: priceTextStyle,),
+          Text(widget.data.nickname, style: brandNameTextStyle,),
+          Text(widget.data.name, style: productNameTextStyle,),
+          Text('${widget.data.price}원', style: priceTextStyle,),
         ],
       ),
     );
@@ -105,13 +112,12 @@ class _CategoryListItemState extends State<CategoryListItem> {
 
   /// 이벤트 메소드 정의
   void didTapLikeButton() {
-    print('didTapLikeButton');
     setState(() {
       isLiked = !isLiked;
     });
   }
 
   void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category,)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: widget.data.productId,)));
   }
 }

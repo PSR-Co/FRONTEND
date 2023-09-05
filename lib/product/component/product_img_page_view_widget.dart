@@ -23,17 +23,33 @@ class _ProductImgPageViewWidgetState extends State<ProductImgPageViewWidget> {
   );
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return (widget.imgKeyList.isEmpty)
+      ? SizedBox(
+        width: MediaQuery.of(widget.context).size.width,
+        height: MediaQuery.of(widget.context).size.width,
+        child: const Center(
+          child: Text('이미지 없음'),
+        ),
+      )
+      : Column(
       children: [
-        Container(
+        SizedBox(
           width: MediaQuery.of(widget.context).size.width,
           height: MediaQuery.of(widget.context).size.width,
           child: PageView.builder(
             controller: controller,
             itemBuilder: (BuildContext context, int index) {
-              return Image.asset(
+              return Image.network(
                 widget.imgKeyList.elementAt(index),
                 fit: BoxFit.contain,
+                loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  if(loadingProgress == null){ return child; }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null,
+                    ),
+                  );
+                },
               );
             }
           ),
