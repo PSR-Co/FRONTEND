@@ -29,15 +29,16 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
       fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
   InquiryListModel? data;
   List<InquiryList> inquiries = [];
+  String type = "";
 
   Future<dynamic> fetchData(String status) async {
     return await InquiryService().getInquiryList({'status': status});
   }
 
-  Future<dynamic> savedType() async {
+  Future<void> savedType() async {
     final savedType = await storage.read(key: USER_TYPE);
     print("savedType $savedType");
-    return savedType;
+    type = savedType!;
   }
 
   @override
@@ -139,18 +140,22 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
             itemCount: inquiries.length,
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
+              savedType();
               return ListTile(
                 onTap: () {
                   // Navigator.push(context, MaterialPageRoute(builder: (context)=> DetailInquiryScreen()));
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => savedType() == '관리자'
-                              ? AdminDetailInquiryScreen(
-                                  inquiryId: inquiries[index].inquiryId,
-                                )
-                              : DetailInquiryScreen(
-                                  inquiryId: inquiries[index].inquiryId)));
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => type == '관리자'
+                                  ? AdminDetailInquiryScreen(
+                                      inquiryId: inquiries[index].inquiryId,
+                                    )
+                                  : DetailInquiryScreen(
+                                      inquiryId: inquiries[index].inquiryId)))
+                      .then((value) {
+                    setState(() {});
+                  });
                 },
                 title: Container(
                   alignment: Alignment.centerLeft,

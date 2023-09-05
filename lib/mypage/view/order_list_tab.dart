@@ -71,10 +71,12 @@ class _OrderListTabState extends State<OrderListTab>
                 child: Text('올바르지 않은 요청 타입입니다.'),
               );
             }
-          } else {
-            return const Center(
-              child: Text('요청목록을 불러오는데 실패하였습니다.'),
-            );
+          }else {
+            return Container(
+              width: 30,
+              height: 30,
+              alignment: Alignment.center,
+              child: const CircularProgressIndicator());
           }
           return SizedBox(
             width: MediaQuery.of(context).size.width,
