@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:psr/auth/component/complete_widget.dart';
-
 import '../../common/const/colors.dart';
 
 class CompleteOrderScreen extends StatelessWidget {
@@ -12,73 +11,76 @@ class CompleteOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: renderBody(context),
-    );
-  }
-
-  Widget renderBody(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: MediaQuery.of(context).size.height/2 - 250,),
-        const CompleteWidget(mainText: '요청이 완료되었습니다!\n감사합니다.'),
-        const SizedBox(height: 70,),
-        Row(
-          children: [
-            getConfirmButton(context),
-            getOrderListButton(context),
-          ],
-        )
-
-      ],
-    );
-  }
-
-  Widget getConfirmButton(BuildContext context) {
-    return Expanded(
+      body: SafeArea(
         child: Container(
-          margin: const EdgeInsets.only(left: 20),
-          height: BUTTON_HEIGHT,
-          child: ElevatedButton(
-            onPressed: () { Navigator.of(context).pop(); },
-            style: ElevatedButton.styleFrom(
-              foregroundColor: GRAY_3_COLOR,
-              elevation: 0,
-              backgroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: const BorderSide(color: GRAY_1_COLOR,width: 1.0),
-                borderRadius: BorderRadius.circular(25),
+          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 5),
+          child: Column(
+            children: [
+              const Icon(Icons.check_circle, color: PURPLE_COLOR, size: 40.0,),
+              Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: const Text(
+                    '요청이 완료되었습니다!\n감사합니다.',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: GRAY_4_COLOR
+                    ),
+                    textAlign: TextAlign.center,)
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 50),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: (MediaQuery.of(context).size.width - 30) / 2,
+                      height: 45,
+                      padding: const EdgeInsets.only(left: 10, right: 5),
+                      child: ElevatedButton(
+                          onPressed: didTapConfirmButton,
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(22),
+                              side: const BorderSide(color: GRAY_1_COLOR)
+                            )
+                          ),
+                          child: const Text('확인', style: TextStyle(color: GRAY_2_COLOR, fontWeight: FontWeight.w700),)
+                      ),
+                    ),
+                    Container(
+                      width: (MediaQuery.of(context).size.width - 30) / 2,
+                      height: 45,
+                      padding: const EdgeInsets.only(left: 5, right: 10),
+                      child: ElevatedButton(
+                          onPressed: didTapOrderList,
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: PURPLE_COLOR,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(22)
+                            )
+                          ),
+                          child: const Text('요청목록', style: TextStyle(fontWeight: FontWeight.w700),)
+                      ),
+                    )
+                  ],
+                ),
               )
-            ),
-            child: const Text('확인',)
+            ],
           ),
-        )
+        ),
+      ),
     );
   }
 
-  Widget getOrderListButton(BuildContext context) {
-    const buttonTitleStyle = TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w500
-    );
+  void didTapConfirmButton() {
+    print('확인 버튼 탭함');
+  }
 
-    return Expanded(
-        child: Container(
-          margin: const EdgeInsets.only(left: 10, right: 20),
-          height: BUTTON_HEIGHT,
-          child: ElevatedButton(
-            onPressed: () {
-              // TODO: 요청목록 화면으로 전환
-            },
-            style: ElevatedButton.styleFrom(
-                elevation: 0,
-                backgroundColor: PURPLE_COLOR,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                )
-            ),
-            child: const Text('요청목록', style: buttonTitleStyle,)
-          ),
-        )
-    );
+  void didTapOrderList() {
+    print('요청목록 버튼 탭함');
   }
 }
