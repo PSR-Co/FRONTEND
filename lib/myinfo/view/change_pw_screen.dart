@@ -20,9 +20,9 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
   final TextStyle completeBtnTextStyle = const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700, color: Colors.white);
   final TextStyle errorTextStyle = const TextStyle(fontSize: 11.0, fontWeight: FontWeight.w400, color: ERROR_COLOR);
 
-  bool isHided1 = false;
-  bool isHided2 = false;
-  bool isHided3 = false;
+  bool isHided1 = true;
+  bool isHided2 = true;
+  bool isHided3 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
               child: SizedBox(
                 width: 20.0, height: 20.0,
                 child: IconButton(
-                    icon: isHided1 ? Icon(null) : SvgPicture.asset("asset/icons/common/eyes_off.svg"),
+                    icon: isHided1 ? SvgPicture.asset("asset/icons/common/eyes_off.svg") : Icon(null),
                     isSelected: false,
                     onPressed: updateHideState1),
               ),
@@ -101,7 +101,7 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
                   child: SizedBox(
                     width: 20.0, height: 20.0,
                     child: IconButton(
-                        icon: isHided2 ? Icon(null) : SvgPicture.asset("asset/icons/common/eyes_off.svg"),
+                        icon: isHided2 ? SvgPicture.asset("asset/icons/common/eyes_off.svg") : Icon(null),
                         isSelected: false,
                         onPressed: updateHideState2),
                   ),
@@ -136,7 +136,7 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
               child: SizedBox(
                 width: 20.0, height: 20.0,
                 child: IconButton(
-                    icon: isHided3 ? Icon(null) : SvgPicture.asset("asset/icons/common/eyes_off.svg"),
+                    icon: isHided3 ? SvgPicture.asset("asset/icons/common/eyes_off.svg") : Icon(null),
                     isSelected: false,
                     onPressed: updateHideState3),
               ),
