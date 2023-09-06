@@ -58,7 +58,7 @@ class _PickImgViewState extends State<PickImgView> {
                       Center(
                         child: renderProductImg(
                           (widget.imgKeyList!.elementAt(index).contains('https'))
-                            ? Image.network(widget.imgKeyList!.elementAt(index), fit: BoxFit.fill,)å
+                            ? Image.network(widget.imgKeyList!.elementAt(index), fit: BoxFit.fill,)
                             : Image.file(File(widget.imgKeyList!.elementAt(index)),),
                         ),
                       ),
