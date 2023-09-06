@@ -58,8 +58,8 @@ class SignupService {
 
   void setProfileImage(String? profileImgKey) { _signupRequest.profileImgKey = (profileImgKey == null) ? null : profileImgKey!; }
 
-  void setNotificationSetting(bool marketing, String? deviceToken) {
-    _signupRequest.marketing = marketing;
+  void setNotificationSetting(bool notification, String? deviceToken) {
+    _signupRequest.notification = notification;
     _signupRequest.deviceToken = deviceToken;
   }
 
