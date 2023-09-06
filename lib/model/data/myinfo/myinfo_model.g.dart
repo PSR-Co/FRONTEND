@@ -34,3 +34,26 @@ Map<String, dynamic> _$MyInfoToJson(MyInfo instance) => <String, dynamic>{
       'phone': instance.phone,
       'nickname': instance.nickname,
     };
+
+ChangePWModel _$ChangePWModelFromJson(Map<String, dynamic> json) => ChangePWModel(
+  code: json['code'] as int,
+  message: json['message'] as String,
+  data: ChangePW.fromJson(json['data'] as Map<String, dynamic>),
+);
+
+Map<String, dynamic> _$ChangePWModelToJson(ChangePWModel instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+      'data': instance.data,
+    };
+
+ChangePW _$ChangePWFromJson(Map<String, dynamic> json) => ChangePW(
+  currentPassword: json['currentPassword'] as String,
+  password: json['password'] as String,
+);
+
+Map<String, dynamic> _$ChangePWToJson(ChangePW instance) => <String, dynamic>{
+  'currentPassword': instance.currentPassword,
+  'password': instance.password,
+};

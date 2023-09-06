@@ -31,3 +31,26 @@ class MyInfo {
 
   factory MyInfo.fromJson(Map<String, dynamic> json) => _$MyInfoFromJson(json);
 }
+
+@JsonSerializable()
+class ChangePWModel extends GeneralModel {
+  final ChangePW data;
+
+  ChangePWModel(
+      {required super.code, required super.message, required this.data});
+
+  factory ChangePWModel.fromJson(Map<String, dynamic> json) =>
+      _$ChangePWModelFromJson(json);
+}
+
+class ChangePW {
+  final String currentPassword;
+  final String password;
+
+  ChangePW({required this.currentPassword, required this.password});
+
+  factory ChangePW.fromJson(Map<String, dynamic> json) =>
+      _$ChangePWFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ChangePWToJson(this);
+}
