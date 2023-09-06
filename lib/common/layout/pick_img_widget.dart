@@ -50,20 +50,36 @@ class _PickImgViewState extends State<PickImgView> {
             itemCount: imgKeyList.length + 1,
             itemBuilder: (BuildContext context, int index) {
               if (imgKeyList.isNotEmpty && index < imgKeyList.length) {
-                return Container(
-                  width: 90,
-                  height: 90,
-                  margin: const EdgeInsets.all(5),
-                  child: (widget.imgKeyList!.elementAt(index).contains('https'))
-                      ? Image.network(widget.imgKeyList!.elementAt(index))
-                      // : AssetThumb(asset: selectedImgAssets.elementAt(index), width: 90, height: 90)
-                      : Image.file(File(widget.imgKeyList!.elementAt(index)),),
-                );
-
-              } else {
                 return SizedBox(
                   width: 90,
                   height: 90,
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: renderProductImg(
+                          (widget.imgKeyList!.elementAt(index).contains('https'))
+                            ? Image.network(widget.imgKeyList!.elementAt(index), fit: BoxFit.fill,)å
+                            : Image.file(File(widget.imgKeyList!.elementAt(index)),),
+                        ),
+                      ),
+                      Positioned(
+                        top: -15,
+                        right: -15,
+                        child: IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: (){ didTapDeleteSelectedImg(index); },
+                          icon: const Icon(Icons.cancel, size: 20, color: Colors.black,)
+                        )
+                      ),
+                    ],
+                  ),
+                );
+
+              } else {
+                return Container(
+                  margin: const EdgeInsets.only(left: 10),
+                  width: 80,
+                  height: 80,
                   child: IconButton(
                       padding: EdgeInsets.zero,
                       onPressed: (widget.isEditing)
@@ -74,7 +90,6 @@ class _PickImgViewState extends State<PickImgView> {
                 );
               }
             },
-            // children: renderImgListView(),
           ),
         ),
         FittedBox(
@@ -93,6 +108,15 @@ class _PickImgViewState extends State<PickImgView> {
     );
   }
 
+  Widget renderProductImg(Image img) {
+    return Container(
+      color: Colors.grey.withOpacity(0.1),
+      width: 80,
+      height: 80,
+      child: img,
+    );
+  }
+
   /// event methods
   void didTapPickImgButton(int length) async {
     if (widget.imgKeyList!.length < 5) {
@@ -103,7 +127,7 @@ class _PickImgViewState extends State<PickImgView> {
           if ((widget.imgKeyList!.length + images.length) < 6) {
             setState(() {
               for (var element in images) {
-                  print('image.path -> ${element.path}');
+                  // print('image.path -> ${element.path}');
                   widget.imgKeyList!.add(element.path);
               }
             });
@@ -121,6 +145,11 @@ class _PickImgViewState extends State<PickImgView> {
           gravity: ToastGravity.BOTTOM
       );
     }
+  }
 
+  void didTapDeleteSelectedImg(int index) {
+    setState(() {
+      widget.imgKeyList!.removeAt(index);
+    });
   }
 }
