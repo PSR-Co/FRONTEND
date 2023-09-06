@@ -53,12 +53,13 @@ class _PickImgViewState extends State<PickImgView> {
                 return Container(
                   width: 90,
                   height: 90,
-                  padding: const EdgeInsets.all(5),
+                  margin: const EdgeInsets.all(5),
                   child: (widget.imgKeyList!.elementAt(index).contains('https'))
                       ? Image.network(widget.imgKeyList!.elementAt(index))
+                      // : AssetThumb(asset: selectedImgAssets.elementAt(index), width: 90, height: 90)
                       : Image.file(File(widget.imgKeyList!.elementAt(index)),),
-                  // child:
                 );
+
               } else {
                 return SizedBox(
                   width: 90,
@@ -94,15 +95,26 @@ class _PickImgViewState extends State<PickImgView> {
 
   /// event methods
   void didTapPickImgButton(int length) async {
-    if (length < 5) {
+    if (widget.imgKeyList!.length < 5) {
       var picker = ImagePicker();
-      var image = await picker.pickImage(source: ImageSource.gallery);
-      if (image != null) {
-        setState(() {
-          imgKeyList.add(image.path);
-          widget.imgKeyList!.add(image.path);
-        });
+      var images = await picker.pickMultiImage();
+      if (images.isNotEmpty) {
+
+          if ((widget.imgKeyList!.length + images.length) < 6) {
+            setState(() {
+              for (var element in images) {
+                  print('image.path -> ${element.path}');
+                  widget.imgKeyList!.add(element.path);
+              }
+            });
+          } else {
+            Fluttertoast.showToast(
+                msg: '사진은 최대 5개까지 첨부할 수 있습니다.',
+                gravity: ToastGravity.BOTTOM
+            );
+          }
       }
+
     } else {
       Fluttertoast.showToast(
           msg: '사진은 최대 5개까지 첨부할 수 있습니다.',
