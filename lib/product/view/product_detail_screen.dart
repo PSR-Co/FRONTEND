@@ -52,7 +52,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             category: data?.data.category ?? "상품 상세",
             isMyProduct: isMyProduct,
             productId: widget.productId,
-            pruductData: data?.data
+            productData: data?.data
           ),
             body: (isLoading)
                 ? const Center(child: CircularProgressIndicator(color: PURPLE_COLOR,),)

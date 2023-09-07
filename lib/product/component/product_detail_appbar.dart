@@ -14,7 +14,7 @@ class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget 
   final String category;
   final bool isMyProduct;
   final int productId;
-  final Product? pruductData;
+  final Product? productData;
 
   static const double APPBAR_HEIGHT = 50;
 
@@ -22,7 +22,7 @@ class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget 
     required this.category,
     required this.isMyProduct,
     required this.productId,
-    required this.pruductData,
+    required this.productData,
     Key? key
   }) : super(key: key);
 
@@ -158,9 +158,9 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
         .isKakaotalkInstalled()
         .then((isInstalled) {
           if(isInstalled) {
-            KakaoShareWithDynamicLink().shareMyCode(link);
+            KakaoShareWithDynamicLink().shareMyCode(widget.productData, link);
           } else {
-            print('카카오톡 설치 안 됨');
+            Fluttertoast.showToast(msg: '카카오톡이 설치되어 있지 않습니다!', gravity: ToastGravity.BOTTOM);
           }
     });
   }
@@ -171,7 +171,7 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
         MaterialPageRoute(
             builder: (_) => AddProductScreen(
               category: widget.category,
-              data: widget.pruductData,
+              data: widget.productData,
               productId: widget.productId,
             )
         )

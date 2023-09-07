@@ -1,5 +1,6 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:psr/model/data/shopping/product_model.dart';
 
 class KakaoShareWithDynamicLink {
   static final KakaoShareWithDynamicLink _manager = KakaoShareWithDynamicLink._internal();
@@ -17,9 +18,9 @@ class KakaoShareWithDynamicLink {
     return installed;
   }
 
-  void shareMyCode(String link) async {
+  void shareMyCode(Product? product, String link) async {
     try {
-      var template = getTemplate(link);
+      var template = getTemplate(product, link);
       var uri = await ShareClient.instance.shareDefault(template: template);
 
       await ShareClient.instance.launchKakaoTalk(uri);
@@ -29,10 +30,23 @@ class KakaoShareWithDynamicLink {
     }
   }
 
-  FeedTemplate getTemplate(String link) {
+  String getTemplateTitle(Product? product) {
+    if (product == null) { return '공유된 상품을 확인해보세요!'; }
+    else { return '\'${product.name}\'을 공유했어요!'; }
+  }
+
+  String getTemplateImgUrl(Product? product) {
+    if (product != null && product!.imgList.isNotEmpty) {
+      return product!.imgList[0];
+    } else {
+      return 'https://firebasestorage.googleapis.com/v0/b/psr-dev.appspot.com/o/dev-content%2FtempImage.png?alt=media&token=86255155-cf03-4b9a-8603-3d02230b2811';
+    }
+  }
+
+  FeedTemplate getTemplate(Product? product, String link) {
     Content content = Content(
-      title: 'title',
-      imageUrl: Uri.parse('https://firebasestorage.googleapis.com/v0/b/psr-dev.appspot.com/o/product%2Fproduct-20230818-0?alt=media&token=f5ec4291-1636-4394-a6e0-bc34f96d829c'),
+      title: getTemplateTitle(product),
+      imageUrl: Uri.parse(getTemplateImgUrl(product)),
       link: Link(
         mobileWebUrl: Uri.parse(link),
       ),
