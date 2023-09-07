@@ -39,6 +39,7 @@ class KakaoShareWithDynamicLink {
     if (product != null && product!.imgList.isNotEmpty) {
       return product!.imgList[0];
     } else {
+      // TODO: 메인 아이콘 이미지로 변경
       return 'https://firebasestorage.googleapis.com/v0/b/psr-dev.appspot.com/o/dev-content%2FtempImage.png?alt=media&token=86255155-cf03-4b9a-8603-3d02230b2811';
     }
   }
@@ -61,20 +62,19 @@ class KakaoShareWithDynamicLink {
     return template;
   }
 
-  Future<String> buildDynamicLink() async {
+  Future<String> buildDynamicLink(int productId) async {
     String url = "https://psr.page.link";
 
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      link: Uri.parse('$url'),
+      link: Uri.parse('$url/$productId'),
       uriPrefix: url,
-      androidParameters: AndroidParameters(
+      androidParameters: const AndroidParameters(
         packageName: "com.psr.front.psr"
       ) ,
-      iosParameters: IOSParameters(
+      iosParameters: const IOSParameters(
         bundleId: "com.psr.front.psr",
       )
     );
-    // final ShortDynamicLink dynamicUrl = await parameters.buildShortLink();
     final ShortDynamicLink dynamicUrl = await FirebaseDynamicLinks.instance.buildShortLink(parameters);
     return dynamicUrl.shortUrl.toString();
   }

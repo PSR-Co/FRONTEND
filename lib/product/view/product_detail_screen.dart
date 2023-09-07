@@ -26,7 +26,7 @@ class ProductDetailScreen extends StatefulWidget {
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _ProductDetailScreenState extends State<ProductDetailScreen> with WidgetsBindingObserver {
 
   bool isLoading = true;
 
@@ -35,6 +35,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   ProductResponseModel? data;
   ReviewPreviewResponseModel? reviewData;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance!.removeObserver(this);
+  }
 
   @override
   Widget build(BuildContext context) {

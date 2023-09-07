@@ -151,8 +151,7 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   }
 
   void didTapShareButton() async {
-    print("didTapShareButton");
-    String link = await KakaoShareWithDynamicLink().buildDynamicLink();
+    String link = await KakaoShareWithDynamicLink().buildDynamicLink(widget.productId);
 
     KakaoShareWithDynamicLink()
         .isKakaotalkInstalled()
@@ -166,7 +165,6 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   }
 
   void didTapEditButton() {
-    print("didTapEditButton");
     Navigator.of(context).push(
         MaterialPageRoute(
             builder: (_) => AddProductScreen(
