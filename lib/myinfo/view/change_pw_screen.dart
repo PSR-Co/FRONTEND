@@ -51,7 +51,6 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
 
   Future<dynamic> fetchData(String currentPassword, String password) async {
     dynamic result = await MyInfoService().changePW(currentPassword, password);
-    print("fetch ${result.toString()}");
     return result;
     // return await MyInfoService().changePW(currentPassword, password);
   }
@@ -67,8 +66,8 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
           child: Column(
             children: [
               Container(
-                  margin: EdgeInsets.only(bottom: 10.0),
-                  child: DefaultAppBarLayout(titleText: "비밀번호 변경")),
+                  margin: const EdgeInsets.only(bottom: 10.0),
+                  child: const DefaultAppBarLayout(titleText: "비밀번호 변경")),
               Expanded(child: changePWView())
             ],
           ),
@@ -90,18 +89,19 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
               btnTitle: '완료',
               isVisible: true,
               onPressed: () {
-                print("click");
                 if (pwController.text.isNotEmpty &&
                     newPwController.text.isNotEmpty &&
                     checkController.text.isNotEmpty) {
-                  if(newPwController.text == checkController.text) {
+                  if (newPwController.text == checkController.text) {
                     showDialog(
                         context: context,
                         barrierDismissible: true,
                         builder: (_) {
                           return resultDialog();
                         });
-                    }else {Fluttertoast.showToast(msg: "비밀번호가 일치해야 합니다");}
+                  } else {
+                    Fluttertoast.showToast(msg: "비밀번호가 일치해야 합니다");
+                  }
                 } else {
                   Fluttertoast.showToast(msg: "값을 모두 입력해주세요");
                 }
@@ -130,7 +130,8 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
                 child: IconButton(
                     icon: isHided1
                         ? SvgPicture.asset("asset/icons/common/eyes_off.svg")
-                        : Icon(CupertinoIcons.eye_fill, color: PURPLE_COLOR),
+                        : const Icon(CupertinoIcons.eye_fill,
+                            color: PURPLE_COLOR),
                     isSelected: false,
                     onPressed: updateHideState1),
               ),
@@ -139,7 +140,7 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
             enabledBorder: textFieldOutlineColor(),
             border: textFieldOutlineColor(),
             contentPadding:
-                EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
+                const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
         style: newPWTextStyle,
       ),
     );
@@ -167,7 +168,8 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
                         icon: isHided2
                             ? SvgPicture.asset(
                                 "asset/icons/common/eyes_off.svg")
-                            : Icon(CupertinoIcons.eye_fill, color: PURPLE_COLOR),
+                            : const Icon(CupertinoIcons.eye_fill,
+                                color: PURPLE_COLOR),
                         isSelected: false,
                         onPressed: updateHideState2),
                   ),
@@ -175,8 +177,8 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
                 focusedBorder: textFieldOutlineColor(),
                 enabledBorder: textFieldOutlineColor(),
                 border: textFieldOutlineColor(),
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 10.0)),
             style: newPWTextStyle,
             onChanged: (value) {
               setState(() {
@@ -187,7 +189,7 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
                 }
               });
             },
-            onTap: (){
+            onTap: () {
               setState(() {
                 if (newPwController.text != checkController.text) {
                   isValidated = false;
@@ -205,8 +207,8 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
 
   Widget alertMessage(String message) {
     return Container(
-        margin: EdgeInsets.symmetric(vertical: 5.0),
-        padding: EdgeInsets.only(left: 10.0),
+        margin: const EdgeInsets.symmetric(vertical: 5.0),
+        padding: const EdgeInsets.only(left: 10.0),
         alignment: Alignment.centerLeft,
         child: Text(
           message,
@@ -236,7 +238,8 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
                         icon: isHided3
                             ? SvgPicture.asset(
                                 "asset/icons/common/eyes_off.svg")
-                            : Icon(CupertinoIcons.eye_fill, color: PURPLE_COLOR),
+                            : const Icon(CupertinoIcons.eye_fill,
+                                color: PURPLE_COLOR),
                         isSelected: false,
                         onPressed: updateHideState3),
                   ),
@@ -244,8 +247,8 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
                 focusedBorder: textFieldOutlineColor(),
                 enabledBorder: textFieldOutlineColor(),
                 border: textFieldOutlineColor(),
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0)),
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 10.0, horizontal: 10.0)),
             style: newPWTextStyle,
             onChanged: (value) {
               setState(() {
@@ -256,7 +259,7 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
                 }
               });
             },
-            onTap: (){
+            onTap: () {
               setState(() {
                 if (newPwController.text != checkController.text) {
                   isValidated = false;
@@ -275,13 +278,13 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
 
   Widget changeViewForm(String title, Widget textField) {
     return Container(
-      margin: EdgeInsets.only(top: 30.0),
+      margin: const EdgeInsets.only(top: 30.0),
       child: Column(
         children: [
           Container(
             alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.only(bottom: 10.0),
             child: Text(title, style: pwTitleTextStyle),
-            margin: EdgeInsets.only(bottom: 10.0),
           ),
           Container(
             child: textField,
@@ -316,18 +319,16 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
   }
 
   Widget resultDialog() {
-    print("text : ${newPwController.text} + ${checkController.text}");
     return FutureBuilder(
         future: fetchData(pwController.text, newPwController.text),
         builder: (context, snapshot) {
           print("snapshot.data : ${snapshot.data}");
           if (snapshot.hasError) {
-            // result = data?.message;
-            return alertDialog("비밀번호 변경 중 네트워크 오류가 발생했습니다.");
+            return alertDialog("비밀번호 변경을 실패했습니다.\n올바른 정보를 입력해주세요.");
           } else if (snapshot.hasData) {
             data = ChangePWModel.fromJson(snapshot.data);
             if (data?.code != 200) {
-                return alertDialog(data!.message);
+              return alertDialog(data!.message);
             }
           } else if (!snapshot.hasData) {
             return Container(
@@ -336,22 +337,16 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
                 alignment: Alignment.center,
                 child: const CircularProgressIndicator());
           }
-          print("result5 : ${data?.message}");
-
           return alertDialog("성공적으로 비밀번호를 변경했습니다!");
         });
   }
 
-
-
   Widget alertDialog(String result) {
-    print("$result");
     return AlertDialog(
       backgroundColor: Colors.white,
       actionsAlignment: MainAxisAlignment.spaceEvenly,
       titlePadding: EdgeInsets.zero,
-      shape:
-      const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       elevation: 0.0,
       content: Container(
         height: 100,
@@ -364,7 +359,7 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
           child: TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                if(result == "성공적으로 비밀번호를 변경했습니다!"){
+                if (result == "성공적으로 비밀번호를 변경했습니다!") {
                   Navigator.of(context).pop();
                 }
               },
@@ -376,9 +371,4 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
       ],
     );
   }
-// void checkValidation(){
-//   setState(() {
-//     if(newPwController.text != checkController.text) {isValidated = false;} else {isValidated = true;}
-//   });
-// }
 }
