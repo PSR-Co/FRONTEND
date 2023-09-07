@@ -8,12 +8,13 @@ import 'package:psr/product/view/declaration_dialog.dart';
 
 import '../../common/const/colors.dart';
 import '../../model/data/shopping/product_model.dart';
+import '../../presenter/shopping/kakao_share_with_dynamic_link.dart';
 
 class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String category;
   final bool isMyProduct;
   final int productId;
-  final Product? pruductData;
+  final Product? productData;
 
   static const double APPBAR_HEIGHT = 50;
 
@@ -21,7 +22,7 @@ class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget 
     required this.category,
     required this.isMyProduct,
     required this.productId,
-    required this.pruductData,
+    required this.productData,
     Key? key
   }) : super(key: key);
 
@@ -149,17 +150,26 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
     );
   }
 
-  void didTapShareButton() {
-    print("didTapShareButton");
+  void didTapShareButton() async {
+    String link = await KakaoShareWithDynamicLink().buildDynamicLink(widget.productId);
+
+    KakaoShareWithDynamicLink()
+        .isKakaotalkInstalled()
+        .then((isInstalled) {
+          if(isInstalled) {
+            KakaoShareWithDynamicLink().shareMyCode(widget.productData, link);
+          } else {
+            Fluttertoast.showToast(msg: '카카오톡이 설치되어 있지 않습니다!', gravity: ToastGravity.BOTTOM);
+          }
+    });
   }
 
   void didTapEditButton() {
-    print("didTapEditButton");
     Navigator.of(context).push(
         MaterialPageRoute(
             builder: (_) => AddProductScreen(
               category: widget.category,
-              data: widget.pruductData,
+              data: widget.productData,
               productId: widget.productId,
             )
         )

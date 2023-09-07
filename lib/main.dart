@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:psr/common/view/root_tab.dart';
+import 'package:psr/model/network/constants.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'common/view/splash_screen.dart';
@@ -9,6 +11,10 @@ import 'common/view/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  KakaoSdk.init(
+    nativeAppKey: native_app_key,
+    javaScriptAppKey: javascript_app_key
+  );
   runApp(const _App());
 }
 
