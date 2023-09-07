@@ -8,6 +8,7 @@ import 'package:psr/product/view/declaration_dialog.dart';
 
 import '../../common/const/colors.dart';
 import '../../model/data/shopping/product_model.dart';
+import '../../presenter/shopping/kakao_share_with_dynamic_link.dart';
 
 class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String category;
@@ -149,8 +150,19 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
     );
   }
 
-  void didTapShareButton() {
+  void didTapShareButton() async {
     print("didTapShareButton");
+    String link = await KakaoShareWithDynamicLink().buildDynamicLink();
+
+    KakaoShareWithDynamicLink()
+        .isKakaotalkInstalled()
+        .then((isInstalled) {
+          if(isInstalled) {
+            KakaoShareWithDynamicLink().shareMyCode(link);
+          } else {
+            print('카카오톡 설치 안 됨');
+          }
+    });
   }
 
   void didTapEditButton() {
