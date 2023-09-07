@@ -5,7 +5,7 @@ part 'myinfo_model.g.dart';
 
 @JsonSerializable()
 class MyInfoModel extends GeneralModel {
-  final MyInfo data;
+  final MyInfo? data;
 
   MyInfoModel(
       {required super.code, required super.message, required this.data});
@@ -34,7 +34,7 @@ class MyInfo {
 
 @JsonSerializable()
 class ChangePWModel extends GeneralModel {
-  final ChangePW data;
+  final Map<String, dynamic>? data;
 
   ChangePWModel(
       {required super.code, required super.message, required this.data});
@@ -43,6 +43,7 @@ class ChangePWModel extends GeneralModel {
       _$ChangePWModelFromJson(json);
 }
 
+@JsonSerializable()
 class ChangePW {
   final String currentPassword;
   final String password;

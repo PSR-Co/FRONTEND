@@ -9,7 +9,8 @@ part of 'myinfo_model.dart';
 MyInfoModel _$MyInfoModelFromJson(Map<String, dynamic> json) => MyInfoModel(
       code: json['code'] as int,
       message: json['message'] as String,
-      data: MyInfo.fromJson(json['data'] as Map<String, dynamic>),
+      data: json['data'] == null ? null
+        : MyInfo.fromJson(json['data'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$MyInfoModelToJson(MyInfoModel instance) =>
@@ -35,11 +36,12 @@ Map<String, dynamic> _$MyInfoToJson(MyInfo instance) => <String, dynamic>{
       'nickname': instance.nickname,
     };
 
-ChangePWModel _$ChangePWModelFromJson(Map<String, dynamic> json) => ChangePWModel(
-  code: json['code'] as int,
-  message: json['message'] as String,
-  data: ChangePW.fromJson(json['data'] as Map<String, dynamic>),
-);
+ChangePWModel _$ChangePWModelFromJson(Map<String, dynamic> json) =>
+    ChangePWModel(
+      code: json['code'] as int,
+      message: json['message'] as String,
+      data: json['data'] as Map<String, dynamic>?,
+    );
 
 Map<String, dynamic> _$ChangePWModelToJson(ChangePWModel instance) =>
     <String, dynamic>{
