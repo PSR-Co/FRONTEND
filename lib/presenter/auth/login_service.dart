@@ -17,8 +17,8 @@ class LoginService {
     return _authService;
   }
 
-  Future<bool> login(String id, String pw) async {
-    final body = LoginRequest(email: id, password: pw).toJson();
+  Future<bool> login(String id, String pw, String? deviceToken) async {
+    final body = LoginRequest(email: id, password: pw, deviceToken: deviceToken).toJson();
     final response = await
     APIManager().request(RequestType.POST, LOGIN_URL, null, null, body)
         .catchError((error) { debugPrint('error : $error'); });

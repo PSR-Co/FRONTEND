@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/colors.dart';
 
+import '../../auth/component/account_input_text_field.dart';
+
 class PurpleOutlinedTextFieldWithButton extends StatefulWidget {
   final int maxLine;
   final int? maxLength;
@@ -12,6 +14,8 @@ class PurpleOutlinedTextFieldWithButton extends StatefulWidget {
   final String buttonTitle;
   final VoidCallback onPressed;
 
+  final TextInputType? inputType;
+
   const PurpleOutlinedTextFieldWithButton({
     required this.maxLine,
     this.maxLength,
@@ -22,6 +26,7 @@ class PurpleOutlinedTextFieldWithButton extends StatefulWidget {
 
     required this.buttonTitle,
     required this.onPressed,
+    this.inputType,
 
     Key? key
   }) : super(key: key);
@@ -39,10 +44,6 @@ class _PurpleOutlinedTextFieldWithButtonState extends State<PurpleOutlinedTextFi
   }
 
   Widget renderRow() {
-    // if (widget.text != null) {
-    //   widget.controller.text = widget.text!;
-    // }
-
     final defaultStyle = OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(
@@ -69,6 +70,7 @@ class _PurpleOutlinedTextFieldWithButtonState extends State<PurpleOutlinedTextFi
                   });
                 },
                 scrollPhysics: const NeverScrollableScrollPhysics(),
+                keyboardType: widget.inputType,
                 showCursor: false,
                 maxLines: widget.maxLine,
                 decoration: InputDecoration(

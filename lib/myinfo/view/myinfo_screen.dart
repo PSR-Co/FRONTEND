@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
@@ -45,6 +46,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
       fontSize: 15.0, fontWeight: FontWeight.w500, color: GRAY_3_COLOR);
   final TextStyle answerTextStyle = const TextStyle(
       fontSize: 13.0, fontWeight: FontWeight.w700, color: Colors.white);
+
+  bool isChecked = true;
 
   MyInfoModel? data;
 
@@ -132,6 +135,10 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         moveTo: const PrivacyPolicyScreen(),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(17.0, 5.0, 17.0, 10.0),
+                      child: setNotification(isChecked),
+                    ),
                     const Division(),
                     Padding(
                         padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0),
@@ -148,7 +155,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     );
   }
 
-  ///이미지 추후 연결. 닉네임도
+  ///이미지 추후 연결
   Widget profile(String nickname, String type, String? imgUrl) {
     return SizedBox(
       child: Container(
@@ -234,6 +241,32 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
         ],
       ),
     );
+  }
+
+  Widget setNotification(bool isChecked){
+    return SizedBox(
+      height: 50.0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "알림받기",
+            style: headerTextStyle,
+          ),
+          CupertinoSwitch(value: isChecked,
+              activeColor: PURPLE_COLOR, onChanged: (value){
+            changeChecked();
+          })
+        ]
+      ),
+    );
+  }
+
+  void changeChecked() {
+    setState(() {
+      isChecked = !isChecked;
+    });
   }
 
   Widget logout() {

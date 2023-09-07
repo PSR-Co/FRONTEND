@@ -100,7 +100,7 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
     return Container(
       padding: const EdgeInsets.only(left: 10.0),
       color: Colors.white,
-      height: MediaQuery.of(context).size.width / 2 + 70,
+      height: MediaQuery.of(context).size.width / 2 + 80,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: data.length,

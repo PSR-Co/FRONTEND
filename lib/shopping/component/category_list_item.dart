@@ -88,7 +88,12 @@ class _CategoryListItemState extends State<CategoryListItem> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(widget.data.nickname, style: brandNameTextStyle,),
-          Text(widget.data.name, style: productNameTextStyle,),
+          Text(
+            widget.data.name,
+            style: productNameTextStyle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
           Text('${widget.data.price}원', style: priceTextStyle,),
         ],
       ),

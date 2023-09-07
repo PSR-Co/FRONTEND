@@ -41,11 +41,11 @@ class _InputUserInfoState extends State<InputUserInfo> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         (widget.isTopName ?? true)
-            ? getInputView('이름', widget.nameController, '이름을 입력해주세요.', false)
-            : getInputView('아이디', widget.nameController, '아이디를 입력해주세요.', false),
+            ? getInputView('이름', widget.nameController, '이름을 입력해주세요.', false, InputType.text)
+            : getInputView('아이디', widget.nameController, '아이디를 입력해주세요.', false, InputType.text),
 
         getPhoneNumInputView('전화번호 인증', widget.phoneNumController, '휴대폰 번호를 입력해주세요.', false),
-        getInputView('인증번호', widget.validCodeController, '휴대폰으로 전송된 인증번호를 입력해주세요.', false),
+        getInputView('인증번호', widget.validCodeController, '휴대폰으로 전송된 인증번호를 입력해주세요.', false, InputType.phone),
       ],
     );
   }
@@ -55,6 +55,7 @@ class _InputUserInfoState extends State<InputUserInfo> {
       TextEditingController controller,
       String hintText,
       bool isNeededForHidden,
+      InputType inputType,
       ) {
 
     List<Widget> widgets = [];
@@ -71,6 +72,7 @@ class _InputUserInfoState extends State<InputUserInfo> {
             isNeededForHidden: isNeededForHidden,
             backgroundColor: Colors.white,
             borderColor: PURPLE_COLOR.withOpacity(0.5),
+            inputType: inputType,
           ),
         ),
         const SizedBox(height: 22,)
@@ -100,6 +102,7 @@ class _InputUserInfoState extends State<InputUserInfo> {
             controller: widget.phoneNumController,
             buttonTitle: '인증요청',
             onPressed: didTapSendCodeButton,
+            inputType: TextInputType.phone
           ),
         ),
         const SizedBox(height: 22,)

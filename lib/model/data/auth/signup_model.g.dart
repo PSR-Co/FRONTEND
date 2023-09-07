@@ -16,6 +16,7 @@ SignupRequest _$SignupRequestFromJson(Map<String, dynamic> json) =>
       profileImgKey: json['profileImgKey'] as String?,
       nickname: json['nickname'] as String,
       marketing: json['marketing'] as bool,
+      deviceToken: json['deviceToken'] as String?,
       notification: json['notification'] as bool,
       interestList: (json['interestList'] as List<dynamic>)
           .map((e) => Interest.fromJson(e as Map<String, dynamic>))
@@ -35,6 +36,7 @@ Map<String, dynamic> _$SignupRequestToJson(SignupRequest instance) =>
       'profileImgKey': instance.profileImgKey,
       'nickname': instance.nickname,
       'marketing': instance.marketing,
+      'deviceToken': instance.deviceToken,
       'notification': instance.notification,
       'interestList': instance.interestList,
       'entreInfo': instance.entreInfo,

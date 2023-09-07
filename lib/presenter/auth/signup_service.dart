@@ -13,7 +13,7 @@ class SignupService {
 
   bool isBusiness = false;
   EntreInfo? _eid = EntreInfo(number: '', companyDate: '', ownerName: '', companyName: '');
-  SignupRequest _signupRequest = SignupRequest(email: '', password: '', type: '', phone: '', name: '', profileImgKey: null, nickname: '', marketing: true, notification: true, interestList: []);
+  SignupRequest _signupRequest = SignupRequest(email: '', password: '', type: '', phone: '', name: '', profileImgKey: null, nickname: '', marketing: true, notification: true, interestList: [], deviceToken: '');
 
   /// Singleton Pattern
   static final SignupService _signupService = SignupService._();
@@ -58,6 +58,10 @@ class SignupService {
 
   void setProfileImage(String? profileImgKey) { _signupRequest.profileImgKey = (profileImgKey == null) ? null : profileImgKey!; }
 
+  void setNotificationSetting(bool marketing, String? deviceToken) {
+    _signupRequest.marketing = marketing;
+    _signupRequest.deviceToken = deviceToken;
+  }
 
   /// helper methods
   String getTotalDateStr(String year, String month, String day) {
@@ -72,8 +76,8 @@ class SignupService {
   }
 
   /// Request Methods
-  Future<bool> validateEid(String number, String year, String month, String day, String ownerName, String companyName) async {
-    final eid = EntreInfo(number: number, companyDate: getTotalDateStr(year,month,day), ownerName: ownerName, companyName: companyName);
+  Future<bool> validateEid(String number, String companyDate, String ownerName, String companyName) async {
+    final eid = EntreInfo(number: number, companyDate: companyDate, ownerName: ownerName, companyName: companyName);
     final response = await APIManager().request(RequestType.POST, VALIDATE_EID, null, null, eid.toJson())
         .catchError((error) { debugPrint('error : $error'); });
     if ((response != null) && (response['code'] == 200)) {

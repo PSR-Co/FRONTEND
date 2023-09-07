@@ -10,7 +10,6 @@ class PopularListItem extends StatefulWidget {
   final int productId;
   final PopularProduct data;
 
-  // TODO: api 연결 후 속성값(상품이름,가격,평균리뷰점수, 리뷰개수, 좋아요 여부) 추가 및 수정
   const PopularListItem({
     required this.category,
     required this.productId,
@@ -144,7 +143,12 @@ class _PopularListItemState extends State<PopularListItem> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.data.name, style: productNameTextStyle,),
+          Text(
+            widget.data.name,
+            style: productNameTextStyle,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
           Text('${widget.data.price}원', style: priceTextStyle,),
           renderReviewInfo()
         ],

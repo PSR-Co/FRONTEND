@@ -7,6 +7,8 @@ import 'package:psr/order/component/order_info_input_widget.dart';
 import 'package:psr/order/view/complete_order_screen.dart';
 import 'package:psr/presenter/shopping/shopping_service.dart';
 
+import 'complete_order_screen.dart';
+
 class AddOrderScreen extends StatefulWidget {
   final int productId;
   final String? productImgUrl;
@@ -42,7 +44,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DefaultAppBarLayout(titleText: '요청하기',),
+      appBar: const DefaultAppBarLayout(titleText: '요청하기',),
       body: renderBody(),
       bottomNavigationBar: PurpleFilledButton(
         title: '판매자에게 요청하기',

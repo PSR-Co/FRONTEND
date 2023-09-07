@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/model/data/inquiry/add_inquiry_answer_model.dart';
+import 'package:psr/model/data/inquiry/delete_inquiry_answer_model.dart';
 import 'package:psr/model/data/inquiry/inquiry_detail_model.dart';
 import 'package:psr/myinfo/component/complete_btn.dart';
 import 'package:psr/presenter/inquiry/inquiry_service.dart';
@@ -34,9 +36,21 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
   bool isActivated = false;
 
   InquiryDetailModel? data;
+  AddInquiryAnswerModel? addInquiryAnswerData;
+  DeleteInquiryAnswerModel? deleteInquiryAnswerData;
+
+  TextEditingController controller = TextEditingController();
 
   Future<dynamic> fetchData(int inquiryId) async {
     return await InquiryService().getDetailInquiry(inquiryId);
+  }
+
+  Future<dynamic> addInquiryAnswer(int inquiryId, String answer) async {
+    return await InquiryService().addInquiryAnswer(inquiryId, answer);
+  }
+
+  Future<dynamic> deleteInquiryAnswer(int inquiryId) async {
+    return await InquiryService().deleteInquiryAnswer(inquiryId);
   }
 
   @override
@@ -122,6 +136,7 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                   style: titleTextStyle,
                 )),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 IconButton(
                   onPressed: () {},
@@ -131,6 +146,8 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                 ),
                 Expanded(
                   child: TextField(
+                    maxLines: 30,
+                    controller: controller,
                     decoration: InputDecoration(
                         hintText: answer ?? '아직 답변이 완료되지 않은 문의입니다.',
                         hintStyle: contentTextStyle,
@@ -143,14 +160,50 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
             ),
             Expanded(child: Container()),
             Padding(
-              padding:
-                  const EdgeInsets.only(left: 17.0, right: 17.0, bottom: 40.0),
-              child: CompleteBtn(
-                btnTitle: '답변하기',
-                isVisible: isActivated,
-                onPressed: null,
-              ),
-            )
+                padding: const EdgeInsets.only(
+                    left: 17.0, right: 17.0, bottom: 40.0),
+                child: CompleteBtn(
+                    btnTitle: '답변하기',
+                    isVisible: isActivated,
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (_) {
+                            return FutureBuilder(
+                                future: addInquiryAnswer(
+                                    widget.inquiryId, controller.text),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) {
+                                    return resultDialog(
+                                        "답변 등록에 실패하셨습니다!", "등록");
+                                  } else if (snapshot.hasData) {
+                                    addInquiryAnswerData =
+                                        AddInquiryAnswerModel.fromJson(
+                                            snapshot.data);
+                                    if (data?.data == null) {
+                                      return resultDialog(
+                                          "답변 등록에 실패하셨습니다!", "등록");
+                                    }
+                                  } else {
+                                    return Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height:
+                                          MediaQuery.of(context).size.height,
+                                      alignment: Alignment.center,
+                                      child: const SizedBox(
+                                          width: 30,
+                                          height: 30,
+                                          child: CircularProgressIndicator(
+                                            backgroundColor: PURPLE_COLOR,
+                                            color: GRAY_0_COLOR,
+                                          )),
+                                    );
+                                  }
+                                  return resultDialog("답변 등록에 성공하셨습니다!", "등록");
+                                });
+                          });
+                    }))
           ],
         ));
   }
@@ -200,7 +253,40 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (_) {
+                          return FutureBuilder(
+                              future: deleteInquiryAnswer(widget.inquiryId),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return resultDialog("답변 삭제에 실패하셨습니다!", "삭제");
+                                } else if (snapshot.hasData) {
+                                  deleteInquiryAnswerData =
+                                      DeleteInquiryAnswerModel.fromJson(
+                                          snapshot.data);
+                                  if (data?.data == null) {
+                                    return resultDialog(
+                                        "답변 삭제에 실패하셨습니다!", "삭제");
+                                  }
+                                } else {
+                                  return Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height,
+                                    alignment: Alignment.center,
+                                    child: const SizedBox(
+                                        width: 30,
+                                        height: 30,
+                                        child: CircularProgressIndicator(
+                                          backgroundColor: PURPLE_COLOR,
+                                          color: GRAY_0_COLOR,
+                                        )),
+                                  );
+                                }
+                                return resultDialog("답변 삭제에 성공하셨습니다!", "삭제");
+                              });
+                        });
                   },
                   child: Text(
                     "삭제",
@@ -208,6 +294,40 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                   ))
             ],
           ),
+        )
+      ],
+    );
+  }
+
+  Widget resultDialog(String result, String type) {
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      actionsAlignment: MainAxisAlignment.spaceEvenly,
+      titlePadding: EdgeInsets.zero,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      elevation: 0.0,
+      content: Container(
+        height: MediaQuery.of(context).size.height / 10,
+        alignment: Alignment.center,
+        child: Text(result, style: answerTextStyle),
+      ),
+      actions: <Widget>[
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: TextButton(
+              onPressed: () {
+                changeEditable();
+                activateBtn();
+                Navigator.of(context).pop();
+                if (type == '삭제') {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                }
+              },
+              child: Text(
+                "확인",
+                style: titleTextStyle,
+              )),
         )
       ],
     );

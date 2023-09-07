@@ -1,4 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:psr/auth/component/account_input_text_field.dart';
 import 'package:psr/auth/view/sign_up_screen.dart';
 import 'package:psr/common/const/colors.dart';
@@ -19,8 +21,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-  // final dio = Dio();
-
   final TextEditingController idController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
 
@@ -32,20 +32,22 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget renderBody() {
-    return SafeArea(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            getMainLogoView(),
-            getWelcomeText(),
+    return SingleChildScrollView(
+      child: SafeArea(
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              getMainLogoView(),
+              getWelcomeText(),
 
-            getAccountInputView(),
-            getLoginButton(),
+              getAccountInputView(),
+              getLoginButton(),
 
-            getAccountOptionView(),
-          ],
+              getAccountOptionView(),
+            ],
+          ),
         ),
       ),
     );
@@ -93,7 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
           AccountInputTextField(
               controller: idController,
               hintText: '아이디 또는 이메일 주소',
-              isNeededForHidden: false
+              isNeededForHidden: false,
+              inputType: InputType.email,
           ),
 
           const SizedBox(height: 8,),
@@ -187,49 +190,86 @@ class _LoginScreenState extends State<LoginScreen> {
 
   /// event methods
   void didTapLoginButton() async {
-   final result = await LoginService().login(idController.value.text, pwController.value.text);
+    checkPermission();
+
+    String? deviceToken;
+    if(await Permission.notification.isGranted) {
+      deviceToken = await FirebaseMessaging.instance.getToken();
+      print('알림 수신 허용 -> $deviceToken');
+    } else { deviceToken = null; }
+
+    final result = await LoginService().login(
+      idController.value.text,
+      pwController.value.text,
+      deviceToken,
+    );
+
     if (result) {
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
 
     } else {
-      showDialog(context: context, builder: (BuildContext context) {
-        return AlertDialog(
-          title: Center(
-            child: Text('로그인 실패', style: TextStyle(fontSize: 16),),
-          ),
-          content: Text('아이디 혹은 비밀번호를 확인해주세요.', style: TextStyle(fontSize: 14), textAlign: TextAlign.center),
-          actions: <Widget>[
-            Center(
-              child: TextButton(
-                child: const Text("확인"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ],
-        );
-      });
+      showCustomDialog(
+          '로그인 실패',
+          '아이디 혹은 비밀번호를 확인해주세요.',
+          '확인',
+          () { Navigator.pop(context); }
+      );
     }
   }
 
   void didTapSignUpButton() {
-    print('didTapJoinButton');
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SignUpScreen()));
   }
 
   void didTapFindIDButton() {
-    print('didTapFindIDButton');
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FindIDScreen()));
   }
 
   void didTapFindPWButton() {
-    print('didTapFindPWButton');
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FindPWScreen()));
   }
 
   void setToken(String accessToken, String refreshToken) {
     storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
     storage.write(key: REFRESH_TOKEN_KEY, value: refreshToken);
+  }
+
+  /// Helper Methods
+  void checkPermission() async {
+    await Permission.notification.request();
+    // 알림 허용이 영구적으로 거부되었을 경우, 필요에 따라 앱설정창으로 이동 (논의 후 코드 제거 여부 결정)
+    // if (await Permission.notification.isPermanentlyDenied) {
+    //   showDialogOfAppSetting();
+    // }
+  }
+
+  void showDialogOfAppSetting() {
+    showCustomDialog(
+      '권한 허용 요청',
+      '알림 허용을 변경하기 위해 설정창으로 이동할까요?',
+      '설정 열기',
+      openAppSettings,
+    );
+  }
+
+  void showCustomDialog(
+      String title, String content, String buttonTitle, VoidCallback onPressed,
+      ) {
+    showDialog(context: context, builder: (BuildContext context) {
+      return AlertDialog(
+        title: Center(
+          child: Text(title, style: const TextStyle(fontSize: 16),),
+        ),
+        content: Text(content, style: const TextStyle(fontSize: 14), textAlign: TextAlign.center),
+        actions: <Widget>[
+          Center(
+            child: TextButton(
+              onPressed: onPressed,
+              child: Text(buttonTitle),
+            ),
+          ),
+        ],
+      );
+    });
   }
 }
