@@ -11,6 +11,7 @@ class PurpleOutlinedTextField extends StatefulWidget {
   final double? margin;
   final VoidCallback? onChanged;
   final bool? isEditing;
+  final TextInputType? textInputType;
 
   const PurpleOutlinedTextField({
     required this.maxLine,
@@ -22,6 +23,7 @@ class PurpleOutlinedTextField extends StatefulWidget {
     this.margin,
     this.onChanged,
     this.isEditing,
+    this.textInputType,
     Key? key
   }) : super(key: key);
 
@@ -59,6 +61,7 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
             width: widget.width ?? MediaQuery.of(context).size.width,
             height: (widget.maxLine == 1) ? 45.0 : 140.0,
             child: TextField(
+              keyboardType: widget.textInputType,
               style: const TextStyle(
                 fontSize: 14,
                 color: Colors.black,

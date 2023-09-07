@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/purple_filled_button.dart';
 import 'package:psr/model/data/shopping/product_model.dart';
@@ -9,7 +10,6 @@ import 'package:psr/presenter/shopping/shopping_service.dart';
 import '../../common/layout/custom_title_text.dart';
 import '../../common/layout/pick_img_widget.dart';
 import '../../common/layout/purple_outlined_text_field.dart';
-import '../../order/view/complete_order_screen.dart';
 import '../component/custom_dropdown_button.dart';
 
 class AddProductScreen extends StatefulWidget {
@@ -31,6 +31,7 @@ class AddProductScreen extends StatefulWidget {
 class AddProductScreenState extends State<AddProductScreen> {
 
   bool isAllInput = false;
+  bool isUploadingImg = false;
 
   List<String> imgList = [];
   String? selectedCategory;
@@ -53,7 +54,7 @@ class AddProductScreenState extends State<AddProductScreen> {
       body: renderBody(),
       bottomNavigationBar: PurpleFilledButton(
         title: '등록하기',
-        onPressed: ((widget.data != null) || isAllInput)
+        onPressed: ((widget.data != null) || isAllInput && !isUploadingImg)
             ? didTapAddButton
             : null,
       ),
@@ -61,6 +62,21 @@ class AddProductScreenState extends State<AddProductScreen> {
   }
 
   Widget renderBody() {
+    if (isUploadingImg) {
+      return Container(
+        margin: const EdgeInsets.symmetric(vertical: 100),
+        child: const Center(
+          child: Column(
+            children: [
+              CircularProgressIndicator(color: PURPLE_COLOR,),
+              SizedBox(height: 15,),
+              Text('이미지 업로드 및 상품 추가 중 입니다.', style: TextStyle(fontSize: 14, color: PURPLE_COLOR),)
+            ],
+          ),
+        ),
+      );
+    }
+
     return GestureDetector(
       onTap: () { FocusScope.of(context).unfocus(); },
       child: ListView(
@@ -94,6 +110,7 @@ class AddProductScreenState extends State<AddProductScreen> {
             hintText: '상품 가격을 입력해주세요.',
             controller: priceController,
             onChanged: onChanged,
+            textInputType: TextInputType.number,
           ),
           const SizedBox(height: 15,),
 
@@ -136,9 +153,11 @@ class AddProductScreenState extends State<AddProductScreen> {
 
   /// event methods
   Future<void> didTapAddButton() async {
-    List<String> uploadedList = [];
-    uploadedList = await ImageService().uploadImageList(ImageType.product, imgList);
+    setState(() { isUploadingImg = true; });
+    await ImageService().uploadImageList(ImageType.product, imgList).then( (value) => requestAddProduct(value) );
+  }
 
+  void requestAddProduct(List<String> uploadedList) async {
     if (widget.data == null) {
       // 상품 등록
       final result = await ShoppingService().requestProduct(
@@ -149,6 +168,7 @@ class AddProductScreenState extends State<AddProductScreen> {
         detailController.value.text,
         (uploadedList.isEmpty) ? null : uploadedList
       );
+      setState(() { isUploadingImg = false; });
       if (result) { Navigator.of(context).pop(); }
       else { Fluttertoast.showToast(msg: '상품 등록에 실패하였습니다.'); }
 
@@ -165,7 +185,6 @@ class AddProductScreenState extends State<AddProductScreen> {
       if (result) { Navigator.of(context).pop(); }
       else { Fluttertoast.showToast(msg: '상품 수정에 실패하였습니다.'); }
     }
-
   }
 
   /// helper methods

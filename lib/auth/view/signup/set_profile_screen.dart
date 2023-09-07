@@ -142,12 +142,11 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
 
   void checkPermission() async {
     await Permission.notification.request();
-    if(await Permission.notification.isGranted) {
-      final deviceToken = await FirebaseMessaging.instance.getToken();
-      SignupService().setNotificationSetting(true, deviceToken);
-    } else {
-      SignupService().setNotificationSetting(false, null);
-    }
+    final deviceToken = await FirebaseMessaging.instance.getToken();
+    SignupService().setNotificationSetting(
+        await Permission.notification.isGranted,
+        deviceToken
+    );
   }
 
   void didTapValidationNickname() async {

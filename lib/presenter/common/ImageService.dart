@@ -16,16 +16,15 @@ class ImageService {
 
   Future<List<String>> uploadImageList(ImageType imageType, List<String> imgKeyList) async {
     List<String> uploadedImgDirList = [];
-    Reference ref = FirebaseStorage.instance.ref();
 
     for (var element in imgKeyList) {
       String dir = getDirectoryStr(imageType, imgKeyList.indexOf(element));
       // upload image
       File file = File(element);
-      FirebaseStorage.instance.ref(dir).putFile(file);
+      await FirebaseStorage.instance.ref(dir).putFile(file);
 
       // get url of uploaded image
-      String url = await ref.child(dir).getDownloadURL();
+      String url = await FirebaseStorage.instance.ref(dir).getDownloadURL();
       uploadedImgDirList.add(url);
     }
     return uploadedImgDirList;
