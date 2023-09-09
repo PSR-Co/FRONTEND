@@ -97,15 +97,20 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   }
 
   Widget renderProductInfo() {
+    double imgSize = MediaQuery.of(context).size.width / 3 + 15;
     return Column(
       children: [
-        (widget.productImgUrl == null)
-        ? Image.asset('/asset/images/product_sample.png')
-        : Image.asset(widget.productImgUrl!, width: 148, height: 148, fit: BoxFit.cover,),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Text(widget.productName, style: defaultStyle),
-            )
+        SizedBox(
+          height: imgSize,
+          width: imgSize,
+          child: (widget.productImgUrl == null)
+            ? Image.asset('/asset/images/product_sample.png')
+            : Image.network(widget.productImgUrl!, fit: BoxFit.cover,)
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Text(widget.productName, style: defaultStyle),
+        )
       ],
     );
   }
