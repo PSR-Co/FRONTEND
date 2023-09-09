@@ -28,7 +28,7 @@ class _CommonDialogState extends State<CommonDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.white,
-      insetPadding: const EdgeInsets.only(top: 600.0),
+      insetPadding: const EdgeInsets.only(bottom: 0.0),
       titlePadding: const EdgeInsets.only(top: 20.0),
       buttonPadding: const EdgeInsets.symmetric(horizontal: 17.0),
       title: Center(
@@ -40,10 +40,11 @@ class _CommonDialogState extends State<CommonDialog> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 30.0),
+                  padding: const EdgeInsets.only(top: 20, bottom: 30.0),
                   child: OutlinedButton(
                       onPressed: () {
                         Navigator.of(context).pop<bool>(true);
@@ -70,7 +71,7 @@ class _CommonDialogState extends State<CommonDialog> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 30.0),
+                  padding: const EdgeInsets.only(top: 20, bottom: 30.0),
                   child: OutlinedButton(
                       onPressed: () {
                         showDialog(

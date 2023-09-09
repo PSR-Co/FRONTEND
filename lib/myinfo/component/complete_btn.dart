@@ -22,7 +22,7 @@ class _CompleteBtnState extends State<CompleteBtn> {
       visible: widget.isVisible,
       child: Container(
           width: MediaQuery.of(context).size.width,
-          height: 50.0,
+          height: 40.0,
           child: OutlinedButton(
               onPressed: widget.onPressed,
               child: Text(widget.btnTitle, style: completeBtnTextStyle,),

@@ -184,54 +184,58 @@ class _OrderListScreenState extends State<OrderListScreen> {
       selectedValue = '요청대기';
     }
     print('selectedValue : $selectedValue');
-    return Column(children: [
-      Container(
-        width: MediaQuery.of(context).size.width,
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.only(right: 20.0, bottom: 10.0, top: 5.0),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton2(
-            hint: Text(
-              '요청대기',
-              style: dropdownBtnTextStyle,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            alignment: Alignment.centerRight,
+            padding: const EdgeInsets.only(right: 20.0, bottom: 10.0, top: 5.0),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton2(
+                hint: Text(
+                  '요청대기',
+                  style: dropdownBtnTextStyle,
+                ),
+                value: selectedValue,
+                items: dropDownBtnTitle
+                    .map((String item) => DropdownMenuItem(
+                        value: item,
+                        child: Text(
+                          item,
+                          style: dropdownBtnTextStyle,
+                        )))
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    type == 'sell'
+                        ? selectedValue1 = value!
+                        : selectedValue2 = value!;
+                    fetchData(
+                        type, type == 'sell' ? selectedValue1 : selectedValue2);
+                  });
+                },
+                dropdownStyleData: DropdownStyleData(
+                  width: 80.0,
+                  elevation: 0,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(color: PURPLE_COLOR, width: 1)),
+                  useSafeArea: true,
+                  padding: EdgeInsets.zero,
+                ),
+                iconStyleData: IconStyleData(
+                    icon: SvgPicture.asset('asset/icons/common/toggle_down.svg'),
+                    openMenuIcon:
+                        SvgPicture.asset('asset/icons/common/toggle_up.svg')),
+              ),
             ),
-            value: selectedValue,
-            items: dropDownBtnTitle
-                .map((String item) => DropdownMenuItem(
-                    value: item,
-                    child: Text(
-                      item,
-                      style: dropdownBtnTextStyle,
-                    )))
-                .toList(),
-            onChanged: (value) {
-              setState(() {
-                type == 'sell'
-                    ? selectedValue1 = value!
-                    : selectedValue2 = value!;
-                fetchData(
-                    type, type == 'sell' ? selectedValue1 : selectedValue2);
-              });
-            },
-            dropdownStyleData: DropdownStyleData(
-              width: 80.0,
-              elevation: 0,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: PURPLE_COLOR, width: 1)),
-              useSafeArea: true,
-              padding: EdgeInsets.zero,
-            ),
-            iconStyleData: IconStyleData(
-                icon: SvgPicture.asset('asset/icons/common/toggle_down.svg'),
-                openMenuIcon:
-                    SvgPicture.asset('asset/icons/common/toggle_up.svg')),
           ),
-        ),
+          child
+        ]
       ),
-      child
-    ]);
+    );
   }
 
   Widget moveToReview(String title, int? reviewId, String sellerName,

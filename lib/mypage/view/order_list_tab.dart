@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/constants.dart';
+import 'package:psr/common/layout/circular_progress_indicator.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
 import 'package:psr/mypage/component/MoveToDetailOrderScreen.dart';
@@ -44,13 +45,24 @@ class _OrderListTabState extends State<OrderListTab>
 
   @override
   Widget build(BuildContext context) {
-    return BodyTab(
-      tabTitle: LargeDetailBar(title: "요청목록", moveTo: const OrderListScreen()),
-      tabBarViewChild: [
-        orderProductCardSlider(type: 'sell'),
-        orderProductCardSlider(type: 'order'),
-      ],
-      titleList: ORDER_LIST_TAB,
+    print("size: ${MediaQuery.of(context).size.height}");
+    double height = MediaQuery.of(context).size.height;
+
+    if(MediaQuery.of(context).size.height > 800) {
+      height = height * 0.5;
+    }else{
+      height = height * 0.65;
+    }
+    return SizedBox(
+      height: height,
+      child: BodyTab(
+        tabTitle: LargeDetailBar(title: "요청목록", moveTo: const OrderListScreen()),
+        tabBarViewChild: [
+          orderProductCardSlider(type: 'sell'),
+          orderProductCardSlider(type: 'order'),
+        ],
+        titleList: ORDER_LIST_TAB,
+      ),
     );
   }
 
@@ -59,39 +71,31 @@ class _OrderListTabState extends State<OrderListTab>
         future: fetchData(type),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Center(
-              child: Text('에러가 발생했습니다.'),
-            );
+            print("orderlist-tab : 에러가 발생했습니다.");
+            return CircularProgress();
           }
           if (snapshot.hasData) {
             data = OrderListModel.fromJson(snapshot.data);
             content = data!.data.content;
             if (data?.code != 200) {
-              return const Center(
-                child: Text('올바르지 않은 요청 타입입니다.'),
-              );
+              print("orderlist-tab : 올바르지 않은 요청 타입입니다.");
+              return CircularProgress();
             }
           }else {
-            return Container(
-              width: 30,
-              height: 30,
-              alignment: Alignment.center,
-              child: const CircularProgressIndicator());
+            return CircularProgress();
           }
-          return SizedBox(
+          return Container(
             width: MediaQuery.of(context).size.width,
             child: WidgetSlider(
               controller: controller,
               itemCount: content.length,
               infiniteScroll: false,
-              proximity: 0.49,
+              proximity: 0.5,
               sizeDistinction: 0.4,
               itemBuilder: (context, index, activeIndex) {
                 return cardContent(
                     content[index].userName,
-                    "asset/images/profile_img_sample.jpg",
-
-                    ///추후 변경
+                    content[index].productImgUrl,
                     content[index].productName,
                     content[index].orderDate,
                     content[index].orderId,
@@ -102,7 +106,7 @@ class _OrderListTabState extends State<OrderListTab>
         });
   }
 
-  Widget cardContent(String userName, String productImg, String productName,
+  Widget cardContent(String userName, String? productImg, String productName,
       String orderDate, int orderId, String type) {
     return GestureDetector(
       onTap: () {
@@ -151,7 +155,7 @@ class _OrderListTabState extends State<OrderListTab>
                                 style: BorderStyle.solid)),
                         child: ClipRect(
                           child: Image.asset(
-                            productImg,
+                            productImg ?? "asset/images/profile_img_sample.jpg",
                             width: 140.0,
                             height: 140.0,
                           ),
