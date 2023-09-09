@@ -67,89 +67,92 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         bottom: false,
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: FutureBuilder(
-              future: fetchData(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  print("myinfo : ${snapshot.error}");
-                  return const CircularProgress();
-                } else if (snapshot.hasData) {
-                  data = MyInfoModel.fromJson(snapshot.data);
-                } else if (!snapshot.hasData) {
-                  print("myinfo : 내 정보가 존재하지 않습니다.");
-                  return const CircularProgress();
-                } else {
-                  return const CircularProgress();
-                }
-                return Column(
-                  children: [
-                    const DefaultAppBarLayout(titleText: "내 정보"),
-                    profile(data!.data!.nickname, data!.data!.type,
-                        data?.data?.imgUrl),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(17.0, 0.0, 17.0, 0.0),
-                      child: infoBox(data!.data!.email, data!.data!.phone),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 20.0),
-                      child: Division(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0),
-                      child: DetailBar(
-                        title: "프로필 수정",
-                        moveTo: const SetProfileScreen(),
+        child: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            color: Colors.white,
+            child: FutureBuilder(
+                future: fetchData(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    print("myinfo : ${snapshot.error}");
+                    return const CircularProgress();
+                  } else if (snapshot.hasData) {
+                    data = MyInfoModel.fromJson(snapshot.data);
+                  } else if (!snapshot.hasData) {
+                    print("myinfo : 내 정보가 존재하지 않습니다.");
+                    return const CircularProgress();
+                  } else {
+                    return const CircularProgress();
+                  }
+                  return Column(
+                    children: [
+                      const DefaultAppBarLayout(titleText: "내 정보"),
+                      profile(data!.data!.nickname, data!.data!.type,
+                          data?.data?.imgUrl),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(17.0, 0.0, 17.0, 0.0),
+                        child: infoBox(data!.data!.email, data!.data!.phone),
                       ),
-                    ),
-                    // 수정 코드
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0),
-                      child: DetailBar(
-                        title: "비밀번호 변경",
-                        moveTo: const ChangePWScreen(),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 20.0),
+                        child: Division(),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0),
-                      child: DetailBar(
-                        title: "관심목록 변경",
-                        moveTo: const SelectInterestScreen(),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0),
+                        child: DetailBar(
+                          title: "프로필 수정",
+                          moveTo: const SetProfileScreen(),
+                        ),
                       ),
-                    ),
-                    // 수정 코드
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0),
-                      child: DetailBar(
-                        title: "약관 안내",
-                        moveTo: const TermsOfUseScreen(),
+                      // 수정 코드
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0),
+                        child: DetailBar(
+                          title: "비밀번호 변경",
+                          moveTo: const ChangePWScreen(),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 10.0),
-                      child: DetailBar(
-                        title: "개인정보 처리방침",
-                        moveTo: const PrivacyPolicyScreen(),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0),
+                        child: DetailBar(
+                          title: "관심목록 변경",
+                          moveTo: const SelectInterestScreen(),
+                        ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(17.0, 5.0, 17.0, 10.0),
-                      // child: setNotification(isChecked),
-                      child: SetNotification(),
-                    ),
-                    const Division(),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0),
-                      child: LogoutDialog(),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 5.0),
-                      child: WithdrawalDialog(),
-                    )
-                  ],
-                );
-              }),
+                      // 수정 코드
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 5.0),
+                        child: DetailBar(
+                          title: "약관 안내",
+                          moveTo: const TermsOfUseScreen(),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(17.0, 5.0, 0.0, 10.0),
+                        child: DetailBar(
+                          title: "개인정보 처리방침",
+                          moveTo: const PrivacyPolicyScreen(),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(17.0, 5.0, 17.0, 10.0),
+                        // child: setNotification(isChecked),
+                        child: SetNotification(),
+                      ),
+                      const Division(),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0),
+                        child: LogoutDialog(),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 5.0),
+                        child: WithdrawalDialog(),
+                      )
+                    ],
+                  );
+                }),
+          ),
         ),
       ),
     );
