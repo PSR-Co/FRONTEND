@@ -32,33 +32,30 @@ class _InquiryScreenState extends State<InquiryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: const DefaultAppBarLayout(titleText: "문의하기"),
       body: SafeArea(
-        child: Column(
-          children: [
-            const DefaultAppBarLayout(titleText: "문의하기"),
-            registerInquiryView(),
-            Expanded(child: Container(width: MediaQuery.of(context).size.width,)),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 17.0),
-              child: CompleteBtn(btnTitle: '등록하기', isVisible: true, onPressed: () {
-                addInquiry().then((value) => setState(() {}));
-              }, ),
-            )
-          ],
-        ),
+        child: registerInquiryView(),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(17.0,0,17.0,2),
+        child: CompleteBtn(btnTitle: '등록하기', isVisible: true, onPressed: () {
+          addInquiry().then((value) => setState(() {}));
+        }, ),
       ),
     );
   }
 
   Widget registerInquiryView(){
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.only(left: 17.0, right: 17.0, top: 40.0),
-      child: Column(
-        children: [
-          inputBox('제목을 입력하세요.', 70.0, titleController),
-          inputBox('내용을 입력하세요.', 370.0, contentController),
-        ],
+    return SingleChildScrollView(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        margin: const EdgeInsets.only(left: 17.0, right: 17.0, top: 40.0),
+        child: Column(
+          children: [
+            inputBox('제목을 입력하세요.', 70.0, titleController),
+            inputBox('내용을 입력하세요.', 370.0, contentController),
+          ],
+        ),
       ),
     );
   }
@@ -71,6 +68,7 @@ class _InquiryScreenState extends State<InquiryScreen> {
         expands: true,
         maxLines: null,
         minLines: null,
+        textInputAction: TextInputAction.next,
         decoration: InputDecoration(
           hintText: hintTitle,
           hintStyle: hintContentTextStyle,

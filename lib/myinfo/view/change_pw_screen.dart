@@ -90,12 +90,14 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
   Widget changePWView() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 17.0),
-      child: Column(
-        children: [
-          currentPW(),
-          newPW(),
-          checkNewPW(),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            currentPW(),
+            newPW(),
+            checkNewPW(),
+          ],
+        ),
       ),
     );
   }
@@ -107,6 +109,7 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
         controller: pwController,
         obscureText: isHided1,
         maxLength: 15,
+        textInputAction: TextInputAction.next,
         decoration: InputDecoration(
             counterText: '',
             hintText: "현재 비밀번호를 입력해주세요.",
@@ -144,6 +147,7 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
             controller: newPwController,
             obscureText: isHided2,
             maxLength: 15,
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
                 counterText: '',
                 hintText: "새 비밀번호를 입력해주세요.",
@@ -214,6 +218,7 @@ class _ChangePWScreenState extends State<ChangePWScreen> {
             controller: checkController,
             obscureText: isHided3,
             maxLength: 15,
+            textInputAction: TextInputAction.done,
             decoration: InputDecoration(
                 counterText: '',
                 hintText: "비밀번호를 다시 입력해주세요.",
