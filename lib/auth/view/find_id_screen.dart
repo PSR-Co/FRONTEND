@@ -17,7 +17,7 @@ class FindIDScreen extends StatefulWidget {
 
 class _FindIDScreenState extends State<FindIDScreen> {
   bool isFounded = false;
-  bool isInputValid = true; // for test
+  bool isAllInput = false;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneNumController = TextEditingController();
@@ -56,6 +56,10 @@ class _FindIDScreenState extends State<FindIDScreen> {
 
   /// event methods
   Future<void> didTapNextButton() async {
+    if (!getIsAllInput()) {
+      Fluttertoast.showToast(msg: '모든 정보를 입력해주세요!');
+      return;
+    }
     SearchEmailResponse? result = await LoginService().searchEmail(
         nameController.value.text,
         validCodeController.value.text,
@@ -75,6 +79,13 @@ class _FindIDScreenState extends State<FindIDScreen> {
     } else {
       Fluttertoast.showToast(msg: "네트워크 오류가 발생하였습니다.");
     }
+  }
+
+  /// helper methods
+  bool getIsAllInput() {
+    return isAllInput = (nameController.value.text.isNotEmpty
+          && phoneNumController.value.text.isNotEmpty
+          && validCodeController.value.text.isNotEmpty);
   }
 
 }

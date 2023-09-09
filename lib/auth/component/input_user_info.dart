@@ -42,7 +42,7 @@ class _InputUserInfoState extends State<InputUserInfo> {
       children: [
         (widget.isTopName ?? true)
             ? getInputView('이름', widget.nameController, '이름을 입력해주세요.', false, InputType.text)
-            : getInputView('아이디', widget.nameController, '아이디를 입력해주세요.', false, InputType.text),
+            : getInputView('아이디', widget.nameController, '아이디를 입력해주세요.', false, InputType.email),
 
         getPhoneNumInputView('전화번호 인증', widget.phoneNumController, '휴대폰 번호를 입력해주세요.', false),
         getInputView('인증번호', widget.validCodeController, '휴대폰으로 전송된 인증번호를 입력해주세요.', false, InputType.phone),
