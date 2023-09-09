@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/const/colors.dart';
@@ -6,10 +5,16 @@ import '../../common/const/colors.dart';
 class CommonDialog extends StatefulWidget {
   final Widget askTitle;
   final String alert;
+
   // final Future<void> onDidTap;
   final Widget onDidTap;
 
-  const CommonDialog({required this.askTitle, required this.alert, required this.onDidTap, Key? key}): super(key: key);
+  const CommonDialog(
+      {required this.askTitle,
+      required this.alert,
+      required this.onDidTap,
+      Key? key})
+      : super(key: key);
 
   @override
   State<CommonDialog> createState() => _CommonDialogState();
@@ -20,7 +25,7 @@ class _CommonDialogState extends State<CommonDialog> {
       fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_3_COLOR);
   final TextStyle answerTextStyle = const TextStyle(
       fontSize: 13.0, fontWeight: FontWeight.w700, color: Colors.white);
-  
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -29,7 +34,9 @@ class _CommonDialogState extends State<CommonDialog> {
       titlePadding: const EdgeInsets.only(top: 20.0),
       // contentPadding: const EdgeInsets.only(top: 20.0),
       buttonPadding: const EdgeInsets.symmetric(horizontal: 17.0),
-      title: Center(child: widget.askTitle,),
+      title: Center(
+        child: widget.askTitle,
+      ),
       actions: <Widget>[
         SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -50,7 +57,7 @@ class _CommonDialogState extends State<CommonDialog> {
                           elevation: 0.0,
                           shape: const RoundedRectangleBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(21.0)),
+                                  BorderRadius.all(Radius.circular(21.0)),
                               side: BorderSide(color: GRAY_1_COLOR, width: 1))),
                       child: Container(
                           height: 45.0,
@@ -74,9 +81,7 @@ class _CommonDialogState extends State<CommonDialog> {
                             context: context,
                             builder: (_) {
                               return widget.onDidTap;
-                            }
-                        );
-                        // Navigator.of(context).pop();
+                            });
                       },
                       style: OutlinedButton.styleFrom(
                           backgroundColor: PURPLE_COLOR,
@@ -84,7 +89,7 @@ class _CommonDialogState extends State<CommonDialog> {
                           elevation: 0.0,
                           shape: const RoundedRectangleBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(21.0)),
+                                  BorderRadius.all(Radius.circular(21.0)),
                               side: BorderSide(color: GRAY_1_COLOR, width: 1))),
                       child: Container(
                           height: 45.0,

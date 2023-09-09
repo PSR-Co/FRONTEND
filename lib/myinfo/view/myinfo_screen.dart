@@ -89,7 +89,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 return Column(
                   children: [
                     const DefaultAppBarLayout(titleText: "내 정보"),
-                    profile(data!.data!.nickname, data!.data!.type, data?.data?.imgUrl),
+                    profile(data!.data!.nickname, data!.data!.type,
+                        data?.data?.imgUrl),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(17.0, 0.0, 17.0, 0.0),
                       child: infoBox(data!.data!.email, data!.data!.phone),
@@ -143,8 +144,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                     ),
                     const Division(),
                     const Padding(
-                        padding: EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0),
-                        // child: logout()
+                      padding: EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0),
+                      // child: logout()
                       child: LogoutDialog(),
                     ),
                     Padding(
@@ -247,23 +248,24 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     );
   }
 
-  Widget setNotification(bool isChecked){
+  Widget setNotification(bool isChecked) {
     return SizedBox(
       height: 50.0,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "알림받기",
-            style: headerTextStyle,
-          ),
-          CupertinoSwitch(value: isChecked,
-              activeColor: PURPLE_COLOR, onChanged: (value){
-            changeChecked();
-          })
-        ]
-      ),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "알림받기",
+              style: headerTextStyle,
+            ),
+            CupertinoSwitch(
+                value: isChecked,
+                activeColor: PURPLE_COLOR,
+                onChanged: (value) {
+                  changeChecked();
+                })
+          ]),
     );
   }
 
@@ -376,29 +378,26 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                     //     alert: '회원탈퇴');
                     return CommonDialog(
                         askTitle: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '회원탈퇴시 모든 정보를 잃게 됩니다.',
-                                style: alertWithdrawalTextStyle,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5.0),
-                                child: Text(
-                                  '그래도 탈퇴하시겠어요?',
-                                  style: answerWithdrawalTextStyle,
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '회원탈퇴시 모든 정보를 잃게 됩니다.',
+                                  style: alertWithdrawalTextStyle,
                                 ),
-                              ),
-                            ],
-                          )
-                        ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Text(
+                                    '그래도 탈퇴하시겠어요?',
+                                    style: answerWithdrawalTextStyle,
+                                  ),
+                                ),
+                              ],
+                            )),
                         alert: '로그아웃',
-                        onDidTap: onDidWithdrawal()
-                    );
-                  }
-                  );
+                        onDidTap: onDidWithdrawal());
+                  });
             },
             child: Text("회원탈퇴", style: withdrawalTextStyle)));
   }
@@ -406,5 +405,4 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   Widget onDidWithdrawal() {
     return Text("");
   }
-
 }
