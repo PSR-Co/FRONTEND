@@ -5,8 +5,6 @@ import '../../common/const/colors.dart';
 class CommonDialog extends StatefulWidget {
   final Widget askTitle;
   final String alert;
-
-  // final Future<void> onDidTap;
   final Widget onDidTap;
 
   const CommonDialog(
@@ -32,7 +30,6 @@ class _CommonDialogState extends State<CommonDialog> {
       backgroundColor: Colors.white,
       insetPadding: const EdgeInsets.only(top: 600.0),
       titlePadding: const EdgeInsets.only(top: 20.0),
-      // contentPadding: const EdgeInsets.only(top: 20.0),
       buttonPadding: const EdgeInsets.symmetric(horizontal: 17.0),
       title: Center(
         child: widget.askTitle,
