@@ -51,16 +51,19 @@ class _FindPWScreenState extends State<FindPWScreen> {
         pwValidController: pwValidController,
       );
     } else {
-      return Column(
-        children: [
-          const SizedBox(height: 40,),
-          InputUserInfo(
-            isTopName: false,
-            nameController: idController,
-            phoneNumController: phoneNumController,
-            validCodeController: codeController,
-          )
-        ],
+      return GestureDetector(
+        onTap: () { FocusScope.of(context).unfocus(); },
+        child: ListView(
+          children: [
+            const SizedBox(height: 50,),
+            InputUserInfo(
+              isTopName: false,
+              nameController: idController,
+              phoneNumController: phoneNumController,
+              validCodeController: codeController,
+            )
+          ],
+        ),
       );
     }
   }

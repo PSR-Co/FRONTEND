@@ -32,21 +32,24 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget renderBody() {
-    return SingleChildScrollView(
-      child: SafeArea(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              getMainLogoView(),
-              getWelcomeText(),
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: SingleChildScrollView(
+        child: SafeArea(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                getMainLogoView(),
+                getWelcomeText(),
 
-              getAccountInputView(),
-              getLoginButton(),
+                getAccountInputView(),
+                getLoginButton(),
 
-              getAccountOptionView(),
-            ],
+                getAccountOptionView(),
+              ],
+            ),
           ),
         ),
       ),

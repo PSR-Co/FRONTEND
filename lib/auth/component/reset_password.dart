@@ -22,13 +22,15 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 40,),
-        getPwInputView('비밀번호', '비밀번호를 입력해주세요.', widget.pwController),
-        getPwInputView('비밀번호 확인', '비밀번호를 다시 입력해주세요.', widget.pwValidController),
-      ],
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: ListView(
+        children: [
+          const SizedBox(height: 50,),
+          getPwInputView('비밀번호', '비밀번호를 입력해주세요.', widget.pwController),
+          getPwInputView('비밀번호 확인', '비밀번호를 다시 입력해주세요.', widget.pwValidController),
+        ],
+      ),
     );
   }
 

@@ -38,15 +38,18 @@ class _FindIDScreenState extends State<FindIDScreen> {
   }
 
   Widget renderBody() {
-    return ListView(
-      children: [
-        const SizedBox(height: 50,),
-        InputUserInfo(
-          nameController: nameController,
-          phoneNumController: phoneNumController,
-          validCodeController: validCodeController,
-        ),
-      ],
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: ListView(
+        children: [
+          const SizedBox(height: 50,),
+          InputUserInfo(
+            nameController: nameController,
+            phoneNumController: phoneNumController,
+            validCodeController: validCodeController,
+          ),
+        ],
+      ),
     );
   }
 
