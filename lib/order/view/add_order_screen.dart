@@ -55,44 +55,47 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   /// rendering methods
   Widget renderBody() {
 
-    return ListView(
-      children: [
-        renderProductInfo(),
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: ListView(
+        children: [
+          renderProductInfo(),
 
-        OrderInfoInputView(
-          title: '이름',
-          hintText: '이름을 입력해주세요.',
-          maxLine: 1,
-          controller: nameController,
-          onChanged: onChanged,
-        ),
+          OrderInfoInputView(
+            title: '이름',
+            hintText: '이름을 입력해주세요.',
+            maxLine: 1,
+            controller: nameController,
+            onChanged: onChanged,
+          ),
 
-        OrderInfoInputView(
-          title: '사업자/쇼핑몰 URL',
-          option: ' (선택)',
-          hintText: 'URL을 입력해주세요.',
-          maxLine: 1,
-          controller: urlController,
-        ),
+          OrderInfoInputView(
+            title: '사업자/쇼핑몰 URL',
+            option: ' (선택)',
+            hintText: 'URL을 입력해주세요.',
+            maxLine: 1,
+            controller: urlController,
+          ),
 
-        OrderInfoInputView(
-          title: '문의사항',
-          hintText: '문의사항을 입력해주세요.',
-          maxLine: 5,
-          controller: inquiryController,
-          onChanged: onChanged,
-        ),
+          OrderInfoInputView(
+            title: '문의사항',
+            hintText: '문의사항을 입력해주세요.',
+            maxLine: 5,
+            controller: inquiryController,
+            onChanged: onChanged,
+          ),
 
-        OrderInfoInputView(
-          title: '요청 상세 설명',
-          hintText: '요청 상세 설명을 입력해주세요.',
-          maxLine: 5,
-          controller: descriptionController,
-          onChanged: onChanged,
-        ),
+          OrderInfoInputView(
+            title: '요청 상세 설명',
+            hintText: '요청 상세 설명을 입력해주세요.',
+            maxLine: 5,
+            controller: descriptionController,
+            onChanged: onChanged,
+          ),
 
-        const SizedBox(height: 30,),
-      ],
+          const SizedBox(height: 30,),
+        ],
+      ),
     );
   }
 
