@@ -54,6 +54,7 @@ class _ProductImgPageViewWidgetState extends State<ProductImgPageViewWidget> {
             }
           ),
         ),
+        const SizedBox(height: 10,),
         SmoothPageIndicator(
             controller: controller,
             count: widget.imgKeyList.length,
