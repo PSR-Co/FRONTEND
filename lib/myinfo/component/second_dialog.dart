@@ -16,7 +16,7 @@ class _SecondDialogState extends State<SecondDialog> {
   final TextStyle titleTextStyle = const TextStyle(
       fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
   final TextStyle answerTextStyle = const TextStyle(
-      fontSize: 13.0, fontWeight: FontWeight.w700, color: Colors.white);
+      fontSize: 15.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _SecondDialogState extends State<SecondDialog> {
           width: MediaQuery.of(context).size.width,
           child: TextButton(
               onPressed: () {
-                if ((widget.result == "회원탈퇴에 성공했습니다!")||(widget.result == "로그아웃에 성공했습니다!")) {
+                if ((widget.result == "회원탈퇴가 완료되었습니다.")||(widget.result == "로그아웃에 성공했습니다!")) {
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (_) => const LoginScreen()),
                           (route) => false);
@@ -51,6 +51,5 @@ class _SecondDialogState extends State<SecondDialog> {
         )
       ],
     );
-  }
   }
 }

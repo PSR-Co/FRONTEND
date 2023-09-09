@@ -34,7 +34,7 @@ class _WithdrawalDialogState extends State<WithdrawalDialog> {
   AccountModel? data;
 
   Future<dynamic> fetchData() async {
-    final response = await MyInfoService().logout();
+    final response = await MyInfoService().withdrawal();
     print("withdrawal fetch: $response");
     return response;
   }
@@ -47,7 +47,7 @@ class _WithdrawalDialogState extends State<WithdrawalDialog> {
         child: TextButton(
             onPressed: () {
               showDialog(
-                  barrierDismissible: false,
+                  barrierDismissible: true,
                   context: context,
                   builder: (_) {
                     return CommonDialog(
@@ -69,7 +69,7 @@ class _WithdrawalDialogState extends State<WithdrawalDialog> {
                                 ),
                               ],
                             )),
-                        alert: '로그아웃',
+                        alert: '탈퇴',
                         onDidTap: onDidWithdrawal());
                   });
             },
@@ -93,7 +93,7 @@ class _WithdrawalDialogState extends State<WithdrawalDialog> {
           } else if (!snapshot.hasData) {
             return const CircularProgress();
           }
-          return const SecondDialog(result: "회원탈퇴에 성공했습니다.");
+          return const SecondDialog(result: "회원탈퇴가 완료되었습니다.");
         });
   }
 

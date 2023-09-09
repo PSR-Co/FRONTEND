@@ -5,6 +5,7 @@ import '../../auth/view/login_screen.dart';
 import '../../common/const/colors.dart';
 import '../../model/data/myinfo/myinfo_model.dart';
 import '../component/common_dialog.dart';
+import '../component/second_dialog.dart';
 
 class LogoutDialog extends StatefulWidget {
   const LogoutDialog({super.key});
@@ -74,50 +75,50 @@ class _LogoutDialogState extends State<LogoutDialog> {
         builder: (context, snapshot) {
           print("snapshot.data : ${snapshot.data}");
           if (snapshot.hasError) {
-            return alertDialog("로그아웃에 실패했습니다.");
+            return const SecondDialog(result: "로그아웃에 실패했습니다.");
           } else if (snapshot.hasData) {
             data = AccountModel.fromJson(snapshot.data);
             if (data?.code != 200) {
-              return alertDialog("로그아웃에 실패했습니다.");
+              return const SecondDialog(result: "로그아웃에 실패했습니다.");
             }
           } else if (!snapshot.hasData) {
             return CircularProgress();
           }
-          return alertDialog("로그아웃에 성공했습니다!");
+          return const SecondDialog(result: "로그아웃에 성공했습니다!");
         });
   }
 
-  AlertDialog alertDialog(String result) {
-    return AlertDialog(
-      backgroundColor: Colors.white,
-      actionsAlignment: MainAxisAlignment.spaceEvenly,
-      titlePadding: EdgeInsets.zero,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      elevation: 0.0,
-      content: Container(
-        height: 100,
-        alignment: Alignment.center,
-        child: Text(result, style: answerTextStyle),
-      ),
-      actions: <Widget>[
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: TextButton(
-              onPressed: () {
-                if (result == "로그아웃에 성공했습니다!") {
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (_) => const LoginScreen()),
-                      (route) => false);
-                } else {
-                  Navigator.of(context).pop();
-                }
-              },
-              child: Text(
-                "확인",
-                style: titleTextStyle,
-              )),
-        )
-      ],
-    );
-  }
+  // AlertDialog alertDialog(String result) {
+  //   return AlertDialog(
+  //     backgroundColor: Colors.white,
+  //     actionsAlignment: MainAxisAlignment.spaceEvenly,
+  //     titlePadding: EdgeInsets.zero,
+  //     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+  //     elevation: 0.0,
+  //     content: Container(
+  //       height: 100,
+  //       alignment: Alignment.center,
+  //       child: Text(result, style: answerTextStyle),
+  //     ),
+  //     actions: <Widget>[
+  //       SizedBox(
+  //         width: MediaQuery.of(context).size.width,
+  //         child: TextButton(
+  //             onPressed: () {
+  //               if (result == "로그아웃에 성공했습니다!") {
+  //                 Navigator.of(context).pushAndRemoveUntil(
+  //                     MaterialPageRoute(builder: (_) => const LoginScreen()),
+  //                     (route) => false);
+  //               } else {
+  //                 Navigator.of(context).pop();
+  //               }
+  //             },
+  //             child: Text(
+  //               "확인",
+  //               style: titleTextStyle,
+  //             )),
+  //       )
+  //     ],
+  //   );
+  // }
 }

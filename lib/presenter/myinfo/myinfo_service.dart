@@ -38,5 +38,6 @@ class MyInfoService {
   
   Future<dynamic> withdrawal() async {
     final response = APIManager().request(RequestType.DELETE, WITHDRAWAL, null, null, null);
+    return response;
   }
 }

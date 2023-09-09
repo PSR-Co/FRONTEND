@@ -25,7 +25,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   HomeModel? data;
-  List<MainTop> mainTopProductList = [];
+  List<MainTop> mainTopProductList = [
+    MainTop(id: 0, category: '', name: '', description: ''),
+    MainTop(id: 0, category: '', name: '', description: ''),
+    MainTop(id: 0, category: '', name: '', description: '')
+  ];
   List<RecentProduct> recentProductList = [];
   List<PopularProduct> popularProductList = [];
 
@@ -77,12 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             print('홈: ${snapshot.error.toString()}');
-            // return const Center(
-            //   child: Text('홈 : 에러가 있습니다'),
-            // );
-            const CircularProgress();
-          }
-          if (snapshot.hasData) {
+            return const CircularProgress();
+          }else if (snapshot.hasData) {
             data = HomeModel.fromJson(snapshot.data);
             mainTopProductList = data!.data.mainTopProductList;
             recentProductList = data!.data.recentProductList;
@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }
           } else {
-            const CircularProgress();
+            return const CircularProgress();
           }
           return SingleChildScrollView(
             child: Container(
