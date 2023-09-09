@@ -32,8 +32,8 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
       children: [
         // 상품 제목
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 18),
-          child: Text(widget.productName, style: TextStyle(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: Text(widget.productName, style: const TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 20,
           ),),
@@ -41,14 +41,14 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
 
         // 별점 이미지 + 리뷰 개수
         Container(
-            padding: EdgeInsets.symmetric(horizontal: 18),
+            padding: const EdgeInsets.symmetric(horizontal: 18),
             child: renderAvgOfRating()
         ),
 
         // 가격
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 18),
-          child: Text('${getTrimmedPrice()}원', style: TextStyle(
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          child: Text('${getTrimmedPrice()}원', style: const TextStyle(
             fontWeight: FontWeight.w500,
             fontSize: 24,
           ),),
@@ -59,7 +59,7 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
 
   /// rendergin methods
   Widget renderAvgOfRating() {
-    final reviewCntStyle = TextStyle(
+    const reviewCntStyle = TextStyle(
       fontSize: 14,
       color: GRAY_4_COLOR,
       fontWeight: FontWeight.w400,
@@ -69,13 +69,18 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
     List<Widget> starIconList = [];
     for (int i=0; i<widget.avgOfRating; i++) {
       starIconList.add(
-          Icon(Icons.star, color: Color(0xFFFFA939), size: 16.0,)
+          const Icon(Icons.star, color: Color(0xFFFFA939), size: 16.0,)
       );
     }
     starIconList.add(
         TextButton(
-            onPressed: didTapReviewCntButton,
-            child: Text('리뷰 ${widget.reviewCnt}개', style: reviewCntStyle,)
+          style: TextButton.styleFrom(
+            minimumSize: Size.zero,
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          onPressed: didTapReviewCntButton,
+          child: Text('리뷰 ${widget.reviewCnt}개', style: reviewCntStyle,)
         )
     );
     return Row(
