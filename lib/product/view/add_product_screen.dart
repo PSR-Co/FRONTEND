@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/const/colors.dart';
@@ -7,10 +8,10 @@ import 'package:psr/model/data/shopping/product_model.dart';
 import 'package:psr/presenter/common/ImageService.dart';
 import 'package:psr/presenter/shopping/shopping_service.dart';
 
+import '../../common/const/constants.dart';
 import '../../common/layout/custom_title_text.dart';
 import '../../common/layout/pick_img_widget.dart';
 import '../../common/layout/purple_outlined_text_field.dart';
-import '../component/custom_dropdown_button.dart';
 
 class AddProductScreen extends StatefulWidget {
   final String? category;
@@ -34,7 +35,7 @@ class AddProductScreenState extends State<AddProductScreen> {
   bool isUploadingImg = false;
 
   List<String> imgList = [];
-  String? selectedCategory;
+  String? selectedCategory = '카테고리를 선택해주세요';
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
@@ -84,12 +85,57 @@ class AddProductScreenState extends State<AddProductScreen> {
           const SizedBox(height: 20,),
 
           const CustomTitleText(title: '상품 카테고리', option: null,),
-          SizedBox(
-            height: 50,
-            child: CustomDropdownButton(
-              width: MediaQuery.of(context).size.width - 40,
-              selected: selectedCategory,
-            )
+          const SizedBox(height: 5,),
+          Container(
+            height: 45,
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: Container(
+              padding: const EdgeInsets.only(right: 10),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: PURPLE_COLOR.withOpacity(0.5),
+                    width: 1.0,
+                  )
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton2(
+                  isExpanded: true,
+                  hint: Row(
+                    children: [
+                      Expanded(
+                          child: Text(selectedCategory!,
+                            style: const TextStyle(fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
+                          )
+                      )
+                    ],
+                  ),
+                  items: CATEGORY.map((String category) {
+                    return DropdownMenuItem<String>(
+                      value: category,
+                      child: Text(category, style: const TextStyle(fontSize: 14),),
+                    );
+                  }).toList(),
+                  onChanged: (dynamic value) {
+                    setState(() {
+                      selectedCategory = value;
+                    });
+                  },
+                  dropdownStyleData: DropdownStyleData(
+                    elevation: 0,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: PURPLE_COLOR.withOpacity(0.5),
+                        width: 1.0,
+                      ),
+                    )
+                  ),
+                ),
+              ),
+            ),
           ),
           const SizedBox(height: 15,),
 
@@ -190,7 +236,7 @@ class AddProductScreenState extends State<AddProductScreen> {
   /// helper methods
   void configure(){
     if (widget.category != null) {
-      selectedCategory = widget.category;
+      selectedCategory = widget.category!;
     }
     if (widget.data != null) {
       nameController.text = widget.data!.name;
