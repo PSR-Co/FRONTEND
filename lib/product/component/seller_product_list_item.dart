@@ -67,6 +67,8 @@ class _SellerProductListItemState extends State<SellerProductListItem> {
   /// rendering methods
   Widget renderProductImage() {
     return Container(
+        width: 90,
+        height: 90,
         margin: const EdgeInsets.symmetric(horizontal: 5.0),
         decoration: BoxDecoration(
           border: Border.all(
@@ -75,8 +77,7 @@ class _SellerProductListItemState extends State<SellerProductListItem> {
           ),
           borderRadius: BorderRadius.circular(12.0),
         ),
-        // TODO: 파이어베이스 연결 후 이미지 크기 및 비율 조정
-        child: Image.asset(widget.imgUrl, width: 90, height: 90, fit: BoxFit.cover,)
+        child: Image.network(widget.imgUrl, fit: BoxFit.cover,)
     );
   }
 
