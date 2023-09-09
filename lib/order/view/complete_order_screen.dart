@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:psr/auth/component/complete_widget.dart';
+import 'package:psr/mypage/view/order_list_screen.dart';
+import 'package:psr/product/view/product_detail_screen.dart';
+import 'package:psr/shopping/view/shopping_screen.dart';
 import '../../common/const/colors.dart';
 
 class CompleteOrderScreen extends StatelessWidget {
@@ -38,7 +41,7 @@ class CompleteOrderScreen extends StatelessWidget {
                       height: 45,
                       padding: const EdgeInsets.only(left: 10, right: 5),
                       child: ElevatedButton(
-                          onPressed: didTapConfirmButton,
+                          onPressed: (){ didTapConfirmButton(context); },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
                             backgroundColor: Colors.white,
@@ -55,7 +58,7 @@ class CompleteOrderScreen extends StatelessWidget {
                       height: 45,
                       padding: const EdgeInsets.only(left: 5, right: 10),
                       child: ElevatedButton(
-                          onPressed: didTapOrderList,
+                          onPressed: (){ didTapOrderList(context); },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
                             backgroundColor: PURPLE_COLOR,
@@ -76,11 +79,11 @@ class CompleteOrderScreen extends StatelessWidget {
     );
   }
 
-  void didTapConfirmButton() {
-    print('확인 버튼 탭함');
+  void didTapConfirmButton(BuildContext context) {
+    Navigator.popUntil(context, ModalRoute.withName('/productDetail'));
   }
 
-  void didTapOrderList() {
-    print('요청목록 버튼 탭함');
+  void didTapOrderList(BuildContext context) {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const OrderListScreen()));
   }
 }

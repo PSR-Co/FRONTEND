@@ -123,6 +123,5 @@ class _CategoryListItemState extends State<CategoryListItem> {
   }
 
   void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: widget.data.productId,)));
-  }
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: widget.data.productId), settings: const RouteSettings(name: '/productDetail')));  }
 }

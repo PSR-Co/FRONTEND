@@ -186,6 +186,6 @@ class _PopularListItemState extends State<PopularListItem> {
   }
 
   void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: widget.productId,)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: widget.data.productId), settings: const RouteSettings(name: '/productDetail')));
   }
 }
