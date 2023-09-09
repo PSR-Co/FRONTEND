@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:psr/common/layout/circular_progress_indicator.dart';
 import 'package:psr/cs/view/service_center_screen.dart';
 import 'package:psr/myinfo/view/myinfo_screen.dart';
 import 'package:psr/mypage/view/likelist_screen.dart';
@@ -50,39 +51,37 @@ class _MypageScreenState extends State<MypageScreen> {
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   print("mypage: ${snapshot.error.toString()}");
-                  return const Center(
-                    child: Text('내 프로필 : 에러가 있습니다'),
-                  );
+                  return const CircularProgress();
                 } else if (snapshot.hasData) {
                   data = MyInfoModel.fromJson(snapshot.data);
                 } else if (!snapshot.hasData) {
-                  return const Center(
-                    child: Text('내 프로필을 불러올 수 없습니다.'),
-                  );
+                  print('내 프로필을 불러올 수 없습니다.');
+                  return const CircularProgress();
                 } else {
-                  return Container(
-                      width: 30,
-                      height: 30,
-                      alignment: Alignment.center,
-                      child: const CircularProgressIndicator());
+                  return const CircularProgress();
                 }
-                return Column(
-                  children: [
-                    myPageHeader(),
-                    profile(data!.data!.nickname, data!.data!.type, data?.data?.imgUrl),
-                    category(),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 15.0),
-                      child: Division(),
-                    ),
-                    const Expanded(
-                        child: Padding(
-                            padding: EdgeInsets.only(bottom: 10.0),
-                            child: OrderListTab())),
-                  ],
-                );
+                return renderBody();
               }
             )),
+      ),
+    );
+  }
+
+  Widget renderBody() {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          myPageHeader(),
+          profile(data!.data!.nickname, data!.data!.type, data?.data?.imgUrl),
+          category(),
+          const Padding(
+            padding: EdgeInsets.only(top: 15.0),
+            child: Division(),
+          ),
+          const Padding(
+              padding: EdgeInsets.only(bottom: 10.0),
+              child: OrderListTab()),
+        ],
       ),
     );
   }
@@ -136,11 +135,9 @@ class _MypageScreenState extends State<MypageScreen> {
         child: Row(
           children: [
             ClipOval(
-              child: Image.asset(
-                imgUrl ?? "asset/images/default_profile.png",
-                width: 70.0,
-                height: 70.0,
-              ),
+              child: (imgUrl == null)
+                  ? Image.asset("asset/images/default_profile.png")
+                  : Image.network(imgUrl),
             ),
             Container(
               margin: const EdgeInsets.only(left: 10.0),
