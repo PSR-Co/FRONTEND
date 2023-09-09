@@ -261,6 +261,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                                 productImgKey: productImgKey,
                                 reviewId: reviewId,
                                 orderId: orderId,
+                                isAdding: true,
                               )));
               },
               child: Text(reviewId != null ? '리뷰 보기' : '리뷰 쓰기',

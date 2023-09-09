@@ -22,12 +22,15 @@ class AddReviewScreen extends StatefulWidget {
   final int orderId;
   final int? reviewId;
 
+  final bool? isAdding;
+
   const AddReviewScreen({
     required this.sellerName,
     required this.productName,
     required this.productImgKey,
     required this.reviewId,
     required this.orderId,
+    this.isAdding,
     Key? key
   }) : super(key: key);
 
@@ -49,11 +52,12 @@ class AddReviewScreenState extends State<AddReviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.isAdding != null) { isEditing = true; }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: ReviewDetailAppbar(reviewId: widget.reviewId),
       body: renderBody(),
-      bottomNavigationBar: (widget.reviewId != null)
+      bottomNavigationBar: (widget.orderId != null)
           ? PurpleFilledButton(
               title: '등록하기',
               onPressed: (isEditing) ? didTapPostReviewButton : null,
