@@ -36,6 +36,7 @@ class _AgreeToTermsScreenState extends State<AgreeToTermsScreen> {
       body: renderBody(),
       bottomNavigationBar: PurpleFilledButton(
         title: '다음',
+        // onPressed: (isAgree) ? didTapNextButton : null,
         onPressed: didTapNextButton,
         height: 40,
       ),

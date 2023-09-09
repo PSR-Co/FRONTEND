@@ -32,6 +32,7 @@ class _SelectRoleScreenState extends State<SelectRoleScreen> {
       body: renderBody(),
       bottomNavigationBar: PurpleFilledButton(
         title: '다음',
+        // onPressed: (selectedRole != null) ? didTapNextButton : null,
         onPressed: didTapNextButton,
         height: 40,
       ),

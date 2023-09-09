@@ -11,10 +11,13 @@ class InputAccountInfo extends StatefulWidget {
   final TextEditingController pwController;
   final TextEditingController pwConfirmController;
 
+  final bool? isAllInput;
+
   const InputAccountInfo({
     required this.emailController,
     required this.pwController,
     required this.pwConfirmController,
+    this.isAllInput,
     Key? key
   }) : super(key: key);
 
@@ -26,10 +29,20 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
   bool isValidPW = true;
   bool isCorrect = true;
 
+  List<TextEditingController> controllers = [];
 
   @override
   Widget build(BuildContext context) {
     return getCenterBody();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controllers.add(widget.emailController);
+    controllers.add(widget.pwController);
+    controllers.add(widget.pwConfirmController);
   }
 
   /// rendering methods
@@ -112,11 +125,18 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
     setState(() {
       InputAccountInfoScreenState? parent = context.findAncestorStateOfType<InputAccountInfoScreenState>();
 
+      controllers.forEach((element) {
+        parent?.isAllInput = element.value.text.isNotEmpty;
+        print('isAllInput -> ${parent?.isAllInput}');
+      });
+
       if (controller == widget.pwController) {
         isValidPW = validateInputPW(widget.pwController.value.text);
       } else if (controller == widget.pwConfirmController) {
         isCorrect = (widget.pwController.value.text == widget.pwConfirmController.value.text);
         parent?.isInputValid = isCorrect;
+      } else {
+
       }
     });
   }
