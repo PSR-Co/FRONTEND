@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psr/common/const/colors.dart';
 import 'package:psr/model/data/review/review_model.dart';
 import 'package:psr/presenter/review/review_service.dart';
 
@@ -18,6 +19,8 @@ class ReviewScreen extends StatefulWidget {
 }
 
 class _ReviewScreenState extends State<ReviewScreen> {
+
+  bool isReviewEmpty = false;
 
   bool isReviewFolded = true;
   ReviewListResponseModel? data;
@@ -43,18 +46,29 @@ class _ReviewScreenState extends State<ReviewScreen> {
           ? const Center(
               child: Text('리뷰 정보를 불러오지 못하였습니다.'),
             )
-          : ListView.builder(
-              itemCount: data!.data.content.length,  // for test
-              itemBuilder: (BuildContext context, int index) {
-                return ReviewItemWidget(review: data!.data.content[index],);
-              }
-            ),
+          : renderReviewList(),
     );
+  }
+
+  Widget renderReviewList() {
+    if (isReviewEmpty) {
+      return const Center(
+        child: Text('등록된 리뷰가 없습니다.', style: TextStyle(fontSize: 16, color: Colors.black),),
+      );
+    } else {
+      return ListView.builder(
+          itemCount: data!.data.content.length,  // for test
+          itemBuilder: (BuildContext context, int index) {
+            return ReviewItemWidget(review: data!.data.content[index],);
+          }
+      );
+    }
   }
 
   Future<bool> fetchData() async {
     final result = await ReviewService().getReviewListData('${widget.productId}');
     data = ReviewListResponseModel.fromJson(result);
+    if (data != null) { isReviewEmpty = data!.data.empty; }
     return (data != null);
   }
 }
