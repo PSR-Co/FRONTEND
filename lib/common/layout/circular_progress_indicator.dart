@@ -16,6 +16,7 @@ class _CircularProgressState extends State<CircularProgress> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
+      color: Colors.white,
       alignment: Alignment.center,
       child: Container(
           width: 30,
