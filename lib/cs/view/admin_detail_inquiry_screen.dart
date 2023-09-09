@@ -174,7 +174,9 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                                 future: addInquiryAnswer(
                                     widget.inquiryId, controller.text),
                                 builder: (context, snapshot) {
+                                  print("admin: ${widget.inquiryId}, ${controller.text}");
                                   if (snapshot.hasError) {
+                                    print("admin err : ${snapshot.data}, ${snapshot.error}");
                                     return resultDialog(
                                         "답변 등록에 실패하셨습니다!", "등록");
                                   } else if (snapshot.hasData) {
@@ -182,6 +184,7 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                                         AddInquiryAnswerModel.fromJson(
                                             snapshot.data);
                                     if (data?.data == null) {
+                                      print("admin in : ${data?.message}");
                                       return resultDialog(
                                           "답변 등록에 실패하셨습니다!", "등록");
                                     }
