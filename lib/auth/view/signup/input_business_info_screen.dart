@@ -49,11 +49,14 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
   }
 
   Widget renderBody() {
-    return ListView(
-      children: [
-        GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(2),),
-        getCenterBody(),
-      ],
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: ListView(
+        children: [
+          GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(2),),
+          getCenterBody(),
+        ],
+      ),
     );
   }
 

@@ -108,7 +108,6 @@ class _AgreeToTermsScreenState extends State<AgreeToTermsScreen> {
                       });
                     },
                     icon: isAgree
-                        // ? SvgPicture.asset('asset/icons/common/check_purple_icon.svg', width: 30, height: 30,)
                         ? const Icon(Icons.check_circle_outline, color: PURPLE_COLOR,size: 30,)
                         : const Icon(Icons.check_circle_sharp, color: GRAY_0_COLOR,size: 30,),
                     padding: EdgeInsets.zero,

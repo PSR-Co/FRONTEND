@@ -39,17 +39,20 @@ class InputAccountInfoScreenState extends State<InputAccountInfoScreen> {
   }
 
   Widget renderBody() {
-    return ListView(
-      children: [
-        const CustomProgressBar(currentPage: 2),
-        GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(3),),
-        const SizedBox(height: 30,),
-        InputAccountInfo(
-            emailController: emailController,
-            pwController: pwController,
-            pwConfirmController: pwConfirmController
-        )
-      ],
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: ListView(
+        children: [
+          const CustomProgressBar(currentPage: 2),
+          GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(3),),
+          const SizedBox(height: 30,),
+          InputAccountInfo(
+              emailController: emailController,
+              pwController: pwController,
+              pwConfirmController: pwConfirmController
+          )
+        ],
+      ),
     );
   }
 
