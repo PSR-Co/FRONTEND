@@ -5,7 +5,7 @@ part 'myinfo_model.g.dart';
 
 @JsonSerializable()
 class MyInfoModel extends GeneralModel {
-  final MyInfo data;
+  final MyInfo? data;
 
   MyInfoModel(
       {required super.code, required super.message, required this.data});
@@ -30,4 +30,28 @@ class MyInfo {
       required this.nickname});
 
   factory MyInfo.fromJson(Map<String, dynamic> json) => _$MyInfoFromJson(json);
+}
+
+@JsonSerializable()
+class ChangePWModel extends GeneralModel {
+  final Map<String, dynamic>? data;
+
+  ChangePWModel(
+      {required super.code, required super.message, required this.data});
+
+  factory ChangePWModel.fromJson(Map<String, dynamic> json) =>
+      _$ChangePWModelFromJson(json);
+}
+
+@JsonSerializable()
+class ChangePW {
+  final String currentPassword;
+  final String password;
+
+  ChangePW({required this.currentPassword, required this.password});
+
+  factory ChangePW.fromJson(Map<String, dynamic> json) =>
+      _$ChangePWFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ChangePWToJson(this);
 }

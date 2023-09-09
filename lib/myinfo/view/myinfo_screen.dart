@@ -87,10 +87,10 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 return Column(
                   children: [
                     const DefaultAppBarLayout(titleText: "내 정보"),
-                    profile(data!.data.nickname, data!.data.type, data?.data.imgUrl),
+                    profile(data!.data!.nickname, data!.data!.type, data?.data?.imgUrl),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(17.0, 0.0, 17.0, 0.0),
-                      child: infoBox(data!.data.email, data!.data.phone),
+                      child: infoBox(data!.data!.email, data!.data!.phone),
                     ),
                     const Padding(
                       padding: EdgeInsets.only(top: 20.0),

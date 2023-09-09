@@ -68,7 +68,7 @@ class _MypageScreenState extends State<MypageScreen> {
                 return Column(
                   children: [
                     myPageHeader(),
-                    profile(data!.data.nickname, data!.data.type, data?.data.imgUrl),
+                    profile(data!.data!.nickname, data!.data!.type, data?.data?.imgUrl),
                     category(),
                     const Padding(
                       padding: EdgeInsets.only(top: 15.0),
