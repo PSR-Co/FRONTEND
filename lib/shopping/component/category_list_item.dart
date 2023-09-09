@@ -117,12 +117,11 @@ class _CategoryListItemState extends State<CategoryListItem> {
 
   /// 이벤트 메소드 정의
   void didTapLikeButton() {
-    setState(() {
-      isLiked = !isLiked;
-    });
+    // setState(() {
+    //   isLiked = !isLiked;
+    // });
   }
 
   void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: widget.data.productId,)));
-  }
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: widget.data.productId), settings: const RouteSettings(name: '/productDetail')));  }
 }
