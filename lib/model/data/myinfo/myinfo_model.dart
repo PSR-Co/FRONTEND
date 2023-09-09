@@ -55,3 +55,14 @@ class ChangePW {
 
   Map<String, dynamic> toJson() => _$ChangePWToJson(this);
 }
+
+@JsonSerializable()
+class AccountModel extends GeneralModel {
+  final Map<String, dynamic>? data;
+
+  AccountModel(
+      {required super.code, required super.message, required this.data});
+
+  factory AccountModel.fromJson(Map<String, dynamic> json) =>
+      _$AccountModelFromJson(json);
+}

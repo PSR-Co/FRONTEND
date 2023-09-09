@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:psr/auth/view/signup/select_interest_screen.dart';
 import 'package:psr/common/const/colors.dart';
+import 'package:psr/common/layout/circular_progress_indicator.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
 import 'package:psr/common/layout/main_appbar_layout.dart';
 import 'package:psr/cs/view/faq_screen.dart';
@@ -29,7 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List<PopularProduct> popularProductList = [];
 
   Future<dynamic> fetchData() async {
-    return await HomeService().getHomeData();
+    final result = await HomeService().getHomeData();
+    print("result : ${result}");
+    return result;
   }
 
   List<Color> mainTopCardColor = [PURPLE_COLOR_20, SKY_COLOR_20, PINK_COLOR_20];
@@ -74,9 +77,10 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             print('홈: ${snapshot.error.toString()}');
-            return const Center(
-              child: Text('홈 : 에러가 있습니다'),
-            );
+            // return const Center(
+            //   child: Text('홈 : 에러가 있습니다'),
+            // );
+            const CircularProgress();
           }
           if (snapshot.hasData) {
             data = HomeModel.fromJson(snapshot.data);
@@ -93,15 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }
           } else {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              alignment: Alignment.center,
-              child: Container(
-                  width: 30,
-                  height: 30,
-                  child: const CircularProgressIndicator(backgroundColor: PURPLE_COLOR, color: GRAY_0_COLOR,)),
-            );
+            const CircularProgress();
           }
           return SingleChildScrollView(
             child: Container(
@@ -201,13 +197,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   SizedBox(
                                       width: 100,
                                       child: Text(
-                                        mainTopProductList[index].category,
+                                        mainTopProductList[index].category ?? "",
                                         style: packageTextStyle,
                                       )),
                                   SizedBox(
                                       width: 100,
                                       child: Text(
-                                        mainTopProductList[index].name,
+                                        mainTopProductList[index].name ?? "",
                                         style: packageNameTextStyle,
                                       ))
                                 ],

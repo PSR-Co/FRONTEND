@@ -49,6 +49,7 @@ class _MypageScreenState extends State<MypageScreen> {
               future: fetchData(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
+                  print("mypage: ${snapshot.error.toString()}");
                   return const Center(
                     child: Text('내 프로필 : 에러가 있습니다'),
                   );

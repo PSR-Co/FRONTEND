@@ -59,3 +59,17 @@ Map<String, dynamic> _$ChangePWToJson(ChangePW instance) => <String, dynamic>{
   'currentPassword': instance.currentPassword,
   'password': instance.password,
 };
+
+AccountModel _$AccountModelFromJson(Map<String, dynamic> json) =>
+    AccountModel(
+      code: json['code'] as int,
+      message: json['message'] as String,
+      data: json['data'] as Map<String, dynamic>?,
+    );
+
+Map<String, dynamic> _$AccountModelToJson(AccountModel instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+      'data': instance.data,
+    };

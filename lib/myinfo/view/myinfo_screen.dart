@@ -5,6 +5,7 @@ import 'package:psr/common/layout/detail_bar_layout.dart';
 import 'package:psr/common/layout/division.dart';
 import 'package:psr/model/data/myinfo/myinfo_model.dart';
 import 'package:psr/myinfo/view/change_pw_screen.dart';
+import 'package:psr/myinfo/view/logout_dialog.dart';
 import 'package:psr/myinfo/view/privacy_policy_screen.dart';
 import 'package:psr/myinfo/view/terms_of_use_screen.dart';
 import 'package:psr/presenter/myinfo/myinfo_service.dart';
@@ -12,6 +13,7 @@ import 'package:psr/presenter/myinfo/myinfo_service.dart';
 import '../../auth/view/signup/select_interest_screen.dart';
 import '../../auth/view/signup/set_profile_screen.dart';
 import '../../common/const/colors.dart';
+import '../component/common_dialog.dart';
 
 class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({super.key});
@@ -140,9 +142,11 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                       child: setNotification(isChecked),
                     ),
                     const Division(),
-                    Padding(
-                        padding: const EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0),
-                        child: logout()),
+                    const Padding(
+                        padding: EdgeInsets.fromLTRB(17.0, 0.0, 0.0, 5.0),
+                        // child: logout()
+                      child: LogoutDialog(),
+                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(10.0, 5.0, 0.0, 5.0),
                       child: withdrawal(),
@@ -269,116 +273,76 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     });
   }
 
-  Widget logout() {
-    return SizedBox(
-      height: 50.0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "로그아웃",
-            style: headerTextStyle,
-          ),
-          IconButton(
-            onPressed: () {
-              showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (_) {
-                    return cupertinoAlertDialog(
-                        askTitle: Container(
-                            width: MediaQuery.of(context).size.width,
-                            alignment: Alignment.center,
-                            child: Text(
-                              '로그아웃 하시겠어요?',
-                              style: askLogoutTextStyle,
-                            )),
-                        alert: '로그아웃');
-                  });
-            },
-            icon: const Icon(
-              Icons.arrow_forward_ios,
-              size: 16.0,
-            ),
-            padding: const EdgeInsets.only(right: 17.0, bottom: 5.0),
-            constraints: const BoxConstraints(),
-          )
-        ],
-      ),
-    );
-  }
-
-  AlertDialog cupertinoAlertDialog(
-      {required Widget askTitle, required String alert}) {
-    return AlertDialog(
-      backgroundColor: Colors.white,
-      insetPadding: const EdgeInsets.only(top: 600.0),
-      titlePadding: EdgeInsets.zero,
-      contentPadding: const EdgeInsets.only(top: 20.0),
-      buttonPadding: const EdgeInsets.symmetric(horizontal: 17.0),
-      content: askTitle,
-      actions: <Widget>[
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 30.0),
-                child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop<bool>(true);
-                    },
-                    style: OutlinedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: GRAY_1_COLOR,
-                        elevation: 0.0,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(21.0)),
-                            side: BorderSide(color: GRAY_1_COLOR, width: 1))),
-                    child: Container(
-                        height: 45.0,
-                        alignment: Alignment.center,
-                        child: Text(
-                          '취소',
-                          style: answerLogoutTextStyle,
-                        ))),
-              ),
-            ),
-            Container(
-              width: 20.0,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 30.0),
-                child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: OutlinedButton.styleFrom(
-                        backgroundColor: PURPLE_COLOR,
-                        foregroundColor: Colors.white,
-                        elevation: 0.0,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(21.0)),
-                            side: BorderSide(color: GRAY_1_COLOR, width: 1))),
-                    child: Container(
-                        height: 45.0,
-                        alignment: Alignment.center,
-                        child: Text(
-                          alert,
-                          style: answerTextStyle,
-                        ))),
-              ),
-            )
-          ],
-        )
-      ],
-    );
-  }
+  // AlertDialog cupertinoAlertDialog(
+  //     {required Widget askTitle, required String alert}) {
+  //   return AlertDialog(
+  //     backgroundColor: Colors.white,
+  //     insetPadding: const EdgeInsets.only(top: 600.0),
+  //     titlePadding: EdgeInsets.zero,
+  //     contentPadding: const EdgeInsets.only(top: 20.0),
+  //     buttonPadding: const EdgeInsets.symmetric(horizontal: 17.0),
+  //     content: askTitle,
+  //     actions: <Widget>[
+  //       Row(
+  //         mainAxisSize: MainAxisSize.max,
+  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //         children: [
+  //           Expanded(
+  //             child: Padding(
+  //               padding: const EdgeInsets.only(bottom: 30.0),
+  //               child: OutlinedButton(
+  //                   onPressed: () {
+  //                     Navigator.of(context).pop<bool>(true);
+  //                   },
+  //                   style: OutlinedButton.styleFrom(
+  //                       backgroundColor: Colors.white,
+  //                       foregroundColor: GRAY_1_COLOR,
+  //                       elevation: 0.0,
+  //                       shape: const RoundedRectangleBorder(
+  //                           borderRadius:
+  //                               BorderRadius.all(Radius.circular(21.0)),
+  //                           side: BorderSide(color: GRAY_1_COLOR, width: 1))),
+  //                   child: Container(
+  //                       height: 45.0,
+  //                       alignment: Alignment.center,
+  //                       child: Text(
+  //                         '취소',
+  //                         style: answerLogoutTextStyle,
+  //                       ))),
+  //             ),
+  //           ),
+  //           Container(
+  //             width: 20.0,
+  //           ),
+  //           Expanded(
+  //             child: Padding(
+  //               padding: const EdgeInsets.only(bottom: 30.0),
+  //               child: OutlinedButton(
+  //                   onPressed: () {
+  //                     Navigator.of(context).pop();
+  //                   },
+  //                   style: OutlinedButton.styleFrom(
+  //                       backgroundColor: PURPLE_COLOR,
+  //                       foregroundColor: Colors.white,
+  //                       elevation: 0.0,
+  //                       shape: const RoundedRectangleBorder(
+  //                           borderRadius:
+  //                               BorderRadius.all(Radius.circular(21.0)),
+  //                           side: BorderSide(color: GRAY_1_COLOR, width: 1))),
+  //                   child: Container(
+  //                       height: 45.0,
+  //                       alignment: Alignment.center,
+  //                       child: Text(
+  //                         alert,
+  //                         style: answerTextStyle,
+  //                       ))),
+  //             ),
+  //           )
+  //         ],
+  //       )
+  //     ],
+  //   );
+  // }
 
   Widget withdrawal() {
     return Container(
@@ -390,28 +354,57 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   barrierDismissible: false,
                   context: context,
                   builder: (_) {
-                    return cupertinoAlertDialog(
+                    // return cupertinoAlertDialog(
+                    //     askTitle: SizedBox(
+                    //         width: MediaQuery.of(context).size.width,
+                    //         child: Column(
+                    //           mainAxisAlignment: MainAxisAlignment.center,
+                    //           children: [
+                    //             Text(
+                    //               '회원탈퇴시 모든 정보를 잃게 됩니다.',
+                    //               style: alertWithdrawalTextStyle,
+                    //             ),
+                    //             Padding(
+                    //               padding: const EdgeInsets.only(top: 5.0),
+                    //               child: Text(
+                    //                 '그래도 탈퇴하시겠어요?',
+                    //                 style: answerWithdrawalTextStyle,
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         )),
+                    //     alert: '회원탈퇴');
+                    return CommonDialog(
                         askTitle: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '회원탈퇴시 모든 정보를 잃게 됩니다.',
-                                  style: alertWithdrawalTextStyle,
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '회원탈퇴시 모든 정보를 잃게 됩니다.',
+                                style: alertWithdrawalTextStyle,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Text(
+                                  '그래도 탈퇴하시겠어요?',
+                                  style: answerWithdrawalTextStyle,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5.0),
-                                  child: Text(
-                                    '그래도 탈퇴하시겠어요?',
-                                    style: answerWithdrawalTextStyle,
-                                  ),
-                                ),
-                              ],
-                            )),
-                        alert: '회원탈퇴');
-                  });
+                              ),
+                            ],
+                          )
+                        ),
+                        alert: '로그아웃',
+                        onDidTap: onDidWithdrawal()
+                    );
+                  }
+                  );
             },
             child: Text("회원탈퇴", style: withdrawalTextStyle)));
   }
+
+  Widget onDidWithdrawal() {
+    return Text("");
+  }
+
 }
