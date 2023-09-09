@@ -41,17 +41,20 @@ class _InputUserInfoScreenState extends State<InputUserInfoScreen> {
   }
 
   Widget renderBody() {
-    return ListView(
-      children: [
-        const CustomProgressBar(currentPage: 3),
-        GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(4),),
-        const SizedBox(height: 50,),
-        InputUserInfo(
-          nameController: nameController,
-          phoneNumController: phoneNumController,
-          validCodeController: validCodeController,
-        ),
-      ],
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: ListView(
+        children: [
+          const CustomProgressBar(currentPage: 3),
+          GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(4),),
+          const SizedBox(height: 50,),
+          InputUserInfo(
+            nameController: nameController,
+            phoneNumController: phoneNumController,
+            validCodeController: validCodeController,
+          ),
+        ],
+      ),
     );
   }
 

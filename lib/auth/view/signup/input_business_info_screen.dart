@@ -49,11 +49,14 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
   }
 
   Widget renderBody() {
-    return ListView(
-      children: [
-        GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(2),),
-        getCenterBody(),
-      ],
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: ListView(
+        children: [
+          GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(2),),
+          getCenterBody(),
+        ],
+      ),
     );
   }
 
@@ -88,7 +91,7 @@ class _InputBusinessInfoState extends State<InputBusinessInfo> {
         const SizedBox(height: 20,),
 
         const CustomTitleText(title: '사업자 등록번호'),
-        PurpleOutlinedTextField(maxLine: 1, hintText: '사업자 등록 번호를 입력해주세요.', controller: registeredCodeController),
+        PurpleOutlinedTextField(maxLine: 1, hintText: '사업자 등록 번호를 입력해주세요.', controller: registeredCodeController, textInputType: TextInputType.number),
         const SizedBox(height: 20,),
 
         getValidationButton(),

@@ -67,13 +67,16 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   }
 
   Widget renderBody({required profile}) {
-    return ListView(
-      children: [
-        getProgressBar(),
-        getTitleGuide(),
-        const SizedBox(height: 30,),
-        getCenterBody(profile: profile),
-      ],
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: ListView(
+        children: [
+          getProgressBar(),
+          getTitleGuide(),
+          const SizedBox(height: 30,),
+          getCenterBody(profile: profile),
+        ],
+      ),
     );
   }
 

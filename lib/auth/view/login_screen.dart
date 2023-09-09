@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:psr/auth/component/account_input_text_field.dart';
 import 'package:psr/auth/view/sign_up_screen.dart';
@@ -32,21 +33,24 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget renderBody() {
-    return SingleChildScrollView(
-      child: SafeArea(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              getMainLogoView(),
-              getWelcomeText(),
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: SingleChildScrollView(
+        child: SafeArea(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                getMainLogoView(),
+                getWelcomeText(),
 
-              getAccountInputView(),
-              getLoginButton(),
+                getAccountInputView(),
+                getLoginButton(),
 
-              getAccountOptionView(),
-            ],
+                getAccountOptionView(),
+              ],
+            ),
           ),
         ),
       ),
@@ -206,7 +210,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (result) {
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
-
+    } else if (idController.value.text.isEmpty || pwController.value.text.isEmpty) {
+      Fluttertoast.showToast(msg: '아이디와 비밀번호를 모두 입력해주세요.');
     } else {
       showCustomDialog(
           '로그인 실패',

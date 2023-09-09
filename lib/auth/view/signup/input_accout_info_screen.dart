@@ -23,15 +23,18 @@ class InputAccountInfoScreenState extends State<InputAccountInfoScreen> {
   final TextEditingController pwConfirmController = TextEditingController();
 
   bool isInputValid = true;
+  bool isAllInput = false;
 
   @override
   Widget build(BuildContext context) {
+    print('build called');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const DefaultAppBarLayout(titleText: '회원가입',),
       body: renderBody(),
       bottomNavigationBar: PurpleFilledButton(
         title: '다음',
+        // onPressed: (isInputValid && isAllInput) ? didTapNextButton : null,
         onPressed: didTapNextButton,
         height: 40,
       ),
@@ -39,24 +42,28 @@ class InputAccountInfoScreenState extends State<InputAccountInfoScreen> {
   }
 
   Widget renderBody() {
-    return ListView(
-      children: [
-        const CustomProgressBar(currentPage: 2),
-        GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(3),),
-        const SizedBox(height: 30,),
-        InputAccountInfo(
-            emailController: emailController,
-            pwController: pwController,
-            pwConfirmController: pwConfirmController
-        )
-      ],
+    return GestureDetector(
+      onTap: () { FocusScope.of(context).unfocus(); },
+      child: ListView(
+        children: [
+          const CustomProgressBar(currentPage: 2),
+          GuideTitleText(title: SIGNUP_GUIDE_TITLE.elementAt(3),),
+          const SizedBox(height: 30,),
+          InputAccountInfo(
+              emailController: emailController,
+              pwController: pwController,
+              pwConfirmController: pwConfirmController,
+              isAllInput: isAllInput,
+          )
+        ],
+      ),
     );
   }
 
 
   /// event methods
   void didTapNextButton() {
-    if(isInputValid) {
+    if(isAllInput && isInputValid) {
       SignupService().setAccountInfo(emailController.value.text, pwController.value.text);
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InputUserInfoScreen()));
     }
