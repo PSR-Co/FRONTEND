@@ -35,7 +35,7 @@ class _InquiryScreenState extends State<InquiryScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            DefaultAppBarLayout(titleText: "문의하기"),
+            const DefaultAppBarLayout(titleText: "문의하기"),
             registerInquiryView(),
             Expanded(child: Container(width: MediaQuery.of(context).size.width,)),
             Padding(
@@ -53,7 +53,7 @@ class _InquiryScreenState extends State<InquiryScreen> {
   Widget registerInquiryView(){
     return Container(
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.only(left: 17.0, right: 17.0, top: 40.0),
+      margin: const EdgeInsets.only(left: 17.0, right: 17.0, top: 40.0),
       child: Column(
         children: [
           inputBox('제목을 입력하세요.', 70.0, titleController),
@@ -103,7 +103,9 @@ class _InquiryScreenState extends State<InquiryScreen> {
         if (kDebugMode) {
           print('요청에 성공했습니다.');
           changeState();
-          isSuccess ? Navigator.push(context, MaterialPageRoute(builder: (context) => const ServiceCenterScreen())) : Fluttertoast.showToast(msg: "문의 등록에 실패하셨습니다.");
+          isSuccess ? Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => const ServiceCenterScreen()),
+                  (route) => false) : Fluttertoast.showToast(msg: "문의 등록에 실패하셨습니다.");
         }
       } else {
         if (kDebugMode) {
