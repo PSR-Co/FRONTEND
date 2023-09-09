@@ -44,10 +44,11 @@ class OrderService {
             queryParameters, body)
         .catchError((error) {
       debugPrint('error : $error');
-    });
+    })
+    ;
+    print('path: $ORDER_DETAIL/$orderId');
     print('body: $body');
-
     print('response: $response');
-    return (response == null) ? null : GeneralModel.fromJson(response);
+    return (response == null) ? null : EditOrderModel.fromJson(response);
   }
 }

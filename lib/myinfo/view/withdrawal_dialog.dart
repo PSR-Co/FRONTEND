@@ -96,38 +96,4 @@ class _WithdrawalDialogState extends State<WithdrawalDialog> {
           return const SecondDialog(result: "회원탈퇴가 완료되었습니다.");
         });
   }
-
-  // AlertDialog alertDialog(String result) {
-  //   return AlertDialog(
-  //     backgroundColor: Colors.white,
-  //     actionsAlignment: MainAxisAlignment.spaceEvenly,
-  //     titlePadding: EdgeInsets.zero,
-  //     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-  //     elevation: 0.0,
-  //     content: Container(
-  //       height: 100,
-  //       alignment: Alignment.center,
-  //       child: Text(result, style: answerTextStyle),
-  //     ),
-  //     actions: <Widget>[
-  //       SizedBox(
-  //         width: MediaQuery.of(context).size.width,
-  //         child: TextButton(
-  //             onPressed: () {
-  //               if (result == "회원탈퇴에 성공했습니다!") {
-  //                 Navigator.of(context).pushAndRemoveUntil(
-  //                     MaterialPageRoute(builder: (_) => const LoginScreen()),
-  //                         (route) => false);
-  //               } else {
-  //                 Navigator.of(context).pop();
-  //               }
-  //             },
-  //             child: Text(
-  //               "확인",
-  //               style: titleTextStyle,
-  //             )),
-  //       )
-  //     ],
-  //   );
-  // }
 }
