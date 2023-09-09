@@ -5,10 +5,12 @@ import 'package:psr/common/layout/division.dart';
 import 'package:psr/model/data/order/order_detail_model.dart';
 import 'package:psr/mypage/component/action_btn.dart';
 import 'package:psr/mypage/component/detail_order_textfield_form.dart';
+import 'package:psr/order/component/order_dialog.dart';
 import 'package:psr/presenter/order/order_service.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/circular_progress_indicator.dart';
+import 'mypage_screen.dart';
 
 ///요청 상세 기본틀 => (요청상태 대기)판매자와 구매자 상세 화면
 ///추후 유저타입, 진행상태에 따른 로직 생성 예정
@@ -48,6 +50,12 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
       fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_2_COLOR);
   final TextStyle btnTypeTextStyle = const TextStyle(
       fontSize: 13.0, fontWeight: FontWeight.w700, color: PURPLE_COLOR);
+
+
+  final TextStyle titleTextStyle = const TextStyle(
+      fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
+  final TextStyle answerTextStyle = const TextStyle(
+      fontSize: 15.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController urlController = TextEditingController();
@@ -319,23 +327,16 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     print('updateState $status');
     result = await OrderService().editOrderData(
         widget.orderId, {'status': status}, name, url, ask, detail);
+    changeEditable();
+    orderDialog('요청을 수정하였습니다.');
+  }
 
-    if (result != null) {
-      if (result.code == 200) {
-        if (kDebugMode) {
-          print('요청에 성공했습니다.');
-        }
-        changeEditable();
-      } else {
-        if (kDebugMode) {
-          print('요청에 실패했습니다.');
-        }
-      }
-    } else {
-      if (kDebugMode) {
-        print('네트워크 오류가 발생하였습니다.');
-      }
-    }
+  void orderDialog(String result){
+    showDialog(barrierDismissible: true,
+        context: context,
+        builder: (_){
+      return OrderDialog(result: result);
+        });
   }
 
   void changeEditable() {
