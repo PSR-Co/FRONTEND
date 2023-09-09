@@ -39,8 +39,9 @@ class _OrderListTabState extends State<OrderListTab>
     } else {
       queryParameters = {'type': 'order'};
     }
-    // print('ordertab ${await OrderService().getOrderData(queryParameters)}');
-    return await OrderService().getOrderData(queryParameters);
+    final result = await OrderService().getOrderData(queryParameters);
+    print('ordertab ${result}');
+    return result;
   }
 
   @override
@@ -154,11 +155,14 @@ class _OrderListTabState extends State<OrderListTab>
                                 width: 1.0,
                                 style: BorderStyle.solid)),
                         child: ClipRect(
-                          child: Image.asset(
-                            productImg ?? "asset/images/profile_img_sample.jpg",
-                            width: 140.0,
-                            height: 140.0,
-                          ),
+                          child: (productImg == null)
+                              ? const Icon(Icons.question_mark, color: PURPLE_COLOR, size: 50,)
+                              : Image.network(productImg),
+                          // Image.asset(
+                          //   productImg ?? "asset/images/profile_img_sample.jpg",
+                          //   width: 140.0,
+                          //   height: 140.0,
+                          // ),
                         )),
                     Text(
                       productName,

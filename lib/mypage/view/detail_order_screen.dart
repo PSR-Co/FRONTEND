@@ -8,6 +8,7 @@ import 'package:psr/mypage/component/detail_order_textfield_form.dart';
 import 'package:psr/presenter/order/order_service.dart';
 
 import '../../common/const/colors.dart';
+import '../../common/layout/circular_progress_indicator.dart';
 
 ///요청 상세 기본틀 => (요청상태 대기)판매자와 구매자 상세 화면
 ///추후 유저타입, 진행상태에 따른 로직 생성 예정
@@ -77,61 +78,59 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
         future: fetchData(widget.orderId),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Center(
-              child: Text('에러가 발생했습니다.'),
-            );
+            print("detail-order-screen : 에러가 발생했습니다.");
+            return const CircularProgress();
           }
           if (snapshot.hasData) {
             data = OrderDetailModel.fromJson(snapshot.data);
             if (data?.code == 403) {
-              return const Center(
-                child: Text('권한이 없습니다.'),
-              );
+              print('detail-order-screen : 권한이 없습니다.');
+              return const CircularProgress();
             } else if (data?.code == 404) {
-              return const Center(
-                child: Text('해당 요청을 찾을 수 없습니다.'),
-              );
+              print("detail-order-screen : 해당 요청을 찾을 수 없습니다.");
+              return const CircularProgress();
             }
           } else {
-            return const Center(
-              child: Text('요청 상세를 불러오는데 실패하였습니다.'),
-            );
+            return const CircularProgress();
           }
-          return Column(
-            children: [
-              orderDetailHeader(data!.data.status, data!.data.orderDate),
-              const Division(),
-              orderDetailView(data!.data.ordererName, data!.data.websiteUrl,
-                  data!.data.inquiry, data!.data.description),
-              if (widget.type == 'sell' && data!.data.status != '요청대기')
-                buttonView('진행완료', '진행취소')
-              else
-                buttonView(widget.btnOption1, widget.btnOption2),
-              if (widget.type == 'sell' && data!.data.status == '요청대기')
-                Padding(
-                  padding: const EdgeInsets.only(top: 18.0),
-                  child: ActionBtn(
-                      child: actionBtnChild(
-                          () => () {
-                                Navigator.pop(context, false);
-                              },
-                          '1:1 채팅')),
-                )
-              else if (widget.type == 'order' && !readOnly)
-                Padding(
-                  padding: const EdgeInsets.only(top: 18.0),
-                  child: ActionBtn(
-                      child: actionBtnChild(
-                          () => editedBtn(
-                                  data!.data.status,
-                                  data!.data.ordererName,
-                                  data!.data.websiteUrl,
-                                  data!.data.inquiry,
-                                  data!.data.description)
-                              .then((value) => setState(() {})),
-                          '수정하기')),
-                )
-            ],
+          print("${widget.type}");
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                orderDetailHeader(data!.data.status, data!.data.orderDate),
+                const Division(),
+                orderDetailView(data!.data.ordererName, data!.data.websiteUrl,
+                    data!.data.inquiry, data!.data.description),
+                if (widget.type == 'sell' && data!.data.status != '요청대기')
+                  buttonView('진행완료', '진행취소')
+                else
+                  buttonView(widget.btnOption1, widget.btnOption2),
+                if (widget.type == 'sell' && data!.data.status == '요청대기')
+                  Padding(
+                    padding: const EdgeInsets.only(top: 18.0),
+                    child: ActionBtn(
+                        child: actionBtnChild(
+                            () => () {
+                                  Navigator.pop(context, false);
+                                },
+                            '1:1 채팅')),
+                  )
+                else if (widget.type == 'order' && !readOnly)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 18.0),
+                    child: ActionBtn(
+                        child: actionBtnChild(
+                            () => editedBtn(
+                                    data!.data.status,
+                                    data!.data.ordererName,
+                                    data!.data.websiteUrl,
+                                    data!.data.inquiry,
+                                    data!.data.description)
+                                .then((value) => setState(() {})),
+                            '수정하기')),
+                  )
+              ],
+            ),
           );
         });
   }
@@ -203,8 +202,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     return Container(
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.only(top: 10),
-      child: ListView(
-        shrinkWrap: true,
+      child: Column(
         children: [
           DetailOrderTextFieldForm(
             title: '이름',

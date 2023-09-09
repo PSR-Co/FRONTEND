@@ -78,7 +78,7 @@ class _MypageScreenState extends State<MypageScreen> {
             padding: EdgeInsets.only(top: 15.0),
             child: Division(),
           ),
-          Padding(
+          const Padding(
               padding: EdgeInsets.only(bottom: 10.0),
               child: OrderListTab()),
         ],
@@ -135,11 +135,9 @@ class _MypageScreenState extends State<MypageScreen> {
         child: Row(
           children: [
             ClipOval(
-              child: Image.asset(
-                imgUrl ?? "asset/images/default_profile.png",
-                width: 70.0,
-                height: 70.0,
-              ),
+              child: (imgUrl == null)
+                  ? Image.asset("asset/images/default_profile.png")
+                  : Image.network(imgUrl),
             ),
             Container(
               margin: const EdgeInsets.only(left: 10.0),

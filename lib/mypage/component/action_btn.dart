@@ -15,7 +15,7 @@ class _ActionBtnState extends State<ActionBtn> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 17.0),
+        margin: const EdgeInsets.fromLTRB(17.0, 0,17.0,5),
         height: 50.0,
         decoration: BoxDecoration(
             color: Colors.white,
