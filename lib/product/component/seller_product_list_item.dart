@@ -102,6 +102,6 @@ class _SellerProductListItemState extends State<SellerProductListItem> {
 
   /// event methods
   void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category, productId: widget.productId,)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(category: widget.category, productId: widget.productId,), settings: const RouteSettings(name: '/productDetail')));
   }
 }
