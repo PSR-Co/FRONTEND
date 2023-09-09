@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/division.dart';
@@ -10,17 +9,12 @@ import 'package:psr/presenter/order/order_service.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/circular_progress_indicator.dart';
-import 'mypage_screen.dart';
 
-///요청 상세 기본틀 => (요청상태 대기)판매자와 구매자 상세 화면
-///추후 유저타입, 진행상태에 따른 로직 생성 예정
 class DetailOrderScreen extends StatefulWidget {
   int orderId;
   String type;
   String btnOption1;
   String btnOption2;
-
-  // Widget? child;
 
   DetailOrderScreen(
       {required this.orderId,
@@ -50,7 +44,6 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
       fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_2_COLOR);
   final TextStyle btnTypeTextStyle = const TextStyle(
       fontSize: 13.0, fontWeight: FontWeight.w700, color: PURPLE_COLOR);
-
 
   final TextStyle titleTextStyle = const TextStyle(
       fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
@@ -331,11 +324,12 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     orderDialog('요청을 수정하였습니다.');
   }
 
-  void orderDialog(String result){
-    showDialog(barrierDismissible: true,
+  void orderDialog(String result) {
+    showDialog(
+        barrierDismissible: true,
         context: context,
-        builder: (_){
-      return OrderDialog(result: result);
+        builder: (_) {
+          return OrderDialog(result: result);
         });
   }
 
