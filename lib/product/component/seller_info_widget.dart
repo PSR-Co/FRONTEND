@@ -34,7 +34,9 @@ class _SellerInfoWidgetState extends State<SellerInfoWidget> {
           TextButton(
             onPressed: didTapSellerName,
             style: TextButton.styleFrom(
+              minimumSize: Size.zero,
               padding: const EdgeInsets.only(left: 8),
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             child: Text(widget.sellerName, style: sellerNameStyle,),
           ),
