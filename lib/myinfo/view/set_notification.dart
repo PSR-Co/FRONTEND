@@ -19,6 +19,7 @@ class _SetNotificationState extends State<SetNotification> {
 
   @override
   Widget build(BuildContext context) {
+    print('build called');
     return FutureBuilder<dynamic> (
         future: configure(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -51,11 +52,33 @@ class _SetNotificationState extends State<SetNotification> {
 
   Future<void> changeChecked() async {
     await Permission.notification.request();
-    bool isGranted = await Permission.notification.isGranted;
-    setState(()  {
-      // isChecked = !isChecked;
-      isChecked = isGranted;
-      print('changeChecked called :: isGranted -> $isGranted');
+    openAppSettings().then((value) =>
+      setState(() async {
+        isChecked = await Permission.notification.isGranted;
+        // TODO: 알림 권한 설정 후 isChecked 값을 기반으로 rerendering 필요
+      })
+    );
+  }
+
+  void showCustomDialog(
+      String title, String content, String buttonTitle, VoidCallback onPressed,
+      ) {
+    showDialog(context: context, builder: (BuildContext context) {
+      return AlertDialog(
+        title: Center(
+          child: Text(title, style: const TextStyle(fontSize: 16),),
+        ),
+        content: Text(content, style: const TextStyle(fontSize: 14),
+            textAlign: TextAlign.center),
+        actions: <Widget>[
+          Center(
+            child: TextButton(
+              onPressed: onPressed,
+              child: Text(buttonTitle),
+            ),
+          ),
+        ],
+      );
     });
   }
 }
