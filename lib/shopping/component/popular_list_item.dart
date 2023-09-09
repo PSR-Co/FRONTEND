@@ -180,9 +180,9 @@ class _PopularListItemState extends State<PopularListItem> {
   /// 이벤트 메소드 정의
   void didTapLikeButton() {
     print('didTapLikeButton');
-    setState(() {
-      isLiked = !isLiked;
-    });
+    // setState(() {
+    //   isLiked = !isLiked;
+    // });
   }
 
   void didTapItem() {

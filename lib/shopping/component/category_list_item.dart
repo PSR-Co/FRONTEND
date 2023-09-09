@@ -117,9 +117,9 @@ class _CategoryListItemState extends State<CategoryListItem> {
 
   /// 이벤트 메소드 정의
   void didTapLikeButton() {
-    setState(() {
-      isLiked = !isLiked;
-    });
+    // setState(() {
+    //   isLiked = !isLiked;
+    // });
   }
 
   void didTapItem() {
