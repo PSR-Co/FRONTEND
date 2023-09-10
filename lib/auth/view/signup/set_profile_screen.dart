@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/custom_title_text.dart';
 import 'package:psr/common/layout/purple_outlined_textfield_with_button.dart';
 import 'package:image_picker/image_picker.dart';
@@ -37,6 +38,8 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   bool isInputValid = false;
   bool isValidNickname = false;
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<dynamic> (
@@ -69,13 +72,24 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   Widget renderBody({required profile}) {
     return GestureDetector(
       onTap: () { FocusScope.of(context).unfocus(); },
-      child: ListView(
+      child: Stack(
         children: [
-          getProgressBar(),
-          getTitleGuide(),
-          const SizedBox(height: 30,),
-          getCenterBody(profile: profile),
-        ],
+          ListView(
+            children: [
+              getProgressBar(),
+              getTitleGuide(),
+              const SizedBox(height: 30,),
+              getCenterBody(profile: profile),
+            ],
+          ),
+          (isLoading)
+              ? Container(
+                  child: const Center(
+                    child: CircularProgressIndicator(color: PURPLE_COLOR,),
+                  ),
+                )
+              : const SizedBox(height: 0,)
+        ]
       ),
     );
   }
@@ -129,14 +143,22 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   Future<void> didTapNextButton() async {
     if (isInputValid) {
       if (isLoginUser) {
+        setState(() { isLoading = true; });
         Future<bool> result = UserService().editProfile(nicknameController.value.text, profileImgKey);
-        if (await result) { Navigator.of(context).pop(); }
+        if (await result) {
+          setState(() { isLoading = false; });
+          Navigator.of(context).pop();
+        }
         else { Fluttertoast.showToast(msg: '프로필 수정에 실패하였습니다.'); }
 
       } else {
-        checkPermission();
+        setState(() { isLoading = true; });
         Future<bool> result = SignupService().signup();
-        if (await result) { Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen())); }
+        if (await result) {
+          setState(() { isLoading = false; });
+          checkPermission();
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen()));
+        }
         else { Fluttertoast.showToast(msg: '회원가입에 실패하였습니다.'); }
       }
     }
