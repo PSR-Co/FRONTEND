@@ -25,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController idController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
 
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,20 +39,32 @@ class _LoginScreenState extends State<LoginScreen> {
       onTap: () { FocusScope.of(context).unfocus(); },
       child: SingleChildScrollView(
         child: SafeArea(
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                getMainLogoView(),
-                getWelcomeText(),
+          child: Stack(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    getMainLogoView(),
+                    getWelcomeText(),
 
-                getAccountInputView(),
-                getLoginButton(),
+                    getAccountInputView(),
+                    getLoginButton(),
 
-                getAccountOptionView(),
-              ],
-            ),
+                    getAccountOptionView(),
+                  ],
+                ),
+              ),
+              (isLoading)
+                  ? Container(
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 3),
+                    child: const Center(
+                      child: CircularProgressIndicator(color: PURPLE_COLOR,),
+                    ),
+                  )
+                  : const SizedBox(height: 0,)
+            ]
           ),
         ),
       ),
@@ -194,14 +208,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   /// event methods
   void didTapLoginButton() async {
-    checkPermission();
+    setState(() { isLoading = true; });
 
-    String? deviceToken;
-    if(await Permission.notification.isGranted) {
-      deviceToken = await FirebaseMessaging.instance.getToken();
-      print('알림 수신 허용 -> $deviceToken');
-    } else { deviceToken = null; }
-
+    String? deviceToken = await FirebaseMessaging.instance.getToken();
     final result = await LoginService().login(
       idController.value.text,
       pwController.value.text,
@@ -209,6 +218,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     if (result) {
+      setState(() { isLoading = false; });
+      checkPermission();
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
     } else if (idController.value.text.isEmpty || pwController.value.text.isEmpty) {
       Fluttertoast.showToast(msg: '아이디와 비밀번호를 모두 입력해주세요.');
