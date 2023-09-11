@@ -26,6 +26,7 @@ class InputAccountInfo extends StatefulWidget {
 }
 
 class _InputAccountInfoState extends State<InputAccountInfo> {
+  bool isValidEmail = true;
   bool isValidPW = true;
   bool isCorrect = true;
 
@@ -56,6 +57,7 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
             '이메일을 입력해주세요.',
             false
         ),
+        getWarningText(isValidEmail, '이메일 형식에 맞지 않습니다.'),
         const SizedBox(height: 22,),
 
         getInputView(
@@ -127,17 +129,16 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
 
       controllers.forEach((element) {
         parent?.isAllInput = element.value.text.isNotEmpty;
-        print('isAllInput -> ${parent?.isAllInput}');
       });
 
       if (controller == widget.pwController) {
         isValidPW = validateInputPW(widget.pwController.value.text);
       } else if (controller == widget.pwConfirmController) {
         isCorrect = (widget.pwController.value.text == widget.pwConfirmController.value.text);
-        parent?.isInputValid = isCorrect;
-      } else {
-
+      } else if (controller == widget.emailController) {
+        isValidEmail = isValidEmailFormat(widget.emailController.value.text);
       }
+      parent?.isInputValid = isValidEmail && isValidPW && isCorrect;
     });
   }
 
@@ -146,5 +147,11 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
     if (input.isEmpty) { return false; }
     else if (!regExp.hasMatch(input)) { return false; }
     return true;
+  }
+
+  bool isValidEmailFormat(String emailInput) {
+    return RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(emailInput);
   }
 }
