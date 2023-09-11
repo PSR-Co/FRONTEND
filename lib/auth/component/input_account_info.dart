@@ -131,15 +131,24 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
         parent?.isAllInput = element.value.text.isNotEmpty;
       });
 
-      if (controller == widget.pwController) {
-        isValidPW = validateInputPW(widget.pwController.value.text);
-      } else if (controller == widget.pwConfirmController) {
-        isCorrect = (widget.pwController.value.text == widget.pwConfirmController.value.text);
-      } else if (controller == widget.emailController) {
-        isValidEmail = isValidEmailFormat(widget.emailController.value.text);
-      }
+      // if (controller == widget.pwController) {
+      //   isValidPW = validateInputPW(widget.pwController.value.text);
+      // } else if (controller == widget.pwConfirmController) {
+      //   isCorrect = (widget.pwController.value.text == widget.pwConfirmController.value.text);
+      // } else if (controller == widget.emailController) {
+      //   isValidEmail = isValidEmailFormat(widget.emailController.value.text);
+      // }
+      // parent?.isInputValid = isValidEmail && isValidPW && isCorrect;
+
+      // 이메일 형식 검증, 비밀번호 형식 검증, 비밀번호 재입력 확인
+      isValidPW = validateInputPW(widget.pwController.value.text);
+      isCorrect = (widget.pwController.value.text == widget.pwConfirmController.value.text);
+      isValidEmail = isValidEmailFormat(widget.emailController.value.text);
+
       parent?.isInputValid = isValidEmail && isValidPW && isCorrect;
     });
+
+
   }
 
   bool validateInputPW(String input) {
