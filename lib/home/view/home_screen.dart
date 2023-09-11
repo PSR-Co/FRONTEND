@@ -17,6 +17,7 @@ import 'package:psr/shopping/view/shopping_screen.dart';
 
 import '../../cs/view/service_center_screen.dart';
 import '../../model/data/home/home_model.dart';
+import '../../product/view/product_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -158,7 +159,9 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: indexes.length,
         itemBuilder: (context, index, activeIndex) {
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: mainTopProductList[index].id), settings: const RouteSettings(name: '/productDetail')));
+              },
             child: Container(
               margin:
                   const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
