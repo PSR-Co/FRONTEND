@@ -217,8 +217,8 @@ class _LoginScreenState extends State<LoginScreen> {
       deviceToken,
     );
 
+    setState(() { isLoading = false; });
     if (result) {
-      setState(() { isLoading = false; });
       checkPermission();
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
     } else if (idController.value.text.isEmpty || pwController.value.text.isEmpty) {
