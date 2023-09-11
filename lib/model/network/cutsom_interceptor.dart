@@ -13,6 +13,9 @@ class CustomInterceptor extends Interceptor {
   /// Variables
   final reissuePath = '/users/reissue';
 
+  int? statusCode;
+  String? errorMsg;
+
   /// Override Methods
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -28,6 +31,9 @@ class CustomInterceptor extends Interceptor {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) async {
+
+    statusCode = err.response?.data['code'];
+    errorMsg = err.response?.data['message'];
 
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
