@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../const/colors.dart';
@@ -18,10 +17,13 @@ class _CircularProgressState extends State<CircularProgress> {
       height: MediaQuery.of(context).size.height,
       color: Colors.white,
       alignment: Alignment.center,
-      child: Container(
+      child: const SizedBox(
           width: 30,
           height: 30,
-          child: const CircularProgressIndicator(backgroundColor: PURPLE_COLOR, color: GRAY_0_COLOR,)),
+          child: CircularProgressIndicator(
+            backgroundColor: PURPLE_COLOR,
+            color: GRAY_0_COLOR,
+          )),
     );
   }
 }

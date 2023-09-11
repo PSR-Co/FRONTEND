@@ -58,14 +58,17 @@ Map<String, dynamic> _$DetailNoticeModelToJson(DetailNoticeModel instance) =>
 
 DetailNoticeData _$DetailNoticeDataFromJson(Map<String, dynamic> json) =>
     DetailNoticeData(
-      noticeId: json['noticeId'] as int,
-      title: json['title'] as String,
-      date: json['date'] as String,
-    );
+        noticeId: json['noticeId'] as int,
+        title: json['title'] as String,
+        date: json['date'] as String,
+        content: json['content'] as String,
+        imgUrl: json['imgUrl'] as String?);
 
 Map<String, dynamic> _$DetailNoticeDataToJson(DetailNoticeData instance) =>
     <String, dynamic>{
       'noticeId': instance.noticeId,
       'title': instance.title,
       'date': instance.date,
+      'content': instance.content,
+      'imgUrl': instance.imgUrl
     };
