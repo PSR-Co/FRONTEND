@@ -22,6 +22,9 @@ class _DetailNoticeScreenState extends State<DetailNoticeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle noticeContentTextStyle = const TextStyle(
+        fontSize: 12.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
+
     return FutureBuilder(
         future: fetchData(widget.noticeId),
         builder: (context, snapshot) {
@@ -56,7 +59,7 @@ class _DetailNoticeScreenState extends State<DetailNoticeScreen> {
             color: PURPLE_COLOR_10,
 
             ///TO-DO : response에 content 추가되면 title -> content 로 수정하기
-            child: Text(data!.data.title),
+            child: Text(data!.data.title, style: noticeContentTextStyle),
           );
         });
   }

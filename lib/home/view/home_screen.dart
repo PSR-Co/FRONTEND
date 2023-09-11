@@ -26,9 +26,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   HomeModel? data;
   List<MainTop> mainTopProductList = [
-    MainTop(id: 0, category: '', name: '', description: ''),
-    MainTop(id: 0, category: '', name: '', description: ''),
-    MainTop(id: 0, category: '', name: '', description: '')
+    // MainTop(id: 0, category: '', name: '', description: ''),
+    // MainTop(id: 0, category: '', name: '', description: ''),
+    // MainTop(id: 0, category: '', name: '', description: '')
   ];
   List<RecentProduct> recentProductList = [];
   List<PopularProduct> popularProductList = [];
@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
     PackageBtn('방송가능', '상품소싱')
   ];
 
-  ///card slider 임시 개수
   final indexes = List.generate(3, (index) => index);
 
   final controller = SliderController();
@@ -100,6 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return const CircularProgress();
           }
           return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Container(
               width: MediaQuery.of(context).size.width,
               color: Colors.white,
