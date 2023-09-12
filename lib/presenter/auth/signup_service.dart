@@ -76,6 +76,10 @@ class SignupService {
     else { return category.replaceAll(' ', ''); }
   }
 
+  bool checkNickname(String nickname) {
+    return (_signupRequest.nickname == nickname);
+  }
+
   /// Request Methods
   Future<bool> validateEid(String number, String companyDate, String ownerName, String companyName) async {
     final eid = EntreInfo(number: number, companyDate: companyDate, ownerName: ownerName, companyName: companyName);

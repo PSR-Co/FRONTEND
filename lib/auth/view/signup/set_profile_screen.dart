@@ -186,6 +186,14 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   /// event methods
   Future<void> didTapNextButton() async {
     if (isInputValid) {
+      if (!SignupService().checkNickname(nicknameController.value.text)) {
+        Fluttertoast.showToast(
+            msg: '변경된 닉네임의 중복확인이 필요합니다!',
+            gravity: ToastGravity.CENTER
+        );
+        return;
+      }
+
       if (isLoginUser) {
         setState(() { isLoading = true; });
 
