@@ -74,6 +74,7 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
       width: containerSize,
       height: containerSize,
       child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: CATEGORY_LIST_FOR_SIGNUP.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
