@@ -18,11 +18,11 @@ class EditInterestsRequest {
 @JsonSerializable()
 class EditUserProfileRequest {
   final String nickname;
-  final String? profileImgKey;
+  final String? imgUrl;
 
   EditUserProfileRequest({
     required this.nickname,
-    required this.profileImgKey,
+    required this.imgUrl,
   });
 
   Map<String, dynamic> toJson() => _$EditUserProfileRequestToJson(this);

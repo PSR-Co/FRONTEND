@@ -24,14 +24,14 @@ EditUserProfileRequest _$EditUserProfileRequestFromJson(
         Map<String, dynamic> json) =>
     EditUserProfileRequest(
       nickname: json['nickname'] as String,
-      profileImgKey: json['profileImgKey'] as String?,
+      imgUrl: json['imgUrl'] as String?,
     );
 
 Map<String, dynamic> _$EditUserProfileRequestToJson(
         EditUserProfileRequest instance) =>
     <String, dynamic>{
       'nickname': instance.nickname,
-      'profileImgKey': instance.profileImgKey,
+      'imgUrl': instance.imgUrl,
     };
 
 UserProfileResponse _$UserProfileResponseFromJson(Map<String, dynamic> json) =>

@@ -43,8 +43,8 @@ class UserService {
   }
 
   Future<bool> editProfile(String nickname, String? profileImgKey) async {
-    final body = EditUserProfileRequest(nickname: nickname, profileImgKey: profileImgKey).toJson();
-    final response = await APIManager().request(RequestType.POST, USERPROFILE, null, null, body)
+    final body = EditUserProfileRequest(nickname: nickname, imgUrl: profileImgKey).toJson();
+    final response = await APIManager().request(RequestType.PATCH, USERPROFILE, null, null, body)
         .catchError((error) { debugPrint('error : $error'); });
     return ((response != null) && (response['code'] == 200));
   }
