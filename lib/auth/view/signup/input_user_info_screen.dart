@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/auth/view/signup/select_interest_screen.dart';
 import 'package:psr/model/data/auth/signup_model.dart';
+import 'package:psr/model/network/cutsom_interceptor.dart';
 import 'package:psr/presenter/auth/signup_service.dart';
 
 import '../../../common/const/constants.dart';
@@ -67,7 +68,10 @@ class _InputUserInfoScreenState extends State<InputUserInfoScreen> {
         SignupService().setUserInfo(nameController.value.text, phoneNumController.value.text);
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SelectInterestScreen()));
       } else {
-        Fluttertoast.showToast(msg: "인증번호를 확인해주세요.");
+        Fluttertoast.showToast(
+            msg: CustomInterceptor().errorMsg ?? "인증번호를 확인해주세요.",
+            gravity: ToastGravity.CENTER
+        );
       }
     } else {
       Fluttertoast.showToast(msg: '입력된 개인정보를 확인해주세요!');

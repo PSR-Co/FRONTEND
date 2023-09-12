@@ -197,14 +197,20 @@ class _InputUserInfoState extends State<InputUserInfo> {
   Future<void> didTapSendCodeButton() async {
     if (widget.nameController.value.text.isEmpty ||
         widget.phoneNumController.value.text.isEmpty) {
-      Fluttertoast.showToast(msg: '이름과 전화번호를 모두 입력해주세요!');
+      Fluttertoast.showToast(
+          msg: '이름과 전화번호를 모두 입력해주세요!',
+          gravity: ToastGravity.CENTER
+      );
       return;
     }
     setState(() {
       isSendingValidCode = true;
     });
     Future<bool> result = SignupService().requestValidationCode(widget.phoneNumController.value.text);
-    Fluttertoast.showToast(msg: await result ? "인증번호를 발송했습니다!" : "인증번호 요청을 실패하였습니다.");
+    Fluttertoast.showToast(
+        msg: await result ? "인증번호를 발송했습니다!" : "인증번호 요청을 실패하였습니다.",
+        gravity: ToastGravity.CENTER
+    );
 
     setState(() {
       isSendingValidCode = false;
