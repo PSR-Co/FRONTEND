@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:psr/auth/view/signup/select_interest_screen.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/circular_progress_indicator.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
@@ -13,8 +12,6 @@ import 'package:psr/home/component/notice_list_content.dart';
 import 'package:psr/home/component/outlined_btn.dart';
 import 'package:psr/home/component/recent_list_item.dart';
 import 'package:psr/presenter/home/home_service.dart';
-import 'package:psr/shopping/view/shopping_screen.dart';
-
 import '../../cs/view/service_center_screen.dart';
 import '../../model/data/home/home_model.dart';
 import '../../product/view/product_detail_screen.dart';
@@ -28,11 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   HomeModel? data;
-  List<MainTop> mainTopProductList = [
-    // MainTop(id: 0, category: '', name: '', description: ''),
-    // MainTop(id: 0, category: '', name: '', description: ''),
-    // MainTop(id: 0, category: '', name: '', description: '')
-  ];
+  List<MainTop> mainTopProductList = [];
   List<RecentProduct> recentProductList = [];
   List<PopularProduct> popularProductList = [];
 
@@ -84,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (snapshot.hasError) {
             print('홈: ${snapshot.error.toString()}');
             return const CircularProgress();
-          }else if (snapshot.hasData) {
+          } else if (snapshot.hasData) {
             data = HomeModel.fromJson(snapshot.data);
             mainTopProductList = data!.data.mainTopProductList;
             recentProductList = data!.data.recentProductList;
@@ -147,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
         margin: const EdgeInsets.only(left: 17),
         child: DetailBar(
           title: '관심있는 패키지를 골라보세요',
-          moveTo: const ShoppingScreen(),
+          moveTo: const RootTab(selectedRootTab: 1, selectedIndex: null),
         ));
   }
 
@@ -160,8 +153,11 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, index, activeIndex) {
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: mainTopProductList[index].id), settings: const RouteSettings(name: '/productDetail')));
-              },
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => ProductDetailScreen(
+                      productId: mainTopProductList[index].id),
+                  settings: const RouteSettings(name: '/productDetail')));
+            },
             child: Container(
               margin:
                   const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
@@ -202,13 +198,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   SizedBox(
                                       width: 100,
                                       child: Text(
-                                        mainTopProductList[index].category ?? "",
+                                        mainTopProductList[index].category,
                                         style: packageTextStyle,
                                       )),
                                   SizedBox(
                                       width: 100,
                                       child: Text(
-                                        mainTopProductList[index].name ?? "",
+                                        mainTopProductList[index].name,
                                         style: packageNameTextStyle,
                                       ))
                                 ],
@@ -263,11 +259,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: packageBtnTextStyle,
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (_) => const RootTab(
+                                        selectedRootTab: 1,
+                                        selectedIndex: 1,
+                                      )),
+                              (route) => false);
+                        },
                         icon: const Icon(Icons.arrow_forward_ios,
                             size: 15.0, color: GRAY_3_COLOR),
                         padding: EdgeInsets.zero,
-                        constraints: BoxConstraints(),
+                        constraints: const BoxConstraints(),
                       ),
                     ],
                   ),
@@ -298,7 +302,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: packageBtnTextStyle,
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (_) => const RootTab(
+                                          selectedRootTab: 1,
+                                          selectedIndex: 2,
+                                        )),
+                                (route) => false);
+                          },
                           padding: EdgeInsets.zero, // 패딩 설정
                           constraints: const BoxConstraints(),
                           icon: const Icon(
@@ -338,7 +350,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: packageBtnTextStyle,
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (_) => const RootTab(
+                                          selectedRootTab: 1,
+                                          selectedIndex: 4,
+                                        )),
+                                (route) => false);
+                          },
                           padding: const EdgeInsets.only(
                             top: 2.0,
                           ), // 패딩 설정
