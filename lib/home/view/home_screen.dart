@@ -53,9 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextStyle packageTextStyle = const TextStyle(
       fontSize: 11.0, fontWeight: FontWeight.w500, color: GRAY_2_COLOR);
   final TextStyle packageNameTextStyle = const TextStyle(
-      fontSize: 16.0, fontWeight: FontWeight.w700, color: GRAY_4_COLOR);
+      fontSize: 15.0, fontWeight: FontWeight.w700, color: GRAY_4_COLOR);
   final TextStyle packageIntroductionTextStyle = const TextStyle(
-      fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
+      fontSize: 12.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
   final TextStyle packageBtnTextStyle = const TextStyle(
       fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_3_COLOR);
   final TextStyle btnGroupTextStyle = const TextStyle(
@@ -206,12 +206,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Text(
                                         mainTopProductList[index].name,
                                         style: packageNameTextStyle,
+                                        overflow: TextOverflow.ellipsis,
+
                                       ))
                                 ],
                               ),
                               Text(
                                 mainTopCardEmogi[index],
-                                style: const TextStyle(fontSize: 40.0),
+                                style: const TextStyle(fontSize: 30.0),
                               ),
                             ],
                           ),
@@ -222,6 +224,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text(
                               mainTopProductList[index].description,
                               style: packageIntroductionTextStyle,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ))
                       ])),
             ),
