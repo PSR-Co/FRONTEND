@@ -99,9 +99,6 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
   }
 
   Widget getCenterBody({required profile}) {
-    print('profile name -> ${profile?.nickname}');
-    print('profile imgUrl -> ${profile?.imgUrl}');
-
     if (isLoginUser && isFirstFetch) {
       nicknameController.text = profile!.nickname;
       isFirstFetch = false;
@@ -155,12 +152,12 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
           const SizedBox(height: 20,),
           const CustomTitleText(title: '닉네임', margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),),
           PurpleOutlinedTextFieldWithButton(
-              maxLine: 1,
-              hintText: '닉네임을 입력해주세요.',
-              text: (profile?.nickname == null) ? null : profile!.nickname,
-              controller: nicknameController,
-              buttonTitle: '중복확인',
-              onPressed: didTapValidationNickname,
+            maxLine: 1,
+            hintText: '닉네임을 입력해주세요.',
+            text: (profile?.nickname == null) ? null : profile!.nickname,
+            controller: nicknameController,
+            buttonTitle: '중복확인',
+            onPressed: didTapValidationNickname,
           )
 
         ],
@@ -198,25 +195,13 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
         setState(() { isLoading = true; });
 
         // TODO: upload profile image using Firebase
-        // String? profileImgUrl;
-        // if (profileImgKey != null) {
-        //   List<String> imgKeyList = [];
-        //   imgKeyList.add(profileImgKey!);
-        //   List<String> results = await ImageService().uploadImageList(ImageType.userProfile, imgKeyList)
-        //   profileImgUrl = results.elementAt(0);
-        //   print('results.length -> ${results.length}');
-        //   print('upload url -> ${profileImgUrl}');
-        // }
-
-        Future<bool> result = UserService().editProfile(nicknameController.value.text, profileImgKey);
-
-        if (await result) {
-          setState(() { isLoading = false; });
-          Navigator.of(context).pop();
-        }
-        else {
-          setState(() { isLoading = false; });
-          Fluttertoast.showToast(msg: CustomInterceptor().errorMsg ?? '프로필 수정에 실패하였습니다.');
+        if (profileImgKey != null) {
+          List<String> imgKeyList = [];
+          imgKeyList.add(profileImgKey!);
+          await ImageService().uploadImageList(ImageType.userProfile, imgKeyList)
+              .then((value) => requestEditProfile(value.first));
+        } else {
+          requestEditProfile(null);
         }
 
       } else {
@@ -270,7 +255,6 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     if (image != null) {
       setState(() {
         profileImgKey = image.path;
-        // SignupService().setProfileImage(profileImgKey);
         isInputValid = isLoginUser;
       });
     }
@@ -302,6 +286,14 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
       }
     }
     else { Fluttertoast.showToast(msg: '10자 이하의 닉네임을 입력해주세요!'); }
+  }
+
+  void requestEditProfile(String? imgUrl) async {
+    Future<bool> result = UserService().editProfile(nicknameController.value.text, imgUrl);
+
+    setState(() { isLoading = false; });
+    if (await result) { Navigator.of(context).pop(); }
+    else { Fluttertoast.showToast(msg: CustomInterceptor().errorMsg ?? '프로필 수정에 실패하였습니다.'); }
   }
 
 }
