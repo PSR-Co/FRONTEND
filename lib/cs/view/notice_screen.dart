@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psr/common/layout/circular_progress_indicator.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/model/data/cs/notice_model.dart';
 import 'package:psr/presenter/cs/cs_service.dart';
@@ -43,9 +44,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       print(snapshot.error);
-                      return const Center(
-                        child: Text('에러가 있습니다'),
-                      );
+                      return const CircularProgress();
                     }
                     if (snapshot.hasData) {
                       data = NoticeModel.fromJson(json: snapshot.data);
@@ -53,13 +52,11 @@ class _NoticeScreenState extends State<NoticeScreen> {
 
                       if (data?.code != 200 || noticeList.isEmpty) {
                         return const Center(
-                          child: Text('공지사항이 없습니다.'),
+                          child: Text('등록된 공지사항이 없습니다.'),
                         );
                       }
                     } else {
-                      return const Center(
-                        child: Text('공지사항을 불러오는데 실패하였습니다.'),
-                      );
+                      return const CircularProgress();
                     }
                     return mainNoticeView(noticeList);
                   }))

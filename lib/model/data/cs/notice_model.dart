@@ -53,8 +53,10 @@ class DetailNoticeData {
   final int noticeId;
   final String title;
   final String date;
+  final String content;
+  final String? imgUrl;
 
-  DetailNoticeData({required this.noticeId, required this.title, required this.date});
+  DetailNoticeData({required this.noticeId, required this.title, required this.date, required this.content, required this.imgUrl});
 
   factory DetailNoticeData.fromJson(Map<String, dynamic> json) => _$DetailNoticeDataFromJson(json);
 }

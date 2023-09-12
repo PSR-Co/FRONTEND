@@ -4,6 +4,7 @@ import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/circular_progress_indicator.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
 import 'package:psr/common/layout/main_appbar_layout.dart';
+import 'package:psr/common/view/root_tab.dart';
 import 'package:psr/cs/view/faq_screen.dart';
 import 'package:psr/home/component/best_list_item.dart';
 import 'package:psr/home/component/card_slider.dart';
@@ -12,9 +13,11 @@ import 'package:psr/home/component/notice_list_content.dart';
 import 'package:psr/home/component/outlined_btn.dart';
 import 'package:psr/home/component/recent_list_item.dart';
 import 'package:psr/presenter/home/home_service.dart';
+import 'package:psr/shopping/view/shopping_screen.dart';
 
 import '../../cs/view/service_center_screen.dart';
 import '../../model/data/home/home_model.dart';
+import '../../product/view/product_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,9 +29,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   HomeModel? data;
   List<MainTop> mainTopProductList = [
-    MainTop(id: 0, category: '', name: '', description: ''),
-    MainTop(id: 0, category: '', name: '', description: ''),
-    MainTop(id: 0, category: '', name: '', description: '')
+    // MainTop(id: 0, category: '', name: '', description: ''),
+    // MainTop(id: 0, category: '', name: '', description: ''),
+    // MainTop(id: 0, category: '', name: '', description: '')
   ];
   List<RecentProduct> recentProductList = [];
   List<PopularProduct> popularProductList = [];
@@ -48,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
     PackageBtn('방송가능', '상품소싱')
   ];
 
-  ///card slider 임시 개수
   final indexes = List.generate(3, (index) => index);
 
   final controller = SliderController();
@@ -100,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return const CircularProgress();
           }
           return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Container(
               width: MediaQuery.of(context).size.width,
               color: Colors.white,
@@ -144,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
         margin: const EdgeInsets.only(left: 17),
         child: DetailBar(
           title: '관심있는 패키지를 골라보세요',
-          moveTo: const SelectInterestScreen(),
+          moveTo: const ShoppingScreen(),
         ));
   }
 
@@ -156,7 +159,9 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: indexes.length,
         itemBuilder: (context, index, activeIndex) {
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: mainTopProductList[index].id), settings: const RouteSettings(name: '/productDetail')));
+              },
             child: Container(
               margin:
                   const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),

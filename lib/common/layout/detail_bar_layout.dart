@@ -29,8 +29,8 @@ class DetailBarState extends State<DetailBar> {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>widget.moveTo));
             },
             icon: const Icon(Icons.arrow_forward_ios, size: 16.0,),
-            padding: EdgeInsets.only(right: 17.0, bottom: 5.0),
-            constraints: BoxConstraints(),
+            padding: const EdgeInsets.only(right: 17.0, bottom: 5.0),
+            constraints: const BoxConstraints(),
           )
         ],
       ),
