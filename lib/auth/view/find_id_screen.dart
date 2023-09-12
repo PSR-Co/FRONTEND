@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:psr/model/network/cutsom_interceptor.dart';
 import 'package:psr/presenter/auth/login_service.dart';
 
 import '../../common/layout/default_appbar_layout.dart';
@@ -77,7 +78,7 @@ class _FindIDScreenState extends State<FindIDScreen> {
         Fluttertoast.showToast(msg: result.message);
       }
     } else {
-      Fluttertoast.showToast(msg: "네트워크 오류가 발생하였습니다.");
+      Fluttertoast.showToast(msg: CustomInterceptor().errorMsg ?? "네트워크 오류가 발생하였습니다.");
     }
   }
 
