@@ -78,7 +78,10 @@ class _FindIDScreenState extends State<FindIDScreen> {
         Fluttertoast.showToast(msg: result.message);
       }
     } else {
-      Fluttertoast.showToast(msg: CustomInterceptor().errorMsg ?? "네트워크 오류가 발생하였습니다.");
+      Fluttertoast.showToast(
+          msg: CustomInterceptor().errorMsg ?? "네트워크 오류가 발생하였습니다.",
+          gravity: ToastGravity.CENTER
+      );
     }
   }
 
