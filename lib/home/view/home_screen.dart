@@ -207,7 +207,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         mainTopProductList[index].name,
                                         style: packageNameTextStyle,
                                         overflow: TextOverflow.ellipsis,
-
                                       ))
                                 ],
                               ),
@@ -245,6 +244,15 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 80.0,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           OutlinedBtnComponent(
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (_) => const RootTab(
+                              selectedRootTab: 1,
+                              selectedIndex: 1,
+                            )),
+                    (route) => false);
+              },
               borderColor: SHADOW_COLOR,
               borderWidth: 2,
               radius: 10,
@@ -263,15 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: packageBtnTextStyle,
                       ),
                       IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (_) => const RootTab(
-                                        selectedRootTab: 1,
-                                        selectedIndex: 1,
-                                      )),
-                              (route) => false);
-                        },
+                        onPressed: () {},
                         icon: const Icon(Icons.arrow_forward_ios,
                             size: 15.0, color: GRAY_3_COLOR),
                         padding: EdgeInsets.zero,
@@ -282,6 +282,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )),
           OutlinedBtnComponent(
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (_) => const RootTab(
+                              selectedRootTab: 1,
+                              selectedIndex: 2,
+                            )),
+                    (route) => false);
+              },
               borderColor: SHADOW_COLOR,
               borderWidth: 2,
               radius: 10,
@@ -306,15 +315,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: packageBtnTextStyle,
                         ),
                         IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                    builder: (_) => const RootTab(
-                                          selectedRootTab: 1,
-                                          selectedIndex: 2,
-                                        )),
-                                (route) => false);
-                          },
+                          onPressed: () {},
                           padding: EdgeInsets.zero, // 패딩 설정
                           constraints: const BoxConstraints(),
                           icon: const Icon(
@@ -329,6 +330,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )),
           OutlinedBtnComponent(
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (_) => const RootTab(
+                              selectedRootTab: 1,
+                              selectedIndex: 4,
+                            )),
+                    (route) => false);
+              },
               borderColor: SHADOW_COLOR,
               borderWidth: 2,
               radius: 10,
@@ -354,15 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: packageBtnTextStyle,
                         ),
                         IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                    builder: (_) => const RootTab(
-                                          selectedRootTab: 1,
-                                          selectedIndex: 4,
-                                        )),
-                                (route) => false);
-                          },
+                          onPressed: () {},
                           padding: const EdgeInsets.only(
                             top: 2.0,
                           ), // 패딩 설정
@@ -377,8 +379,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-              ))
-        ]));
+              )
+          )
+        ])
+    );
   }
 
   Widget renderBtnGroup() {
@@ -389,25 +393,33 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           OutlinedBtnComponent(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => const FAQScreen()));
+              },
               borderColor: PURPLE_COLOR,
               borderWidth: 1,
               radius: 24,
               width: 170,
               height: 60,
-              child: buttonContent('자주 묻는 질문', const FAQScreen())),
+              child: buttonContent('자주 묻는 질문')),
           OutlinedBtnComponent(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => const ServiceCenterScreen()));
+            },
               borderColor: PURPLE_COLOR,
               borderWidth: 1,
               radius: 24,
               width: 170,
               height: 60,
-              child: buttonContent('문의하기', const ServiceCenterScreen()))
+              child: buttonContent('문의하기'))
         ],
       ),
     );
   }
 
-  Widget buttonContent(String content, Widget moveTo) {
+  Widget buttonContent(String content) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 7.0),
       child: Row(
@@ -420,10 +432,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: btnGroupTextStyle,
               )),
           IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => moveTo));
-            },
+            onPressed: () {},
             padding: const EdgeInsets.only(
               top: 2.0,
             ), // 패딩 설정
