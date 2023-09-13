@@ -108,15 +108,12 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                 else
                   buttonView(widget.btnOption1, widget.btnOption2),
                 if (widget.type == 'sell' && data!.data.status == '요청대기')
-                  Padding(
-                    padding: const EdgeInsets.only(top: 18.0),
-                    child: ActionBtn(
-                        child: actionBtnChild(
-                            () => () {
-                                  Navigator.pop(context, false);
-                                },
-                            '1:1 채팅')),
-                  )
+                  ActionBtn(
+                      child: actionBtnChild(
+                          () => () {
+                                Navigator.pop(context, false);
+                              },
+                          '1:1 채팅'))
                 else if (widget.type == 'order' && !readOnly)
                   Padding(
                     padding: const EdgeInsets.only(top: 18.0),
