@@ -271,7 +271,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: packageBtnTextStyle,
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (_) => const RootTab(
+                                    selectedRootTab: 1,
+                                    selectedIndex: 1,
+                                  )),
+                                  (route) => false);
+                        },
                         icon: const Icon(Icons.arrow_forward_ios,
                             size: 15.0, color: GRAY_3_COLOR),
                         padding: EdgeInsets.zero,
@@ -315,7 +323,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: packageBtnTextStyle,
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (_) => const RootTab(
+                                      selectedRootTab: 1,
+                                      selectedIndex: 2,
+                                    )),
+                                    (route) => false);
+                          },
                           padding: EdgeInsets.zero, // 패딩 설정
                           constraints: const BoxConstraints(),
                           icon: const Icon(
@@ -364,7 +380,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: packageBtnTextStyle,
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                    builder: (_) => const RootTab(
+                                      selectedRootTab: 1,
+                                      selectedIndex: 4,
+                                    )),
+                                    (route) => false);
+                          },
                           padding: const EdgeInsets.only(
                             top: 2.0,
                           ), // 패딩 설정
@@ -402,7 +426,8 @@ class _HomeScreenState extends State<HomeScreen> {
               radius: 24,
               width: 170,
               height: 60,
-              child: buttonContent('자주 묻는 질문')),
+              child: buttonContent('자주 묻는 질문', (){Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => const FAQScreen()));})),
           OutlinedBtnComponent(
             onTap: () {
               Navigator.push(
@@ -413,13 +438,15 @@ class _HomeScreenState extends State<HomeScreen> {
               radius: 24,
               width: 170,
               height: 60,
-              child: buttonContent('문의하기'))
+              child: buttonContent('문의하기', (){Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const ServiceCenterScreen()));
+          }))
         ],
       ),
     );
   }
 
-  Widget buttonContent(String content) {
+  Widget buttonContent(String content, Function() onPressed) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 7.0),
       child: Row(
@@ -432,7 +459,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: btnGroupTextStyle,
               )),
           IconButton(
-            onPressed: () {},
+            onPressed: onPressed,
             padding: const EdgeInsets.only(
               top: 2.0,
             ), // 패딩 설정
