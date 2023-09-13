@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/constants.dart';
+import 'package:psr/common/layout/circular_progress_indicator.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
@@ -99,22 +100,18 @@ class _OrderListScreenState extends State<OrderListScreen> {
         future: fetchData(type, selectedValue),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Center(
-              child: Text('에러가 발생했습니다.'),
-            );
+            print('에러가 발생했습니다.');
+            return const CircularProgress();
           }
           if (snapshot.hasData) {
             data = OrderListModel.fromJson(snapshot.data);
             content = data!.data.content;
             if (data?.code != 200) {
-              return const Center(
-                child: Text('올바르지 않은 요청 타입입니다.'),
-              );
+              print('올바르지 않은 요청 타입입니다.');
+              return const CircularProgress();
             }
           } else {
-            return const Center(
-              child: Text('요청목록을 불러오는데 실패하였습니다.'),
-            );
+            return const CircularProgress();
           }
           return orderView(
               type,
@@ -185,17 +182,19 @@ class _OrderListScreenState extends State<OrderListScreen> {
     }
     print('selectedValue : $selectedValue');
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.only(right: 20.0, bottom: 10.0, top: 5.0),
-            child: DropdownButtonHideUnderline(
+      child: Column(children: [
+        Container(
+          width: MediaQuery.of(context).size.width,
+          alignment: Alignment.centerRight,
+          margin: const EdgeInsets.only(right: 15.0, bottom: 10.0, top: 5.0),
+          child: DropdownButtonHideUnderline(
+            child: ButtonTheme(
+              alignedDropdown: true,
               child: DropdownButton2(
                 hint: Text(
                   '요청대기',
                   style: dropdownBtnTextStyle,
+                  textAlign: TextAlign.end,
                 ),
                 value: selectedValue,
                 items: dropDownBtnTitle
@@ -216,7 +215,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                   });
                 },
                 dropdownStyleData: DropdownStyleData(
-                  width: 80.0,
+                  width: 90.0,
                   elevation: 0,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -226,15 +225,16 @@ class _OrderListScreenState extends State<OrderListScreen> {
                   padding: EdgeInsets.zero,
                 ),
                 iconStyleData: IconStyleData(
-                    icon: SvgPicture.asset('asset/icons/common/toggle_down.svg'),
+                    icon:
+                        SvgPicture.asset('asset/icons/common/toggle_down.svg'),
                     openMenuIcon:
                         SvgPicture.asset('asset/icons/common/toggle_up.svg')),
               ),
             ),
           ),
-          child
-        ]
-      ),
+        ),
+        child
+      ]),
     );
   }
 

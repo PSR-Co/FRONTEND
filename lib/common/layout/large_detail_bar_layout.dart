@@ -20,30 +20,36 @@ class LargeDetailBarState extends State<LargeDetailBar> {
   ///위젯 임시 연결
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            widget.title,
-            style: headerTextStyle,
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => widget.moveTo));
-            },
-            icon: const Icon(
-              Icons.arrow_forward_ios,
-              size: 20.0,
-              color: GRAY_4_COLOR,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => widget.moveTo));
+      },
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        // margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Text(
+                widget.title,
+                style: headerTextStyle,
+              ),
             ),
-            padding: EdgeInsets.only(bottom: 2.0),
-            constraints: BoxConstraints(),
-          )
-        ],
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.arrow_forward_ios,
+                size: 20.0,
+                color: GRAY_4_COLOR,
+              ),
+              padding: const EdgeInsets.only(bottom: 2.0),
+              constraints: const BoxConstraints(),
+            )
+          ],
+        ),
       ),
     );
   }
