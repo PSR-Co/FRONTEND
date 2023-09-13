@@ -152,7 +152,7 @@ class _OrderListTabState extends State<OrderListTab>
                     Container(
                         margin: const EdgeInsets.only(left: 8.0),
                         child: Text(
-                          "$userName님의 요청",
+                          "$userName님",
                           style: orderTextStyle,
                         )),
                     Container(
@@ -168,15 +168,11 @@ class _OrderListTabState extends State<OrderListTab>
                           child: (productImg == null)
                               ? const Icon(Icons.question_mark, color: PURPLE_COLOR, size: 50,)
                               : Image.network(productImg),
-                          // Image.asset(
-                          //   productImg ?? "asset/images/profile_img_sample.jpg",
-                          //   width: 140.0,
-                          //   height: 140.0,
-                          // ),
                         )),
                     Text(
                       productName,
                       style: orderProductTextStyle,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       orderDate,
