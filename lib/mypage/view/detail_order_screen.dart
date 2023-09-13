@@ -8,6 +8,7 @@ import 'package:psr/order/component/order_dialog.dart';
 import 'package:psr/presenter/order/order_service.dart';
 
 import '../../common/const/colors.dart';
+import '../../common/const/constants.dart';
 import '../../common/layout/circular_progress_indicator.dart';
 import '../../product/view/product_detail_screen.dart';
 
@@ -126,7 +127,10 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                                     data!.data.ordererName,
                                     data!.data.websiteUrl,
                                     data!.data.inquiry,
-                                    data!.data.description)
+                                    data!.data.description,
+                                "수정",
+                                "요청을 수정하였습니다."
+                            )
                                 .then((value) => setState(() {})),
                             '수정하기')),
                   )
@@ -269,7 +273,10 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                             data!.data.ordererName,
                             data!.data.websiteUrl,
                             data!.data.inquiry,
-                            data!.data.description)
+                            data!.data.description,
+                      "승인",
+                      "요청을 성공적으로 승인하였습니다!"
+                    )
                         .then((value) => setState(() {}));
                   });
                   break;
@@ -311,7 +318,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
   }
 
   Future<dynamic> editedBtn(String status, String ordererName,
-      String? websiteUrl, String inquiry, String description) async {
+      String? websiteUrl, String inquiry, String description, String type, String dialogMsg) async {
     String name = '';
     String? url = '';
     String ask = '';
@@ -328,6 +335,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     print('updateState $status');
     result = await OrderService().editOrderData(
         widget.orderId, {'status': status}, name, url, ask, detail);
+    print('updateStateResponse $result');
     changeEditable();
     orderDialog('요청을 수정하였습니다.');
   }
