@@ -9,6 +9,7 @@ import 'package:psr/presenter/order/order_service.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/circular_progress_indicator.dart';
+import '../../product/view/product_detail_screen.dart';
 
 class DetailOrderScreen extends StatefulWidget {
   int orderId;
@@ -21,7 +22,6 @@ class DetailOrderScreen extends StatefulWidget {
       required this.type,
       required this.btnOption1,
       required this.btnOption2,
-      // required this.child,
       Key? key})
       : super(key: key);
 
@@ -167,33 +167,41 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
           ),
           Container(
             margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-            child: detailOrderBar(data!.data.productName),
+            child: detailOrderBar(data!.data.productName, data!.data.productId),
           ),
         ]));
   }
 
-  Widget detailOrderBar(String productName) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            productName,
-            style: headerTextStyle,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.arrow_forward_ios,
-              size: 20.0,
-              color: GRAY_4_COLOR,
+  Widget detailOrderBar(String productName, int productId) {
+    return GestureDetector(
+      onTap: () {
+        tapProduct(productId);
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Text(
+                productName,
+                style: headerTextStyle,
+              ),
             ),
-            padding: const EdgeInsets.only(bottom: 2.0),
-            constraints: const BoxConstraints(),
-          )
-        ],
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.arrow_forward_ios,
+                size: 20.0,
+                color: GRAY_4_COLOR,
+              ),
+              padding: const EdgeInsets.only(bottom: 2.0),
+              constraints: const BoxConstraints(),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -343,5 +351,11 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     setState(() {
       status = newStatus;
     });
+  }
+
+  void tapProduct(int productId) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => ProductDetailScreen(productId: productId),
+        settings: const RouteSettings(name: '/productDetail')));
   }
 }
