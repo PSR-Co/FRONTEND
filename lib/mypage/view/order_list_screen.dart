@@ -39,6 +39,10 @@ class _OrderListScreenState extends State<OrderListScreen> {
       decoration: TextDecoration.underline);
   final TextStyle headerTextStyle = const TextStyle(
       fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
+  final titleStyle = const TextStyle(
+      color: Colors.black,
+      fontSize: 17
+  );
 
   List<String> dropDownBtnTitle = ['요청대기', '진행중', '진행완료', '요청취소'];
   String isReviewed = "리뷰 쓰기";
@@ -84,8 +88,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
       body: SafeArea(
         bottom: false,
         child: BodyTab(
+          isBackItemHidden: true,
             titleList: ORDER_LIST_TAB,
-            tabTitle: const DefaultAppBarLayout(titleText: '요청 목록'),
+            tabTitle: Text("요청 목록", style: titleStyle,),
             tabBarViewChild: [
               orderProductView('sell', selectedValue1),
               orderProductView('order', selectedValue2)
@@ -282,4 +287,16 @@ class _OrderListScreenState extends State<OrderListScreen> {
       // selectedValue = value;
     });
   }
+
+  Widget renderleftItem() {
+    return Container(
+      color: Colors.red[100],
+      child: IconButton(
+        icon: SvgPicture.asset("asset/icons/common/chevron.backward.svg"),
+        onPressed: didTapBackItem,
+      ),
+    );
+  }
+  /// event methods
+  void didTapBackItem() { Navigator.of(context).pop(); }
 }
