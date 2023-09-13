@@ -104,9 +104,9 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                 orderDetailView(data!.data.ordererName, data!.data.websiteUrl,
                     data!.data.inquiry, data!.data.description),
                 if (widget.type == 'sell' && data!.data.status != '요청대기')
-                  buttonView('진행완료', '진행취소')
+                  buttonView('진행완료', '진행취소', data!.data.status)
                 else
-                  buttonView(widget.btnOption1, widget.btnOption2),
+                  buttonView(widget.btnOption1, widget.btnOption2, data!.data.status),
                 if (widget.type == 'sell' && data!.data.status == '요청대기')
                   ActionBtn(
                       child: actionBtnChild(
@@ -251,17 +251,21 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     );
   }
 
-  Widget buttonView(String btnOption1, String btnOption2) {
+  Widget buttonView(String btnOption1, String btnOption2, String status) {
     return ActionBtn(
         child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         TextButton(
             onPressed: () {
+              print("order status: $status");
               switch (btnOption1) {
                 case '요청수정':
-                  changeEditable();
-                  break;
+                  if(status != '진행중'){
+                    changeEditable();
+                  } else {
+                    orderDialog("요청 대기 중에는 수정이 불가합니다.");
+                  } break;
                 case '요청승인':
                   changeStatus('진행중');
                   setState(() {

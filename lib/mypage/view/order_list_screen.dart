@@ -42,7 +42,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
   final titleStyle = const TextStyle(color: Colors.black, fontSize: 17);
 
   List<String> dropDownBtnTitle = ['요청대기', '진행중', '진행완료', '요청취소'];
-  String isReviewed = "리뷰 쓰기";
+  // String isReviewed = "리뷰 쓰기";
   String selectedValue = "";
   String selectedValue1 = "";
   String selectedValue2 = "";
