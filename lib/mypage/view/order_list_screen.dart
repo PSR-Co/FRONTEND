@@ -1,9 +1,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/constants.dart';
 import 'package:psr/common/layout/circular_progress_indicator.dart';
-import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
 import 'package:psr/review/view/add_review_screen.dart';
@@ -39,10 +39,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
       decoration: TextDecoration.underline);
   final TextStyle headerTextStyle = const TextStyle(
       fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
-  final titleStyle = const TextStyle(
-      color: Colors.black,
-      fontSize: 17
-  );
+  final titleStyle = const TextStyle(color: Colors.black, fontSize: 17);
 
   List<String> dropDownBtnTitle = ['요청대기', '진행중', '진행완료', '요청취소'];
   String isReviewed = "리뷰 쓰기";
@@ -72,7 +69,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
       default:
         break;
     }
-    print('fetchData : ${await OrderService().getOrderData(queryParameters)}');
+    if (kDebugMode) {
+      print('fetchData : ${await OrderService().getOrderData(queryParameters)}');
+    }
     return await OrderService().getOrderData(queryParameters);
   }
 
@@ -80,17 +79,22 @@ class _OrderListScreenState extends State<OrderListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('$cnt : $selectedValue1');
-    print('$cnt : $selectedValue2');
+    if (kDebugMode) {
+      print('$cnt : $selectedValue1');
+      print('$cnt : $selectedValue2');
+    }
     cnt++;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         bottom: false,
         child: BodyTab(
-          isBackItemHidden: true,
+            isBackItemHidden: true,
             titleList: ORDER_LIST_TAB,
-            tabTitle: Text("요청 목록", style: titleStyle,),
+            tabTitle: Text(
+              "요청 목록",
+              style: titleStyle,
+            ),
             tabBarViewChild: [
               orderProductView('sell', selectedValue1),
               orderProductView('order', selectedValue2)
@@ -100,19 +104,25 @@ class _OrderListScreenState extends State<OrderListScreen> {
   }
 
   Widget orderProductView(String type, String selectedValue) {
-    print("실행");
+    if (kDebugMode) {
+      print("실행");
+    }
     return FutureBuilder(
         future: fetchData(type, selectedValue),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            print('에러가 발생했습니다.');
+            if (kDebugMode) {
+              print('에러가 발생했습니다.');
+            }
             return const CircularProgress();
           }
           if (snapshot.hasData) {
             data = OrderListModel.fromJson(snapshot.data);
             content = data!.data.content;
             if (data?.code != 200) {
-              print('올바르지 않은 요청 타입입니다.');
+              if (kDebugMode) {
+                print('올바르지 않은 요청 타입입니다.');
+              }
               return const CircularProgress();
             }
           } else {
@@ -126,7 +136,14 @@ class _OrderListScreenState extends State<OrderListScreen> {
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MoveToDetailOrderScreen(
+                                      type: type,
+                                      orderId: content[index].orderId)));
+                        },
                         title: Container(
                           width: MediaQuery.of(context).size.width,
                           alignment: Alignment.centerLeft,
@@ -297,6 +314,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
       ),
     );
   }
+
   /// event methods
-  void didTapBackItem() { Navigator.of(context).pop(); }
+  void didTapBackItem() {
+    Navigator.of(context).pop();
+  }
 }

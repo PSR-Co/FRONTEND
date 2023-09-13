@@ -39,7 +39,10 @@ class LargeDetailBarState extends State<LargeDetailBar> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => widget.moveTo));
+              },
               icon: const Icon(
                 Icons.arrow_forward_ios,
                 size: 20.0,
