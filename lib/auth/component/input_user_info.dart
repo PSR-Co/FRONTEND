@@ -105,14 +105,6 @@ class _InputUserInfoState extends State<InputUserInfo> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: renderValidInputViewWithPhoneWidget(),
-          // PurpleOutlinedTextFieldWithButton(
-          //   maxLine: 1,
-          //   hintText: '휴대폰 번호를 입력해주세요.',
-          //   controller: widget.phoneNumController,
-          //   buttonTitle: '인증요청',
-          //   onPressed: didTapSendCodeButton,
-          //   inputType: TextInputType.phone
-          // ),
         ),
         const SizedBox(height: 22,)
       ],
@@ -178,13 +170,13 @@ class _InputUserInfoState extends State<InputUserInfo> {
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: const BorderSide(
-                          color: PURPLE_COLOR,
+                        side: BorderSide(
+                          color: isSendingValidCode ? GRAY_1_COLOR : PURPLE_COLOR,
                         )
                     ),
                     elevation: 0.5
                 ),
-                child: const Text('인증요청')
+                child: Text(isSendingValidCode ? '요청됨' : '인증요청')
             ),
           ),
         ),
