@@ -44,8 +44,8 @@ class _OrderListScreenState extends State<OrderListScreen> {
   List<String> dropDownBtnTitle = ['요청대기', '진행중', '진행완료', '요청취소'];
   // String isReviewed = "리뷰 쓰기";
   String selectedValue = "";
-  String selectedValue1 = "";
-  String selectedValue2 = "";
+  String selectedValue1 = "요청대기";
+  String selectedValue2 = "요청대기";
 
   OrderListModel? data;
   List<OrderList> content = [];
@@ -65,6 +65,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
         break;
       case '요청취소':
         queryParameters.addAll({'status': '요청취소'});
+        break;
+      case '요청대기':
+        queryParameters.addAll({'status': '요청대기'});
         break;
       default:
         break;
