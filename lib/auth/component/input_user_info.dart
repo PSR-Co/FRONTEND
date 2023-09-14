@@ -141,7 +141,8 @@ class _InputUserInfoState extends State<InputUserInfo> {
               },
               scrollPhysics: const NeverScrollableScrollPhysics(),
               keyboardType: TextInputType.phone,
-              showCursor: false,
+              showCursor: true,
+              cursorColor: PURPLE_COLOR_50,
               maxLines: 1,
               decoration: InputDecoration(
                 hintText: '휴대폰 번호를 입력해주세요.',
