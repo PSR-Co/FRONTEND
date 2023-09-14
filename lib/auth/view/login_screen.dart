@@ -220,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (result) {
       setState(() { isLoading = false; });
       checkPermission();
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const RootTab()), (route) => false);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => const RootTab(selectedRootTab: null, selectedIndex: null,)), (route) => false);
     } else if (idController.value.text.isEmpty || pwController.value.text.isEmpty) {
       Fluttertoast.showToast(msg: '아이디와 비밀번호를 모두 입력해주세요.');
     } else {

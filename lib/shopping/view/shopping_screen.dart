@@ -7,7 +7,8 @@ import '../../common/layout/main_appbar_layout.dart';
 import '../component/tabbar_widget.dart';
 
 class ShoppingScreen extends StatefulWidget {
-  const ShoppingScreen({Key? key}) : super(key: key);
+  final int? selectedIndex;
+  const ShoppingScreen({required this.selectedIndex, Key? key}) : super(key: key);
 
   @override
   State<ShoppingScreen> createState() => _ShoppingScreenState();
@@ -36,6 +37,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
     controller.addListener(() {
       setState(() {});
     });
+    setShoppingTab(widget.selectedIndex ?? controller.index);
   }
   
   @override
@@ -128,4 +130,10 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
     };
   }
 
+  ///홈 -> 상품 bottomnavigation 이동 시 해당 상품과 일치하는 상단 탭 세팅
+  void setShoppingTab(int selectedIndex) {
+    setState(() {
+      controller.index = selectedIndex;
+    });
+  }
 }

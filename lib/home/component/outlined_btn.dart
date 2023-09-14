@@ -5,6 +5,7 @@ class OutlinedBtnComponent extends StatefulWidget {
   final Widget child;
   final Color borderColor;
   final double borderWidth, radius, width, height;
+  final Function() onTap;
 
   const OutlinedBtnComponent(
       {required this.child,
@@ -13,7 +14,9 @@ class OutlinedBtnComponent extends StatefulWidget {
       required this.radius,
       required this.width,
       required this.height,
-      Key? key}) : super(key: key);
+      required this.onTap,
+      Key? key})
+      : super(key: key);
 
   @override
   State<OutlinedBtnComponent> createState() => _OutlinedBtnComponentState();
@@ -23,17 +26,17 @@ class _OutlinedBtnComponentState extends State<OutlinedBtnComponent> {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-        onPressed: () {},
-        style: OutlinedButton.styleFrom(
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.white,
-            side: BorderSide(color: widget.borderColor, width: widget.borderWidth),
-            maximumSize: Size(widget.width, widget.height),
-            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(widget.radius)))
-        ),
-        child: widget.child,
-      );
-    }
+      onPressed: widget.onTap,
+      style: OutlinedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.white,
+          side:
+              BorderSide(color: widget.borderColor, width: widget.borderWidth),
+          maximumSize: Size(widget.width, widget.height),
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(widget.radius)))),
+      child: widget.child,
+    );
+  }
 }

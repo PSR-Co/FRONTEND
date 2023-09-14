@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:psr/auth/view/signup/select_interest_screen.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/circular_progress_indicator.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
@@ -13,8 +12,6 @@ import 'package:psr/home/component/notice_list_content.dart';
 import 'package:psr/home/component/outlined_btn.dart';
 import 'package:psr/home/component/recent_list_item.dart';
 import 'package:psr/presenter/home/home_service.dart';
-import 'package:psr/shopping/view/shopping_screen.dart';
-
 import '../../cs/view/service_center_screen.dart';
 import '../../model/data/home/home_model.dart';
 import '../../product/view/product_detail_screen.dart';
@@ -28,11 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   HomeModel? data;
-  List<MainTop> mainTopProductList = [
-    // MainTop(id: 0, category: '', name: '', description: ''),
-    // MainTop(id: 0, category: '', name: '', description: ''),
-    // MainTop(id: 0, category: '', name: '', description: '')
-  ];
+  List<MainTop> mainTopProductList = [];
   List<RecentProduct> recentProductList = [];
   List<PopularProduct> popularProductList = [];
 
@@ -60,9 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextStyle packageTextStyle = const TextStyle(
       fontSize: 11.0, fontWeight: FontWeight.w500, color: GRAY_2_COLOR);
   final TextStyle packageNameTextStyle = const TextStyle(
-      fontSize: 16.0, fontWeight: FontWeight.w700, color: GRAY_4_COLOR);
+      fontSize: 15.0, fontWeight: FontWeight.w700, color: GRAY_4_COLOR);
   final TextStyle packageIntroductionTextStyle = const TextStyle(
-      fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
+      fontSize: 12.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
   final TextStyle packageBtnTextStyle = const TextStyle(
       fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_3_COLOR);
   final TextStyle btnGroupTextStyle = const TextStyle(
@@ -84,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (snapshot.hasError) {
             print('홈: ${snapshot.error.toString()}');
             return const CircularProgress();
-          }else if (snapshot.hasData) {
+          } else if (snapshot.hasData) {
             data = HomeModel.fromJson(snapshot.data);
             mainTopProductList = data!.data.mainTopProductList;
             recentProductList = data!.data.recentProductList;
@@ -147,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
         margin: const EdgeInsets.only(left: 17),
         child: DetailBar(
           title: '관심있는 패키지를 골라보세요',
-          moveTo: const ShoppingScreen(),
+          moveTo: const RootTab(selectedRootTab: 1, selectedIndex: null),
         ));
   }
 
@@ -160,8 +153,11 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, index, activeIndex) {
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: mainTopProductList[index].id), settings: const RouteSettings(name: '/productDetail')));
-              },
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => ProductDetailScreen(
+                      productId: mainTopProductList[index].id),
+                  settings: const RouteSettings(name: '/productDetail')));
+            },
             child: Container(
               margin:
                   const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
@@ -202,20 +198,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                   SizedBox(
                                       width: 100,
                                       child: Text(
-                                        mainTopProductList[index].category ?? "",
+                                        mainTopProductList[index].category,
                                         style: packageTextStyle,
                                       )),
                                   SizedBox(
                                       width: 100,
                                       child: Text(
-                                        mainTopProductList[index].name ?? "",
+                                        mainTopProductList[index].name,
                                         style: packageNameTextStyle,
+                                        overflow: TextOverflow.ellipsis,
                                       ))
                                 ],
                               ),
                               Text(
                                 mainTopCardEmogi[index],
-                                style: const TextStyle(fontSize: 40.0),
+                                style: const TextStyle(fontSize: 30.0),
                               ),
                             ],
                           ),
@@ -226,6 +223,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text(
                               mainTopProductList[index].description,
                               style: packageIntroductionTextStyle,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ))
                       ])),
             ),
@@ -245,6 +244,15 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 80.0,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           OutlinedBtnComponent(
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (_) => const RootTab(
+                              selectedRootTab: 1,
+                              selectedIndex: 1,
+                            )),
+                    (route) => false);
+              },
               borderColor: SHADOW_COLOR,
               borderWidth: 2,
               radius: 10,
@@ -267,13 +275,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: const Icon(Icons.arrow_forward_ios,
                             size: 15.0, color: GRAY_3_COLOR),
                         padding: EdgeInsets.zero,
-                        constraints: BoxConstraints(),
+                        constraints: const BoxConstraints(),
                       ),
                     ],
                   ),
                 ),
               )),
           OutlinedBtnComponent(
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (_) => const RootTab(
+                              selectedRootTab: 1,
+                              selectedIndex: 2,
+                            )),
+                    (route) => false);
+              },
               borderColor: SHADOW_COLOR,
               borderWidth: 2,
               radius: 10,
@@ -313,6 +330,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )),
           OutlinedBtnComponent(
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (_) => const RootTab(
+                              selectedRootTab: 1,
+                              selectedIndex: 4,
+                            )),
+                    (route) => false);
+              },
               borderColor: SHADOW_COLOR,
               borderWidth: 2,
               radius: 10,
@@ -353,8 +379,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-              ))
-        ]));
+              )
+          )
+        ])
+    );
   }
 
   Widget renderBtnGroup() {
@@ -365,25 +393,33 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           OutlinedBtnComponent(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => const FAQScreen()));
+              },
               borderColor: PURPLE_COLOR,
               borderWidth: 1,
               radius: 24,
               width: 170,
               height: 60,
-              child: buttonContent('자주 묻는 질문', const FAQScreen())),
+              child: buttonContent('자주 묻는 질문')),
           OutlinedBtnComponent(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => const ServiceCenterScreen()));
+            },
               borderColor: PURPLE_COLOR,
               borderWidth: 1,
               radius: 24,
               width: 170,
               height: 60,
-              child: buttonContent('문의하기', const ServiceCenterScreen()))
+              child: buttonContent('문의하기'))
         ],
       ),
     );
   }
 
-  Widget buttonContent(String content, Widget moveTo) {
+  Widget buttonContent(String content) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 7.0),
       child: Row(
@@ -396,10 +432,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: btnGroupTextStyle,
               )),
           IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => moveTo));
-            },
+            onPressed: () {},
             padding: const EdgeInsets.only(
               top: 2.0,
             ), // 패딩 설정
