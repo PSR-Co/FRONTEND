@@ -6,18 +6,32 @@ part of 'user_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-EditInterestsRequest _$EditInterestsRequestFromJson(
-        Map<String, dynamic> json) =>
-    EditInterestsRequest(
+EditInterests _$EditInterestsFromJson(Map<String, dynamic> json) =>
+    EditInterests(
       interestList: (json['interestList'] as List<dynamic>)
           .map((e) => Interest.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$EditInterestsRequestToJson(
-        EditInterestsRequest instance) =>
+Map<String, dynamic> _$EditInterestsToJson(EditInterests instance) =>
     <String, dynamic>{
       'interestList': instance.interestList,
+    };
+
+EditInterestsResponse _$EditInterestsResponseFromJson(
+        Map<String, dynamic> json) =>
+    EditInterestsResponse(
+      code: json['code'] as int,
+      message: json['message'] as String,
+      data: EditInterests.fromJson(json['data'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$EditInterestsResponseToJson(
+        EditInterestsResponse instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+      'data': instance.data,
     };
 
 EditUserProfileRequest _$EditUserProfileRequestFromJson(

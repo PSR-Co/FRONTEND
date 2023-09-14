@@ -5,14 +5,30 @@ import 'package:psr/model/data/general_model.dart';
 part 'user_model.g.dart';
 
 @JsonSerializable()
-class EditInterestsRequest {
+class EditInterests {
   final List<Interest> interestList;
 
-  EditInterestsRequest({
+  EditInterests({
     required this.interestList,
   });
 
-  Map<String, dynamic> toJson() => _$EditInterestsRequestToJson(this);
+  Map<String, dynamic> toJson() => _$EditInterestsToJson(this);
+  factory EditInterests.fromJson(Map<String, dynamic> json)
+  => _$EditInterestsFromJson(json);
+}
+
+@JsonSerializable()
+class EditInterestsResponse extends GeneralModel {
+  final EditInterests data;
+
+  EditInterestsResponse({
+    required super.code,
+    required super.message,
+    required this.data,
+  });
+
+  factory EditInterestsResponse.fromJson(Map<String, dynamic> json)
+  => _$EditInterestsResponseFromJson(json);
 }
 
 @JsonSerializable()
