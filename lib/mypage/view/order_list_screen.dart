@@ -133,69 +133,57 @@ class _OrderListScreenState extends State<OrderListScreen> {
           }
           return orderView(
               type,
-              ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: content.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MoveToDetailOrderScreen(
-                                      type: type,
-                                      orderId: content[index].orderId)));
-                        },
-                        title: Container(
-                          width: MediaQuery.of(context).size.width,
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 5.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      type == 'sell'
-                                          ? '요청자 ${content[index].userName}님'
-                                          : '${content[index].userName}님',
-                                      style: userNameTextStyle,
-                                    ),
-                                    Text(
-                                      content[index].orderDate,
-                                      style: dateTextStyle,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 5.0, bottom: 30.0),
-                                child: type == 'sell'
-                                    ? LargeDetailBar(
-                                        title: content[index].productName,
-                                        moveTo: MoveToDetailOrderScreen(
-                                          type: type,
-                                          orderId: content[index].orderId,
-                                        ))
-                                    : moveToReview(
-                                        content[index].productName,
-                                        content[index].reviewId,
-                                        content[index].userName,
-                                        content[index].productName,
-                                        content[index].productImgUrl,
-                                        content[index].orderId,
-                                        content[index].productId),
+              SingleChildScrollView(child: Column(children: content.map((e) =>
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MoveToDetailOrderScreen(
+                            type: type,
+                            orderId: e.orderId)));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 130,
+                  margin: const EdgeInsets.symmetric(horizontal: 17.0),
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              type == 'sell'
+                                  ? '요청자 ${e.userName}님'
+                                  : '${e.userName}님',
+                              style: userNameTextStyle,
+                            ),
+                            Text(
+                              e.orderDate,
+                              style: dateTextStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 30.0),
+                        child: type == 'sell'
+                            ? LargeDetailBar(
+                                title: e.productName,
+                                moveTo: MoveToDetailOrderScreen(type: type, orderId: e.orderId,)
                               )
-                            ],
-                          ),
-                        ));
-                  }));
-        });
+                            : moveToReview(e.productName, e.reviewId, e.userName, e.productName, e.productImgUrl, e.orderId, e.productId),
+                      )
+                    ],
+                  ),
+                ),
+              )).toList()
+            ))
+        );
+      });
   }
 
   Widget orderView(String type, Widget child) {
@@ -205,7 +193,9 @@ class _OrderListScreenState extends State<OrderListScreen> {
         '') {
       selectedValue = '요청대기';
     }
-    print('selectedValue : $selectedValue');
+    if (kDebugMode) {
+      print('selectedValue : $selectedValue');
+    }
     return SingleChildScrollView(
       child: Column(children: [
         Container(
