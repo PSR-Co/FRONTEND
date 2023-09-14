@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/division.dart';
@@ -8,7 +9,6 @@ import 'package:psr/order/component/order_dialog.dart';
 import 'package:psr/presenter/order/order_service.dart';
 
 import '../../common/const/colors.dart';
-import '../../common/const/constants.dart';
 import '../../common/layout/circular_progress_indicator.dart';
 import '../../product/view/product_detail_screen.dart';
 
@@ -80,22 +80,30 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
         future: fetchData(widget.orderId),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            print("detail-order-screen : 에러가 발생했습니다.");
+            if (kDebugMode) {
+              print("detail-order-screen : 에러가 발생했습니다.");
+            }
             return const CircularProgress();
           }
           if (snapshot.hasData) {
             data = OrderDetailModel.fromJson(snapshot.data);
             if (data?.code == 403) {
-              print('detail-order-screen : 권한이 없습니다.');
+              if (kDebugMode) {
+                print('detail-order-screen : 권한이 없습니다.');
+              }
               return const CircularProgress();
             } else if (data?.code == 404) {
-              print("detail-order-screen : 해당 요청을 찾을 수 없습니다.");
+              if (kDebugMode) {
+                print("detail-order-screen : 해당 요청을 찾을 수 없습니다.");
+              }
               return const CircularProgress();
             }
           } else {
             return const CircularProgress();
           }
-          print("${widget.type}");
+          if (kDebugMode) {
+            print(widget.type);
+          }
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -105,8 +113,11 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                     data!.data.inquiry, data!.data.description),
                 if (widget.type == 'sell' && data!.data.status != '요청대기')
                   buttonView('진행완료', '진행취소', data!.data.status)
-                else
-                  buttonView(widget.btnOption1, widget.btnOption2, data!.data.status),
+                else if ((widget.type != 'sell' ||
+                        data!.data.status == '요청대기') &&
+                    data!.data.status != '요청취소')
+                  buttonView(
+                      widget.btnOption1, widget.btnOption2, data!.data.status),
                 if (widget.type == 'sell' && data!.data.status == '요청대기')
                   ActionBtn(
                       child: actionBtnChild(
@@ -125,9 +136,8 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                                     data!.data.websiteUrl,
                                     data!.data.inquiry,
                                     data!.data.description,
-                                "수정",
-                                "요청을 수정하였습니다."
-                            )
+                                    "수정",
+                                    "요청을 수정하였습니다.")
                                 .then((value) => setState(() {})),
                             '수정하기')),
                   )
@@ -258,14 +268,17 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
       children: [
         TextButton(
             onPressed: () {
-              print("order status: $status");
+              if (kDebugMode) {
+                print("order status: $status");
+              }
               switch (btnOption1) {
                 case '요청수정':
-                  if(status != '진행중'){
+                  if (status != '진행중') {
                     changeEditable();
                   } else {
                     orderDialog("요청 대기 중에는 수정이 불가합니다.");
-                  } break;
+                  }
+                  break;
                 case '요청승인':
                   changeStatus('진행중');
                   setState(() {
@@ -275,9 +288,8 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                             data!.data.websiteUrl,
                             data!.data.inquiry,
                             data!.data.description,
-                      "승인",
-                      "요청을 성공적으로 승인하였습니다!"
-                    )
+                            "승인",
+                            "요청을 성공적으로 승인하였습니다!")
                         .then((value) => setState(() {}));
                   });
                   break;
@@ -318,8 +330,14 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     );
   }
 
-  Future<dynamic> editedBtn(String status, String ordererName,
-      String? websiteUrl, String inquiry, String description, String type, String dialogMsg) async {
+  Future<dynamic> editedBtn(
+      String status,
+      String ordererName,
+      String? websiteUrl,
+      String inquiry,
+      String description,
+      String type,
+      String dialogMsg) async {
     String name = '';
     String? url = '';
     String ask = '';
