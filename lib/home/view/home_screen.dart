@@ -15,6 +15,7 @@ import 'package:psr/presenter/home/home_service.dart';
 
 import '../../cs/view/service_center_screen.dart';
 import '../../model/data/home/home_model.dart';
+import '../../model/network/cutsom_interceptor.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -80,6 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
         future: fetchData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
+            if(CustomInterceptor().statusCode == -1) {
+              CustomInterceptor().resetViewWithLoginScreen(context);
+            }
             print('홈: ${snapshot.error.toString()}');
             return const CircularProgress();
           }else if (snapshot.hasData) {

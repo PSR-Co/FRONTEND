@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import '../../auth/view/login_screen.dart';
 import 'constants.dart';
+import 'package:flutter/material.dart';
 
 class CustomInterceptor extends Interceptor {
 
@@ -44,6 +46,9 @@ class CustomInterceptor extends Interceptor {
     if (err.response?.data['code'] == 403 &&
         !(err.requestOptions.path == reissuePath)) {
 
+      print('statusCode -> $statusCode');
+      print('errorMsg -> $errorMsg');
+
       final dio = Dio();
       try {
         // 토큰 재발급 요청 전송
@@ -72,11 +77,19 @@ class CustomInterceptor extends Interceptor {
         return handler.resolve(resp);
 
       } on DioError catch (e) {
+        statusCode = -1;
+        // print('status code -> $statusCode');
         return handler.reject(e);
       }
 
     }
 
     return super.onError(err, handler);
+  }
+
+  void resetViewWithLoginScreen(BuildContext context) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => LoginScreen()));
+    });
   }
 }
