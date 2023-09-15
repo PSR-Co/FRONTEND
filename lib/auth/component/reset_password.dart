@@ -20,6 +20,9 @@ class ResetPassword extends StatefulWidget {
 
 class _ResetPasswordState extends State<ResetPassword> {
 
+  bool isValidPW = true;
+  bool isCorrect = true;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -28,7 +31,11 @@ class _ResetPasswordState extends State<ResetPassword> {
         children: [
           const SizedBox(height: 50,),
           getPwInputView('비밀번호', '비밀번호를 입력해주세요.', widget.pwController),
+          getWarningText(isValidPW, '영문,숫자,특수문자만 입력해주세요. (8자이상 15자이내)'),
+
+          const SizedBox(height: 22,),
           getPwInputView('비밀번호 확인', '비밀번호를 다시 입력해주세요.', widget.pwValidController),
+          getWarningText(isCorrect, '비밀번호가 일치하지 않습니다'),
         ],
       ),
     );
@@ -47,10 +54,36 @@ class _ResetPasswordState extends State<ResetPassword> {
             isNeededForHidden: true,
             backgroundColor: Colors.white,
             borderColor: PURPLE_COLOR.withOpacity(0.5),
+            onChange: onChange,
           ),
         ),
-        const SizedBox(height: 22,)
+        // const SizedBox(height: 22,)
       ],
     );
+  }
+
+  Widget getWarningText(bool isValid, String warningText) {
+    if (!isValid) {
+      return Container(
+        margin: const EdgeInsets.only(left: 30),
+        child: Text(warningText, style: const TextStyle(fontSize: 11, color: Colors.red,),),
+      );
+    } else {
+      return const SizedBox(width: 0, height: 0,);
+    }
+  }
+
+  void onChange() {
+    setState(() {
+      isValidPW = validateInputPW(widget.pwController.value.text);
+      isCorrect = widget.pwController.value.text == widget.pwValidController.value.text;
+    });
+  }
+
+  bool validateInputPW(String input) {
+    RegExp regExp = RegExp(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?~^<>,.&+=])[A-Za-z\d$@$!%*#?~^<>,.&+=]{8,15}$");
+    if (input.isEmpty) { return false; }
+    else if (!regExp.hasMatch(input)) { return false; }
+    return true;
   }
 }

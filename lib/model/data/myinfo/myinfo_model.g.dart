@@ -9,8 +9,9 @@ part of 'myinfo_model.dart';
 MyInfoModel _$MyInfoModelFromJson(Map<String, dynamic> json) => MyInfoModel(
       code: json['code'] as int,
       message: json['message'] as String,
-      data: json['data'] == null ? null
-        : MyInfo.fromJson(json['data'] as Map<String, dynamic>),
+      data: json['data'] == null
+          ? null
+          : MyInfo.fromJson(json['data'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$MyInfoModelToJson(MyInfoModel instance) =>
@@ -51,17 +52,16 @@ Map<String, dynamic> _$ChangePWModelToJson(ChangePWModel instance) =>
     };
 
 ChangePW _$ChangePWFromJson(Map<String, dynamic> json) => ChangePW(
-  currentPassword: json['currentPassword'] as String,
-  password: json['password'] as String,
-);
+      currentPassword: json['currentPassword'] as String,
+      password: json['password'] as String,
+    );
 
 Map<String, dynamic> _$ChangePWToJson(ChangePW instance) => <String, dynamic>{
-  'currentPassword': instance.currentPassword,
-  'password': instance.password,
-};
+      'currentPassword': instance.currentPassword,
+      'password': instance.password,
+    };
 
-AccountModel _$AccountModelFromJson(Map<String, dynamic> json) =>
-    AccountModel(
+AccountModel _$AccountModelFromJson(Map<String, dynamic> json) => AccountModel(
       code: json['code'] as int,
       message: json['message'] as String,
       data: json['data'] as Map<String, dynamic>?,

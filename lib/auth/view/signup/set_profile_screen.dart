@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,8 +10,10 @@ import 'package:psr/common/layout/custom_title_text.dart';
 import 'package:psr/common/layout/purple_outlined_textfield_with_button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:psr/model/data/auth/user_model.dart';
+import 'package:psr/model/network/cutsom_interceptor.dart';
 import 'package:psr/presenter/auth/signup_service.dart';
 import 'package:psr/presenter/auth/user_service.dart';
+import 'package:psr/presenter/common/ImageService.dart';
 
 import '../../../common/const/constants.dart';
 import '../../../common/layout/default_appbar_layout.dart';
@@ -105,33 +109,55 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: PROFILE_IMG_SIZE,
-            height: PROFILE_IMG_SIZE,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(44),
-            ),
-            child: IconButton(
-                onPressed: didTapProfileImgButton,
-                icon: (profile?.imgUrl == null)
-                    ? SvgPicture.asset('asset/icons/common/pick_profile_img_icon.svg',)
-                    : ClipRRect(
-                  borderRadius: BorderRadius.circular(PROFILE_IMG_SIZE/2),
-                  child: Image.network(profile!.imgUrl,
-                      width: PROFILE_IMG_SIZE, height: PROFILE_IMG_SIZE,
-                      fit: BoxFit.cover),
-                )
-            ),
+          Stack(
+            children: [
+              Container(
+                width: PROFILE_IMG_SIZE,
+                height: PROFILE_IMG_SIZE,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(44),
+                ),
+                child: IconButton(
+                    onPressed: didTapProfileImgButton,
+                    icon: (profile?.imgUrl == null)
+                        ? getProfileImg()
+                        : ClipRRect(
+                        borderRadius: BorderRadius.circular(PROFILE_IMG_SIZE/2),
+                        child: Image.network(profile!.imgUrl,
+                            width: PROFILE_IMG_SIZE, height: PROFILE_IMG_SIZE,
+                            fit: BoxFit.cover)
+                    )
+                ),
+              ),
+                   Positioned(
+                       bottom: 3,
+                       right: 5,
+                       child: Container(
+                           width: 25,
+                           decoration: BoxDecoration(
+                             borderRadius: BorderRadius.circular(30),
+                             boxShadow: [
+                               BoxShadow(
+                                 color: Colors.grey.withOpacity(0.5),
+                                 spreadRadius: -5.0,
+                                 blurRadius: 20,
+                               ),
+                              ],
+                           ),
+                           child: SvgPicture.asset('asset/icons/common/circle_plus_icon.svg')
+                       )
+              )
+            ]
           ),
           const SizedBox(height: 20,),
           const CustomTitleText(title: '닉네임', margin: EdgeInsets.symmetric(vertical: 5, horizontal: 0),),
           PurpleOutlinedTextFieldWithButton(
-              maxLine: 1,
-              hintText: '닉네임을 입력해주세요.',
-              text: (profile?.nickname == null) ? null : profile!.nickname,
-              controller: nicknameController,
-              buttonTitle: '중복확인',
-              onPressed: didTapValidationNickname,
+            maxLine: 1,
+            hintText: '닉네임을 입력해주세요.',
+            text: (profile?.nickname == null) ? null : profile!.nickname,
+            controller: nicknameController,
+            buttonTitle: '중복확인',
+            onPressed: didTapValidationNickname,
           )
 
         ],
@@ -139,17 +165,44 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     );
   }
 
+  Widget getProfileImg() {
+    if (profileImgKey == null) {
+      return SvgPicture.asset('asset/icons/common/pick_profile_img_icon.svg',);
+    } else {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(PROFILE_IMG_SIZE/2),
+        child: Image.file(
+            File(profileImgKey!),
+            width: PROFILE_IMG_SIZE, height: PROFILE_IMG_SIZE,
+            fit: BoxFit.cover
+        )
+      );
+    }
+  }
+
   /// event methods
   Future<void> didTapNextButton() async {
     if (isInputValid) {
+      if (!SignupService().checkNickname(nicknameController.value.text)) {
+        Fluttertoast.showToast(
+            msg: '변경된 닉네임의 중복확인이 필요합니다!',
+            gravity: ToastGravity.CENTER
+        );
+        return;
+      }
+
       if (isLoginUser) {
         setState(() { isLoading = true; });
-        Future<bool> result = UserService().editProfile(nicknameController.value.text, profileImgKey);
-        if (await result) {
-          setState(() { isLoading = false; });
-          Navigator.of(context).pop();
+
+        // TODO: upload profile image using Firebase
+        if (profileImgKey != null) {
+          List<String> imgKeyList = [];
+          imgKeyList.add(profileImgKey!);
+          await ImageService().uploadImageList(ImageType.userProfile, imgKeyList)
+              .then((value) => requestEditProfile(value.first));
+        } else {
+          requestEditProfile(null);
         }
-        else { Fluttertoast.showToast(msg: '프로필 수정에 실패하였습니다.'); }
 
       } else {
         setState(() { isLoading = true; });
@@ -159,7 +212,9 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
           checkPermission();
           Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompleteSignupScreen()));
         }
-        else { Fluttertoast.showToast(msg: '회원가입에 실패하였습니다.'); }
+        else {
+          Fluttertoast.showToast(msg: CustomInterceptor().errorMsg ?? '회원가입에 실패하였습니다.',);
+        }
       }
     }
     else { Fluttertoast.showToast(msg: '입력된 정보를 확인해주세요!'); }
@@ -181,7 +236,10 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
         if (result != null) {
           isInputValid = result;
           if (isInputValid) { SignupService().setNickname(nicknameController.value.text); }
-          Fluttertoast.showToast(msg: result ? "사용 가능한 닉네임입니다!" : "이미 존재하는 닉네임입니다.");
+          Fluttertoast.showToast(
+            msg: result ? "사용 가능한 닉네임입니다!" : "이미 존재하는 닉네임입니다.",
+            gravity: ToastGravity.CENTER
+          );
         } else {
           isInputValid = false;
           Fluttertoast.showToast(msg: "1자 이상의 닉네임을 입력해주세요.");
@@ -197,7 +255,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     if (image != null) {
       setState(() {
         profileImgKey = image.path;
-        SignupService().setProfileImage(profileImgKey);
+        isInputValid = isLoginUser;
       });
     }
   }
@@ -228,6 +286,14 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
       }
     }
     else { Fluttertoast.showToast(msg: '10자 이하의 닉네임을 입력해주세요!'); }
+  }
+
+  void requestEditProfile(String? imgUrl) async {
+    Future<bool> result = UserService().editProfile(nicknameController.value.text, imgUrl);
+
+    setState(() { isLoading = false; });
+    if (await result) { Navigator.of(context).pop(); }
+    else { Fluttertoast.showToast(msg: CustomInterceptor().errorMsg ?? '프로필 수정에 실패하였습니다.'); }
   }
 
 }

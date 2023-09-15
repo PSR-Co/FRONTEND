@@ -109,7 +109,7 @@ class _AgreeToTermsScreenState extends State<AgreeToTermsScreen> {
                       });
                     },
                     icon: isAgree
-                        ? const Icon(Icons.check_circle_outline, color: PURPLE_COLOR,size: 30,)
+                        ? getAgreeButton()
                         : const Icon(Icons.check_circle_sharp, color: GRAY_0_COLOR,size: 30,),
                     padding: EdgeInsets.zero,
                   ),
@@ -126,6 +126,25 @@ class _AgreeToTermsScreenState extends State<AgreeToTermsScreen> {
             ),
           )
       ),
+    );
+  }
+
+  Widget getAgreeButton() {
+    return Container(
+      width: 25,
+      height: 25,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.all(Radius.circular(12.5)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 3,
+          ),
+        ],
+      ),
+      child: const Icon(Icons.check, color: PURPLE_COLOR),
     );
   }
 
