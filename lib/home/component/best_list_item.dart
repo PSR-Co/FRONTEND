@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
+import 'package:psr/common/view/root_tab.dart';
 import 'package:psr/home/component/product_list_item.dart';
-import 'package:psr/shopping/view/shopping_screen.dart';
 
 import '../../model/data/home/home_model.dart';
 
@@ -24,7 +24,10 @@ class BestListItemState extends State<BestListItem> {
         children: [
           DetailBar(
             title: '인기게시글',
-            moveTo: const ShoppingScreen(),
+            moveTo: const RootTab(
+              selectedIndex: null,
+              selectedRootTab: 1,
+            ),
           ),
           ProductListItem(
             productList: widget.popularProductList,

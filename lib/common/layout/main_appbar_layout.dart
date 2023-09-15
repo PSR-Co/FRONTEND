@@ -47,7 +47,7 @@ class _MainAppBarLayoutState extends State<MainAppBarLayout> {
         icon: Image.asset("asset/icons/common/main_logo.png"),
         onPressed: () {
           Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (_) => RootTab()),
+              MaterialPageRoute(builder: (_) => RootTab(selectedRootTab: null, selectedIndex: null,)),
                   (route) => false
           );
         },

@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
     /// Access / Refresh Token 저장 여부 확인 (있으면 홈 화면, 없으면 로그인 화면으로 전환)
     if (await APIManager().checkToken()) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => RootTab()
+          MaterialPageRoute(builder: (_) => RootTab(selectedRootTab: null, selectedIndex: null,)
           ), (route) => false);
 
     } else {

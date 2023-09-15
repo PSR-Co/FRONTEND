@@ -8,7 +8,9 @@ import '../../mypage/view/mypage_screen.dart';
 import '../../shopping/view/shopping_screen.dart';
 
 class RootTab extends StatefulWidget {
-  const RootTab({Key? key}) : super(key: key);
+  final int? selectedRootTab;
+  final int? selectedIndex;
+  const RootTab({required this.selectedRootTab, required this.selectedIndex, Key? key}) : super(key: key);
 
   @override
   State<RootTab> createState() => _RootTabState();
@@ -17,12 +19,16 @@ class RootTab extends StatefulWidget {
 class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
   late TabController controller;
   int index = 0;
-  
+
+  int selectedTab = 0;
   @override
   void initState() {
     super.initState();
     controller = TabController(length: TABBAR_ICONS.length, vsync: this);
     controller.addListener(tabListener);
+    ///홈->상품패키지 이동 시 bottomNavigation 나타나도록 수정
+    setSelectedRootTab(widget.selectedRootTab ?? 0);
+    setShoppingTab();
   }
 
   @override
@@ -53,7 +59,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
       controller: controller,
       children: [
         HomeScreen(),
-        ShoppingScreen(),
+        ShoppingScreen(selectedIndex: selectedTab,),
         ChatScreen(),
         MypageScreen(),
       ],
@@ -75,6 +81,9 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
 
         onTap: (index){
           controller.animateTo(index);
+          setState(() {
+            selectedTab = 0;
+          });
         },
         currentIndex: index,
         items: TABBAR_ICONS,
@@ -87,5 +96,16 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
         fontSize: 10,
         fontWeight: FontWeight.w500
     );
+  }
+  ///홈->상품패키지 이동 시 bottomNavigation 나타나도록 수정
+  void setSelectedRootTab(int selectedRootTab) {
+    controller.animateTo(selectedRootTab);
+  }
+
+  ///홈->상품패키지 이동 시 해당 상품 탭으로 연결
+  void setShoppingTab() {
+    setState(() {
+      selectedTab = widget.selectedIndex ?? 0;
+    });
   }
 }
