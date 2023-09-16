@@ -39,7 +39,7 @@ class Like {
   final int productId;
   final String? imgUrl;
   final String category;
-  final String nickname;
+  // final String nickname;
   final String name;
   final int price;
 
@@ -47,7 +47,7 @@ class Like {
       {required this.productId,
         required this.imgUrl,
         required this.category,
-        required this.nickname,
+        // required this.nickname,
         required this.name,
         required this.price});
 
