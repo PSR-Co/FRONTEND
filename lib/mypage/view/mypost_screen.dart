@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:psr/common/layout/circular_progress_indicator.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/model/data/mypage/myproduct_model.dart';
 import 'package:psr/presenter/mypage/mypage_service.dart';
 
 import '../../common/const/colors.dart';
+import '../../product/view/product_detail_screen.dart';
 
 class MyPostScreen extends StatefulWidget {
   const MyPostScreen({super.key});
@@ -50,7 +53,7 @@ class _MyPostScreenState extends State<MyPostScreen> {
           child: Column(
             children: [
               const DefaultAppBarLayout(titleText: "내 게시글"),
-              Expanded(child: postListView())
+              SingleChildScrollView(child: postListView())
             ],
           ),
         ),
@@ -63,28 +66,24 @@ class _MyPostScreenState extends State<MyPostScreen> {
         future: fetchData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            print('my product error: ${snapshot.error.toString()}');
-            return const Center(
-              child: Text('내 게시글 : 에러가 있습니다'),
-            );
+            if (kDebugMode) {
+              print('my product error: ${snapshot.error.toString()}');
+            }
+            return const CircularProgress();
           } else if (snapshot.hasData) {
             data = MyProductModel.fromJson(snapshot.data);
             if (data?.data.productList.content == null) {
-              return const Center(
-                child: Text('내 게시글이 존재하지 않습니다.'),
-              );
+              if (kDebugMode) {
+                print('내 게시글이 존재하지 않습니다.');
+              }
+              return const CircularProgress();
             }
             content = data!.data.productList.content;
           } else if (!snapshot.hasData) {
-            return const Center(
-              child: Text('내 게시글을 불러올 수 없습니다.'),
-            );
+            print('내 게시글을 불러올 수 없습니다.');
+            return const CircularProgress();
           } else {
-            return Container(
-                width: 30,
-                height: 30,
-                alignment: Alignment.center,
-                child: const CircularProgressIndicator());
+            return const CircularProgress();
           }
           return Container(
             margin: const EdgeInsets.only(top: 15.0),
@@ -94,7 +93,7 @@ class _MyPostScreenState extends State<MyPostScreen> {
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  onTap: () {},
+                  onTap: () {tapProduct(content[index].productId);},
                   title: GestureDetector(
                     child: postListItem(
                         content[index].imgUrl,
@@ -159,5 +158,11 @@ class _MyPostScreenState extends State<MyPostScreen> {
   priceConverter(int price) {
     String result = '${price ~/ 1000},000원';
     return result;
+  }
+
+  void tapProduct(int productId) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => ProductDetailScreen(productId: productId),
+        settings: const RouteSettings(name: '/productDetail')));
   }
 }

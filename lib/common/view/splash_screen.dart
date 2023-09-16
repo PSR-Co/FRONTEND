@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> with WidgetsBindingObserver
   }
 
   void checkToken() async {
-    // storage.deleteAll(); // 로그인 화면으로 돌아갈 때 주석 해제
+    storage.deleteAll(); // 로그인 화면으로 돌아갈 때 주석 해제
 
     /// Access / Refresh Token 저장 여부 확인 (있으면 홈 화면, 없으면 로그인 화면으로 전환)
     if (await APIManager().checkToken()) {
