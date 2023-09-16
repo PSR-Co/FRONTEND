@@ -10,6 +10,8 @@ import 'package:psr/model/data/inquiry/inquiry_detail_model.dart';
 import 'package:psr/myinfo/component/complete_btn.dart';
 import 'package:psr/presenter/inquiry/inquiry_service.dart';
 
+import '../../common/view/root_tab.dart';
+
 class AdminDetailInquiryScreen extends StatefulWidget {
   final int inquiryId;
 
@@ -340,8 +342,13 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                 activateBtn();
                 Navigator.of(context).pop();
                 if (type == '삭제') {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const RootTab(selectedRootTab: 3, selectedIndex: null)), (route)=>false);
+
+                  // Navigator.of(context).pop();
+                  // Navigator.of(context).pop();
                 }
               },
               child: Text(

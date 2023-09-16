@@ -1,16 +1,11 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
-import 'package:psr/cs/view/service_center_screen.dart';
-import 'package:psr/model/data/inquiry/inquiry_model.dart';
 import 'package:psr/myinfo/component/complete_btn.dart';
 import 'package:psr/presenter/inquiry/inquiry_service.dart';
 
 import '../../common/const/colors.dart';
+import '../component/inquiry_dialog.dart';
 
 class InquiryScreen extends StatefulWidget {
   const InquiryScreen({super.key});
@@ -20,8 +15,10 @@ class InquiryScreen extends StatefulWidget {
 }
 
 class _InquiryScreenState extends State<InquiryScreen> {
-  final TextStyle hintContentTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_1_COLOR);
-  final TextStyle contentTextStyle = const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
+  final TextStyle hintContentTextStyle = const TextStyle(
+      fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_1_COLOR);
+  final TextStyle contentTextStyle = const TextStyle(
+      fontSize: 13.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
@@ -37,15 +34,19 @@ class _InquiryScreenState extends State<InquiryScreen> {
         child: registerInquiryView(),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.fromLTRB(17.0,0,17.0,2),
-        child: CompleteBtn(btnTitle: '등록하기', isVisible: true, onPressed: () {
-          addInquiry().then((value) => setState(() {}));
-        }, ),
+        padding: const EdgeInsets.fromLTRB(17.0, 0, 17.0, 20),
+        child: CompleteBtn(
+          btnTitle: '등록하기',
+          isVisible: true,
+          onPressed: () {
+            addInquiry().then((value) => setState(() {}));
+          },
+        ),
       ),
     );
   }
 
-  Widget registerInquiryView(){
+  Widget registerInquiryView() {
     return SingleChildScrollView(
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -60,7 +61,8 @@ class _InquiryScreenState extends State<InquiryScreen> {
     );
   }
 
-  Widget inputBox(String hintTitle, double height, TextEditingController controller) {
+  Widget inputBox(
+      String hintTitle, double height, TextEditingController controller) {
     return Container(
       height: height,
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -75,7 +77,8 @@ class _InquiryScreenState extends State<InquiryScreen> {
           border: customBorder(),
           focusedBorder: customBorder(),
           enabledBorder: customBorder(),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
         ),
         style: contentTextStyle,
         textAlignVertical: TextAlignVertical.top,
@@ -84,7 +87,7 @@ class _InquiryScreenState extends State<InquiryScreen> {
     );
   }
 
-  OutlineInputBorder customBorder(){
+  OutlineInputBorder customBorder() {
     return const OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),
       borderSide: BorderSide(color: GRAY_0_COLOR, width: 1),
@@ -101,9 +104,9 @@ class _InquiryScreenState extends State<InquiryScreen> {
         if (kDebugMode) {
           print('요청에 성공했습니다.');
           changeState();
-          isSuccess ? Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (_) => const ServiceCenterScreen()),
-                  (route) => false) : Fluttertoast.showToast(msg: "문의 등록에 실패하셨습니다.");
+          isSuccess
+              ? inquiryDialog('문의가 등록되었습니다!')
+              : inquiryDialog('문의 등록에 실패하셨습니다.');
         }
       } else {
         if (kDebugMode) {
@@ -117,10 +120,19 @@ class _InquiryScreenState extends State<InquiryScreen> {
     }
   }
 
-  void changeState(){
+  void changeState() {
     setState(() {
       isSuccess = !isSuccess;
       // print('success : $isSuccess');
     });
+  }
+
+  void inquiryDialog(String result) {
+    showDialog(
+        barrierDismissible: true,
+        context: context,
+        builder: (_) {
+          return InquiryDialog(result: result);
+        });
   }
 }
