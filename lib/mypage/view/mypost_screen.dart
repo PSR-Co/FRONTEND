@@ -156,7 +156,12 @@ class _MyPostScreenState extends State<MyPostScreen> {
   }
 
   priceConverter(int price) {
-    String result = '${price ~/ 1000},000원';
+    String result = "";
+    if(price < 1000){
+      result = '$price원';
+    }else{
+      result = '${price ~/ 1000},000원';
+    }
     return result;
   }
 
