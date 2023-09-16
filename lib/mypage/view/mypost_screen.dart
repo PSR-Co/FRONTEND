@@ -50,6 +50,7 @@ class _MyPostScreenState extends State<MyPostScreen> {
         bottom: false,
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
               const DefaultAppBarLayout(titleText: "내 게시글"),
@@ -79,13 +80,12 @@ class _MyPostScreenState extends State<MyPostScreen> {
               return const CircularProgress();
             }
             content = data!.data.productList.content;
-          } else if (!snapshot.hasData) {
-            print('내 게시글을 불러올 수 없습니다.');
-            return const CircularProgress();
+            if(content.isEmpty) return const Text("게시글이 존재하지 않습니다.");
           } else {
             return const CircularProgress();
           }
           return Container(
+            width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.only(top: 15.0),
             child: ListView.builder(
               scrollDirection: Axis.vertical,
