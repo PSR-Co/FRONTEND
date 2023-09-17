@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../const/colors.dart';
 
@@ -6,11 +7,13 @@ class BodyTab extends StatefulWidget {
   List<String> titleList;
   List<Widget> tabBarViewChild;
   Widget tabTitle;
+  bool isBackItemHidden;
 
   BodyTab(
       {required this.titleList,
       required this.tabTitle,
       required this.tabBarViewChild,
+      required this.isBackItemHidden,
       Key? key})
       : super(key: key);
 
@@ -42,14 +45,15 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        title: widget.tabTitle,
-        bottom: PreferredSize(
-            preferredSize: Size(MediaQuery.of(context).size.width, 50.0),
-            child: renderTabBar(titleList: widget.titleList)),
-      ),
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          title: widget.tabTitle,
+          bottom: PreferredSize(
+              preferredSize: Size(MediaQuery.of(context).size.width, 50.0),
+              child: renderTabBar(titleList: widget.titleList)),
+          leading:
+              (widget.isBackItemHidden == false) ? null : renderLeftItem()),
       body: tabBarView(),
     );
   }
@@ -57,7 +61,7 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin {
   Widget renderTabBar({required List<String> titleList}) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           border: Border(bottom: BorderSide(color: GRAY_1_COLOR, width: 1.0))),
       child: TabBar(
         controller: tabController,
@@ -65,7 +69,7 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin {
         indicatorColor: PURPLE_COLOR,
         indicatorSize: TabBarIndicatorSize.tab,
         indicatorWeight: 3.0,
-        indicatorPadding: EdgeInsets.only(left: 9, right: 9),
+        indicatorPadding: const EdgeInsets.only(left: 9, right: 9),
         labelColor: PURPLE_COLOR,
         labelStyle: tabbedTextStyle,
         dividerColor: GRAY_1_COLOR,
@@ -90,5 +94,17 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin {
     return TabBarView(
         controller: tabController,
         children: widget.tabBarViewChild.map((e) => e).toList());
+  }
+
+  Widget renderLeftItem() {
+    return IconButton(
+      icon: SvgPicture.asset("asset/icons/common/chevron.backward.svg"),
+      onPressed: didTapBackItem,
+    );
+  }
+
+  /// event methods
+  void didTapBackItem() {
+    Navigator.of(context).pop();
   }
 }

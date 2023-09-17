@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:psr/common/view/root_tab.dart';
 import 'package:psr/mypage/view/mypage_screen.dart';
 
 import '../../common/const/colors.dart';
@@ -36,13 +37,17 @@ class _OrderDialogState extends State<OrderDialog> {
           width: MediaQuery.of(context).size.width,
           child: TextButton(
               onPressed: () {
-                if ((widget.result == "요청을 수정하였습니다.")||(widget.result == "로그아웃에 성공했습니다!")) {
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (_) => const MypageScreen()),
-                          (route) => false);
-                } else {
-                  Navigator.of(context).pop();
-                }
+                // if ((widget.result == "요청을 수정하였습니다.")||(widget.result == "로그아웃에 성공했습니다!")) {
+                //   Navigator.of(context).pushAndRemoveUntil(
+                //       MaterialPageRoute(builder: (_) => const RootTab(selectedRootTab: 3, selectedIndex: null)),
+                //           (route) => false);
+                //   setState(() {
+                //   });
+                // } else {
+                //   Navigator.of(context).pop();
+                // }
+                Navigator.of(context).pop();
+                setState(() {});
               },
               child: Text(
                 "확인",

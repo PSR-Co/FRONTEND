@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/division.dart';
@@ -9,6 +10,7 @@ import 'package:psr/presenter/order/order_service.dart';
 
 import '../../common/const/colors.dart';
 import '../../common/layout/circular_progress_indicator.dart';
+import '../../product/view/product_detail_screen.dart';
 
 class DetailOrderScreen extends StatefulWidget {
   int orderId;
@@ -21,7 +23,6 @@ class DetailOrderScreen extends StatefulWidget {
       required this.type,
       required this.btnOption1,
       required this.btnOption2,
-      // required this.child,
       Key? key})
       : super(key: key);
 
@@ -79,22 +80,30 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
         future: fetchData(widget.orderId),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            print("detail-order-screen : 에러가 발생했습니다.");
+            if (kDebugMode) {
+              print("detail-order-screen : 에러가 발생했습니다.");
+            }
             return const CircularProgress();
           }
           if (snapshot.hasData) {
             data = OrderDetailModel.fromJson(snapshot.data);
             if (data?.code == 403) {
-              print('detail-order-screen : 권한이 없습니다.');
+              if (kDebugMode) {
+                print('detail-order-screen : 권한이 없습니다.');
+              }
               return const CircularProgress();
             } else if (data?.code == 404) {
-              print("detail-order-screen : 해당 요청을 찾을 수 없습니다.");
+              if (kDebugMode) {
+                print("detail-order-screen : 해당 요청을 찾을 수 없습니다.");
+              }
               return const CircularProgress();
             }
           } else {
             return const CircularProgress();
           }
-          print("${widget.type}");
+          if (kDebugMode) {
+            print(widget.type);
+          }
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -103,19 +112,19 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                 orderDetailView(data!.data.ordererName, data!.data.websiteUrl,
                     data!.data.inquiry, data!.data.description),
                 if (widget.type == 'sell' && data!.data.status != '요청대기')
-                  buttonView('진행완료', '진행취소')
-                else
-                  buttonView(widget.btnOption1, widget.btnOption2),
+                  buttonView('진행완료', '진행취소', data!.data.status)
+                else if ((widget.type != 'sell' ||
+                        data!.data.status == '요청대기') &&
+                    data!.data.status != '요청취소')
+                  buttonView(
+                      widget.btnOption1, widget.btnOption2, data!.data.status),
                 if (widget.type == 'sell' && data!.data.status == '요청대기')
-                  Padding(
-                    padding: const EdgeInsets.only(top: 18.0),
-                    child: ActionBtn(
-                        child: actionBtnChild(
-                            () => () {
-                                  Navigator.pop(context, false);
-                                },
-                            '1:1 채팅')),
-                  )
+                  ActionBtn(
+                      child: actionBtnChild(
+                          () => () {
+                                Navigator.pop(context, false);
+                              },
+                          '1:1 채팅'))
                 else if (widget.type == 'order' && !readOnly)
                   Padding(
                     padding: const EdgeInsets.only(top: 18.0),
@@ -126,7 +135,9 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                                     data!.data.ordererName,
                                     data!.data.websiteUrl,
                                     data!.data.inquiry,
-                                    data!.data.description)
+                                    data!.data.description,
+                                    "수정",
+                                    "요청을 수정하였습니다.")
                                 .then((value) => setState(() {})),
                             '수정하기')),
                   )
@@ -167,33 +178,41 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
           ),
           Container(
             margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-            child: detailOrderBar(data!.data.productName),
+            child: detailOrderBar(data!.data.productName, data!.data.productId),
           ),
         ]));
   }
 
-  Widget detailOrderBar(String productName) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            productName,
-            style: headerTextStyle,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.arrow_forward_ios,
-              size: 20.0,
-              color: GRAY_4_COLOR,
+  Widget detailOrderBar(String productName, int productId) {
+    return GestureDetector(
+      onTap: () {
+        tapProduct(productId);
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Text(
+                productName,
+                style: headerTextStyle,
+              ),
             ),
-            padding: const EdgeInsets.only(bottom: 2.0),
-            constraints: const BoxConstraints(),
-          )
-        ],
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.arrow_forward_ios,
+                size: 20.0,
+                color: GRAY_4_COLOR,
+              ),
+              padding: const EdgeInsets.only(bottom: 2.0),
+              constraints: const BoxConstraints(),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -242,16 +261,23 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     );
   }
 
-  Widget buttonView(String btnOption1, String btnOption2) {
+  Widget buttonView(String btnOption1, String btnOption2, String status) {
     return ActionBtn(
         child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         TextButton(
             onPressed: () {
+              if (kDebugMode) {
+                print("order status: $status");
+              }
               switch (btnOption1) {
                 case '요청수정':
-                  changeEditable();
+                  if (status != '진행중') {
+                    changeEditable();
+                  } else {
+                    orderDialog("요청 대기 중에는 수정이 불가합니다.");
+                  }
                   break;
                 case '요청승인':
                   changeStatus('진행중');
@@ -261,7 +287,9 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                             data!.data.ordererName,
                             data!.data.websiteUrl,
                             data!.data.inquiry,
-                            data!.data.description)
+                            data!.data.description,
+                            "승인",
+                            "요청을 성공적으로 승인하였습니다!")
                         .then((value) => setState(() {}));
                   });
                   break;
@@ -302,8 +330,14 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     );
   }
 
-  Future<dynamic> editedBtn(String status, String ordererName,
-      String? websiteUrl, String inquiry, String description) async {
+  Future<dynamic> editedBtn(
+      String status,
+      String ordererName,
+      String? websiteUrl,
+      String inquiry,
+      String description,
+      String type,
+      String dialogMsg) async {
     String name = '';
     String? url = '';
     String ask = '';
@@ -320,6 +354,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     print('updateState $status');
     result = await OrderService().editOrderData(
         widget.orderId, {'status': status}, name, url, ask, detail);
+    print('updateStateResponse $result');
     changeEditable();
     orderDialog('요청을 수정하였습니다.');
   }
@@ -343,5 +378,11 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     setState(() {
       status = newStatus;
     });
+  }
+
+  void tapProduct(int productId) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => ProductDetailScreen(productId: productId),
+        settings: const RouteSettings(name: '/productDetail')));
   }
 }

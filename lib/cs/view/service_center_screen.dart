@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
@@ -37,7 +38,9 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
 
   Future<void> savedType() async {
     final savedType = await storage.read(key: USER_TYPE);
-    print("savedType $savedType");
+    if (kDebugMode) {
+      print("savedType $savedType");
+    }
     type = savedType!;
   }
 
@@ -82,6 +85,7 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
           const Division(),
           Expanded(
             child: BodyTab(
+                isBackItemHidden: false,
                 titleList: MY_INQUIRY_LIST_TAB,
                 tabTitle: Container(
                     width: MediaQuery.of(context).size.width,

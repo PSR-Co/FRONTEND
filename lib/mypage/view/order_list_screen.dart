@@ -1,8 +1,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/constants.dart';
-import 'package:psr/common/layout/default_appbar_layout.dart';
+import 'package:psr/common/layout/circular_progress_indicator.dart';
 import 'package:psr/common/layout/large_detail_bar_layout.dart';
 import 'package:psr/common/view/body_tab.dart';
 import 'package:psr/review/view/add_review_screen.dart';
@@ -38,12 +39,13 @@ class _OrderListScreenState extends State<OrderListScreen> {
       decoration: TextDecoration.underline);
   final TextStyle headerTextStyle = const TextStyle(
       fontSize: 18.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
+  final titleStyle = const TextStyle(color: Colors.black, fontSize: 17);
 
   List<String> dropDownBtnTitle = ['요청대기', '진행중', '진행완료', '요청취소'];
-  String isReviewed = "리뷰 쓰기";
+  // String isReviewed = "리뷰 쓰기";
   String selectedValue = "";
-  String selectedValue1 = "";
-  String selectedValue2 = "";
+  String selectedValue1 = "요청대기";
+  String selectedValue2 = "요청대기";
 
   OrderListModel? data;
   List<OrderList> content = [];
@@ -64,10 +66,15 @@ class _OrderListScreenState extends State<OrderListScreen> {
       case '요청취소':
         queryParameters.addAll({'status': '요청취소'});
         break;
+      case '요청대기':
+        queryParameters.addAll({'status': '요청대기'});
+        break;
       default:
         break;
     }
-    print('fetchData : ${await OrderService().getOrderData(queryParameters)}');
+    if (kDebugMode) {
+      print('fetchData : ${await OrderService().getOrderData(queryParameters)}');
+    }
     return await OrderService().getOrderData(queryParameters);
   }
 
@@ -75,16 +82,22 @@ class _OrderListScreenState extends State<OrderListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('$cnt : $selectedValue1');
-    print('$cnt : $selectedValue2');
+    if (kDebugMode) {
+      print('$cnt : $selectedValue1');
+      print('$cnt : $selectedValue2');
+    }
     cnt++;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         bottom: false,
         child: BodyTab(
+            isBackItemHidden: true,
             titleList: ORDER_LIST_TAB,
-            tabTitle: const DefaultAppBarLayout(titleText: '요청 목록'),
+            tabTitle: Text(
+              "요청 목록",
+              style: titleStyle,
+            ),
             tabBarViewChild: [
               orderProductView('sell', selectedValue1),
               orderProductView('order', selectedValue2)
@@ -94,86 +107,83 @@ class _OrderListScreenState extends State<OrderListScreen> {
   }
 
   Widget orderProductView(String type, String selectedValue) {
-    print("실행");
+    if (kDebugMode) {
+      print("실행");
+    }
     return FutureBuilder(
         future: fetchData(type, selectedValue),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Center(
-              child: Text('에러가 발생했습니다.'),
-            );
+            if (kDebugMode) {
+              print('에러가 발생했습니다.');
+            }
+            return const CircularProgress();
           }
           if (snapshot.hasData) {
             data = OrderListModel.fromJson(snapshot.data);
             content = data!.data.content;
             if (data?.code != 200) {
-              return const Center(
-                child: Text('올바르지 않은 요청 타입입니다.'),
-              );
+              if (kDebugMode) {
+                print('올바르지 않은 요청 타입입니다.');
+              }
+              return const CircularProgress();
             }
           } else {
-            return const Center(
-              child: Text('요청목록을 불러오는데 실패하였습니다.'),
-            );
+            return const CircularProgress();
           }
           return orderView(
               type,
-              ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: content.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                        onTap: () {},
-                        title: Container(
-                          width: MediaQuery.of(context).size.width,
-                          alignment: Alignment.centerLeft,
-                          child: Column(
-                            children: [
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 5.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      type == 'sell'
-                                          ? '요청자 ${content[index].userName}님'
-                                          : '${content[index].userName}님',
-                                      style: userNameTextStyle,
-                                    ),
-                                    Text(
-                                      content[index].orderDate,
-                                      style: dateTextStyle,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 5.0, bottom: 30.0),
-                                child: type == 'sell'
-                                    ? LargeDetailBar(
-                                        title: content[index].productName,
-                                        moveTo: MoveToDetailOrderScreen(
-                                          type: type,
-                                          orderId: content[index].orderId,
-                                        ))
-                                    : moveToReview(
-                                        content[index].productName,
-                                        content[index].reviewId,
-                                        content[index].userName,
-                                        content[index].productName,
-                                        content[index].productImgUrl,
-                                        content[index].orderId,
-                                        content[index].productId),
+              SingleChildScrollView(child: Column(children: content.map((e) =>
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MoveToDetailOrderScreen(
+                            type: type,
+                            orderId: e.orderId)));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 130,
+                  margin: const EdgeInsets.symmetric(horizontal: 17.0),
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              type == 'sell'
+                                  ? '요청자 ${e.userName}님'
+                                  : '${e.userName}님',
+                              style: userNameTextStyle,
+                            ),
+                            Text(
+                              e.orderDate,
+                              style: dateTextStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 30.0),
+                        child: type == 'sell'
+                            ? LargeDetailBar(
+                                title: e.productName,
+                                moveTo: MoveToDetailOrderScreen(type: type, orderId: e.orderId,)
                               )
-                            ],
-                          ),
-                        ));
-                  }));
-        });
+                            : moveToReview(e.productName, e.reviewId, e.userName, e.productName, e.productImgUrl, e.orderId, e.productId),
+                      )
+                    ],
+                  ),
+                ),
+              )).toList()
+            ))
+        );
+      });
   }
 
   Widget orderView(String type, Widget child) {
@@ -183,19 +193,23 @@ class _OrderListScreenState extends State<OrderListScreen> {
         '') {
       selectedValue = '요청대기';
     }
-    print('selectedValue : $selectedValue');
+    if (kDebugMode) {
+      print('selectedValue : $selectedValue');
+    }
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.only(right: 20.0, bottom: 10.0, top: 5.0),
-            child: DropdownButtonHideUnderline(
+      child: Column(children: [
+        Container(
+          width: MediaQuery.of(context).size.width,
+          alignment: Alignment.centerRight,
+          margin: const EdgeInsets.only(right: 15.0, bottom: 10.0, top: 5.0),
+          child: DropdownButtonHideUnderline(
+            child: ButtonTheme(
+              alignedDropdown: true,
               child: DropdownButton2(
                 hint: Text(
                   '요청대기',
                   style: dropdownBtnTextStyle,
+                  textAlign: TextAlign.end,
                 ),
                 value: selectedValue,
                 items: dropDownBtnTitle
@@ -216,7 +230,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                   });
                 },
                 dropdownStyleData: DropdownStyleData(
-                  width: 80.0,
+                  width: 90.0,
                   elevation: 0,
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -226,15 +240,16 @@ class _OrderListScreenState extends State<OrderListScreen> {
                   padding: EdgeInsets.zero,
                 ),
                 iconStyleData: IconStyleData(
-                    icon: SvgPicture.asset('asset/icons/common/toggle_down.svg'),
+                    icon:
+                        SvgPicture.asset('asset/icons/common/toggle_down.svg'),
                     openMenuIcon:
                         SvgPicture.asset('asset/icons/common/toggle_up.svg')),
               ),
             ),
           ),
-          child
-        ]
-      ),
+        ),
+        child
+      ]),
     );
   }
 
@@ -281,5 +296,20 @@ class _OrderListScreenState extends State<OrderListScreen> {
 
       // selectedValue = value;
     });
+  }
+
+  Widget renderleftItem() {
+    return Container(
+      color: Colors.red[100],
+      child: IconButton(
+        icon: SvgPicture.asset("asset/icons/common/chevron.backward.svg"),
+        onPressed: didTapBackItem,
+      ),
+    );
+  }
+
+  /// event methods
+  void didTapBackItem() {
+    Navigator.of(context).pop();
   }
 }

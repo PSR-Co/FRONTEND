@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/const/constants.dart';
 import 'package:psr/common/layout/circular_progress_indicator.dart';
@@ -40,13 +41,17 @@ class _OrderListTabState extends State<OrderListTab>
       queryParameters = {'type': 'order'};
     }
     final result = await OrderService().getOrderData(queryParameters);
-    print('ordertab ${result}');
+    if (kDebugMode) {
+      print('ordertab $result');
+    }
     return result;
   }
 
   @override
   Widget build(BuildContext context) {
-    print("size: ${MediaQuery.of(context).size.height}");
+    if (kDebugMode) {
+      print("size: ${MediaQuery.of(context).size.height}");
+    }
     double height = MediaQuery.of(context).size.height;
 
     if(MediaQuery.of(context).size.height > 800) {
@@ -57,6 +62,7 @@ class _OrderListTabState extends State<OrderListTab>
     return SizedBox(
       height: height,
       child: BodyTab(
+        isBackItemHidden: false,
         tabTitle: LargeDetailBar(title: "요청목록", moveTo: const OrderListScreen()),
         tabBarViewChild: [
           orderProductCardSlider(type: 'sell'),
@@ -72,20 +78,24 @@ class _OrderListTabState extends State<OrderListTab>
         future: fetchData(type),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            print("orderlist-tab : 에러가 발생했습니다.");
-            return CircularProgress();
+            if (kDebugMode) {
+              print("orderlist-tab : 에러가 발생했습니다.");
+            }
+            return const CircularProgress();
           }
           if (snapshot.hasData) {
             data = OrderListModel.fromJson(snapshot.data);
             content = data!.data.content;
             if (data?.code != 200) {
-              print("orderlist-tab : 올바르지 않은 요청 타입입니다.");
-              return CircularProgress();
+              if (kDebugMode) {
+                print("orderlist-tab : 올바르지 않은 요청 타입입니다.");
+              }
+              return const CircularProgress();
             }
           }else {
-            return CircularProgress();
+            return const CircularProgress();
           }
-          return Container(
+          return SizedBox(
             width: MediaQuery.of(context).size.width,
             child: WidgetSlider(
               controller: controller,
@@ -142,7 +152,7 @@ class _OrderListTabState extends State<OrderListTab>
                     Container(
                         margin: const EdgeInsets.only(left: 8.0),
                         child: Text(
-                          "$userName님의 요청",
+                          "$userName님",
                           style: orderTextStyle,
                         )),
                     Container(
@@ -158,15 +168,11 @@ class _OrderListTabState extends State<OrderListTab>
                           child: (productImg == null)
                               ? const Icon(Icons.question_mark, color: PURPLE_COLOR, size: 50,)
                               : Image.network(productImg),
-                          // Image.asset(
-                          //   productImg ?? "asset/images/profile_img_sample.jpg",
-                          //   width: 140.0,
-                          //   height: 140.0,
-                          // ),
                         )),
                     Text(
                       productName,
                       style: orderProductTextStyle,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       orderDate,

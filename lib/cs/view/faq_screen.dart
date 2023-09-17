@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:psr/common/const/constants.dart';
 import 'package:psr/cs/component/faq_tabbar_widget.dart';
 
@@ -23,7 +24,7 @@ class _FAQScreenState extends State<FAQScreen> with TickerProviderStateMixin {
       fontSize: 15.0, fontWeight: FontWeight.w500, color: GRAY_1_COLOR);
   final TextStyle tabbedTextStyle = const TextStyle(
       fontSize: 15.0, fontWeight: FontWeight.w700, color: PURPLE_COLOR);
-
+  final titleStyle = const TextStyle(color: Colors.black, fontSize: 17);
   late final TabController tabController;
 
   int index = 0;
@@ -46,10 +47,11 @@ class _FAQScreenState extends State<FAQScreen> with TickerProviderStateMixin {
           child: Scaffold(
               backgroundColor: Colors.white,
               appBar: AppBar(
+                leading: renderLeftItem(),
                 automaticallyImplyLeading: false,
                 backgroundColor: Colors.white,
                 elevation: 0.0,
-                title: const DefaultAppBarLayout(titleText: "자주 묻는 질문"),
+                title: Text("자주 묻는 질문", style: titleStyle,),
                 bottom: PreferredSize(
                     preferredSize:
                         Size(MediaQuery.of(context).size.width, 55.0),
@@ -97,4 +99,13 @@ class _FAQScreenState extends State<FAQScreen> with TickerProviderStateMixin {
       children: FAQ_LIST_TAP.map((e) => FAQTabBarWidget(type: e)).toList(),
     );
   }
+
+  Widget renderLeftItem() {
+    return IconButton(
+      icon: SvgPicture.asset("asset/icons/common/chevron.backward.svg"),
+      onPressed: didTapBackItem,
+    );
+  }
+
+  void didTapBackItem() { Navigator.of(context).pop(); }
 }
