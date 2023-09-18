@@ -21,7 +21,7 @@ class SellerProfileScreen extends StatefulWidget {
 class _SellerProfileScreenState extends State<SellerProfileScreen> {
   static const PROFILE_IMG_SIZE = 64.0;
 
-  final int productCnt = 15;  // TODO: 패치 후 데이터 개수로 변경하기
+  // final int productCnt = 15;  // TODO: 패치 후 데이터 개수로 변경하기
 
   UserProductResponse? data;
 
@@ -153,8 +153,8 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
   }
 
   Widget renderProductListView(List<UserProduct> productList) {
-    return Container(
-      height: 110.0 * (productCnt - 1),
+    return SizedBox(
+      height: 110.0 * (productList.length - 1) + 10,
       child: ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           itemCount: productList.length,
@@ -172,10 +172,6 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
   }
 
   Future<bool> fetchData() async {
-    return await getUserProductsData();
-  }
-
-  Future<bool> getUserProductsData() async {
     final result = await ShoppingService().getUserProductsData('${widget.userId}');
     data = UserProductResponse.fromJson(result);
     return (data != null);
