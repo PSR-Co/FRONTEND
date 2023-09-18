@@ -61,7 +61,8 @@ class ReviewItem {
   final List<String>? imgList;
   final String reviewedDate;
   final String nickName;
-  final String? profileImgKey;
+  final String? profileImgUrl;
+  final bool isMyReview;
 
   ReviewItem({
     required this.reviewId,
@@ -70,7 +71,8 @@ class ReviewItem {
     required this.imgList,
     required this.reviewedDate,
     required this.nickName,
-    required this.profileImgKey,
+    required this.profileImgUrl,
+    required this.isMyReview,
   });
 
   factory ReviewItem.fromJson(Map<String, dynamic> json)

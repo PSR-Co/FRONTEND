@@ -30,7 +30,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
-      height: isFolded ? getContainerHeight() : NOT_FOLDED_HEIGHT,  // TODO: 상세내용에 따른 동적높이 구현
+      height: isFolded ? getContainerHeight() : NOT_FOLDED_HEIGHT,
       decoration: containerDeco,
       child:
       Stack(

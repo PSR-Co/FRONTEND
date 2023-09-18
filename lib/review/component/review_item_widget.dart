@@ -44,7 +44,7 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
             RoundedUserProfileImg(
               width: 32.0,
               height: 32.0,
-              imgKey: widget.review.profileImgKey,
+              imgKey: widget.review.profileImgUrl,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
