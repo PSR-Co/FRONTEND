@@ -64,14 +64,19 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
     if (!showSortButton) { return const SizedBox(height: 0, width: 0,); }
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: 50,
+      height: 30,
       child: Row(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width - 100,
+            width: MediaQuery.of(context).size.width - 78,
           ),
           TextButton(
             onPressed: () { setState(() { showSortItem = !showSortItem; }); },
+            style: TextButton.styleFrom(
+              minimumSize: Size.zero,
+              padding: EdgeInsets.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -97,9 +102,9 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
   Widget renderSortItem() {
     return (showSortItem)
     ? Positioned(
-      right: 20,
+      right: 15,
       child: Container(
-        width: 100,
+        width: 80,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all( Radius.circular(5.0) ),
