@@ -42,12 +42,12 @@ class CustomInterceptor extends Interceptor {
 
     if (refreshToken == null) { return handler.reject(err); }
 
+    print('statusCode -> $statusCode');
+    print('errorMsg -> $errorMsg');
+
     /// 403 토큰 오류이며, 토큰 재발급 중 발생한 오류가 아닌 경우
     if (err.response?.data['code'] == 403 &&
         !(err.requestOptions.path == reissuePath)) {
-
-      print('statusCode -> $statusCode');
-      print('errorMsg -> $errorMsg');
 
       final dio = Dio();
       try {
