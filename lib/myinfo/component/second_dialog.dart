@@ -1,12 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:psr/model/network/constants.dart';
 
 import '../../auth/view/login_screen.dart';
 import '../../common/const/colors.dart';
 
 class SecondDialog extends StatefulWidget {
   final String result;
-  const SecondDialog({required this.result, Key? key}): super(key: key);
+
+  const SecondDialog({required this.result, Key? key}) : super(key: key);
 
   @override
   State<SecondDialog> createState() => _SecondDialogState();
@@ -36,10 +37,12 @@ class _SecondDialogState extends State<SecondDialog> {
           width: MediaQuery.of(context).size.width,
           child: TextButton(
               onPressed: () {
-                if ((widget.result == "회원탈퇴가 완료되었습니다.")||(widget.result == "로그아웃에 성공했습니다!")) {
+                if ((widget.result == "회원탈퇴가 완료되었습니다.") ||
+                    (widget.result == "로그아웃에 성공했습니다!")) {
+                  storage.deleteAll();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (_) => const LoginScreen()),
-                          (route) => false);
+                      (route) => false);
                 } else {
                   Navigator.of(context).pop();
                 }
