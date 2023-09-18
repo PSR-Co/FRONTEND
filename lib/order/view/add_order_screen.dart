@@ -127,7 +127,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
 
   Widget renderProductImg(String imgUrl) {
     if (imgUrl.contains('asset')) {
-      return Image.asset('/asset/images/product_sample.png',);
+      return Image.asset(imgUrl,);
     } else {
       return Image.network(imgUrl, fit: BoxFit.cover,);
     }
