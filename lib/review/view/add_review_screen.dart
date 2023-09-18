@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/layout/pick_img_widget.dart';
 import 'package:psr/common/layout/purple_outlined_text_field.dart';
 import 'package:psr/model/data/review/review_model.dart';
+import 'package:psr/model/network/cutsom_interceptor.dart';
 import 'package:psr/presenter/review/review_service.dart';
 import 'package:psr/review/component/review_detail_appbar.dart';
 
@@ -266,9 +267,19 @@ class AddReviewScreenState extends State<AddReviewScreen> {
       selectedRating,
       reviewController.value.text,
       imgKeyList,
-    );
-    if (result) { Navigator.of(context).pop(); }
-    else { Fluttertoast.showToast(msg: '리뷰 등록에 실패하였습니다.'); }
+    ).catchError((error) {
+      debugPrint('error : ${error}');
+      Fluttertoast.showToast(
+          msg: CustomInterceptor().errorMsg ?? '리뷰 등록에 실패하였습니다.',
+          gravity: ToastGravity.CENTER
+      );
+    });
+
+    if (result) {
+      Fluttertoast.showToast(
+          msg: CustomInterceptor().errorMsg ?? '리뷰를 등록하였습니다.'
+      ).then((value) => Navigator.of(context).pop());
+    }
   }
 
   Future<void> fetchData() async {
