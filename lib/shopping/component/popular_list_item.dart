@@ -11,11 +11,13 @@ class PopularListItem extends StatefulWidget {
   final String category;
   final int productId;
   final PopularProduct data;
+  final int index;
 
   const PopularListItem({
     required this.category,
     required this.productId,
     required this.data,
+    required this.index,
     Key? key
   }) : super(key: key);
 
@@ -132,7 +134,7 @@ class _PopularListItemState extends State<PopularListItem> {
     return Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3),
-        child: Text('${widget.productId}', style: itemOrderTextStyle,)
+        child: Text('${widget.index+1}', style: itemOrderTextStyle,)
     );
   }
 
