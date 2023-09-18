@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/auth/component/input_user_info.dart';
 import 'package:psr/model/data/general_model.dart';
+import 'package:psr/model/network/cutsom_interceptor.dart';
 import 'package:psr/presenter/auth/login_service.dart';
 
 import '../../common/layout/default_appbar_layout.dart';
@@ -82,6 +83,7 @@ class _FindPWScreenState extends State<FindPWScreen> {
               builder: (_) => const LoginScreen()
           ), (route) => false
       );
+
     } else if (isInfoInputted && !isReset) {
       GeneralModel? result = await LoginService().resetPW(
         idController.value.text,
@@ -111,7 +113,7 @@ class _FindPWScreenState extends State<FindPWScreen> {
           Fluttertoast.showToast(msg: "입력정보를 확인해주세요.");
         }
       } else {
-        Fluttertoast.showToast(msg: "네트워크 오류가 발생하였습니다.");
+        Fluttertoast.showToast(msg: CustomInterceptor().errorMsg ?? "네트워크 오류가 발생하였습니다.");
       }
     }
 

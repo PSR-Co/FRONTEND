@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import '../../auth/view/login_screen.dart';
 import 'constants.dart';
+import 'package:flutter/material.dart';
 
 class CustomInterceptor extends Interceptor {
 
@@ -12,6 +14,9 @@ class CustomInterceptor extends Interceptor {
 
   /// Variables
   final reissuePath = '/users/reissue';
+
+  int? statusCode;
+  String? errorMsg;
 
   /// Override Methods
   @override
@@ -29,6 +34,9 @@ class CustomInterceptor extends Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) async {
 
+    statusCode = err.response?.data['code'];
+    errorMsg = err.response?.data['message'];
+
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
@@ -37,6 +45,9 @@ class CustomInterceptor extends Interceptor {
     /// 403 토큰 오류이며, 토큰 재발급 중 발생한 오류가 아닌 경우
     if (err.response?.data['code'] == 403 &&
         !(err.requestOptions.path == reissuePath)) {
+
+      print('statusCode -> $statusCode');
+      print('errorMsg -> $errorMsg');
 
       final dio = Dio();
       try {
@@ -66,11 +77,19 @@ class CustomInterceptor extends Interceptor {
         return handler.resolve(resp);
 
       } on DioError catch (e) {
+        statusCode = -1;
+        // print('status code -> $statusCode');
         return handler.reject(e);
       }
 
     }
 
     return super.onError(err, handler);
+  }
+
+  void resetViewWithLoginScreen(BuildContext context) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => LoginScreen()));
+    });
   }
 }

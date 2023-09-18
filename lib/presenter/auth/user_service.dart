@@ -28,7 +28,7 @@ class UserService {
       selectedList.add(Interest(category: getTrimmedCategory(e)));
     }
 
-    final body = EditInterestsRequest(interestList: selectedList).toJson();
+    final body = EditInterests(interestList: selectedList).toJson();
     final response = await APIManager().request(RequestType.PATCH, EDIT_INTERESTLIST, null, null, body)
         .catchError((error) { debugPrint('error : $error'); });
 
@@ -43,9 +43,22 @@ class UserService {
   }
 
   Future<bool> editProfile(String nickname, String? profileImgKey) async {
-    final body = EditUserProfileRequest(nickname: nickname, profileImgKey: profileImgKey).toJson();
-    final response = await APIManager().request(RequestType.POST, USERPROFILE, null, null, body)
+    final body = EditUserProfileRequest(nickname: nickname, imgUrl: profileImgKey).toJson();
+    final response = await APIManager().request(RequestType.PATCH, USERPROFILE, null, null, body)
         .catchError((error) { debugPrint('error : $error'); });
     return ((response != null) && (response['code'] == 200));
+  }
+
+  Future<EditInterestsResponse?> getUserInterests() async {
+    final response = await APIManager().request(RequestType.GET, EDIT_INTERESTLIST, null, null, null)
+        .catchError((error) { debugPrint('error : $error'); });
+
+    if (response != null) {
+      print('response -> $response');
+      final result = EditInterestsResponse.fromJson(response);
+      print('result -> ${result}');
+      return result;
+    }
+    return null;
   }
 }

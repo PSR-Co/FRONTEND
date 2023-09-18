@@ -105,14 +105,6 @@ class _InputUserInfoState extends State<InputUserInfo> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: renderValidInputViewWithPhoneWidget(),
-          // PurpleOutlinedTextFieldWithButton(
-          //   maxLine: 1,
-          //   hintText: '휴대폰 번호를 입력해주세요.',
-          //   controller: widget.phoneNumController,
-          //   buttonTitle: '인증요청',
-          //   onPressed: didTapSendCodeButton,
-          //   inputType: TextInputType.phone
-          // ),
         ),
         const SizedBox(height: 22,)
       ],
@@ -149,7 +141,8 @@ class _InputUserInfoState extends State<InputUserInfo> {
               },
               scrollPhysics: const NeverScrollableScrollPhysics(),
               keyboardType: TextInputType.phone,
-              showCursor: false,
+              showCursor: true,
+              cursorColor: PURPLE_COLOR_50,
               maxLines: 1,
               decoration: InputDecoration(
                 hintText: '휴대폰 번호를 입력해주세요.',
@@ -178,13 +171,13 @@ class _InputUserInfoState extends State<InputUserInfo> {
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: const BorderSide(
-                          color: PURPLE_COLOR,
+                        side: BorderSide(
+                          color: isSendingValidCode ? GRAY_1_COLOR : PURPLE_COLOR,
                         )
                     ),
                     elevation: 0.5
                 ),
-                child: const Text('인증요청')
+                child: Text(isSendingValidCode ? '요청됨' : '인증요청')
             ),
           ),
         ),
@@ -197,14 +190,20 @@ class _InputUserInfoState extends State<InputUserInfo> {
   Future<void> didTapSendCodeButton() async {
     if (widget.nameController.value.text.isEmpty ||
         widget.phoneNumController.value.text.isEmpty) {
-      Fluttertoast.showToast(msg: '이름과 전화번호를 모두 입력해주세요!');
+      Fluttertoast.showToast(
+          msg: '이름과 전화번호를 모두 입력해주세요!',
+          gravity: ToastGravity.CENTER
+      );
       return;
     }
     setState(() {
       isSendingValidCode = true;
     });
     Future<bool> result = SignupService().requestValidationCode(widget.phoneNumController.value.text);
-    Fluttertoast.showToast(msg: await result ? "인증번호를 발송했습니다!" : "인증번호 요청을 실패하였습니다.");
+    Fluttertoast.showToast(
+        msg: await result ? "인증번호를 발송했습니다!" : "인증번호 요청을 실패하였습니다.",
+        gravity: ToastGravity.CENTER
+    );
 
     setState(() {
       isSendingValidCode = false;

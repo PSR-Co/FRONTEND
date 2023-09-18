@@ -14,6 +14,7 @@ import 'package:psr/home/component/recent_list_item.dart';
 import 'package:psr/presenter/home/home_service.dart';
 import '../../cs/view/service_center_screen.dart';
 import '../../model/data/home/home_model.dart';
+import '../../model/network/cutsom_interceptor.dart';
 import '../../product/view/product_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -75,6 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
         future: fetchData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
+            if(CustomInterceptor().statusCode == -1) {
+              CustomInterceptor().resetViewWithLoginScreen(context);
+            }
             print('홈: ${snapshot.error.toString()}');
             return const CircularProgress();
           } else if (snapshot.hasData) {
