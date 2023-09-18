@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:psr/model/network/constants.dart';
+import 'package:psr/common/view/root_tab.dart';
 
-import '../../auth/view/login_screen.dart';
 import '../../common/const/colors.dart';
+import '../view/service_center_screen.dart';
 
-class SecondDialog extends StatefulWidget {
+class InquiryDialog extends StatefulWidget {
   final String result;
 
-  const SecondDialog({required this.result, Key? key}) : super(key: key);
+  const InquiryDialog({required this.result, Key? key}) : super(key: key);
 
   @override
-  State<SecondDialog> createState() => _SecondDialogState();
+  State<InquiryDialog> createState() => _InquiryDialogState();
 }
 
-class _SecondDialogState extends State<SecondDialog> {
+class _InquiryDialogState extends State<InquiryDialog> {
   final TextStyle titleTextStyle = const TextStyle(
       fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
   final TextStyle answerTextStyle = const TextStyle(
@@ -37,15 +37,15 @@ class _SecondDialogState extends State<SecondDialog> {
           width: MediaQuery.of(context).size.width,
           child: TextButton(
               onPressed: () {
-                if ((widget.result == "회원탈퇴가 완료되었습니다.") ||
-                    (widget.result == "로그아웃에 성공했습니다!")) {
-                  storage.deleteAll();
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (_) => const LoginScreen()),
-                      (route) => false);
+                if (widget.result == '문의가 등록되었습니다!') {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const RootTab(selectedRootTab: 3, selectedIndex: null)), (route)=>false);
                 } else {
-                  Navigator.of(context).pop();
+                  Navigator.pop(context);
                 }
+                setState(() {});
               },
               child: Text(
                 "확인",

@@ -9,6 +9,7 @@ import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/custom_title_text.dart';
 import 'package:psr/common/layout/purple_outlined_textfield_with_button.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:psr/common/view/root_tab.dart';
 import 'package:psr/model/data/auth/user_model.dart';
 import 'package:psr/model/network/cutsom_interceptor.dart';
 import 'package:psr/presenter/auth/signup_service.dart';
@@ -292,7 +293,12 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
     Future<bool> result = UserService().editProfile(nicknameController.value.text, imgUrl);
 
     setState(() { isLoading = false; });
-    if (await result) { Navigator.of(context).pop(); }
+    if (await result) { 
+         ///프로필 변경 후 마이페이지 새로고침
+         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const RootTab(selectedRootTab: 3, selectedIndex: null)), (route) => false);
+
+      //Navigator.of(context).pop(); 
+    }
     else { Fluttertoast.showToast(msg: CustomInterceptor().errorMsg ?? '프로필 수정에 실패하였습니다.'); }
   }
 

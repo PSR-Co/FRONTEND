@@ -139,7 +139,7 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
                 alignment: Alignment.center,
                 child: const CircularProgressIndicator());
           }
-          return ListView.builder(
+          return ListView.separated(
             scrollDirection: Axis.vertical,
             itemCount: inquiries.length,
             shrinkWrap: true,
@@ -173,7 +173,7 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
                     const EdgeInsets.symmetric(vertical: 0.0, horizontal: 17.0),
                 minVerticalPadding: 5.0,
               );
-            },
+            }, separatorBuilder: (BuildContext context, int index) { return const Divider(thickness: 1, color: GRAY_0_COLOR,); },
           );
         });
   }

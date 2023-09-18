@@ -52,7 +52,7 @@ class _LikeListScreenState extends State<LikeListScreen> {
           child: Column(
             children: [
               const DefaultAppBarLayout(titleText: "찜"),
-              Expanded(child: likeListView())
+              likeListView()
             ],
           ),
         ),
@@ -88,41 +88,36 @@ class _LikeListScreenState extends State<LikeListScreen> {
                 alignment: Alignment.center,
                 child: const CircularProgressIndicator());
           }
-          return Container(
-            margin: const EdgeInsets.only(top: 15.0),
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: content.length,
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  onTap: () {},
-                  title: GestureDetector(
+          return SingleChildScrollView(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              padding:  const EdgeInsets.symmetric(
+                    vertical: 5.0, horizontal: 17.0),
+              margin: const EdgeInsets.only(top: 15.0),
+              child: Column(children: content.map((e) =>
+                  GestureDetector(
                       child: likeListItem(
-                          content[index].imgUrl,
-                          content[index].nickname,
-                          content[index].name,
-                          content[index].price,
+                          e.imgUrl,
+                          e.category,
+                          e.name,
+                          e.price,
                           isLike)),
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 5.0, horizontal: 17.0),
-                );
-              },
-            ),
+              ).toList(),)
+              ),
+            );}
           );
-        });
   }
 
   ///추후 이미지 연결
   Widget likeListItem(
-      String? imgKey, String nickname, String name, int price, bool isLike) {
+      String? imgKey, String category, String name, int price, bool isLike) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          renderProductImage("asset/images/product_sample.png"),
-          renderProductInfo(nickname, name, price),
+          renderProductImage(imgKey),
+          renderProductInfo(category, name, price),
           Expanded(
               child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -134,18 +129,23 @@ class _LikeListScreenState extends State<LikeListScreen> {
     );
   }
 
-  Widget renderProductImage(String imgKey) {
+  Widget renderProductImage(String? imgKey) {
     return Container(
+      width: 90,
+      height: 90,
         margin: const EdgeInsets.symmetric(horizontal: 5.0),
         decoration: BoxDecoration(
           border: Border.all(width: 1.0, color: GRAY_0_COLOR),
           borderRadius: BorderRadius.circular(12.0),
         ),
-        child: Image.asset(
-          imgKey,
-          width: 90,
-          height: 90,
-        ));
+        child:(imgKey == null)
+        ? const Icon(
+          Icons.question_mark,
+          color: PURPLE_COLOR,
+          size: 90,
+        )
+        : Image.network(imgKey),
+    );
   }
 
   Widget renderProductInfo(String category, String name, int price) {
