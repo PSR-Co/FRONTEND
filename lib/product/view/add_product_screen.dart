@@ -103,6 +103,7 @@ class AddProductScreenState extends State<AddProductScreen> {
                   isExpanded: true,
                   hint: Row(
                     children: [
+                      const SizedBox(width: 12,),
                       Expanded(
                           child: Text(selectedCategory!,
                             style: const TextStyle(fontSize: 14),
@@ -110,6 +111,9 @@ class AddProductScreenState extends State<AddProductScreen> {
                           )
                       )
                     ],
+                  ),
+                  iconStyleData: const IconStyleData(
+                    openMenuIcon: Icon(Icons.arrow_drop_up),
                   ),
                   items: CATEGORY_LIST_FOR_ADD.map((String category) {
                     return DropdownMenuItem<String>(
@@ -123,6 +127,7 @@ class AddProductScreenState extends State<AddProductScreen> {
                     });
                   },
                   dropdownStyleData: DropdownStyleData(
+                    width: MediaQuery.of(context).size.width-40,
                     elevation: 0,
                     decoration: BoxDecoration(
                       color: Colors.white,
