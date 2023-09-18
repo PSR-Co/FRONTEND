@@ -73,7 +73,7 @@ class _ReviewInfoState extends State<ReviewInfo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 아이디 (뒤4자리 가리기)
-          Text(getEditedID(widget.nickName), style: const TextStyle(
+          Text(widget.nickName, style: const TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 12,
               color: GRAY_2_COLOR
@@ -105,13 +105,6 @@ class _ReviewInfoState extends State<ReviewInfo> {
         ],
       ),
     );
-  }
-
-  /// helper methods
-  String getEditedID(String id) {
-    // 작성자 ID의 뒷 4자리를 '*'로 대체
-    if (id.length > 4) { return id.replaceRange(id.length-4, id.length, '****'); }
-    else { return id.replaceRange(0, id.length, '****'); }
   }
 
   /// event methods
