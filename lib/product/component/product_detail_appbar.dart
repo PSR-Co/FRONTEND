@@ -54,20 +54,26 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
     if (widget.isMyProduct) {
       rightItems.add(
           IconButton(
-            icon: SvgPicture.asset("asset/icons/shopping/more_vertical.svg"),
+            icon: SvgPicture.asset("asset/icons/shopping/share.svg", width: 20,),
+            onPressed: didTapShareButton,
+          )
+      );
+      rightItems.add(
+          IconButton(
+            icon: SvgPicture.asset("asset/icons/shopping/more_vertical.svg", width: 20,),
             onPressed: didTapMoreButton,
           )
       );
     } else {
       rightItems.add(
           IconButton(
-            icon: SvgPicture.asset("asset/icons/shopping/declaration.svg"),
+            icon: SvgPicture.asset("asset/icons/shopping/declaration.svg", width: 23,),
             onPressed: didTapDeclarationButton,
           )
       );
       rightItems.add(
           IconButton(
-            icon: SvgPicture.asset("asset/icons/shopping/share.svg"),
+            icon: SvgPicture.asset("asset/icons/shopping/share.svg", width: 20,),
             onPressed: didTapShareButton,
           )
       );
