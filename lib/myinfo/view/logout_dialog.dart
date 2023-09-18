@@ -35,37 +35,53 @@ class _LogoutDialogState extends State<LogoutDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50.0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "로그아웃",
-            style: headerTextStyle,
-          ),
-          IconButton(
-            onPressed: () {
-              showDialog(
-                  barrierDismissible: true,
-                  context: context,
-                  builder: (_) {
-                    return CommonDialog(
-                        askTitle:
-                            Text('로그아웃 하시겠어요?', style: askLogoutTextStyle),
-                        alert: '로그아웃',
-                        onDidTap: didLogout());
-                  });
-            },
-            icon: const Icon(
-              Icons.arrow_forward_ios,
-              size: 16.0,
+    return GestureDetector(
+      onTap: (){
+        showDialog(
+            barrierDismissible: true,
+            context: context,
+            builder: (_) {
+              return CommonDialog(
+                  askTitle:
+                  Text('로그아웃 하시겠어요?', style: askLogoutTextStyle),
+                  alert: '로그아웃',
+                  onDidTap: didLogout());
+            });
+      },
+      child: SizedBox(
+        height: 50.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Text(
+                "로그아웃",
+                style: headerTextStyle,
+              ),
             ),
-            padding: const EdgeInsets.only(right: 17.0, bottom: 5.0),
-            constraints: const BoxConstraints(),
-          )
-        ],
+            IconButton(
+              onPressed: () {
+                showDialog(
+                    barrierDismissible: true,
+                    context: context,
+                    builder: (_) {
+                      return CommonDialog(
+                          askTitle:
+                              Text('로그아웃 하시겠어요?', style: askLogoutTextStyle),
+                          alert: '로그아웃',
+                          onDidTap: didLogout());
+                    });
+              },
+              icon: const Icon(
+                Icons.arrow_forward_ios,
+                size: 16.0,
+              ),
+              padding: const EdgeInsets.only(right: 17.0, bottom: 5.0),
+              constraints: const BoxConstraints(),
+            )
+          ],
+        ),
       ),
     );
   }

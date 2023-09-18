@@ -31,6 +31,7 @@ class _CommonDialogState extends State<CommonDialog> {
       insetPadding: const EdgeInsets.only(bottom: 0.0),
       titlePadding: const EdgeInsets.only(top: 20.0),
       buttonPadding: const EdgeInsets.symmetric(horizontal: 17.0),
+      alignment: Alignment.bottomCenter,
       title: Center(
         child: widget.askTitle,
       ),
