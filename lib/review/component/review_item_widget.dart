@@ -54,6 +54,7 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
                   avgOfRating: widget.review.rating,
                   nickName: widget.review.nickName,
                   reviewedDate: widget.review.reviewedDate,
+                  isMyReview: widget.review.isMyReview,
                 ),
                 ReviewContent(reviewContent: widget.review.content,),
                 ReviewImgListView(imgUrlList: widget.review.imgList ?? [],)

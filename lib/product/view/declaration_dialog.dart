@@ -195,9 +195,23 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
           }
 
         case DeclarationType.REVIEW:
-          final result = await ReviewService().declareReview('${widget.idx}', selectedReason!);
-          if (result) { Navigator.pop(context); }
-          else { Fluttertoast.showToast(msg: CustomInterceptor().errorMsg ?? "리뷰 신고에 실패하였습니다."); }
+          final result = await ReviewService().declareReview('${widget.idx}', selectedReason!)
+              .catchError((error) {
+                debugPrint('error : ${error}');
+                Fluttertoast.showToast(
+                    msg: CustomInterceptor().errorMsg ?? "리뷰 신고에 실패하였습니다.",
+                    gravity: ToastGravity.CENTER
+                );
+              });
+
+          if (result) {
+            Fluttertoast.showToast(
+                msg: "신고가 완료되었습니다!",
+                gravity: ToastGravity.CENTER
+            ).then((value) =>
+                Navigator.pop(context)
+            );
+          }
       }
     }
   }
