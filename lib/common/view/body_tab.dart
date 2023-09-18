@@ -61,6 +61,7 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin {
   }
 
   Widget renderTabBar({required List<String> titleList}) {
+    if (widget.isFromCompleteOrderScreen ?? false) { tabController.index = 1; }
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
