@@ -15,7 +15,12 @@ import '../../review/view/review_screen.dart';
 import '../component/MoveToDetailOrderScreen.dart';
 
 class OrderListScreen extends StatefulWidget {
-  const OrderListScreen({Key? key}) : super(key: key);
+  final bool? isComplete;
+
+  const OrderListScreen({
+    this.isComplete,
+    Key? key
+  }) : super(key: key);
 
   @override
   State<OrderListScreen> createState() => _OrderListScreenState();
@@ -93,6 +98,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
         bottom: false,
         child: BodyTab(
             isBackItemHidden: true,
+            isFromCompleteOrderScreen: true,
             titleList: ORDER_LIST_TAB,
             tabTitle: Text(
               "요청 목록",
@@ -310,6 +316,12 @@ class _OrderListScreenState extends State<OrderListScreen> {
 
   /// event methods
   void didTapBackItem() {
-    Navigator.of(context).pop();
+    final isComplete = widget.isComplete ?? false;
+    print('isComplete -> $isComplete');
+    if (isComplete) {
+      Navigator.popUntil(context, ModalRoute.withName('/productDetail'));
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 }

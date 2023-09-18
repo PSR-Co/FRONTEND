@@ -84,6 +84,6 @@ class CompleteOrderScreen extends StatelessWidget {
   }
 
   void didTapOrderList(BuildContext context) {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const OrderListScreen()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const OrderListScreen(isComplete: true)));
   }
 }

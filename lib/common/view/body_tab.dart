@@ -8,12 +8,14 @@ class BodyTab extends StatefulWidget {
   List<Widget> tabBarViewChild;
   Widget tabTitle;
   bool isBackItemHidden;
+  bool? isFromCompleteOrderScreen;
 
   BodyTab(
       {required this.titleList,
       required this.tabTitle,
       required this.tabBarViewChild,
       required this.isBackItemHidden,
+      this.isFromCompleteOrderScreen,
       Key? key})
       : super(key: key);
 
@@ -105,6 +107,10 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin {
 
   /// event methods
   void didTapBackItem() {
-    Navigator.of(context).pop();
+    final isComplete = widget.isFromCompleteOrderScreen ?? false;
+    if (isComplete) {
+      Navigator.popUntil(context, ModalRoute.withName('/productDetail'));
+    }
+    else { Navigator.of(context).pop(); }
   }
 }
