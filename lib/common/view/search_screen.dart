@@ -204,7 +204,8 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
             getSearchResults();
           });
         },
-        showCursor: false,
+        showCursor: true,
+        cursorColor: PURPLE_COLOR_50,
         decoration: InputDecoration(
           hintText: '검색어를 입력해주세요.',
           hintStyle: const TextStyle(
