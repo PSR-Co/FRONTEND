@@ -111,7 +111,7 @@ class AddProductScreenState extends State<AddProductScreen> {
                       )
                     ],
                   ),
-                  items: CATEGORY.map((String category) {
+                  items: CATEGORY_LIST_FOR_ADD.map((String category) {
                     return DropdownMenuItem<String>(
                       value: category,
                       child: Text(category, style: const TextStyle(fontSize: 14),),
