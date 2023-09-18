@@ -316,12 +316,6 @@ class _OrderListScreenState extends State<OrderListScreen> {
 
   /// event methods
   void didTapBackItem() {
-    final isComplete = widget.isComplete ?? false;
-    print('isComplete -> $isComplete');
-    if (isComplete) {
-      Navigator.popUntil(context, ModalRoute.withName('/productDetail'));
-    } else {
-      Navigator.of(context).pop();
-    }
+    Navigator.of(context).pop();
   }
 }
