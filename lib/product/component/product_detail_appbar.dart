@@ -8,6 +8,7 @@ import 'package:psr/product/view/declaration_dialog.dart';
 
 import '../../common/const/colors.dart';
 import '../../model/data/shopping/product_model.dart';
+import '../../model/network/cutsom_interceptor.dart';
 import '../../presenter/shopping/kakao_share_with_dynamic_link.dart';
 
 class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -183,11 +184,14 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   }
 
   Future<void> didDeleteEditButton() async {
-    final result = await ShoppingService().deleteProduct(widget.productId);
-    if (result) {
-      Navigator.of(context).popUntil((route) => route.isFirst);
-    } else {
-      // TODO: response 중 code를 통한 상품 삭제 예외처리 추가
-    }
+    final result = await ShoppingService().deleteProduct(widget.productId)
+        .catchError((error) {
+          debugPrint('error : ${error}');
+          Fluttertoast.showToast(
+              msg: CustomInterceptor().errorMsg ?? "상품 삭제에 실패하였습니다.",
+              gravity: ToastGravity.CENTER
+          );
+        });
+    if (result) { Navigator.of(context).popUntil((route) => route.isFirst); }
   }
 }
