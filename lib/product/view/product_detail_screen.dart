@@ -72,6 +72,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> with WidgetsB
             bottomNavigationBar: (isEmptyData)
                 ? null
                 : BottomNavigationWidget(
+              isOwner: data!.data.isOwner,
               numOfLike: data!.data.numOfLikes,
               productId: widget.productId,
               productImgUrl: (data!.data.imgList.isNotEmpty) ? data!.data.imgList[0] : null,

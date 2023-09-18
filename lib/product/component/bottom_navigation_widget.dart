@@ -7,6 +7,7 @@ import '../../common/const/colors.dart';
 import '../../order/view/add_order_screen.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
+  final bool isOwner;
   final int numOfLike;
   final int productId;
   final String? productImgUrl;
@@ -14,6 +15,7 @@ class BottomNavigationWidget extends StatefulWidget {
   final bool isLiked;
 
   const BottomNavigationWidget({
+    required this.isOwner,
     required this.numOfLike,
     required this.productId,
     required this.productImgUrl,
@@ -118,12 +120,17 @@ class _State extends State<BottomNavigationWidget> {
   }
 
   void didTapOrderButton() {
-    Navigator.of(context).push(MaterialPageRoute(builder:
-        (_) => AddOrderScreen(
-          productId: widget.productId,
-          productImgUrl: widget.productImgUrl,
-          productName: widget.productName,
-        )
-    ));
+    if (widget.isOwner) {
+      Fluttertoast.showToast(msg: '본인의 상품에 요청을 작성할 수 없습니다.');
+    } else {
+      Navigator.of(context).push(MaterialPageRoute(builder:
+          (_) => AddOrderScreen(
+        productId: widget.productId,
+        productImgUrl: widget.productImgUrl,
+        productName: widget.productName,
+      )
+      ));
+    }
+
   }
 }
