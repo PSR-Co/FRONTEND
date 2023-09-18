@@ -98,7 +98,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
         bottom: false,
         child: BodyTab(
             isBackItemHidden: true,
-            isFromCompleteOrderScreen: true,
+            isFromCompleteOrderScreen: widget.isComplete,
             titleList: ORDER_LIST_TAB,
             tabTitle: Text(
               "요청 목록",
