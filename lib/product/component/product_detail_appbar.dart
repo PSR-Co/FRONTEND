@@ -179,7 +179,7 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
               productId: widget.productId,
             )
         )
-    );
+    ).then((value) => Navigator.of(context).pop());
   }
 
   Future<void> didDeleteEditButton() async {
