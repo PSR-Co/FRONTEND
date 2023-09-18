@@ -185,7 +185,14 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
                 );
               });
 
-          if (result) { Navigator.pop(context); }
+          if (result) {
+            Fluttertoast.showToast(
+                msg: "신고가 완료되었습니다!",
+                gravity: ToastGravity.CENTER
+            ).then((value) =>
+                Navigator.pop(context)
+            );
+          }
 
         case DeclarationType.REVIEW:
           final result = await ReviewService().declareReview('${widget.idx}', selectedReason!);
