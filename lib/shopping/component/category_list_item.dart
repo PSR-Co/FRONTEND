@@ -125,7 +125,7 @@ class _CategoryListItemState extends State<CategoryListItem> {
 
   /// 이벤트 메소드 정의
   void didTapLikeButton() async {
-    final response = await ShoppingService().likeProduct(widget.productId!);
+    final response = await ShoppingService().likeProduct(widget.data.productId!);
     if (response) { setState(() { isLiked = !isLiked; }); }
     else { Fluttertoast.showToast(msg: '상품 찜에 실패하였습니다.'); }
   }

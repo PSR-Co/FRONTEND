@@ -44,7 +44,6 @@ class _SearchDetailScreenState extends State<SearchDetailScreen> {
       return FutureBuilder(
         future: getSearchResults(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          // return renderProductList();
           return ListView(
             children: [
               renderSortButton(),
