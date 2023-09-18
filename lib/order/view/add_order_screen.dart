@@ -107,8 +107,15 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
           height: imgSize,
           width: imgSize,
           child: (widget.productImgUrl == null)
-            ? Image.asset('/asset/images/product_sample.png')
-            : Image.network(widget.productImgUrl!, fit: BoxFit.cover,)
+            ? Container(
+                color: Colors.grey.withOpacity(0.2),
+                width: imgSize,
+                height: imgSize,
+                child: const Center(
+                    child: Text('이미지 없음', style: TextStyle(fontSize: 14, color: Colors.grey),)
+                ),
+              )
+            : renderProductImg(widget.productImgUrl!),
         ),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -116,6 +123,14 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
         )
       ],
     );
+  }
+
+  Widget renderProductImg(String imgUrl) {
+    if (imgUrl.contains('asset')) {
+      return Image.asset('/asset/images/product_sample.png',);
+    } else {
+      return Image.network(imgUrl, fit: BoxFit.cover,);
+    }
   }
 
   void onChanged() {
