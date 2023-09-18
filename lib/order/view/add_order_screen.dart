@@ -87,7 +87,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
 
           OrderInfoInputView(
             title: '요청 상세 설명',
-            hintText: '요청 상세 설명을 입력해주세요.',
+            hintText: '서비스 및 물품 판매 의뢰 시기와 기간, 추가적으로 요청하고 싶은 부분 외에 판매자에게 요청하고 싶은 내용을 자세하세 작성해주세요.',
             maxLine: 5,
             controller: descriptionController,
             onChanged: onChanged,
