@@ -36,14 +36,13 @@ class _LogoutDialogState extends State<LogoutDialog> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         showDialog(
             barrierDismissible: true,
             context: context,
             builder: (_) {
               return CommonDialog(
-                  askTitle:
-                  Text('로그아웃 하시겠어요?', style: askLogoutTextStyle),
+                  askTitle: Text('로그아웃 하시겠어요?', style: askLogoutTextStyle),
                   alert: '로그아웃',
                   onDidTap: didLogout());
             });
@@ -106,38 +105,4 @@ class _LogoutDialogState extends State<LogoutDialog> {
           return const SecondDialog(result: "로그아웃에 성공했습니다!");
         });
   }
-
-// AlertDialog alertDialog(String result) {
-//   return AlertDialog(
-//     backgroundColor: Colors.white,
-//     actionsAlignment: MainAxisAlignment.spaceEvenly,
-//     titlePadding: EdgeInsets.zero,
-//     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-//     elevation: 0.0,
-//     content: Container(
-//       height: 100,
-//       alignment: Alignment.center,
-//       child: Text(result, style: answerTextStyle),
-//     ),
-//     actions: <Widget>[
-//       SizedBox(
-//         width: MediaQuery.of(context).size.width,
-//         child: TextButton(
-//             onPressed: () {
-//               if (result == "로그아웃에 성공했습니다!") {
-//                 Navigator.of(context).pushAndRemoveUntil(
-//                     MaterialPageRoute(builder: (_) => const LoginScreen()),
-//                     (route) => false);
-//               } else {
-//                 Navigator.of(context).pop();
-//               }
-//             },
-//             child: Text(
-//               "확인",
-//               style: titleTextStyle,
-//             )),
-//       )
-//     ],
-//   );
-// }
 }
