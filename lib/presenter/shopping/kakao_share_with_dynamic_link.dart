@@ -39,8 +39,7 @@ class KakaoShareWithDynamicLink {
     if (product != null && product!.imgList.isNotEmpty) {
       return product!.imgList[0];
     } else {
-      // TODO: 메인 아이콘 이미지로 변경
-      return 'https://firebasestorage.googleapis.com/v0/b/psr-dev.appspot.com/o/dev-content%2FtempImage.png?alt=media&token=86255155-cf03-4b9a-8603-3d02230b2811';
+      return 'https://firebasestorage.googleapis.com/v0/b/psr-dev.appspot.com/o/dev-content%2Fapp-icon.png?alt=media&token=bf596f7c-4eab-4ef8-945a-a8649898669d';
     }
   }
 
@@ -73,6 +72,7 @@ class KakaoShareWithDynamicLink {
       ) ,
       iosParameters: const IOSParameters(
         bundleId: "com.psr.front.psr",
+        appStoreId: '6465684353',
       )
     );
     final ShortDynamicLink dynamicUrl = await FirebaseDynamicLinks.instance.buildShortLink(parameters);
