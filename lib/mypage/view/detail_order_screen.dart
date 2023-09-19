@@ -59,6 +59,8 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
   bool readOnly = true;
   String status = '';
   OrderDetailModel? data;
+  bool isSuccess = false;
+
 
   Future<dynamic> fetchData(int orderId) async {
     return await OrderService().getOrderDetailData(orderId);
@@ -131,7 +133,6 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                     child: ActionBtn(
                         child: actionBtnChild(
                             () => editedBtn(
-                                    data!.data.status,
                                     data!.data.ordererName,
                                     data!.data.websiteUrl,
                                     data!.data.inquiry,
@@ -281,15 +282,41 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                   break;
                 case '요청승인':
                   changeStatus('진행중');
+                  // setState(() {
+                  //
+                  // });
+                  editedBtn(
+                      data!.data.ordererName,
+                      data!.data.websiteUrl,
+                      data!.data.inquiry,
+                      data!.data.description,
+                      "승인",
+                      "요청을 승인하였습니다!")
+                      .then((value) => setState(() {}));
+                  break;
+                case '요청취소' :
+                  changeStatus('요청취소');
                   setState(() {
                     editedBtn(
-                            status,
-                            data!.data.ordererName,
-                            data!.data.websiteUrl,
-                            data!.data.inquiry,
-                            data!.data.description,
-                            "승인",
-                            "요청을 성공적으로 승인하였습니다!")
+                        data!.data.ordererName,
+                        data!.data.websiteUrl,
+                        data!.data.inquiry,
+                        data!.data.description,
+                        "취소",
+                        "요청을 취소하였습니다.")
+                        .then((value) => setState(() {}));
+                  });
+                  break;
+                case '요청거절' :
+                  changeStatus('진행완료');
+                  setState(() {
+                    editedBtn(
+                        data!.data.ordererName,
+                        data!.data.websiteUrl,
+                        data!.data.inquiry,
+                        data!.data.description,
+                        "거절",
+                        "요청을 거절하였습니다.")
                         .then((value) => setState(() {}));
                   });
                   break;
@@ -331,7 +358,6 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
   }
 
   Future<dynamic> editedBtn(
-      String status,
       String ordererName,
       String? websiteUrl,
       String inquiry,
@@ -352,11 +378,26 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
         : detail = detailController.text;
 
     print('updateState $status');
-    result = await OrderService().editOrderData(
-        widget.orderId, {'status': status}, name, url, ask, detail);
+    if(type == '수정'){
+      result = await OrderService().editOrderData(
+          widget.orderId, name, url, ask, detail);
+      changeState();
+      isSuccess ? orderDialog('요청이 수정되었습니다!')
+          : orderDialog('요청 수정에 실패하셨습니다.');
+      changeEditable();
+      if(result != null) {
+        orderDialog(dialogMsg);
+      } else {
+        orderDialog('요청수정 실패');
+      }
+    }else {
+      result = await OrderService().editOrderStatus(widget.orderId, {"status" : status});
+      if(result != null) {
+        orderDialog(dialogMsg);
+      } else {
+        orderDialog('요청$type 실패');
+      }    }
     print('updateStateResponse $result');
-    changeEditable();
-    orderDialog('요청을 수정하였습니다.');
   }
 
   void orderDialog(String result) {
@@ -364,6 +405,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
         barrierDismissible: true,
         context: context,
         builder: (_) {
+          print('tab');
           return OrderDialog(result: result);
         });
   }
@@ -384,5 +426,12 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (_) => ProductDetailScreen(productId: productId),
         settings: const RouteSettings(name: '/productDetail')));
+  }
+
+  void changeState() {
+    setState(() {
+      isSuccess = !isSuccess;
+      // print('success : $isSuccess');
+    });
   }
 }
