@@ -89,7 +89,7 @@ class _DetailOrderTextFieldFormState extends State<DetailOrderTextFieldForm> {
           maxLength: widget.maxLength,
           decoration: InputDecoration(
             hintText: widget.hintText,
-            hintStyle: const TextStyle(fontSize: 14, color: Colors.black),
+            hintStyle: const TextStyle(fontSize: 14, color: GRAY_2_COLOR),
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             enabledBorder: const OutlineInputBorder(

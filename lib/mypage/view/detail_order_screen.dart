@@ -55,6 +55,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
   final TextEditingController urlController = TextEditingController();
   final TextEditingController askController = TextEditingController();
   final TextEditingController detailController = TextEditingController();
+  final ScrollController scrollController = ScrollController();
 
   bool readOnly = true;
   String status = '';
@@ -107,6 +108,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
             print(widget.type);
           }
           return SingleChildScrollView(
+            controller: scrollController,
             child: Column(
               children: [
                 orderDetailHeader(data!.data.status, data!.data.orderDate),
@@ -124,7 +126,11 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                   ActionBtn(
                       child: actionBtnChild(
                           () => () {
+                            ///추후 채팅과 연결
                                 Navigator.pop(context, false);
+                                setState(() {
+                                  scrollController.jumpTo(scrollController.position.maxScrollExtent);
+                                });
                               },
                           '1:1 채팅'))
                 else if (widget.type == 'order' && !readOnly)
@@ -282,9 +288,6 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                   break;
                 case '요청승인':
                   changeStatus('진행중');
-                  // setState(() {
-                  //
-                  // });
                   editedBtn(
                       data!.data.ordererName,
                       data!.data.websiteUrl,
@@ -294,20 +297,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                       "요청을 승인하였습니다!")
                       .then((value) => setState(() {}));
                   break;
-                case '요청취소' :
-                  changeStatus('요청취소');
-                  setState(() {
-                    editedBtn(
-                        data!.data.ordererName,
-                        data!.data.websiteUrl,
-                        data!.data.inquiry,
-                        data!.data.description,
-                        "취소",
-                        "요청을 취소하였습니다.")
-                        .then((value) => setState(() {}));
-                  });
-                  break;
-                case '요청거절' :
+                case '진행완료' :
                   changeStatus('진행완료');
                   setState(() {
                     editedBtn(
@@ -315,12 +305,12 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                         data!.data.websiteUrl,
                         data!.data.inquiry,
                         data!.data.description,
-                        "거절",
-                        "요청을 거절하였습니다.")
+                        "완료",
+                        "요청이 완료되었습니다.")
                         .then((value) => setState(() {}));
                   });
                   break;
-                case '진행완료':
+                default:
                   break;
               }
             },
@@ -335,7 +325,47 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
         ),
         TextButton(
             onPressed: () {
-              Navigator.pop(context, false);
+              switch(btnOption2){
+                case '진행취소' :
+                  changeStatus('요청취소');
+                  setState(() {
+                    editedBtn(
+                        data!.data.ordererName,
+                        data!.data.websiteUrl,
+                        data!.data.inquiry,
+                        data!.data.description,
+                        "취소",
+                        "요청을 취소하였습니다.")
+                        .then((value) => setState(() {}));
+                  });
+                  break;
+                case '요청거절' :
+                  changeStatus('요청취소');
+                  setState(() {
+                    editedBtn(
+                        data!.data.ordererName,
+                        data!.data.websiteUrl,
+                        data!.data.inquiry,
+                        data!.data.description,
+                        "거절",
+                        "요청을 거절하였습니다.")
+                        .then((value) => setState(() {}));
+                  });
+                  break;
+                case '요청취소' :
+                  changeStatus('요청취소');
+                  setState(() {
+                    editedBtn(
+                        data!.data.ordererName,
+                        data!.data.websiteUrl,
+                        data!.data.inquiry,
+                        data!.data.description,
+                        "취소",
+                        "요청을 취소하였습니다.")
+                        .then((value) => setState(() {}));
+                  });
+                  break;
+              }
             },
             child: Text(
               btnOption2,
@@ -346,6 +376,8 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
   }
 
   Widget actionBtnChild(Function()? onPressed, String btnText) {
+    scrollController.jumpTo(scrollController.position.maxScrollExtent);
+
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: TextButton(
@@ -379,17 +411,21 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
 
     print('updateState $status');
     if(type == '수정'){
-      result = await OrderService().editOrderData(
-          widget.orderId, name, url, ask, detail);
-      changeState();
-      isSuccess ? orderDialog('요청이 수정되었습니다!')
-          : orderDialog('요청 수정에 실패하셨습니다.');
-      changeEditable();
-      if(result != null) {
-        orderDialog(dialogMsg);
-      } else {
-        orderDialog('요청수정 실패');
+      if(status == '진행중'){
+        orderDialog('요청이 진행 중일 때는 요청을 수정할 수 없습니다.');
+      }else{
+        result = await OrderService().editOrderData(
+            widget.orderId, name, url, ask, detail);
+        changeState();
+        isSuccess ? orderDialog('요청이 수정되었습니다!')
+            : orderDialog('요청 수정에 실패하셨습니다.');
+        if(result != null) {
+          orderDialog(dialogMsg);
+        } else {
+          orderDialog('요청수정 실패');
+        }
       }
+      changeEditable();
     }else {
       result = await OrderService().editOrderStatus(widget.orderId, {"status" : status});
       if(result != null) {
@@ -405,7 +441,6 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
         barrierDismissible: true,
         context: context,
         builder: (_) {
-          print('tab');
           return OrderDialog(result: result);
         });
   }
@@ -431,7 +466,6 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
   void changeState() {
     setState(() {
       isSuccess = !isSuccess;
-      // print('success : $isSuccess');
     });
   }
 }
