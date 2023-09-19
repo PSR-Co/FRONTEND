@@ -109,6 +109,7 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
             category: widget.categoryName,
             productId: data[index].productId,
             data: data[index],
+            index: index,
           );
         },
       ),

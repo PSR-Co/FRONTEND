@@ -44,7 +44,7 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
             RoundedUserProfileImg(
               width: 32.0,
               height: 32.0,
-              imgKey: widget.review.profileImgKey,
+              imgKey: widget.review.profileImgUrl,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,6 +54,7 @@ class _ReviewItemWidgetState extends State<ReviewItemWidget> {
                   avgOfRating: widget.review.rating,
                   nickName: widget.review.nickName,
                   reviewedDate: widget.review.reviewedDate,
+                  isMyReview: widget.review.isMyReview,
                 ),
                 ReviewContent(reviewContent: widget.review.content,),
                 ReviewImgListView(imgUrlList: widget.review.imgList ?? [],)

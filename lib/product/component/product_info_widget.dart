@@ -72,6 +72,7 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
           const Icon(Icons.star, color: Color(0xFFFFA939), size: 16.0,)
       );
     }
+    starIconList.add(const SizedBox(width: 6,));
     starIconList.add(
         TextButton(
           style: TextButton.styleFrom(

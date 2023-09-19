@@ -72,6 +72,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> with WidgetsB
             bottomNavigationBar: (isEmptyData)
                 ? null
                 : BottomNavigationWidget(
+              isOwner: data!.data.isOwner,
               numOfLike: data!.data.numOfLikes,
               productId: widget.productId,
               productImgUrl: (data!.data.imgList.isNotEmpty) ? data!.data.imgList[0] : null,
@@ -87,37 +88,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> with WidgetsB
 
   /// rendering methods
   Widget renderBody() {
-    // if (!isEmptyData) {
-      Product product = data!.data;
-      ReviewPreviewInfo reviewInfo = reviewData!.data;
-      return Container(
-        color: Colors.white,
-        child: ListView(
-          children: [
-            ProductImgPageViewWidget(imgKeyList: product.imgList, context: context),
-            const SizedBox(height: 25,),
-            SellerInfoWidget(sellerName: product.nickname, sellerId: product.userId,),
-            ProductInfoWidget(
-              productId: widget.productId,
-              productName: product.name,
-              price: product.price,
-              avgOfRating: reviewInfo.avgOfRating ?? 0.0,
-              reviewCnt: reviewInfo.numOfReviews,
-            ),
-            ProductDetailWidget(description: product.description,),
-            ReviewListWidget(
-              productId: widget.productId,
-              reviewList: reviewInfo.reviewList,
-            ),
-          ],
-        ),
-      );
-    // } else {
-      return const Center(
-        // child: Text('상품 정보를 불러오지 못하였습니다.'),
-        child: CircularProgressIndicator(color: PURPLE_COLOR,),
-      );
-    // }
+    Product product = data!.data;
+    ReviewPreviewInfo reviewInfo = reviewData!.data;
+    return Container(
+      color: Colors.white,
+      child: ListView(
+        children: [
+          ProductImgPageViewWidget(imgKeyList: product.imgList, context: context),
+          const SizedBox(height: 25,),
+          SellerInfoWidget(sellerName: product.nickname, sellerId: product.userId,),
+          ProductInfoWidget(
+            productId: widget.productId,
+            productName: product.name,
+            price: product.price,
+            avgOfRating: reviewInfo.avgOfRating ?? 0.0,
+            reviewCnt: reviewInfo.numOfReviews,
+          ),
+          ProductDetailWidget(description: product.description,),
+          ReviewListWidget(
+            productId: widget.productId,
+            reviewList: reviewInfo.reviewList,
+          ),
+        ],
+      ),
+    );
   }
 
   Future<bool> fetchData() async {

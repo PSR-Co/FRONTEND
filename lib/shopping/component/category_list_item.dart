@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../common/const/colors.dart';
 import '../../model/data/shopping/shopping_main_model.dart';
+import '../../presenter/shopping/shopping_service.dart';
 import '../../product/view/product_detail_screen.dart';
 
 class CategoryListItem extends StatefulWidget {
@@ -42,6 +44,12 @@ class _CategoryListItemState extends State<CategoryListItem> {
     fontWeight: FontWeight.w500,
     color: Colors.black,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    isLiked = widget.data.isLike;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,10 +124,10 @@ class _CategoryListItemState extends State<CategoryListItem> {
   }
 
   /// 이벤트 메소드 정의
-  void didTapLikeButton() {
-    // setState(() {
-    //   isLiked = !isLiked;
-    // });
+  void didTapLikeButton() async {
+    final response = await ShoppingService().likeProduct(widget.data.productId!);
+    if (response) { setState(() { isLiked = !isLiked; }); }
+    else { Fluttertoast.showToast(msg: '상품 찜에 실패하였습니다.'); }
   }
 
   void didTapItem() {

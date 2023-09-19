@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/const/colors.dart';
+import 'package:psr/presenter/shopping/shopping_service.dart';
 
 import '../../model/data/shopping/shopping_main_model.dart';
 import '../../product/view/product_detail_screen.dart';
@@ -9,11 +11,13 @@ class PopularListItem extends StatefulWidget {
   final String category;
   final int productId;
   final PopularProduct data;
+  final int index;
 
   const PopularListItem({
     required this.category,
     required this.productId,
     required this.data,
+    required this.index,
     Key? key
   }) : super(key: key);
 
@@ -54,6 +58,12 @@ class _PopularListItemState extends State<PopularListItem> {
     fontSize: 11.0,
     fontWeight: FontWeight.w400,
   );
+
+  @override
+  void initState() {
+    super.initState();
+    isLiked = widget.data.isLike;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +113,7 @@ class _PopularListItemState extends State<PopularListItem> {
 
   Widget renderLikeButton() {
     Widget likeIcon;
-    if (widget.data.isLike) {
+    if (isLiked) {
       likeIcon = SvgPicture.asset('asset/icons/common/favorite_border.fill.svg', width: 20, height: 20,);
     } else {
       likeIcon = SvgPicture.asset('asset/icons/common/favorite_border.svg', width: 20, height: 20,);
@@ -124,7 +134,7 @@ class _PopularListItemState extends State<PopularListItem> {
     return Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3),
-        child: Text('${widget.productId}', style: itemOrderTextStyle,)
+        child: Text('${widget.index+1}', style: itemOrderTextStyle,)
     );
   }
 
@@ -178,11 +188,10 @@ class _PopularListItemState extends State<PopularListItem> {
 
 
   /// 이벤트 메소드 정의
-  void didTapLikeButton() {
-    print('didTapLikeButton');
-    // setState(() {
-    //   isLiked = !isLiked;
-    // });
+  void didTapLikeButton() async {
+    final response = await ShoppingService().likeProduct(widget.productId);
+    if (response) { setState(() { isLiked = !isLiked; }); }
+    else { Fluttertoast.showToast(msg: '상품 찜에 실패하였습니다.'); }
   }
 
   void didTapItem() {

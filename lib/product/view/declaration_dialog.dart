@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/const/colors.dart';
+import 'package:psr/model/network/cutsom_interceptor.dart';
 import 'package:psr/presenter/review/review_service.dart';
 import 'package:psr/presenter/shopping/shopping_service.dart';
 
@@ -174,12 +176,42 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
       switch (widget.type) {
         case DeclarationType.PRODUCT:
           if (selectedReason! == reasonList[4]) { selectedReason = '게시글 성격에 부적합함'; }
-          final result = await ShoppingService().declareProduct('${widget.idx}', selectedReason!);
-          if (result) { Navigator.pop(context); }
+          final result = await ShoppingService().declareProduct('${widget.idx}', selectedReason!)
+              .catchError((error) {
+                debugPrint('error : ${error}');
+                Fluttertoast.showToast(
+                    msg: CustomInterceptor().errorMsg ?? "게시물 신고에 실패하였습니다.",
+                    gravity: ToastGravity.CENTER
+                );
+              });
+
+          if (result) {
+            Fluttertoast.showToast(
+                msg: "신고가 완료되었습니다!",
+                gravity: ToastGravity.CENTER
+            ).then((value) =>
+                Navigator.pop(context)
+            );
+          }
 
         case DeclarationType.REVIEW:
-          final result = await ReviewService().declareReview('${widget.idx}', selectedReason!);
-          if (result) { Navigator.pop(context); }
+          final result = await ReviewService().declareReview('${widget.idx}', selectedReason!)
+              .catchError((error) {
+                debugPrint('error : ${error}');
+                Fluttertoast.showToast(
+                    msg: CustomInterceptor().errorMsg ?? "리뷰 신고에 실패하였습니다.",
+                    gravity: ToastGravity.CENTER
+                );
+              });
+
+          if (result) {
+            Fluttertoast.showToast(
+                msg: "신고가 완료되었습니다!",
+                gravity: ToastGravity.CENTER
+            ).then((value) =>
+                Navigator.pop(context)
+            );
+          }
       }
     }
   }

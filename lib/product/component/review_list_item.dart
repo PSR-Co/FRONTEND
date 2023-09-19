@@ -19,9 +19,9 @@ class ReviewItem extends StatefulWidget {
 }
 
 class _ReviewItemState extends State<ReviewItem> {
-  static final double CONTAINER_HEIGHT = 190.0;
-  static final double REVIEW_IMG_HEIGHT = 48.0;
-  static final double REVIEW_IMG_WIDTH = 48.0;
+  static const double CONTAINER_HEIGHT = 190.0;
+  static const double REVIEW_IMG_HEIGHT = 48.0;
+  static const double REVIEW_IMG_WIDTH = 48.0;
 
   @override
   Widget build(BuildContext context) {
@@ -73,20 +73,25 @@ class _ReviewItemState extends State<ReviewItem> {
     const reviewStyle = TextStyle(fontSize: 12,);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Container(
-          width: CONTAINER_HEIGHT - REVIEW_IMG_WIDTH - 15,
+          width: CONTAINER_HEIGHT - REVIEW_IMG_WIDTH - 20,
           height: REVIEW_IMG_HEIGHT,
-          padding: const EdgeInsets.only(left: 14, right: 5),
+          margin: const EdgeInsets.only(left: 10),
+          padding: const EdgeInsets.only(left: 10, right: 5),
           child: Text(widget.detail, style: reviewStyle, maxLines: 2,),
         ),
-        Container(
-          padding: const EdgeInsets.only(right: 10),
-            // TODO: widget.imgUrl로 렌더링
-            child: Image.asset("asset/images/product_sample.png", width: REVIEW_IMG_WIDTH, height: REVIEW_IMG_HEIGHT,)
-        )
+        renderReviewImg(),
       ],
     );
+  }
+
+  Widget renderReviewImg() {
+    return (widget.imgUrl == null)
+      ? const SizedBox(height: 0,)
+      : Container(
+          padding: const EdgeInsets.only(right: 10),
+          child: Image.network(widget.imgUrl!, width: REVIEW_IMG_WIDTH, height: REVIEW_IMG_HEIGHT,)
+        );
   }
 }

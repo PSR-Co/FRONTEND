@@ -62,7 +62,8 @@ ReviewItem _$ReviewItemFromJson(Map<String, dynamic> json) => ReviewItem(
           (json['imgList'] as List<dynamic>?)?.map((e) => e as String).toList(),
       reviewedDate: json['reviewedDate'] as String,
       nickName: json['nickName'] as String,
-      profileImgKey: json['profileImgKey'] as String?,
+      profileImgUrl: json['profileImgUrl'] as String?,
+      isMyReview: json['isMyReview'] as bool,
     );
 
 Map<String, dynamic> _$ReviewItemToJson(ReviewItem instance) =>
@@ -73,7 +74,8 @@ Map<String, dynamic> _$ReviewItemToJson(ReviewItem instance) =>
       'imgList': instance.imgList,
       'reviewedDate': instance.reviewedDate,
       'nickName': instance.nickName,
-      'profileImgKey': instance.profileImgKey,
+      'profileImgUrl': instance.profileImgUrl,
+      'isMyReview': instance.isMyReview,
     };
 
 ReviewResponseModel _$ReviewResponseModelFromJson(Map<String, dynamic> json) =>

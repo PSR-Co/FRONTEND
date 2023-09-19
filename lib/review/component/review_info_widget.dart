@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../common/const/colors.dart';
 import '../../product/view/declaration_dialog.dart';
@@ -10,6 +11,7 @@ class ReviewInfo extends StatefulWidget {
   final String nickName;
   final String reviewedDate;
   final String? profileImgKey;
+  final bool isMyReview;
 
   const ReviewInfo({
     required this.reviewId,
@@ -17,6 +19,7 @@ class ReviewInfo extends StatefulWidget {
     required this.nickName,
     required this.reviewedDate,
     this.profileImgKey,
+    required this.isMyReview,
     Key? key
   }) : super(key: key);
 
@@ -72,8 +75,7 @@ class _ReviewInfoState extends State<ReviewInfo> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 아이디 (뒤4자리 가리기)
-          Text(getEditedID(widget.nickName), style: const TextStyle(
+          Text(widget.nickName, style: const TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 12,
               color: GRAY_2_COLOR
@@ -107,21 +109,23 @@ class _ReviewInfoState extends State<ReviewInfo> {
     );
   }
 
-  /// helper methods
-  String getEditedID(String id) {
-    // 작성자 ID의 뒷 4자리를 '*'로 대체
-    if (id.length > 4) { return id.replaceRange(id.length-4, id.length, '****'); }
-    else { return id.replaceRange(0, id.length, '****'); }
-  }
-
   /// event methods
   void didTapDeclarationButton() {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (_) {
-          return DeclarationDialog(idx: widget.reviewId, type: DeclarationType.REVIEW,);
-        }
-    );
+    if (widget.isMyReview) {
+      Fluttertoast.showToast(
+          msg: '자신의 리뷰는 신고할 수 없습니다.',
+          gravity: ToastGravity.CENTER,
+          toastLength: Toast.LENGTH_LONG,
+      );
+    } else {
+      showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (_) {
+            return DeclarationDialog(idx: widget.reviewId, type: DeclarationType.REVIEW,);
+          }
+      );
+    }
+
   }
 }
