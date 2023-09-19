@@ -261,9 +261,11 @@ class _OrderListScreenState extends State<OrderListScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            title,
-            style: headerTextStyle,
+          Expanded(
+            child: Text(
+              title,
+              style: headerTextStyle,
+            ),
           ),
           TextButton(
               onPressed: () {
