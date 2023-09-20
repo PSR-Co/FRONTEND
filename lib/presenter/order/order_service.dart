@@ -28,7 +28,6 @@ class OrderService {
 
   Future<dynamic> editOrderData(
       int orderId,
-      Map<String, dynamic>? queryParameters,
       String ordererName,
       String? websiteUrl,
       String inquiry,
@@ -41,14 +40,17 @@ class OrderService {
         .toJson();
     final response = await APIManager()
         .request(RequestType.PATCH, '$ORDER_DETAIL/$orderId', null,
-            queryParameters, body)
+            null, body)
         .catchError((error) {
       debugPrint('error : $error');
     })
     ;
-    print('path: $ORDER_DETAIL/$orderId');
-    print('body: $body');
-    print('response: $response');
+
+    return (response == null) ? null : EditOrderModel.fromJson(response);
+  }
+
+  Future<dynamic> editOrderStatus(int orderId, Map<String, dynamic> status) async {
+    final response = await APIManager().request(RequestType.PATCH, '$ORDER_DETAIL/$orderId/status', null, null, status);
     return (response == null) ? null : EditOrderModel.fromJson(response);
   }
 }
