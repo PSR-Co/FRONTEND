@@ -209,7 +209,9 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                tapProduct(productId);
+              },
               icon: const Icon(
                 Icons.arrow_forward_ios,
                 size: 20.0,
