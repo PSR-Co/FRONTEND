@@ -115,7 +115,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                 const Division(),
                 orderDetailView(data!.data.ordererName, data!.data.websiteUrl,
                     data!.data.inquiry, data!.data.description),
-                if (widget.type == 'sell' && data!.data.status != '요청대기')
+                if (widget.type == 'sell' && data!.data.status != '요청대기' && data!.data.status != '진행완료')
                   buttonView('진행완료', '진행취소', data!.data.status)
                 else if ((widget.type != 'sell' ||
                         data!.data.status == '요청대기') &&
