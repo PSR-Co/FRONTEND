@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:psr/model/data/general_model.dart';
 
 part 'myinfo_model.g.dart';
@@ -65,4 +66,30 @@ class AccountModel extends GeneralModel {
 
   factory AccountModel.fromJson(Map<String, dynamic> json) =>
       _$AccountModelFromJson(json);
+}
+
+@JsonSerializable()
+class NotificationModel extends GeneralModel {
+  final Notification data;
+
+  NotificationModel({
+    required super.code,
+    required super.message,
+    required this.data,
+  });
+
+  factory NotificationModel.fromJson(Map<String, dynamic> json) =>
+      _$NotificationModelFromJson(json);
+}
+
+@JsonSerializable()
+class Notification {
+  final bool notification;
+
+  Notification({
+    required this.notification,
+  });
+
+  factory Notification.fromJson(Map<String, dynamic> json) =>
+      _$NotificationFromJson(json);
 }

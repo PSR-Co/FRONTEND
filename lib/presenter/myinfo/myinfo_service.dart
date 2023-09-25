@@ -6,6 +6,7 @@ class MyInfoService {
   final CHANGE_PW = '/users/password-change';
   final LOGOUT = '/users/logout';
   final WITHDRAWAL = '/users/signout';
+  final EDIT_NOTIFICATION_PERMISSION = '/users/notification';
 
   static final MyInfoService _myInfoService = MyInfoService._();
 
@@ -39,5 +40,12 @@ class MyInfoService {
   Future<dynamic> withdrawal() async {
     final response = APIManager().request(RequestType.DELETE, WITHDRAWAL, null, null, null);
     return response;
+  }
+
+  Future<bool> editNotificationPermission() async {
+    final response = await APIManager().request(RequestType.POST, EDIT_NOTIFICATION_PERMISSION, null, null, null);
+    final result = NotificationModel.fromJson(response);
+    if (response == null) { return false; }
+    else { return result.data.notification; }
   }
 }

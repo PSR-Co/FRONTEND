@@ -73,3 +73,26 @@ Map<String, dynamic> _$AccountModelToJson(AccountModel instance) =>
       'message': instance.message,
       'data': instance.data,
     };
+
+NotificationModel _$NotificationModelFromJson(Map<String, dynamic> json) =>
+    NotificationModel(
+      code: json['code'] as int,
+      message: json['message'] as String,
+      data: Notification.fromJson(json['data'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$NotificationModelToJson(NotificationModel instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'message': instance.message,
+      'data': instance.data,
+    };
+
+Notification _$NotificationFromJson(Map<String, dynamic> json) => Notification(
+      notification: json['notification'] as bool,
+    );
+
+Map<String, dynamic> _$NotificationToJson(Notification instance) =>
+    <String, dynamic>{
+      'notification': instance.notification,
+    };

@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:psr/presenter/myinfo/myinfo_service.dart';
 
 import '../../common/const/colors.dart';
+import '../../model/network/constants.dart';
 
 class SetNotification extends StatefulWidget {
   const SetNotification({super.key});
@@ -15,11 +17,11 @@ class _SetNotificationState extends State<SetNotification> {
   final TextStyle headerTextStyle = const TextStyle(
       fontSize: 15.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
 
-  bool isChecked = true;
+  bool isFirstCheck = true;
+  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
-    print('build called');
     return FutureBuilder<dynamic> (
         future: configure(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -47,17 +49,25 @@ class _SetNotificationState extends State<SetNotification> {
   }
 
   Future<void> configure() async {
-    isChecked = await Permission.notification.isGranted;
+    if (isFirstCheck) {
+      final permission = await storage.read(key: NOTIFICATION_PERMISSION);
+      if (permission == 'true') {isChecked = true; }
+      else { isChecked = false; }
+      isFirstCheck = false;
+    }
   }
 
   Future<void> changeChecked() async {
-    await Permission.notification.request();
-    openAppSettings().then((value) =>
-      setState(() async {
-        isChecked = await Permission.notification.isGranted;
-        // TODO: 알림 권한 설정 후 isChecked 값을 기반으로 rerendering 필요
-      })
-    );
+    bool isGranted = await Permission.notification.request().isGranted;
+    setState(() { isChecked = !isChecked; });
+
+    if(!isGranted && isChecked) {
+      // 알림 ON 요청했으나 디바이스 상 권한 요청이 거절된 경우 -> 앱 설정 열기
+      openAppSettings();
+    }
+    final permission = await MyInfoService().editNotificationPermission();
+    setState(() { isChecked = permission; });
+    await storage.write(key: NOTIFICATION_PERMISSION, value: permission.toString());
   }
 
   void showCustomDialog(
