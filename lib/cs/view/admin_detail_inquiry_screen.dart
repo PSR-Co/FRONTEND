@@ -342,13 +342,13 @@ class _AdminDetailInquiryScreenState extends State<AdminDetailInquiryScreen> {
                 activateBtn();
                 Navigator.of(context).pop();
                 if (type == '삭제') {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const RootTab(selectedRootTab: 3, selectedIndex: null)), (route)=>false);
+                  // Navigator.pushAndRemoveUntil(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (_) => const RootTab(selectedRootTab: 3, selectedIndex: null)), (route)=>false);
 
-                  // Navigator.of(context).pop();
-                  // Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                 }
               },
               child: Text(
