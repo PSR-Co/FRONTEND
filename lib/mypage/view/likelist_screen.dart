@@ -5,6 +5,7 @@ import 'package:psr/model/data/mypage/like_model.dart';
 import 'package:psr/presenter/mypage/mypage_service.dart';
 
 import '../../common/const/colors.dart';
+import '../../product/view/product_detail_screen.dart';
 
 class LikeListScreen extends StatefulWidget {
   const LikeListScreen({super.key});
@@ -101,7 +102,14 @@ class _LikeListScreenState extends State<LikeListScreen> {
                           e.category,
                           e.name,
                           e.price,
-                          isLike)),
+                          isLike),
+                  onTap: (){
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => ProductDetailScreen(
+                            productId: e.productId),
+                        settings: const RouteSettings(name: '/productDetail')));
+
+                  },),
               ).toList(),)
               ),
             );}
@@ -111,8 +119,10 @@ class _LikeListScreenState extends State<LikeListScreen> {
   ///추후 이미지 연결
   Widget likeListItem(
       String? imgKey, String category, String name, int price, bool isLike) {
-    return SizedBox(
+    return Container(
       width: MediaQuery.of(context).size.width,
+      height: 90,
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -133,7 +143,7 @@ class _LikeListScreenState extends State<LikeListScreen> {
     return Container(
       width: 90,
       height: 90,
-        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+        margin: const EdgeInsets.fromLTRB(5.0,0,10.0,0),
         decoration: BoxDecoration(
           border: Border.all(width: 1.0, color: GRAY_0_COLOR),
           borderRadius: BorderRadius.circular(12.0),
