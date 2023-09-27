@@ -278,11 +278,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => reviewId != null
-                            ? ReviewScreen(
-                                productId: productId,
-                              )
-                            : AddReviewScreen(
+                        builder: (context) => AddReviewScreen(
                                 sellerName: sellerName,
                                 productName: productName,
                                 productImgKey: productImgKey,
