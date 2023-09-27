@@ -68,7 +68,7 @@ class _OrderListTabState extends State<OrderListTab>
           orderProductCardSlider(type: 'sell'),
           orderProductCardSlider(type: 'order'),
         ],
-        titleList: ORDER_LIST_TAB,
+        titleList: ORDER_LIST_TAB, selectedTab: null,
       ),
     );
   }

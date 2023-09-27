@@ -9,6 +9,7 @@ class BodyTab extends StatefulWidget {
   Widget tabTitle;
   bool isBackItemHidden;
   bool? isFromCompleteOrderScreen;
+  int? selectedTab;
 
   BodyTab(
       {required this.titleList,
@@ -16,6 +17,7 @@ class BodyTab extends StatefulWidget {
       required this.tabBarViewChild,
       required this.isBackItemHidden,
       this.isFromCompleteOrderScreen,
+        required this.selectedTab,
       Key? key})
       : super(key: key);
 
@@ -40,6 +42,7 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin {
     tabController.addListener(() {
       setState(() {});
     });
+    setSelectedTab(widget.selectedTab ?? 0);
   }
 
   @override
@@ -113,5 +116,10 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin {
       Navigator.popUntil(context, ModalRoute.withName('/productDetail'));
     }
     else { Navigator.of(context).pop(); }
+  }
+
+  ///요청 상태 수정 후 이동 시 요청한 상품/요청받은 상품 탭을 지정할 수 있도록 수정
+  void setSelectedTab(int selectedTab) {
+    tabController.animateTo(selectedTab);
   }
 }

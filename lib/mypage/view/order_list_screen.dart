@@ -11,14 +11,15 @@ import 'package:psr/review/view/add_review_screen.dart';
 import '../../common/const/colors.dart';
 import '../../model/data/order/order_list_model.dart';
 import '../../presenter/order/order_service.dart';
-import '../../review/view/review_screen.dart';
 import '../component/MoveToDetailOrderScreen.dart';
 
 class OrderListScreen extends StatefulWidget {
   final bool? isComplete;
+  final int? selectedTab;
 
   const OrderListScreen({
     this.isComplete,
+    this.selectedTab,
     Key? key
   }) : super(key: key);
 
@@ -107,7 +108,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
             tabBarViewChild: [
               orderProductView('sell', selectedValue1),
               orderProductView('order', selectedValue2)
-            ]),
+            ], selectedTab: widget.selectedTab,),
       ),
     );
   }
@@ -175,7 +176,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 5.0, bottom: 30.0),
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 20.0),
                         child: type == 'sell'
                             ? LargeDetailBar(
                                 title: e.productName,
@@ -262,7 +263,8 @@ class _OrderListScreenState extends State<OrderListScreen> {
   Widget moveToReview(String title, int? reviewId, String sellerName,
       String productName, String? productImgKey, int orderId, int productId) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+      margin: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+      height: 40,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -273,16 +275,12 @@ class _OrderListScreenState extends State<OrderListScreen> {
               style: headerTextStyle,
             ),
           ),
-          TextButton(
+          if(selectedValue == '진행완료') TextButton(
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => reviewId != null
-                            ? ReviewScreen(
-                                productId: productId,
-                              )
-                            : AddReviewScreen(
+                        builder: (context) => AddReviewScreen(
                                 sellerName: sellerName,
                                 productName: productName,
                                 productImgKey: productImgKey,
@@ -291,8 +289,13 @@ class _OrderListScreenState extends State<OrderListScreen> {
                                 isAdding: true,
                               )));
               },
-              child: Text(reviewId != null ? '리뷰 보기' : '리뷰 쓰기',
-                  style: reviewBtnTextStyle))
+              child: Container(
+                height: 40,
+                alignment: Alignment.center,
+                child: Text(reviewId != null ? '리뷰 보기' : '리뷰 쓰기',
+                    style: reviewBtnTextStyle),
+              )
+          )
         ],
       ),
     );
