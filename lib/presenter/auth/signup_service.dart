@@ -6,7 +6,7 @@ import 'package:psr/presenter/auth/user_service.dart';
 
 class SignupService {
   final VALIDATE_EID = "/users/eid";
-  final REQUEST_VALIDATION_CODE = "/users/phone/check";
+  final REQUEST_VALIDATION_CODE = "/users/phone/signup";
   final VALIDATE_CODE = "/users/phone/validation";
   final VALIDATE_NICKNAME_URL = "/users/nickname";
   final SIGNUP_URL = "/users/signup";
