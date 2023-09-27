@@ -94,7 +94,7 @@ class _ServiceCenterScreenState extends State<ServiceCenterScreen> {
                       "내 문의내역",
                       style: inquiryTextStyle,
                     )),
-                tabBarViewChild: [inquiryList('진행중'), inquiryList('완료')]),
+                tabBarViewChild: [inquiryList('진행중'), inquiryList('완료')], selectedTab: null,),
           )
         ],
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:psr/common/view/root_tab.dart';
 import 'package:psr/mypage/view/mypage_screen.dart';
+import 'package:psr/mypage/view/order_list_screen.dart';
 
 import '../../common/const/colors.dart';
 
@@ -41,9 +42,10 @@ class _OrderDialogState extends State<OrderDialog> {
                   print("실패");
                   Navigator.of(context).pop();
                 } else {
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (_) => const RootTab(selectedRootTab: 3, selectedIndex: null)),
-                          (route) => false);
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacement (
+                      MaterialPageRoute(builder: (_) => const OrderListScreen(selectedTab: 1,)));
                   setState(() {});
                 }
                 // Navigator.of(context).pop();

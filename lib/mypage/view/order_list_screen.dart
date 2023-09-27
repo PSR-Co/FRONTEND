@@ -11,14 +11,15 @@ import 'package:psr/review/view/add_review_screen.dart';
 import '../../common/const/colors.dart';
 import '../../model/data/order/order_list_model.dart';
 import '../../presenter/order/order_service.dart';
-import '../../review/view/review_screen.dart';
 import '../component/MoveToDetailOrderScreen.dart';
 
 class OrderListScreen extends StatefulWidget {
   final bool? isComplete;
+  final int? selectedTab;
 
   const OrderListScreen({
     this.isComplete,
+    this.selectedTab,
     Key? key
   }) : super(key: key);
 
@@ -107,7 +108,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
             tabBarViewChild: [
               orderProductView('sell', selectedValue1),
               orderProductView('order', selectedValue2)
-            ]),
+            ], selectedTab: widget.selectedTab,),
       ),
     );
   }
