@@ -198,12 +198,13 @@ class _LikeListScreenState extends State<LikeListScreen> {
   Widget renderLikeButton(bool isLike) {
     Widget likeIcon;
     likeIcon = SvgPicture.asset(
-      'asset/icons/common/heart.svg',
+      'asset/icons/common/favorite_border.fill.svg',
       width: 25,
       height: 25,
     );
 
     return IconButton(
+        splashColor: Colors.transparent,
         // onPressed: didTapLikeButton(isLike),
         onPressed: () {},
         padding: const EdgeInsets.only(right: 0.0),
