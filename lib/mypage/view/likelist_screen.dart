@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:psr/common/layout/circular_progress_indicator.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/model/data/mypage/like_model.dart';
 import 'package:psr/presenter/mypage/mypage_service.dart';
@@ -53,7 +55,7 @@ class _LikeListScreenState extends State<LikeListScreen> {
           child: Column(
             children: [
               const DefaultAppBarLayout(titleText: "찜"),
-              likeListView()
+              Expanded(child: likeListView())
             ],
           ),
         ),
@@ -66,36 +68,37 @@ class _LikeListScreenState extends State<LikeListScreen> {
         future: fetchData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            print('likes error: ${snapshot.error.toString()}');
+            if (kDebugMode) {
+              print('likes error: ${snapshot.error.toString()}');
+            }
             return const Center(
               child: Text('찜 : 에러가 있습니다'),
             );
           } else if (snapshot.hasData) {
             data = LikeModel.fromJson(snapshot.data);
             if (data?.data.productList.content == null) {
-              return const Center(
-                child: Text('찜한 게시글이 존재하지 않습니다.'),
-              );
+              if (kDebugMode) {
+                print('likes error: 찜한 게시글이 존재하지 않습니다.');
+              }
+              return const CircularProgress();
             }
             content = data!.data.productList.content;
-          } else if (!snapshot.hasData) {
-            return const Center(
-              child: Text('찜한 게시글을 불러올 수 없습니다.'),
-            );
           } else {
-            return Container(
-                width: 30,
-                height: 30,
-                alignment: Alignment.center,
-                child: const CircularProgressIndicator());
+            return const CircularProgress();
           }
           return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Container(
               width: MediaQuery.of(context).size.width,
               padding:  const EdgeInsets.symmetric(
                     vertical: 5.0, horizontal: 17.0),
               margin: const EdgeInsets.only(top: 15.0),
-              child: Column(children: content.map((e) =>
+              child: content.isEmpty ? Center( child: Container(
+                alignment: Alignment.center,
+                  padding: const EdgeInsets.only(bottom: 15.0),
+                  height: MediaQuery.of(context).size.height,
+                  child: const Text('찜한 게시글이 존재하지 않습니다.',)),
+          ) : Column(children: content.map((e) =>
                   GestureDetector(
                       child: likeListItem(
                           e.imgUrl,
@@ -162,17 +165,26 @@ class _LikeListScreenState extends State<LikeListScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          category,
-          style: brandNameTextStyle,
+        SizedBox(
+          width: MediaQuery.of(context).size.width / 2,
+          child: Text(
+            category,
+            style: brandNameTextStyle,
+          ),
         ),
-        Text(
-          name,
-          style: productNameTextStyle,
+        SizedBox(
+          width: MediaQuery.of(context).size.width / 2,
+          child: Text(
+            name,
+            style: productNameTextStyle,
+          ),
         ),
-        Text(
-          priceConverter(price),
-          style: priceTextStyle,
+        SizedBox(
+          width: MediaQuery.of(context).size.width / 2,
+          child: Text(
+            priceConverter(price),
+            style: priceTextStyle,
+          ),
         ),
       ],
     );
