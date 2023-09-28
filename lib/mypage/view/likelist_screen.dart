@@ -179,11 +179,13 @@ class _LikeListScreenState extends State<LikeListScreen> {
             style: productNameTextStyle,
           ),
         ),
-        SizedBox(
-          width: MediaQuery.of(context).size.width / 2,
-          child: Text(
-            priceConverter(price),
-            style: priceTextStyle,
+        Expanded(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width / 2,
+            child: Text(
+              priceConverter(price),
+              style: priceTextStyle,
+            ),
           ),
         ),
       ],
