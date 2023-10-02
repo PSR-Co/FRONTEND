@@ -103,6 +103,9 @@ class _LikeListScreenState extends State<LikeListScreen> {
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index){
                   return ListTile(
+                    selectedColor: Colors.transparent,
+                    selectedTileColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
                     onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (_) => ProductDetailScreen(
