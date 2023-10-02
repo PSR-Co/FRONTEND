@@ -54,7 +54,7 @@ class _MyPostScreenState extends State<MyPostScreen> {
           child: Column(
             children: [
               const DefaultAppBarLayout(titleText: "내 게시글"),
-              SingleChildScrollView(child: postListView())
+              Expanded(child: postListView())
             ],
           ),
         ),
@@ -88,6 +88,7 @@ class _MyPostScreenState extends State<MyPostScreen> {
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.only(top: 15.0),
             child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemCount: content.length,
               shrinkWrap: true,
