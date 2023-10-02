@@ -80,14 +80,18 @@ class _MyPostScreenState extends State<MyPostScreen> {
               return const CircularProgress();
             }
             content = data!.data.productList.content;
-            if(content.isEmpty) return const Text("게시글이 존재하지 않습니다.");
           } else {
             return const CircularProgress();
           }
           return Container(
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.only(top: 15.0),
-            child: ListView.builder(
+            child: content.isEmpty ? Center( child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.only(bottom: 15.0),
+                height: MediaQuery.of(context).size.height,
+                child: const Text('작성한 게시글이 존재하지 않습니다.',)),
+            ) :ListView.builder(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               itemCount: content.length,
