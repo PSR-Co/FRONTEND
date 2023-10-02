@@ -86,35 +86,55 @@ class _LikeListScreenState extends State<LikeListScreen> {
           } else {
             return const CircularProgress();
           }
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding:  const EdgeInsets.symmetric(
-                    vertical: 5.0, horizontal: 17.0),
-              margin: const EdgeInsets.only(top: 15.0),
-              child: content.isEmpty ? Center( child: Container(
-                alignment: Alignment.center,
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  height: MediaQuery.of(context).size.height,
-                  child: const Text('찜한 게시글이 존재하지 않습니다.',)),
-          ) : Column(children: content.map((e) =>
-                  GestureDetector(
-                      child: likeListItem(
-                          e.imgUrl,
-                          e.category,
-                          e.name,
-                          e.price,
-                          isLike),
-                  onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => ProductDetailScreen(
-                            productId: e.productId),
-                        settings: const RouteSettings(name: '/productDetail')));
-
-                  },),
-              ).toList(),)
-              ),
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            padding:  const EdgeInsets.symmetric(
+                  vertical: 5.0, horizontal: 17.0),
+            margin: const EdgeInsets.only(top: 15.0),
+            child: content.isEmpty ? Center( child: Container(
+              alignment: Alignment.center,
+                padding: const EdgeInsets.only(bottom: 15.0),
+                height: MediaQuery.of(context).size.height,
+                child: const Text('찜한 게시글이 존재하지 않습니다.',)),
+          ) : ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                itemCount: content.length,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext context, int index){
+                  return ListTile(
+                    onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => ProductDetailScreen(
+                                    productId: content[index].productId),
+                                settings: const RouteSettings(name: '/productDetail')));
+                    },
+                    title: GestureDetector(
+                              child: likeListItem(
+                                  content[index].imgUrl,
+                                  content[index].category,
+                                  content[index].name,
+                                  content[index].price,
+                                  isLike),
+                    ),
+                  );
+            })
+            // Column(children: content.map((e) =>
+            //     GestureDetector(
+            //         child: likeListItem(
+            //             e.imgUrl,
+            //             e.category,
+            //             e.name,
+            //             e.price,
+            //             isLike),
+            //     onTap: (){
+            //       Navigator.of(context).push(MaterialPageRoute(
+            //           builder: (_) => ProductDetailScreen(
+            //               productId: e.productId),
+            //           settings: const RouteSettings(name: '/productDetail')));
+            //
+            //     },),
+            // ).toList(),)
             );}
           );
   }
