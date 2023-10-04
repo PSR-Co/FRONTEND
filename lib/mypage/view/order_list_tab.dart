@@ -169,10 +169,13 @@ class _OrderListTabState extends State<OrderListTab>
                               ? const Icon(Icons.question_mark, color: PURPLE_COLOR, size: 50,)
                               : Image.network(productImg),
                         )),
-                    Text(
-                      productName,
-                      style: orderProductTextStyle,
-                      overflow: TextOverflow.ellipsis,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 26.0),
+                      child: Text(
+                        productName,
+                        style: orderProductTextStyle,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     Text(
                       orderDate,
