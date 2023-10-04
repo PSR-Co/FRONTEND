@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/common/layout/circular_progress_indicator.dart';
 import 'package:psr/common/layout/detail_bar_layout.dart';
@@ -284,8 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )),
                                   (route) => false);
                         },
-                        icon: const Icon(Icons.arrow_forward_ios,
-                            size: 15.0, color: GRAY_3_COLOR),
+                        icon: SvgPicture.asset('asset/icons/common/purple_forward.svg'),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
                       ),
@@ -338,11 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                           padding: EdgeInsets.zero, // 패딩 설정
                           constraints: const BoxConstraints(),
-                          icon: const Icon(
-                            Icons.arrow_forward_ios,
-                            size: 15.0,
-                            color: GRAY_3_COLOR,
-                          ),
+                          icon: SvgPicture.asset('asset/icons/common/purple_forward.svg'),
                         )
                       ],
                     ),
@@ -397,11 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             top: 2.0,
                           ), // 패딩 설정
                           constraints: const BoxConstraints(),
-                          icon: const Icon(
-                            Icons.arrow_forward_ios,
-                            size: 15.0,
-                            color: GRAY_3_COLOR,
-                          ),
+                          icon: SvgPicture.asset('asset/icons/common/purple_forward.svg'),
                         )
                       ],
                     ),

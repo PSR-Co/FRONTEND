@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/common/layout/division.dart';
 import 'package:psr/model/data/order/order_detail_model.dart';
@@ -212,11 +213,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
               onPressed: () {
                 tapProduct(productId);
               },
-              icon: const Icon(
-                Icons.arrow_forward_ios,
-                size: 20.0,
-                color: GRAY_4_COLOR,
-              ),
+              icon: SvgPicture.asset('asset/icons/common/forward.svg'),
               padding: const EdgeInsets.only(bottom: 2.0),
               constraints: const BoxConstraints(),
             )
