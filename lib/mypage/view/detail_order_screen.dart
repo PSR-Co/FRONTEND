@@ -285,7 +285,7 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
                   if (status != '진행중') {
                     changeEditable();
                   } else {
-                    orderDialog("요청 대기 중에는 수정이 불가합니다.");
+                    orderDialog("요청이 진행 중에는 수정이 불가합니다.");
                   }
                   break;
                 case '요청승인':
