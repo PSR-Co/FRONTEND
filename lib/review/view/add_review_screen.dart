@@ -4,6 +4,7 @@ import 'package:psr/common/layout/pick_img_widget.dart';
 import 'package:psr/common/layout/purple_outlined_text_field.dart';
 import 'package:psr/model/data/review/review_model.dart';
 import 'package:psr/model/network/cutsom_interceptor.dart';
+import 'package:psr/mypage/view/order_list_screen.dart';
 import 'package:psr/presenter/review/review_service.dart';
 import 'package:psr/review/component/review_detail_appbar.dart';
 
@@ -278,7 +279,10 @@ class AddReviewScreenState extends State<AddReviewScreen> {
     if (result) {
       Fluttertoast.showToast(
           msg: CustomInterceptor().errorMsg ?? '리뷰를 등록하였습니다.'
-      ).then((value) => Navigator.of(context).pop());
+      // ).then((value) => Navigator.of(context).pop());
+      ).then((value) => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => const OrderListScreen(selectedTab: 1,)), (route)=>false).then((value) {setState(() {
+
+      });}));
     }
   }
 
