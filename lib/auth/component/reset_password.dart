@@ -20,7 +20,7 @@ class ResetPassword extends StatefulWidget {
 
 class _ResetPasswordState extends State<ResetPassword> {
 
-  bool isValidPW = true;
+  // bool isValidPW = true;
   bool isCorrect = true;
 
   @override
@@ -31,7 +31,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         children: [
           const SizedBox(height: 50,),
           getPwInputView('비밀번호', '비밀번호를 입력해주세요.', widget.pwController),
-          getWarningText(isValidPW, '영문,숫자,특수문자만 입력해주세요. (8자이상 15자이내)'),
+          getWarningText(false, '영문,숫자,특수문자만 입력해주세요. (8자이상 15자이내)'),
 
           const SizedBox(height: 22,),
           getPwInputView('비밀번호 확인', '비밀번호를 다시 입력해주세요.', widget.pwValidController),
@@ -75,7 +75,7 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   void onChange() {
     setState(() {
-      isValidPW = validateInputPW(widget.pwController.value.text);
+      // isValidPW = validateInputPW(widget.pwController.value.text);
       isCorrect = widget.pwController.value.text == widget.pwValidController.value.text;
     });
   }
