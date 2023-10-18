@@ -27,7 +27,6 @@ class InputAccountInfo extends StatefulWidget {
 
 class _InputAccountInfoState extends State<InputAccountInfo> {
   bool isValidEmail = true;
-  bool isValidPW = true;
   bool isCorrect = true;
 
   List<TextEditingController> controllers = [];
@@ -67,7 +66,7 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
             true
         ),
 
-        getWarningText(isValidPW, '영문,숫자,특수문자만 입력해주세요. (8자이상 15자이내)'),
+        getWarningText(false, '영문,숫자,특수문자만 입력해주세요. (8자이상 15자이내)'),
         const SizedBox(height: 22,),
 
         getInputView(
@@ -131,21 +130,11 @@ class _InputAccountInfoState extends State<InputAccountInfo> {
         parent?.isAllInput = element.value.text.isNotEmpty;
       });
 
-      // if (controller == widget.pwController) {
-      //   isValidPW = validateInputPW(widget.pwController.value.text);
-      // } else if (controller == widget.pwConfirmController) {
-      //   isCorrect = (widget.pwController.value.text == widget.pwConfirmController.value.text);
-      // } else if (controller == widget.emailController) {
-      //   isValidEmail = isValidEmailFormat(widget.emailController.value.text);
-      // }
-      // parent?.isInputValid = isValidEmail && isValidPW && isCorrect;
-
       // 이메일 형식 검증, 비밀번호 형식 검증, 비밀번호 재입력 확인
-      isValidPW = validateInputPW(widget.pwController.value.text);
       isCorrect = (widget.pwController.value.text == widget.pwConfirmController.value.text);
       isValidEmail = isValidEmailFormat(widget.emailController.value.text);
 
-      parent?.isInputValid = isValidEmail && isValidPW && isCorrect;
+      parent?.isInputValid = isValidEmail && isCorrect;
     });
 
 
