@@ -89,7 +89,8 @@ class _MypageScreenState extends State<MypageScreen> {
   Widget myPageHeader() {
     return SizedBox(
       child: Container(
-        margin: const EdgeInsets.fromLTRB(17.0, 5.0, 17.0, 5.0),
+        height: 48,
+        margin: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
