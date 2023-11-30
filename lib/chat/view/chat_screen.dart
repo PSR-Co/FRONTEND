@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../presenter/chat/chat_service.dart';
+import '../component/chat_list_item.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -13,7 +14,8 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextStyle chatTitleTextStyle = const TextStyle(
       fontSize: 16.0, fontWeight: FontWeight.w700, color: Colors.black);
 
-  // List<ChatModel?> data;
+  // late List<ChatModel?> chatList;
+  List<dynamic> chatList = [null, "a", "b", "c", "d"]; // 더미데이터
 
   Future<dynamic> fetchData() async {
     return await ChatService().getChatList();
@@ -35,6 +37,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   } else if (snapshot.hasData) {
                     // data = List<ChatModel>.fromJson(snapshot.data);
                   } else if (!snapshot.hasData) {
+                    /* 채팅 emptyView 필요 */
                     // return const CircularProgress();
                   } else {
                     // return const CircularProgress();
@@ -47,13 +50,13 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget renderBody() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          chatHeader(),
-          // chatList()
-        ],
-      ),
+    return Column(
+      children: [
+        chatHeader(),
+        SingleChildScrollView(
+            child: ChatListItem(chatList: chatList)
+        ),
+      ],
     );
   }
 
