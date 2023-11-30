@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../common/const/colors.dart';
@@ -24,7 +24,11 @@ class _ChatListItemState extends State<ChatListItem> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      child: ListView.builder(
+      child: ListView.separated(
+        separatorBuilder: (BuildContext context, int index) {
+          return const SizedBox(height: 4);
+        },
+        physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: widget.chatList.length,
@@ -34,17 +38,27 @@ class _ChatListItemState extends State<ChatListItem> {
               tapChatItem(widget.chatList[index].id);
             },
             child: Container(
-              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 20.0),
               width: MediaQuery.of(context).size.width,
               height: 80.0,
+              margin: EdgeInsets.only(bottom: (index == widget.chatList.length-1) ? 4 : 0),
+              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 20.0),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(color: LIGHT_SHADOW_COLOR, blurRadius: 4.0),
+                ],
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ClipOval(
                     // 상대방 프로필 이미지(기본 프로필 이미지)
                     child: (widget.chatList[0] == null)
-                        ? SvgPicture.asset('asset/icons/common/default_profile.svg',
-                                            width: 44, height: 44,)
+                        ? SvgPicture.asset(
+                            'asset/icons/common/default_profile.svg',
+                            width: 44,
+                            height: 44,
+                          )
                         : Image.network(widget.chatList[0]),
                   ),
                   const SizedBox(
@@ -71,7 +85,7 @@ class _ChatListItemState extends State<ChatListItem> {
                     )
                   ),
                   const SizedBox(
-                    width: 14.0,
+                    width: 8.0,
                   ),
                   SizedBox(
                     child: Column(

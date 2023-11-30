@@ -15,7 +15,8 @@ class _ChatScreenState extends State<ChatScreen> {
       fontSize: 16.0, fontWeight: FontWeight.w700, color: Colors.black);
 
   // late List<ChatModel?> chatList;
-  List<dynamic> chatList = [null, "a", "b", "c", "d"]; // 더미데이터
+  // 더미데이터
+  List<dynamic> chatList = [null, "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"];
 
   Future<dynamic> fetchData() async {
     return await ChatService().getChatList();
@@ -26,6 +27,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
+        bottom: false,
         child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: FutureBuilder(
@@ -44,7 +46,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   }
                   return renderBody();
                 }
-        )),
+            )
+        ),
       ),
     );
   }
@@ -53,8 +56,10 @@ class _ChatScreenState extends State<ChatScreen> {
     return Column(
       children: [
         chatHeader(),
-        SingleChildScrollView(
-            child: ChatListItem(chatList: chatList)
+        Expanded(
+            child: SingleChildScrollView(
+              child: ChatListItem(chatList: chatList),
+            ),
         ),
       ],
     );
