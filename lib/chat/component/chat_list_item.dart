@@ -14,11 +14,11 @@ class ChatListItem extends StatefulWidget {
 
 class _ChatListItemState extends State<ChatListItem> {
   final TextStyle nicknameTextStyle = const TextStyle(
-      fontSize: 14.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
+      letterSpacing: -0.9, fontSize: 14.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
   final TextStyle lastMsgTextStyle = const TextStyle(
-      fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
+      letterSpacing: -0.6, fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
   final TextStyle dateTextStyle = const TextStyle(
-      fontSize: 12.0, fontWeight: FontWeight.w400, color: GRAY_2_COLOR);
+      letterSpacing: -0.9, fontSize: 12.0, fontWeight: FontWeight.w400, color: GRAY_2_COLOR);
   final TextStyle numOfUnreadChatsTextStyle = const TextStyle(
       fontSize: 10.0, fontWeight: FontWeight.w400, color: Colors.white);
 
