@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:psr/shopping/component/tabbar_widget.dart';
 
 import '../../common/const/colors.dart';
 import '../../model/data/shopping/shopping_main_model.dart';
@@ -130,6 +131,17 @@ class _CategoryListItemState extends State<CategoryListItem> {
     else { Fluttertoast.showToast(msg: '상품 찜에 실패하였습니다.'); }
   }
 
-  void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: widget.data.productId), settings: const RouteSettings(name: '/productDetail')));  }
+  void didTapItem() async {
+    bool isRefresh = await Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => ProductDetailScreen(
+            productId: widget.data.productId),
+            settings: const RouteSettings(name: '/productDetail')
+        )
+    );
+    if (isRefresh) {
+      ShoppingTabBarWidgetState? parent = context.findAncestorStateOfType<ShoppingTabBarWidgetState>();
+      parent?.refresh();
+    }
+  }
+
 }

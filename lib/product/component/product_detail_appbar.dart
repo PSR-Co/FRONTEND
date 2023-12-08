@@ -5,6 +5,7 @@ import 'package:psr/common/layout/default_appbar_layout.dart';
 import 'package:psr/presenter/shopping/shopping_service.dart';
 import 'package:psr/product/view/add_product_screen.dart';
 import 'package:psr/product/view/declaration_dialog.dart';
+import 'package:psr/shopping/view/shopping_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../model/data/shopping/product_model.dart';
@@ -45,7 +46,8 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   DefaultAppBarLayout build(BuildContext context) {
     return DefaultAppBarLayout(
         titleText: getTrimmedCategory(),
-        rightItems: renderRightItems()
+        rightItems: renderRightItems(),
+        didTapBackItem: didTapBackItem,
     );
   }
 
@@ -194,4 +196,6 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
         });
     if (result) { Navigator.of(context).popUntil((route) => route.isFirst); }
   }
+
+  void didTapBackItem() { Navigator.pop(context, true); }
 }
