@@ -48,6 +48,9 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
       child: FutureBuilder<dynamic> (
           future: fetchData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const Center(child: CircularProgressIndicator(color: PURPLE_COLOR,));
+            }
             if (snapshot.hasError) {
               return const Center(
                 child: Text('상품 정보를 불러오지 못 하였습니다.'),
