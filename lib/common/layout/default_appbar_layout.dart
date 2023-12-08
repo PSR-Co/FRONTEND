@@ -5,6 +5,7 @@ class DefaultAppBarLayout extends StatefulWidget implements PreferredSizeWidget 
   final String? titleText;
   final List<Widget>? rightItems;
   final bool? isBackItemHidden;
+  final VoidCallback? didTapBackItem;
 
   static const double APPBAR_HEIGHT = 50;
 
@@ -12,6 +13,7 @@ class DefaultAppBarLayout extends StatefulWidget implements PreferredSizeWidget 
     required this.titleText,
     this.rightItems,
     this.isBackItemHidden,
+    this.didTapBackItem,
     Key? key
   }) : super(key: key);
 
@@ -19,14 +21,11 @@ class DefaultAppBarLayout extends StatefulWidget implements PreferredSizeWidget 
   State<DefaultAppBarLayout> createState() => _DefaultAppBarLayoutState();
 
   @override
-  Size get preferredSize => Size.fromHeight(APPBAR_HEIGHT);
+  Size get preferredSize => const Size.fromHeight(APPBAR_HEIGHT);
 }
 
 class _DefaultAppBarLayoutState extends State<DefaultAppBarLayout> {
-  final titleStyle = TextStyle(
-      color: Colors.black,
-      fontSize: 17
-  );
+  final titleStyle = const TextStyle(color: Colors.black, fontSize: 17);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,7 @@ class _DefaultAppBarLayoutState extends State<DefaultAppBarLayout> {
   AppBar renderAppBar() {
     return AppBar(
       backgroundColor: Colors.white,
-      title: (widget.titleText != null) ? Text(widget.titleText!, style: titleStyle,) : Text(""),
+      title: (widget.titleText != null) ? Text(widget.titleText!, style: titleStyle,) : const Text(""),
       centerTitle: true,
       leading: (widget.isBackItemHidden ?? false) ? null : renderleftItem(),
       actions: widget.rightItems,
@@ -49,7 +48,7 @@ class _DefaultAppBarLayoutState extends State<DefaultAppBarLayout> {
     return Container(
       child: IconButton(
         icon: SvgPicture.asset("asset/icons/common/chevron.backward.svg"),
-        onPressed: didTapBackItem,
+        onPressed: widget.didTapBackItem ?? didTapBackItem,
       ),
     );
   }

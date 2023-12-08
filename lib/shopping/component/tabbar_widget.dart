@@ -16,10 +16,10 @@ class ShoppingTabBarWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ShoppingTabBarWidget> createState() => _ShoppingTabBarWidgetState();
+  State<ShoppingTabBarWidget> createState() => ShoppingTabBarWidgetState();
 }
 
-class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
+class ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
 
   bool isLoading = true;
 
@@ -33,6 +33,11 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
     return data;
   }
 
+  void refresh() {
+    setState(() {
+    });
+  }
+
   final titleStyle = const TextStyle(
     color: Colors.black,
     fontSize: 18.0,
@@ -42,34 +47,24 @@ class _ShoppingTabBarWidgetState extends State<ShoppingTabBarWidget> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async {
-        fetchData();
-      },
+      onRefresh: () async { fetchData(); },
       child: FutureBuilder<dynamic> (
           future: fetchData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.connectionState != ConnectionState.done) {
-              return const Center(child: CircularProgressIndicator(color: PURPLE_COLOR,));
-            }
-            if (snapshot.hasError) {
-              return const Center(
-                child: Text('상품 정보를 불러오지 못 하였습니다.'),
-              );
-            }
+            if (snapshot.hasError) { return const Center(child: Text('상품 정보를 불러오지 못 하였습니다.'),); }
             else {
-              if (isLoading) {
-                return const Center(child: CircularProgressIndicator(color: PURPLE_COLOR,),);
-              }
-              data = ShoppingMainResponse.fromJson(snapshot.data);
-              popularList = data!.data.popularList;
-              productList = data!.data.productList.content;
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(child: CircularProgressIndicator(color: PURPLE_COLOR,));
+              } else {
+                if (isLoading) { return const Center(child: CircularProgressIndicator(color: PURPLE_COLOR,),); }
+                data = ShoppingMainResponse.fromJson(snapshot.data);
+                popularList = data!.data.popularList;
+                productList = data!.data.productList.content;
 
-              if (data?.code != 200 || popularList.isEmpty && productList.isEmpty) {
-                return const Center(
-                  child: Text('불러올 상품 정보가 없습니다.'),
-                );
+                if (data?.code != 200 || popularList.isEmpty && productList.isEmpty) {
+                  return const Center(child: Text('불러올 상품 정보가 없습니다.'),);
+                }
               }
-
             }
             return ListView(
               scrollDirection: Axis.vertical,

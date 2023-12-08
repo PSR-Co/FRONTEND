@@ -5,6 +5,7 @@ import 'package:psr/common/const/colors.dart';
 import 'package:psr/model/network/cutsom_interceptor.dart';
 import 'package:psr/presenter/review/review_service.dart';
 import 'package:psr/presenter/shopping/shopping_service.dart';
+import 'package:psr/product/view/success_declaration_screen.dart';
 
 enum DeclarationType { PRODUCT, REVIEW }
 
@@ -185,14 +186,7 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
                 );
               });
 
-          if (result) {
-            Fluttertoast.showToast(
-                msg: "신고가 완료되었습니다!",
-                gravity: ToastGravity.CENTER
-            ).then((value) =>
-                Navigator.pop(context)
-            );
-          }
+          if (result) { Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SuccessDeclarationScreen())); }
 
         case DeclarationType.REVIEW:
           final result = await ReviewService().declareReview('${widget.idx}', selectedReason!)
@@ -204,14 +198,7 @@ class _DeclarationDialogState extends State<DeclarationDialog> {
                 );
               });
 
-          if (result) {
-            Fluttertoast.showToast(
-                msg: "신고가 완료되었습니다!",
-                gravity: ToastGravity.CENTER
-            ).then((value) =>
-                Navigator.pop(context)
-            );
-          }
+          if (result) { Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SuccessDeclarationScreen())); }
       }
     }
   }

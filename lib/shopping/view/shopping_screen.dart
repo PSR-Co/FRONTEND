@@ -64,7 +64,7 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
         ],
       ),
       child: FloatingActionButton(
-        onPressed: didTapAddProductButton(),
+        onPressed: didTapAddProductButton,
         backgroundColor: Colors.white,
         elevation: 0,
         highlightElevation: 0,
@@ -124,10 +124,9 @@ class _ShoppingScreenState extends State<ShoppingScreen> with TickerProviderStat
 
 
   /// event methods
-  VoidCallback didTapAddProductButton() {
-    return () {
-      Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddProductScreen()));
-    };
+  void didTapAddProductButton() async {
+    bool isRefresh = await Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddProductScreen()));
+    if (isRefresh) { setState(() {}); }
   }
 
   ///홈 -> 상품 bottomnavigation 이동 시 해당 상품과 일치하는 상단 탭 세팅

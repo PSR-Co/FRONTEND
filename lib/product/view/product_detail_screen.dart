@@ -23,10 +23,10 @@ class ProductDetailScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  State<ProductDetailScreen> createState() => ProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> with WidgetsBindingObserver {
+class ProductDetailScreenState extends State<ProductDetailScreen> with WidgetsBindingObserver {
 
   bool isLoading = true;
 
@@ -133,4 +133,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> with WidgetsB
     reviewData = ReviewPreviewResponseModel.fromJson(result);
     return (reviewData != null);
   }
+
+  void refresh() { setState(() {}); }
+
 }

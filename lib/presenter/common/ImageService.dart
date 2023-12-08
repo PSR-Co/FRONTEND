@@ -19,6 +19,11 @@ class ImageService {
     List<String> uploadedImgDirList = [];
 
     for (var element in imgKeyList) {
+      // 이미 업로드 된 경우 넘어감
+      if (element.contains('https')) {
+        uploadedImgDirList.add(element);
+        continue;
+      }
       String dir = await getDirectoryStr(imageType, imgKeyList.indexOf(element));
       // upload image
       File file = File(element);

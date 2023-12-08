@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:psr/common/const/colors.dart';
 import 'package:psr/presenter/shopping/shopping_service.dart';
+import 'package:psr/shopping/component/tabbar_widget.dart';
 
 import '../../model/data/shopping/shopping_main_model.dart';
 import '../../product/view/product_detail_screen.dart';
@@ -194,7 +195,16 @@ class _PopularListItemState extends State<PopularListItem> {
     else { Fluttertoast.showToast(msg: '상품 찜에 실패하였습니다.'); }
   }
 
-  void didTapItem() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProductDetailScreen(productId: widget.data.productId), settings: const RouteSettings(name: '/productDetail')));
+  void didTapItem() async {
+    bool isRefresh = await Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => ProductDetailScreen(
+            productId: widget.data.productId),
+            settings: const RouteSettings(name: '/productDetail')
+        )
+    );
+    if (isRefresh) {
+      ShoppingTabBarWidgetState? parent = context.findAncestorStateOfType<ShoppingTabBarWidgetState>();
+      parent?.refresh();
+    }
   }
 }
