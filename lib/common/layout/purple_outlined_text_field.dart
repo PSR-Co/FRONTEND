@@ -77,7 +77,8 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
               textInputAction: TextInputAction.next,
               showCursor: true,
               cursorColor: PURPLE_COLOR_50,
-              maxLines: widget.maxLine,
+              // maxLines: widget.maxLine,
+              maxLines: (currentTextLength > 0) ? widget.maxLine + currentTextLength~/35 : widget.maxLine,
               decoration: InputDecoration(
                 hintText: widget.hintText,
                 hintStyle: const TextStyle(

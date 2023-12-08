@@ -11,6 +11,8 @@ import '../../common/const/colors.dart';
 import '../../model/data/shopping/product_model.dart';
 import '../../model/network/cutsom_interceptor.dart';
 import '../../presenter/shopping/kakao_share_with_dynamic_link.dart';
+import '../../shopping/component/tabbar_widget.dart';
+import '../view/product_detail_screen.dart';
 
 class ProductDetailAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String category;
@@ -173,8 +175,8 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
     });
   }
 
-  void didTapEditButton() {
-    Navigator.of(context).push(
+  void didTapEditButton() async {
+    await Navigator.of(context).push(
         MaterialPageRoute(
             builder: (_) => AddProductScreen(
               category: widget.category,
@@ -182,7 +184,7 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
               productId: widget.productId,
             )
         )
-    ).then((value) => Navigator.of(context).pop());
+    ).then((value) => refreshAfterEdit(value));
   }
 
   Future<void> didDeleteEditButton() async {
@@ -194,8 +196,18 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
               gravity: ToastGravity.CENTER
           );
         });
-    if (result) { Navigator.of(context).popUntil((route) => route.isFirst); }
+    if (result) {
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      ShoppingTabBarWidgetState? parent = context.findAncestorStateOfType<ShoppingTabBarWidgetState>();
+      parent?.refresh();
+    }
   }
 
   void didTapBackItem() { Navigator.pop(context, true); }
+
+  void refreshAfterEdit(bool refresh) {
+    Navigator.of(context).pop();
+    ProductDetailScreenState? parent = context.findAncestorStateOfType<ProductDetailScreenState>();
+    parent?.refresh();
+  }
 }

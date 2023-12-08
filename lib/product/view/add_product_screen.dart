@@ -51,10 +51,11 @@ class AddProductScreenState extends State<AddProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const DefaultAppBarLayout(titleText: '상품 추가',),
+      appBar: DefaultAppBarLayout(titleText: (widget.data == null) ? '상품 추가' : '상품 수정',),
       body: renderBody(),
       bottomNavigationBar: PurpleFilledButton(
-        title: '등록하기',
+        height: 42,
+        title: (widget.data == null) ? '등록하기' : '수정하기',
         onPressed: ((widget.data != null) || isAllInput && !isUploadingImg)
             ? didTapAddButton
             : null,
@@ -166,8 +167,8 @@ class AddProductScreenState extends State<AddProductScreen> {
 
           const CustomTitleText(title: '상품 설명', option: null,),
           PurpleOutlinedTextField(
-            maxLine: 15,
-            maxLength: 5000,
+            maxLine: 3,
+            maxLength: 500,
             hintText: '상품 설명을 입력해주세요.',
             controller: detailController,
             onChanged: onChanged,
@@ -218,7 +219,7 @@ class AddProductScreenState extends State<AddProductScreen> {
         (uploadedList.isEmpty) ? null : uploadedList
       );
       setState(() { isUploadingImg = false; });
-      if (result) { Navigator.of(context).pop(); }
+      if (result) { Navigator.pop(context, true); }
       else { Fluttertoast.showToast(msg: '상품 등록에 실패하였습니다.'); }
 
     } else {
@@ -231,7 +232,7 @@ class AddProductScreenState extends State<AddProductScreen> {
           detailController.value.text,
           (uploadedList.isEmpty) ? null : uploadedList
       );
-      if (result) { Navigator.of(context).pop(); }
+      if (result) { Navigator.pop(context, true); }
       else { Fluttertoast.showToast(msg: '상품 수정에 실패하였습니다.'); }
     }
   }
