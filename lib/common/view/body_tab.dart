@@ -54,6 +54,7 @@ class _BodyTabState extends State<BodyTab> with SingleTickerProviderStateMixin {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: widget.tabTitle,
+          centerTitle: true,
           bottom: PreferredSize(
               preferredSize: Size(MediaQuery.of(context).size.width, 50.0),
               child: renderTabBar(titleList: widget.titleList)),

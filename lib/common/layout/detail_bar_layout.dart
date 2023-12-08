@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../const/colors.dart';
 
@@ -42,10 +43,7 @@ class DetailBarState extends State<DetailBar> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => widget.moveTo));
               },
-              icon: const Icon(
-                Icons.arrow_forward_ios,
-                size: 16.0,
-              ),
+              icon: SvgPicture.asset('asset/icons/common/forward.svg'),
               padding: const EdgeInsets.only(right: 17.0, bottom: 5.0),
               constraints: const BoxConstraints(),
             )

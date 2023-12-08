@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../const/colors.dart';
 
@@ -43,11 +44,7 @@ class LargeDetailBarState extends State<LargeDetailBar> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => widget.moveTo));
               },
-              icon: const Icon(
-                Icons.arrow_forward_ios,
-                size: 20.0,
-                color: GRAY_4_COLOR,
-              ),
+              icon: SvgPicture.asset('asset/icons/common/forward.svg'),
               padding: const EdgeInsets.only(bottom: 2.0),
               constraints: const BoxConstraints(),
             )
