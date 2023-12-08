@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../view/search_screen.dart';
 import '../const/colors.dart';
@@ -44,7 +45,8 @@ class _MainAppBarLayoutState extends State<MainAppBarLayout> {
       margin: EdgeInsets.only(left: 5, top: 3, bottom: 2),
       child: IconButton(
         // TODO: png -> svg로 변경 (화질 이슈)
-        icon: Image.asset("asset/icons/common/main_logo.png"),
+        icon: Image.asset("asset/icons/common/main_icon.png"),
+        // icon: SvgPicture.asset('asset/icons/common/main_logo.svg'),
         onPressed: () {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (_) => RootTab(selectedRootTab: null, selectedIndex: null,)),

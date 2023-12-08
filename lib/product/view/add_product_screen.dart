@@ -106,7 +106,7 @@ class AddProductScreenState extends State<AddProductScreen> {
                       const SizedBox(width: 12,),
                       Expanded(
                           child: Text(selectedCategory!,
-                            style: const TextStyle(fontSize: 14),
+                            style: TextStyle(fontSize: 14, color: (selectedCategory == '카테고리를 선택해주세요') ? GRAY_1_COLOR : Colors.black),
                             overflow: TextOverflow.ellipsis,
                           )
                       )
@@ -122,9 +122,7 @@ class AddProductScreenState extends State<AddProductScreen> {
                     );
                   }).toList(),
                   onChanged: (dynamic value) {
-                    setState(() {
-                      selectedCategory = value;
-                    });
+                    setState(() { selectedCategory = value; });
                   },
                   dropdownStyleData: DropdownStyleData(
                     width: MediaQuery.of(context).size.width-40,
@@ -240,9 +238,7 @@ class AddProductScreenState extends State<AddProductScreen> {
 
   /// helper methods
   void configure(){
-    if (widget.category != null) {
-      selectedCategory = widget.category!;
-    }
+    if (widget.category != null) { selectedCategory = widget.category!; }
     if (widget.data != null) {
       nameController.text = widget.data!.name;
       priceController.text = widget.data!.price.toString();
