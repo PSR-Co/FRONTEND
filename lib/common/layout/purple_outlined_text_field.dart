@@ -59,7 +59,6 @@ class _PurpleOutlinedTextFieldState extends State<PurpleOutlinedTextField> {
         Container(
             margin: EdgeInsets.symmetric(vertical: 5, horizontal: widget.margin ?? 20),
             width: widget.width ?? MediaQuery.of(context).size.width,
-            height: (widget.maxLine == 1) ? 45.0 : 140.0,
             child: TextField(
               keyboardType: widget.textInputType,
               style: const TextStyle(

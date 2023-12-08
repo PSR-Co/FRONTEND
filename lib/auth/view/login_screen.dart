@@ -115,6 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
               hintText: '아이디 또는 이메일 주소',
               isNeededForHidden: false,
               inputType: InputType.email,
+              width: MediaQuery.of(context).size.width,
           ),
 
           const SizedBox(height: 8,),
@@ -122,7 +123,8 @@ class _LoginScreenState extends State<LoginScreen> {
           AccountInputTextField(
               controller: pwController,
               hintText: '비밀번호',
-              isNeededForHidden: true
+              isNeededForHidden: true,
+              width: MediaQuery.of(context).size.width,
           ),
         ],
       ),

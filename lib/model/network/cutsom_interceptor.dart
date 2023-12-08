@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:psr/model/network/api_manager.dart';
 import '../../auth/view/login_screen.dart';
 import 'constants.dart';
 import 'package:flutter/material.dart';
@@ -46,12 +47,12 @@ class CustomInterceptor extends Interceptor {
     print('errorMsg -> $errorMsg');
 
     /// 403 토큰 오류이며, 토큰 재발급 중 발생한 오류가 아닌 경우
-    if (err.response?.data['code'] == 403 &&
-        !(err.requestOptions.path == reissuePath)) {
+    if (statusCode == 403 && !(err.requestOptions.path == reissuePath)) {
 
       final dio = Dio();
       try {
         // 토큰 재발급 요청 전송
+        print('try :: 토큰 재발급 요청 전송');
         final response = await dio.post(
           BASE_URL + reissuePath,
           data: {
@@ -64,8 +65,7 @@ class CustomInterceptor extends Interceptor {
         final newAccessToken = response.data['data']['accessToken'];
         final newRefreshToken = response.data['data']['refreshToken'];
 
-        await storage.write(key: ACCESS_TOKEN_KEY, value: newAccessToken);
-        await storage.write(key: REFRESH_TOKEN_KEY, value: newRefreshToken);
+        APIManager().writeToken(newAccessToken, newRefreshToken);
 
         final options = err.requestOptions;
         options.headers.addAll({

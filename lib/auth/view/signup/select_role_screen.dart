@@ -20,7 +20,7 @@ class SelectRoleScreen extends StatefulWidget {
 }
 
 class _SelectRoleScreenState extends State<SelectRoleScreen> {
-  final roleList = [ '일반회원', '사업자', '쇼호스트', '관리자' ];
+  final roleList = [ '일반회원', '사업자', '쇼호스트', ];
   String? selectedRole;
   bool isBusiness = false;
 
@@ -110,7 +110,7 @@ class _SelectRoleScreenState extends State<SelectRoleScreen> {
             isBusiness ? const InputBusinessInfo() : const InputAccountInfoScreen())
         );
       } else {
-        Fluttertoast.showToast(msg: '회원 종류를 선택해주세요!');
+        Fluttertoast. showToast(msg: '회원 종류를 선택해주세요!');
       }
     });
   }

@@ -186,6 +186,10 @@ class _SelectInterestScreenState extends State<SelectInterestScreen> {
       selectedList.contains(selected)
           ? selectedList.remove(selected)
           : selectedList.add(selected);
+      print('\n\n\n');
+      selectedList.forEach((element) {
+        print(element);
+      });
     });
   }
 }

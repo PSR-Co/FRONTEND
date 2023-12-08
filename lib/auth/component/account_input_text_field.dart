@@ -13,6 +13,7 @@ class AccountInputTextField extends StatefulWidget {
   final Color? borderColor;
   final VoidCallback? onChange;
   final InputType? inputType;
+  final double? width;
 
   const AccountInputTextField({
     required this.controller,
@@ -22,6 +23,7 @@ class AccountInputTextField extends StatefulWidget {
     this.borderColor,
     this.onChange,
     this.inputType,
+    this.width,
     Key? key
   }) : super(key: key);
 
@@ -46,7 +48,7 @@ class _AccountInputTextFieldState extends State<AccountInputTextField> {
           color: widget.backgroundColor ?? GRAY_1_COLOR.withOpacity(0.2),
           borderRadius: BorderRadius.circular(12)
       ),
-      width: MediaQuery.of(context).size.width - 40,
+      width: widget.width ?? MediaQuery.of(context).size.width - 40,
       height: 50,
       child: TextFormField(
         style: const TextStyle(

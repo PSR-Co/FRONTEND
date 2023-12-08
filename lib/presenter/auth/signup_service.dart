@@ -42,16 +42,16 @@ class SignupService {
   }
 
   Future<void> setInterestList(List<String> interests) async {
-    if (await APIManager().checkToken()) {
+    // if (await APIManager().checkToken()) {
       // 로컬에 저장된 token이 있는 경우 -> 로그인한 회원인 경우 (관심목록 변경 요청)
       UserService().requestEditInterestList(interests);
 
-    } else {
+    // } else {
       // 로컬에 저장된 token이 없는 경우 -> 회원가입 진행중인 경우
       interests.forEach((element) {
         _signupRequest.interestList.add(Interest(category: getTrimmedCategory(element)));
       });
-    }
+    // }
   }
 
   void setNickname(String nickname) { _signupRequest.nickname = nickname; }
