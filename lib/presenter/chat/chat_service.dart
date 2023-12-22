@@ -7,4 +7,6 @@ class ChatService {
     // print('response: $response');
     // return response;
   }
+
+  getChat() {}
 }

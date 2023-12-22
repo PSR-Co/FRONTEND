@@ -70,7 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
         chatHeader(),
         Expanded(
             child: SingleChildScrollView(
-              child: ChatListItem(chatList: chatList),
+              child: ChatListItem(context: context, chatList: chatList),
             ),
         ),
       ],

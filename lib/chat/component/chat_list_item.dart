@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:psr/chat/view/chat_room_screen.dart';
 
 import '../../common/const/colors.dart';
 
 class ChatListItem extends StatefulWidget {
   List<dynamic> chatList;
 
-  ChatListItem({required this.chatList, Key? key}) : super(key: key);
+  ChatListItem({required this.chatList, Key? key, required BuildContext context}) : super(key: key);
 
   @override
   State<ChatListItem> createState() => _ChatListItemState();
@@ -38,7 +39,7 @@ class _ChatListItemState extends State<ChatListItem> {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-              tapChatItem(widget.chatList[index].id);
+              tapChatItem();
             },
             child: Slidable(
                 endActionPane: ActionPane(
@@ -68,21 +69,21 @@ class _ChatListItemState extends State<ChatListItem> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     ClipOval(
-                      // 상대방 프로필 이미지(기본 프로필 이미지)
+                      /// 상대방 프로필 이미지(기본 프로필 이미지)
                       child: (widget.chatList[index][0] == null)
-                          ? SvgPicture.asset(
-                        'asset/icons/common/default_profile.svg',
-                        width: 44,
-                        height: 44,
-                      )
-                          : Image.network(widget.chatList[0]),
+                        ? SvgPicture.asset(
+                          'asset/icons/common/default_profile.svg',
+                          width: 44,
+                          height: 44,
+                        )
+                        : Image.network(widget.chatList[0]),
                     ),
                     const SizedBox(
                       width: 14.0,
                     ),
                     Expanded(
                         child: Column(
-                          // 닉네임, 마지막 채팅 텍스트(길어지면 말줄임표)
+                          /// 닉네임, 마지막 채팅 텍스트(길어지면 말줄임표)
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -104,7 +105,7 @@ class _ChatListItemState extends State<ChatListItem> {
                     ),
                     SizedBox(
                       child: Column(
-                        // 날짜(or n분 전), 안 읽은 채팅 수(없을 수도 있음, 100개부터 99+로)
+                        /// 날짜(or n분 전), 안 읽은 채팅 수(없을 수도 있음, 100개부터 99+로)
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
@@ -143,8 +144,10 @@ class _ChatListItemState extends State<ChatListItem> {
     );
   }
   
-  void tapChatItem(int chatRoomId) {
-
+  void tapChatItem() {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => ChatRoomScreen(id: 0)
+    ));
   }
 
   void leaveChatRoom(BuildContext context) {
