@@ -18,3 +18,5 @@ const PURPLE_COLOR_50 = Color(0x809A7CB6);
 const PURPLE_COLOR_10 = Color(0x1A9A7CB6);
 const ERROR_COLOR = Color(0xFFFF6B85);
 const ORANGE_COLOR = Color(0xFFFFA53F);
+const BLACK_COLOR_70 = Color(0xB3000000);
+const RED_COLOR = Color(0xFFF05F5F);

@@ -15,7 +15,7 @@ class _ChatScreenState extends State<ChatScreen> {
       fontSize: 16.0, fontWeight: FontWeight.w700, color: Colors.black);
 
   // late List<ChatModel?> chatList;
-  // 더미데이터(사진/닉네임/마지막 채팅/날짜/안 읽은 채팅 수)
+  /// 더미데이터(사진/닉네임/마지막 채팅/날짜/안 읽은 채팅 수)
   List<dynamic> chatList = [
     [null, "슈크림붕어빵", "안녕하시와요", "오후 10:11", 1],
     [null, "뽀로로", "아아 알겠습니다!", "3시간 전", 0],
