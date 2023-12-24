@@ -85,7 +85,7 @@ class _ChatScreenState extends State<ChatScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            "채팅",
+            "쪽지",
             style: chatTitleTextStyle,
           ),
           const Spacer()

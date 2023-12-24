@@ -89,6 +89,7 @@ flutter:
     - asset/icons/common/
     - asset/icons/custom_dialog/
     - asset/icons/shopping/
+    - asset/icons/chat/
     - asset/images/
   fonts:
     - family: NotoSans

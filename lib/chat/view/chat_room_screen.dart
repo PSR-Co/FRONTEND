@@ -18,6 +18,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       fontSize: 15.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
   final TextStyle leaveTextStyle = const TextStyle(
       fontSize: 15.0, fontWeight: FontWeight.w500, color: RED_COLOR);
+  final TextStyle inputMessageTextStyle = const TextStyle(
+      letterSpacing: -0.6, fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_1_COLOR);
+final TextStyle hintTextStyle = const TextStyle(
+    letterSpacing: -0.6, fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
 
   Future<dynamic> fetchData() async {
     return await ChatService().getChat();
@@ -56,15 +60,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         preferredSize: const Size.fromHeight(48.0),
         child: chatRoomHeader(),
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            child: SingleChildScrollView(
-              child: chatContentView(),
-            ),
-          ),
-          chatInputBar(),
-        ],
+      body: SizedBox(
+        child: SingleChildScrollView(
+          child: chatContentView(),
+        ),
       ),
     );
   }
@@ -80,11 +79,20 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
             Navigator.pop(context);
           },
         ),
+        centerTitle: true,
         title: Text(
           "닉네임",
           style: nicknameTextStyle,
         ),
         actions: [
+          IconButton(
+            icon: SvgPicture.asset(
+              'asset/icons/chat/send.svg',
+              width: 20,
+              height: 20,
+            ),
+            onPressed: goToMsgSendingScreen(),
+          ),
           IconButton(
             icon: SvgPicture.asset('asset/icons/shopping/more_vertical.svg'),
             onPressed: () {
@@ -155,13 +163,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     );
   }
 
-  Widget chatInputBar() {
-    return Container(
-      height: 51,
-      child: Row(
+  goToMsgSendingScreen() {
 
-      ),
-    );
   }
 
   void showReportDialog() {

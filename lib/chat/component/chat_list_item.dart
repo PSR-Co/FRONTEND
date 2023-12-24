@@ -18,7 +18,7 @@ class _ChatListItemState extends State<ChatListItem> {
   final TextStyle nicknameTextStyle = const TextStyle(
       letterSpacing: -0.6, fontSize: 14.0, fontWeight: FontWeight.w500, color: GRAY_4_COLOR);
   final TextStyle lastMsgTextStyle = const TextStyle(
-      letterSpacing: -0.3, fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
+      letterSpacing: -0.4, fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
   final TextStyle dateTextStyle = const TextStyle(
       letterSpacing: -0.6, fontSize: 12.0, fontWeight: FontWeight.w400, color: GRAY_2_COLOR);
   final TextStyle numOfUnreadChatsTextStyle = const TextStyle(
@@ -42,18 +42,18 @@ class _ChatListItemState extends State<ChatListItem> {
               tapChatItem();
             },
             child: Slidable(
-                endActionPane: ActionPane(
-                  extentRatio: 0.25,
-                  motion: const DrawerMotion(),
-                  children: [
-                    SlidableAction(
-                      onPressed: (BuildContext context) => leaveChatRoom(context),
-                      backgroundColor: PINK_COLOR,
-                      foregroundColor: Colors.white,
-                      label: '나가기',
-                    ),
-                  ],
-                ),
+              endActionPane: ActionPane(
+                extentRatio: 0.25,
+                motion: const DrawerMotion(),
+                children: [
+                  SlidableAction(
+                    onPressed: (BuildContext context) => leaveChatRoom(context),
+                    backgroundColor: PINK_COLOR,
+                    foregroundColor: Colors.white,
+                    label: '나가기',
+                  ),
+                ],
+              ),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 80.0,
