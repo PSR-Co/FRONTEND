@@ -71,14 +71,14 @@ class _ChatScreenState extends State<ChatScreen> {
     return Column(
       children: [
         chatHeader(),
-        // Expanded(
-        //   child: chatPreparationText(),
-        // ),
         Expanded(
-            child: SingleChildScrollView(
-              child: ChatListItem(context: context, chatList: chatList),
-            ),
+          child: chatPreparationText(),
         ),
+        // Expanded(
+        //     child: SingleChildScrollView(
+        //       child: ChatListItem(context: context, chatList: chatList),
+        //     ),
+        // ),
       ],
     );
   }
