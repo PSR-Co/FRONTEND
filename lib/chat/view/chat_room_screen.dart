@@ -26,7 +26,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   final TextStyle headerTextStyle = const TextStyle(
       letterSpacing: -0.1, fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
 
-  late List<dynamic> chatMessageList;
+  List<dynamic> chatMessageList = [];
 
   Future<dynamic> fetchData() async {
     return await ChatService().getChat();

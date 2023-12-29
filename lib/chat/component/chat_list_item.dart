@@ -32,7 +32,7 @@ class _ChatListItemState extends State<ChatListItem> {
         border: Border(
           bottom: BorderSide(
             color: GRAY_6_COLOR,
-            width: 2.0,
+            width: 4.0,
           ),
         ),
       ),

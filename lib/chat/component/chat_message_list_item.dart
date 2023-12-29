@@ -15,16 +15,8 @@ class _ChatMessageListItemState extends State<ChatMessageListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: GRAY_6_COLOR,
-            width: 2.0,
-          ),
-        ),
-      ),
       child: ListView.separated(
         separatorBuilder: (BuildContext context, int index) {
           return Container(height: 4, color: GRAY_6_COLOR);
