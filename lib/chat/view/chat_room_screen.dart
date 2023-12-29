@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../common/const/colors.dart';
 import '../../presenter/chat/chat_service.dart';
+import '../component/chat_message_list_item.dart';
 
 class ChatRoomScreen extends StatefulWidget {
   const ChatRoomScreen({Key? key, required int id}) : super(key: key);
@@ -20,8 +21,12 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       fontSize: 15.0, fontWeight: FontWeight.w500, color: RED_COLOR);
   final TextStyle inputMessageTextStyle = const TextStyle(
       letterSpacing: -0.6, fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_1_COLOR);
-final TextStyle hintTextStyle = const TextStyle(
-    letterSpacing: -0.6, fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
+  final TextStyle hintTextStyle = const TextStyle(
+      letterSpacing: -0.6, fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
+  final TextStyle headerTextStyle = const TextStyle(
+      letterSpacing: -0.1, fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
+
+  late List<dynamic> chatMessageList;
 
   Future<dynamic> fetchData() async {
     return await ChatService().getChat();
@@ -56,11 +61,12 @@ final TextStyle hintTextStyle = const TextStyle(
 
   Widget renderBody() {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(48.0),
-        child: chatRoomHeader(),
+        child: chatRoomAppBar(),
       ),
-      body: SizedBox(
+      body: Expanded(
         child: SingleChildScrollView(
           child: chatContentView(),
         ),
@@ -68,7 +74,7 @@ final TextStyle hintTextStyle = const TextStyle(
     );
   }
 
-  Widget chatRoomHeader() {
+  Widget chatRoomAppBar() {
     return AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -159,7 +165,36 @@ final TextStyle hintTextStyle = const TextStyle(
 
   Widget chatContentView() {
     return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 24.0),
+            child: chatRoomHeader(),
+          ),
+          ChatMessageListItem(context: context, chatMessageList: chatMessageList),
+        ],
+      ),
+    );
+  }
 
+  Widget chatRoomHeader() {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16.0, 20.0, 16.0, 20.0),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+        boxShadow: [
+          BoxShadow(color: PURPLE_COLOR_50, blurRadius: 4.0),
+        ],
+      ),
+      child: Center(
+        child: Text(
+          "'[상품명]' 상품에서부터 시작된 쪽지입니다.",
+          style: headerTextStyle,
+          textAlign: TextAlign.center,
+        ),
+      )
     );
   }
 

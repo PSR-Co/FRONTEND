@@ -9,6 +9,7 @@ const GRAY_2_COLOR = Color(0xFF828282);
 const GRAY_3_COLOR = Color(0xFF5A5A5A);
 const GRAY_4_COLOR = Color(0xFF414141);
 const GRAY_5_COLOR = Color(0xFF000000);
+const GRAY_6_COLOR = Color(0xFFF6F6F6);
 const SHADOW_COLOR = Color(0x4DBFBFBF);
 const LIGHT_SHADOW_COLOR = Color(0x40666666);
 const PURPLE_COLOR_20 = Color(0x339A7CB6);

@@ -26,11 +26,19 @@ class _ChatListItemState extends State<ChatListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: MediaQuery.of(context).size.width,
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: GRAY_6_COLOR,
+            width: 2.0,
+          ),
+        ),
+      ),
       child: ListView.separated(
         separatorBuilder: (BuildContext context, int index) {
-          return const SizedBox(height: 4);
+          return Container(height: 4, color: GRAY_6_COLOR);
         },
         physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
@@ -59,12 +67,6 @@ class _ChatListItemState extends State<ChatListItem> {
                 height: 80.0,
                 margin: EdgeInsets.only(bottom: (index == widget.chatList.length-1) ? 4 : 0),
                 padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 20.0),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(color: LIGHT_SHADOW_COLOR, blurRadius: 4.0),
-                  ],
-                ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
