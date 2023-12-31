@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:psr/chat/view/chat_sending_screen.dart';
 
 import '../../common/const/colors.dart';
 import '../../presenter/chat/chat_service.dart';
@@ -66,11 +67,15 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         preferredSize: const Size.fromHeight(48.0),
         child: chatRoomAppBar(),
       ),
-      body: Expanded(
-        child: SingleChildScrollView(
-          child: chatContentView(),
-        ),
-      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: chatContentView(),
+            ),
+          ),
+        ],
+      )
     );
   }
 
@@ -97,7 +102,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
               width: 20,
               height: 20,
             ),
-            onPressed: goToMsgSendingScreen(),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => const ChatSendingScreen(), fullscreenDialog: true
+              ));
+            },
           ),
           IconButton(
             icon: SvgPicture.asset('asset/icons/shopping/more_vertical.svg'),
@@ -196,10 +205,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         ),
       )
     );
-  }
-
-  goToMsgSendingScreen() {
-
   }
 
   void showReportDialog() {

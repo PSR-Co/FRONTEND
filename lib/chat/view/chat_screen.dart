@@ -14,8 +14,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextStyle chatTitleTextStyle = const TextStyle(
       fontSize: 16.0, fontWeight: FontWeight.w700, color: Colors.black);
-  final TextStyle chatPreparationTextStyle = const TextStyle(
-      fontSize: 18.0, fontWeight: FontWeight.w700, color: GRAY_4_COLOR);
 
   // late List<ChatModel?> chatList;
   /// 더미데이터(사진/닉네임/마지막 채팅/날짜/안 읽은 채팅 수)
@@ -72,13 +70,10 @@ class _ChatScreenState extends State<ChatScreen> {
       children: [
         chatHeader(),
         Expanded(
-          child: chatPreparationText(),
+            child: SingleChildScrollView(
+              child: ChatListItem(context: context, chatList: chatList),
+            ),
         ),
-        // Expanded(
-        //     child: SingleChildScrollView(
-        //       child: ChatListItem(context: context, chatList: chatList),
-        //     ),
-        // ),
       ],
     );
   }
@@ -96,16 +91,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           const Spacer()
         ],
-      )
-    );
-  }
-
-  Widget chatPreparationText() {
-    return Center(
-      child: Text(
-        "쪽지 기능 준비 중입니다.\n조금만 기다려주세요!",
-        style: chatPreparationTextStyle,
-        textAlign: TextAlign.center,
       )
     );
   }
