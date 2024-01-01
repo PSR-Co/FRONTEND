@@ -17,6 +17,8 @@ class _ChatSendingScreenState extends State<ChatSendingScreen> {
       fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
   final TextStyle hintTextStyle = const TextStyle(
       fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_1_COLOR);
+  final TextStyle sendTextStyle = const TextStyle(
+      fontSize: 14.0, fontWeight: FontWeight.w500, color: Colors.white);
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +37,35 @@ class _ChatSendingScreenState extends State<ChatSendingScreen> {
       backgroundColor: Colors.white,
       elevation: 0,
       scrolledUnderElevation: 0.0,
+      centerTitle: true,
       title: Text(
         "쪽지 보내기",
         style: titleTextStyle,
       ),
       actions: [
-        /// 전송 버튼
+        SizedBox(
+          height: 30,
+          child: ElevatedButton(
+            onPressed: () {
+              sendMessage();
+            },
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.only(left: 12, right: 12),
+              elevation: 0,
+              backgroundColor: PURPLE_COLOR,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+            child: Text(
+              "전송",
+              style: sendTextStyle,
+            )
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
       ],
     );
   }
@@ -64,5 +89,9 @@ class _ChatSendingScreenState extends State<ChatSendingScreen> {
         ),
       ),
     );
+  }
+
+  sendMessage() {
+    print("전송");
   }
 }
