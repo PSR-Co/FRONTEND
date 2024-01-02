@@ -32,7 +32,7 @@ class _ChatListItemState extends State<ChatListItem> {
         border: Border(
           bottom: BorderSide(
             color: GRAY_6_COLOR,
-            width: 4.0,
+            width: 2.0,
           ),
         ),
       ),
@@ -65,7 +65,6 @@ class _ChatListItemState extends State<ChatListItem> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 80.0,
-                margin: EdgeInsets.only(bottom: (index == widget.chatList.length-1) ? 4 : 0),
                 padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 20.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

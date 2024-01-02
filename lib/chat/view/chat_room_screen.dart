@@ -27,7 +27,18 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   final TextStyle headerTextStyle = const TextStyle(
       letterSpacing: -0.1, fontSize: 14.0, fontWeight: FontWeight.w400, color: GRAY_4_COLOR);
 
-  List<dynamic> chatMessageList = [];
+  List<dynamic> chatMessageList = [
+    [false, "닉네임이 들어갑니다", "24/01/01 02:37", "새해복 많이 받으세용~!~! 해피 뉴이어입니다🌅"],
+    [true, "나", "24/01/03 02:37", "오랜만이에요~ 잘 지내셨어요?"],
+    [false, "보라돌이 뚜비 나나 뽀", "24/01/03 02:37", "그럼요~ 이번에 텍스트 길이 테스트 좀 해볼게요 길어져도 괜찮죠?\n지금 테일러 스위프트 노래 듣는 중\n그럼요~ 이번에 텍스트 길이 테스트 좀 해볼게요 그럼요~ 이번에 텍스트 길이 테스트 좀 해볼게요"],
+    [true,"나", "24/01/03 02:37", "네 알겠습니당"],
+    [false, "엄청 나게 긴 닉네임일 경우 테스트해볼게요 엄청 나게 긴 닉네임일 경우 테스트입니다", "24/01/01 02:37", "네 알겠습니다"],
+    [true,"나", "24/01/03 02:37", "뭘 알겠다는 거예용?"],
+    [false, "닉네임", "2024/01/01 02:37", "제가 알겠다고 하면 그냥 알겠는 줄 아세요.. 더 묻지 마시길 ㅋ"],
+    [true,"나", "24/01/03 02:37", "눼"],
+    [false, "두번째 테스트 닉네임 두번째 텍스트 닉네임 들어가유", "24/01/01 02:37", "그럼 이번 주말에 봬요^^~"],
+    [true,"나", "24/01/03 02:37", "넹..🩵 첫눈 같이 보면 좋겠다."],
+  ];
 
   Future<dynamic> fetchData() async {
     return await ChatService().getChat();
@@ -83,6 +94,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     return AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        scrolledUnderElevation: 0.0,
         leading: IconButton(
           iconSize: 24,
           icon: SvgPicture.asset('asset/icons/common/chevron.backward.svg'),
