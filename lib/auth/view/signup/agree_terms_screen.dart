@@ -21,11 +21,15 @@ class AgreeToTermsScreen extends StatefulWidget {
 class _AgreeToTermsScreenState extends State<AgreeToTermsScreen> {
 
   SignUpScreenState? parentWidget;
-  bool isAgree = false;
+  // bool isAgree = false;
   
   final List<List<String>> terms = [
-    // TODO: 약관 링크 제공받을 경우 수정할 예정
-    ['개인정보 수집 동의', 'https://www.naver.com',]
+    ['개인정보 수집 동의', 'https://broadleaf-mist-919.notion.site/2fce6ce9df73438d9573a81358b8d8fe?pvs=4', ],
+    ['이용약관 동의', 'https://broadleaf-mist-919.notion.site/50dcd0ab5b644a14b51231d3cdee634b?pvs=4',]
+  ];
+
+  List<bool> isAgree = [
+    false, false
   ];
 
   @override
@@ -56,20 +60,22 @@ class _AgreeToTermsScreenState extends State<AgreeToTermsScreen> {
   Widget getCenterBody() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 50.0 * terms.length,
+      height: 60.0 * terms.length,
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
       child: ListView(
-        children: terms.map(
-                (e) => getTermButton(e.elementAt(0), e.elementAt(1)))
-            .toList(),
-
+        children: terms.map((e) => getTermButton(terms.indexOf(e))).toList(),
       ),
     );
   }
 
-  Widget getTermButton(String title, String url) {
+  // Widget getTermButton(String title, String url) {
+  Widget getTermButton(int index) {
+    String title = terms[index][0];
+    String url = terms[index][1];
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 1),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
@@ -103,12 +109,8 @@ class _AgreeToTermsScreenState extends State<AgreeToTermsScreen> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: IconButton(
-                    onPressed: (){
-                      setState(() {
-                        isAgree = !isAgree;
-                      });
-                    },
-                    icon: isAgree
+                    onPressed: (){ setState(() { isAgree[index] = !isAgree[index]; }); },
+                    icon: isAgree[index]
                         ? getAgreeButton()
                         : const Icon(Icons.check_circle_sharp, color: GRAY_0_COLOR,size: 30,),
                     padding: EdgeInsets.zero,
@@ -148,16 +150,23 @@ class _AgreeToTermsScreenState extends State<AgreeToTermsScreen> {
     );
   }
 
+  /// Helper Methods
+  bool isAllAgree() {
+    bool result = false;
+    for (var element in isAgree) { result = element; }
+    return result;
+  }
+
+  /// Event Methods
   void didTapTermButton(String title, String url) {
     setState(() {
-      isAgree = true;
       Navigator.of(context).push(MaterialPageRoute(builder: (_) => WebViewScreen(appbarTitle: title, url: url)));
     });
   }
 
   void didTapNextButton() {
     setState(() {
-      if (isAgree) {
+      if (isAllAgree()) {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SelectRoleScreen()));
       } else {
         Fluttertoast.showToast(msg: '필수 약관에 동의해주세요!');
