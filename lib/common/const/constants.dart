@@ -42,3 +42,16 @@ const CONTENT = '잘못 송금한 경우 아래 내용을 확인해주세요.\n\
 
 ///요청 상태
 const ORDER_STATUS = ['요청대기', '진행중', '진행완료', '요청취소'];
+
+/// 채팅 신고 사유
+const SELECT_REASON = '타당한 신고 사유를 선택해주세요.\n신고 사유에 맞지 않는 신고를 하실 경우,\n해당 신고는 처리 되지 않습니다.';
+enum ReasonForReporting {
+  spam('스팸홍보/도배'),
+  profanity('욕설/혐오/차별'),
+  harmful('음란물/유해한 정보'),
+  fraud('사기/불법정보'),
+  inappropriate('부적절한 내용');
+
+  const ReasonForReporting(this.korean);
+  final String korean;
+}
