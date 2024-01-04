@@ -55,12 +55,12 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
   /// 화면 중앙 UI 구현 메소드 ///
   Widget renderTabBarView() {
     return TabBarView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       controller: controller,
       children: [
         HomeScreen(),
         ShoppingScreen(selectedIndex: selectedTab,),
-        ChatScreen(),
+        // ChatScreen(),
         MypageScreen(),
       ],
     );
@@ -92,7 +92,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
   }
 
   TextStyle renderLabelStyle() {
-    return TextStyle(
+    return const TextStyle(
         fontSize: 10,
         fontWeight: FontWeight.w500
     );
