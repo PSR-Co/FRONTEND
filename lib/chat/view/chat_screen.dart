@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:psr/common/const/colors.dart';
 
 import '../../presenter/chat/chat_service.dart';
 import '../component/chat_list_item.dart';
@@ -32,7 +31,7 @@ class _ChatScreenState extends State<ChatScreen> {
   ];
 
   Future<dynamic> fetchData() async {
-    return await ChatService().getChatList();
+    return await ChatService().getChatRoomList();
   }
 
   @override
@@ -46,15 +45,18 @@ class _ChatScreenState extends State<ChatScreen> {
             child: FutureBuilder(
                 future: fetchData(),
                 builder: (context, snapshot) {
-                  if (snapshot.hasError) {
+                  if (snapshot.hasData) {
+                    /// 정상
+                    // data = List<ChatModel>.fromJson(snapshot.data);
+                  } else if (snapshot.hasError) {
+                    /// 에러 - 데이터를 불러올 수 없다고 띄우기
                     print("chat: ${snapshot.error.toString()}");
                     // return const CircularProgress();
-                  } else if (snapshot.hasData) {
-                    // data = List<ChatModel>.fromJson(snapshot.data);
                   } else if (!snapshot.hasData) {
-                    /* 채팅 emptyView 필요 */
+                    /// empty view
                     // return const CircularProgress();
                   } else {
+                    /// 필요할까?
                     // return const CircularProgress();
                   }
                   return renderBody();
