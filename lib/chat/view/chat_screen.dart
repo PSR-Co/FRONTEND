@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:psr/common/const/colors.dart';
+import 'package:psr/model/data/chat/chat_room_list_model.dart';
 
+import '../../common/layout/circular_progress_indicator.dart';
 import '../../presenter/chat/chat_service.dart';
 import '../component/chat_list_item.dart';
 
@@ -13,25 +16,25 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextStyle chatTitleTextStyle = const TextStyle(
       fontSize: 16.0, fontWeight: FontWeight.w700, color: Colors.black);
+  final TextStyle emptyListTextStyle = const TextStyle(
+      fontSize: 15.0, fontWeight: FontWeight.w500, color: GRAY_2_COLOR);
+  final TextStyle sendMessageTextStyle = const TextStyle(
+      fontSize: 13.0, fontWeight: FontWeight.w500, color: GRAY_1_COLOR);
 
-  // late List<ChatModel?> chatList;
-  /// 더미데이터(사진/닉네임/마지막 채팅/날짜/안 읽은 채팅 수)
-  List<dynamic> chatList = [
-    [null, "슈크림붕어빵", "안녕하시와요", "오후 10:11", 1],
-    [null, "뽀로로", "아아 알겠습니다!", "3시간 전", 0],
-    [null, "겨울엔고구마라떼", "넵", "어제", 0],
-    [null, "밤빵", "괜찮습니다~^^ 수고하세요.", "12월 1일", 0],
-    [null, "새벽근무중", "에효", "12월 1일", 54],
-    [null, "123", "?", "11월 31일", 1],
-    [null, "긴 문자열 테스트 중----긴 문자열 테스트 중----긴 문자열 테스트 중----", "여기도 테스트 중입니다. 지나갑니당..여기도 테스트 중입니다. 지나갑니당..", "1월 1일", 10],
-    [null, "놀러오세요 개발의숲", "머리 쥐어뜯는중 ㅋㅋ", "2022.11.12", 1],
-    [null, "ㅇㅇ", "저 13살인데요?", "2022.10.31", 2],
-    [null, "홍길동", "저 안읽씹 싫어하는데...", "2022.10.22", 100],
-    [null, "온새미로", "인소 여주 아닙니다", "2022.09.01", 3],
-  ];
+  late Future myFuture;
+  ChatRoomListModel? data;
+  List<ChatRoom> chatRoomList = [];
 
   Future<dynamic> fetchData() async {
-    return await ChatService().getChatRoomList();
+    final result = await ChatService().getChatRoomList();
+    print("${result}");
+    return result;
+  }
+
+  @override
+  void initState() {
+    myFuture = fetchData();
+    super.initState();
   }
 
   @override
@@ -43,27 +46,60 @@ class _ChatScreenState extends State<ChatScreen> {
         child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: FutureBuilder(
-                future: fetchData(),
+                future: myFuture,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    /// 정상
-                    // data = List<ChatModel>.fromJson(snapshot.data);
+                    data = ChatRoomListModel.fromJson(snapshot.data);
+                    if (data!.data != null) {
+                      print("chatRoomList: ✅");
+                      chatRoomList = data!.data!.noticeLists;
+                      return renderBody();
+                    } else {
+                      print("chatRoomList: ❎");
+                      return emptyView();
+                    }
                   } else if (snapshot.hasError) {
                     /// 에러 - 데이터를 불러올 수 없다고 띄우기
                     print("chat: ${snapshot.error.toString()}");
-                    // return const CircularProgress();
+                    return const CircularProgress();
                   } else if (!snapshot.hasData) {
-                    /// empty view
-                    // return const CircularProgress();
+                    print("chatRoomList: ❌");
+                    return const CircularProgress();
                   } else {
-                    /// 필요할까?
-                    // return const CircularProgress();
+                    return const CircularProgress();
                   }
-                  return renderBody();
                 }
             )
         ),
       ),
+    );
+  }
+
+  Widget emptyView() {
+    return Column(
+      children: [
+        chatHeader(),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "쪽지함이 비어있어요!",
+                style: emptyListTextStyle,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 4.0,
+              ),
+              Text(
+                "쪽지는 상품 게시글에서 작성자에게 보낼 수 있습니다",
+                style: sendMessageTextStyle,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -73,7 +109,7 @@ class _ChatScreenState extends State<ChatScreen> {
         chatHeader(),
         Expanded(
             child: SingleChildScrollView(
-              child: ChatListItem(context: context, chatList: chatList),
+              child: ChatListItem(context: context, chatRoomList: chatRoomList),
             ),
         ),
       ],
