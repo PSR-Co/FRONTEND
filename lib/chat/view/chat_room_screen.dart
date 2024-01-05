@@ -140,40 +140,38 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                       child: Container(
                         color: Colors.white,
                         height: 133,
-                        child: ListView(
+                        child: Column(
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                showReportDialog();
-                              },
-                              child: SizedBox(
-                                height: 66,
-                                child: Center(
-                                  child: Text(
-                                    "신고하기",
-                                    style: reportTextStyle,
-                                  ),
-                                )
+                            SizedBox(
+                              width: double.infinity,
+                              height: 66,
+                              child: TextButton(
+                                onPressed: () {
+                                  showReportDialog();
+                                },
+                                child: Text(
+                                  "신고하기",
+                                  style: reportTextStyle,
+                                ),
                               ),
                             ),
                             const Divider(
                               height: 1,
                               color: GRAY_0_COLOR,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                showConfirmationDialog();
-                              },
-                              child:SizedBox(
-                                height: 66,
-                                child: Center(
-                                  child: Text(
-                                    "나가기",
-                                    style: leaveTextStyle,
-                                  ),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 66,
+                              child: TextButton(
+                                onPressed: () {
+                                  showConfirmationDialog();
+                                },
+                                child: Text(
+                                  "나가기",
+                                  style: leaveTextStyle,
                                 ),
-                              ),
-                            )
+                              )
+                            ),
                           ],
                         ),
                       ),
