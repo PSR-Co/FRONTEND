@@ -35,7 +35,7 @@ Map<String, dynamic> _$ChatRoomListToJson(ChatRoomList instance) =>
 
 ChatRoom _$ChatRoomFromJson(Map<String, dynamic> json) => ChatRoom(
       chatRoomId: json['chatRoomId'] as int,
-      profileImgUrl: json['profileImgUrl'] as String,
+      profileImgUrl: json['profileImgUrl'] as String?,
       nickname: json['nickname'] as String,
       message: json['message'] as String,
       date: json['date'] as String,

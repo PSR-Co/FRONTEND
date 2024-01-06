@@ -22,7 +22,7 @@ class ChatRoomList {
 @JsonSerializable()
 class ChatRoom {
   final int chatRoomId;
-  final String profileImgUrl;
+  final String? profileImgUrl;
   final String nickname;
   final String message;
   final String date;
