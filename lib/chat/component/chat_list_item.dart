@@ -6,9 +6,9 @@ import 'package:psr/chat/view/chat_room_screen.dart';
 import '../../common/const/colors.dart';
 
 class ChatListItem extends StatefulWidget {
-  List<dynamic> chatList;
+  List<dynamic> chatRoomList;
 
-  ChatListItem({required this.chatList, Key? key, required BuildContext context}) : super(key: key);
+  ChatListItem({required this.chatRoomList, Key? key, required BuildContext context}) : super(key: key);
 
   @override
   State<ChatListItem> createState() => _ChatListItemState();
@@ -32,7 +32,7 @@ class _ChatListItemState extends State<ChatListItem> {
         border: Border(
           bottom: BorderSide(
             color: GRAY_6_COLOR,
-            width: 4.0,
+            width: 2.0,
           ),
         ),
       ),
@@ -43,11 +43,11 @@ class _ChatListItemState extends State<ChatListItem> {
         physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
-        itemCount: widget.chatList.length,
+        itemCount: widget.chatRoomList.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-              tapChatItem();
+              goToChatRoom(widget.chatRoomList[index].chatRoomId);
             },
             child: Slidable(
               endActionPane: ActionPane(
@@ -65,37 +65,34 @@ class _ChatListItemState extends State<ChatListItem> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 80.0,
-                margin: EdgeInsets.only(bottom: (index == widget.chatList.length-1) ? 4 : 0),
                 padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 20.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     ClipOval(
-                      /// 상대방 프로필 이미지(기본 프로필 이미지)
-                      child: (widget.chatList[index][0] == null)
+                      child: (widget.chatRoomList[index].profileImgUrl == null)
                         ? SvgPicture.asset(
                           'asset/icons/common/default_profile.svg',
                           width: 44,
                           height: 44,
                         )
-                        : Image.network(widget.chatList[0]),
+                        : Image.network(widget.chatRoomList[index].profileImgUrl),
                     ),
                     const SizedBox(
                       width: 14.0,
                     ),
                     Expanded(
                         child: Column(
-                          /// 닉네임, 마지막 채팅 텍스트(길어지면 말줄임표)
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.chatList[index][1],
+                              widget.chatRoomList[index].nickname,
                               style: nicknameTextStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
                             const Spacer(),
                             Text(
-                              widget.chatList[index][2],
+                              widget.chatRoomList[index].message,
                               style: lastMsgTextStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -107,28 +104,28 @@ class _ChatListItemState extends State<ChatListItem> {
                     ),
                     SizedBox(
                       child: Column(
-                        /// 날짜(or n분 전), 안 읽은 채팅 수(없을 수도 있음, 100개부터 99+로)
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            widget.chatList[index][3],
+                            /// 날짜(or n분 전) 포맷 처리하기
+                            widget.chatRoomList[index].date,
                             style: dateTextStyle,
                           ),
                           const Spacer(),
                           Visibility(
-                            visible: (widget.chatList[index][4] == 0) ? false : true,
+                            visible: (widget.chatRoomList[index].isRead) ? false : true,
                             child: Container(
                               height: 18,
                               padding: const EdgeInsets.symmetric(horizontal: 6.0),
                               decoration: BoxDecoration(
                                 color: PINK_COLOR,
-                                shape: (widget.chatList[index][4] < 10) ? BoxShape.circle : BoxShape.rectangle,
-                                borderRadius: (widget.chatList[index][4] < 10) ? null : BorderRadius.circular(8.5),
+                                shape: (widget.chatRoomList[index].numOfUnread < 10) ? BoxShape.circle : BoxShape.rectangle,
+                                borderRadius: (widget.chatRoomList[index].numOfUnread < 10) ? null : BorderRadius.circular(8.5),
                               ),
                               child: Text(
                                 // chatList[index].numOfUnreadChats
-                                (widget.chatList[index][4] < 100) ? "${widget.chatList[index][4]}" : "99+",
+                                (widget.chatRoomList[index].numOfUnread < 100) ? "${widget.chatRoomList[index].numOfUnread}" : "99+",
                                 style: numOfUnreadChatsTextStyle,
                               ),
                             ),
@@ -146,9 +143,9 @@ class _ChatListItemState extends State<ChatListItem> {
     );
   }
   
-  void tapChatItem() {
+  void goToChatRoom(int chatRoomId) {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (_) => ChatRoomScreen(id: 0)
+        builder: (_) => ChatRoomScreen(id: chatRoomId)
     ));
   }
 
