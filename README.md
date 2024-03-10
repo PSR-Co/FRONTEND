@@ -14,12 +14,19 @@
 <br> 
 <br>
 
-## Commit/PR Convention
+## Commit/Issue/PR Convention
 **Commit**
 ```
 feat: 유저 정보 조회 API 연결
 ```
 - 타입: 커밋 설명
+<br>
+
+**Issue**
+```
+[Feature] 상품 상세 화면 UI 구현
+```
+- [타입] 구현할 기능 설명
 <br>
 
 **Pull Request**
